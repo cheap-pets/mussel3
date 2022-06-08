@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Editor Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+</head>
+
+<body class="mu-background-normal">
+  <div id="app">
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-editor
+        class="mu-box"
+        underline
+        clear-button
+        width="500"
+        label="Artist"
+        placeholder="Artist Name"
+        v-model:value="artist">
+        <template v-slot:right>
+          <mu-icon link icon="bug"></mu-icon>
+        </template>
+      </mu-editor>
+      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
+        {{ artist }}
+      </p>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-combo-box
+        class="mu-box"
+        width="500"
+        label="Artist"
+        placeholder="Artist Name"
+        v-model:value="artist"
+        :options="artists">
+      </mu-combo-box>
+      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
+        {{ artist }}
+      </p>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x" style="margin-top: 1000px">
+      <mu-combo-box
+        class="mu-box"
+        width="500"
+        label="Artist"
+        :dropdown-style="{ width: '600px' }"
+        placeholder="Artist Name"
+        v-model:value="artist">
+        <template v-slot:dropdown>
+          <mu-option
+            v-for="el in artistsCn"
+            :key="el.value || '-'"
+            v-bind="el" />
+        </template>
+      </mu-combo-box>
+      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
+        {{ artist }}
+      </p>
+    </div>
+    <mu-button @click="addOption">Add Option</mu-button>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const artist = Vue.ref('Johann Baptist Strauss')
+        const artists = Vue.reactive([
+          { divider: true, label: 'GROUP 1' },  
+          { value: 'Ludwig van Beethoven' },
+          { value: 'Wolfgang Amadeus Mozart' },
+          { value: 'Frédéric François Chopin' },
+          '-',
+          { divider: true, label: 'GROUP 2' },  
+          { value: 'Johann Baptist Strauss', disabled: true  }
+        ])
+
+        const artistsCn = Vue.reactive([
+          { value: 'Ludwig van Beethoven', label: '贝多芬' },
+          { value: 'Wolfgang Amadeus Mozart', label: '莫扎特' },
+          { value: 'Frédéric François Chopin', label: '肖邦' },
+          { divider: true },
+          { value: 'Johann Baptist Strauss', label: '斯特劳斯', disabled: true }
+        ])
+
+        return { artist, artists, artistsCn }
+      },
+      methods: {
+        onDropdownShow () {
+          console.log('dropdown show')
+        },
+        addOption () {
+          const  v = (new Date()).toString()
+
+          this.artist = v
+          this.artists.push({
+            value: v
+          })
+          this.artistsCn.push({
+            value: v
+          })
+        }
+      }
+    })
+
+    mussel.install(app)
+    mussel.registerIcons({
+      bug: 'ti ti-bug',
+      bolt: 'ti ti-bolt',
+      album: 'ti ti-album'
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

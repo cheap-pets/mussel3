@@ -1,0 +1,302 @@
+.mu-editor {
+  position: relative;
+  height: $editorHeight;
+  width: 200px;
+  border: $editorBorderWidth solid var(--mu-editor-border-color);
+  border-radius: $editorBorderRadius;
+  font-size: $rootFontSize;;
+  line-height: $editorLineHeight;
+  background-color: var(--mu-editor-background);
+
+  &:not(input) {
+    display: flex;
+    align-items: center;
+  }
+
+  input& {
+    padding: 0 $editorPaddingX;
+  }
+
+  input&,
+  & > input {
+    outline: none;
+    font-size: $rootFontSize;
+    color: var(--mu-editor-text-color);
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    &::placeholder {
+      color: var(--mu-text-color-placeholder);
+    }
+  }
+
+  & > input {
+    align-self: stretch;
+    flex: 1 1 0;
+    width: 1px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  & > label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: calc(1em - 1px);
+    /* background-color: var(--mu-editor-background-solid); */
+
+    &[align=left] {
+      justify-content: start;
+    }
+
+    &[align=right] {
+      justify-content: end;
+    }
+
+    &:first-child {
+      border-top-left-radius: $editorBorderRadius;
+      border-bottom-left-radius: $editorBorderRadius;
+    }
+  }
+
+  & > .mu-icon {
+    font-size: calc(1em + 2px);
+  }
+
+  & > input ~ label:last-of-type {
+    border-top-right-radius: $editorBorderRadius;
+    border-bottom-right-radius: $editorBorderRadius;
+  }
+
+  & > span,
+  & > label,
+  & > .mu-icon {
+    color: var(--mu-text-color-weak);
+  }
+
+  & a,
+  & .mu-link {
+    color: var(--mu-text-color-weak);
+    text-decoration: none !important;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--mu-primary-color-light);
+    }
+
+    &[danger]:hover {
+      color: var(--mu-danger-color-light);
+    }
+  }
+
+  & > .mu-popup-holder {
+    width: 0;
+    margin-left: 0;
+    overflow: visible;
+  }
+
+  &[invalid] {
+    border-color: var(--mu-danger-color);
+
+    &[solid],
+    & > label {
+      background-color: var(--mu-red-0);
+    }
+
+    input&,
+    & > input,
+    & > .mu-icon:not(a) {
+      color: var(--mu-danger-color);
+    }
+  }
+  
+  &[solid] {
+    background: var(--mu-editor-background-solid);
+    border-color: transparent;
+
+    & > label {
+      background-color: transparent;
+    }
+  }
+}
+
+/* spacing */
+.mu-editor {
+  & > * {
+    margin-left: $commonItemSpacing;
+  }
+
+  & > :first-child {
+    margin-left: $editorPaddingX;
+  }
+
+  & > :last-child {
+    margin-right: $editorPaddingX;
+  }
+
+  & > label {
+    padding: 0 $editorPaddingX;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    & + label,
+    & + .mu-icon {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    & > * {
+      margin-left: $commonItemSpacing;
+    }
+
+    & > :first-child {
+      margin-left: 0;
+    }
+
+    & + .mu-popup-holder {
+      margin-right: 0;
+    }
+  }
+}
+
+/* readonly, disabled */
+.mu-editor {
+  &[readonly] {
+    background-color: var(--mu-editor-background-readonly) !important;
+
+    & > label {
+      background: inherit !important;
+    }
+  }
+
+  &[disabled] {
+    background-color: var(--mu-background-disabled) !important;
+    border-color: var(--mu-editor-border-color) !important;
+    color: var(--mu-text-color-weak) !important;
+    box-shadow: none !important;
+    pointer-events: none;
+    cursor: default;
+
+    &[solid] {
+      border-color: transparent !important;
+    }
+
+    &[underline] {
+      border-top-color: transparent !important;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+    }
+    
+    & > * {
+      color: var(--mu-text-color-weak) !important;
+    }
+
+    /* & > label {
+      background: transparent !important;
+    } */
+  }
+}
+
+/* round */
+.mu-editor[round] {
+  border-radius: calc($editorHeight / 2);
+
+  & > label:first-child {
+    border-top-left-radius: calc($editorHeight / 2);
+    border-bottom-left-radius: calc($editorHeight / 2);
+  }
+
+  & > input ~ label:last-of-type {
+    border-top-right-radius: calc($editorHeight / 2);
+    border-bottom-right-radius: calc($editorHeight / 2);
+  }
+}
+
+/* underline */
+.mu-editor[underline] {
+  background: var(--mu-editor-background);
+  border-radius: 0;
+  border-color: transparent;
+  border-bottom-color: var(--mu-editor-border-color);
+
+  &[invalid] {
+    border-color: transparent;
+    border-bottom-color: var(--mu-danger-color);
+  }
+
+  & > label {
+    background-color: transparent;
+    border-radius: 0 !important;
+  }
+
+  &:hover {
+    border-bottom-color: var(--mu-primary-color-light);
+  }
+
+  &[invalid]:hover {
+    border-bottom-color: var(--mu-danger-color-light);
+  }
+}
+
+/* focus-within */
+.mu-editor:focus-within {
+  border-color: var(--mu-primary-color);
+  box-shadow: $editorFocusShadowSize var(--mu-primary-color-tiny);
+
+  &[solid] {
+    background-color: var(--mu-editor-background);
+  }
+
+  &[invalid] {
+    border-color: var(--mu-danger-color);
+    box-shadow: $editorFocusShadowSize var(--mu-danger-color-tiny);
+  }
+}
+
+/* hover */
+.mu-editor {
+  &:hover {
+    border-color: var(--mu-primary-color-light);
+  }
+
+  &[invalid]:hover {
+    border-color: var(--mu-danger-color-light);
+  }
+}
+
+/* visibility control */
+.mu-editor {
+  & > [visibility~=hover],
+  & > [visibility~=focus] {
+    visibility: hidden;
+    overflow: hidden;
+    width: 0;
+
+    &:not(:first-child) {
+      margin-left: 0;
+    }
+  }
+
+  &:hover > [visibility~=hover],
+  &:focus-within > [visibility~=focus]  {
+    visibility: visible;
+    width: auto;
+
+    &:not(:first-child) {
+      margin-left: $commonItemSpacing;
+    }
+  }
+}

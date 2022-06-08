@@ -1,0 +1,29 @@
+.mu-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: $badgeHeight;
+  min-width: calc($badgeHeight * 1.5);
+  padding: 0 $badgePaddingX;
+  font-size: $badgeFontSize;
+  line-height: $badgeHeight;
+  border-radius: calc($badgeHeight / 2);
+  background: var(--mu-badge-background);
+  color: #fff;
+
+  &[primary] {
+    background: var(--mu-primary-color);
+  }
+
+  &[secondary] {
+    background: var(--mu-secondary-color);
+  }
+
+  &[warning] {
+    background: var(--mu-warning-color);
+  }
+
+  &[danger] {
+    background: var(--mu-danger-color);
+  }
+}

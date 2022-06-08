@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Editor CSS Example</title>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <style>
+    .mu-editor {
+      margin: 8px;
+    }
+  </style>
+</head>
+
+<body class="mu-background-normal">
+  <div class="mu-box" layout="flex" padding="1x">
+    <input class="mu-editor" placeholder="Input Text" value="Text">
+    <input class="mu-editor" invalid placeholder="Input Text" value="Invalid Text">
+    <input class="mu-editor" readonly value="Readonly">
+    <input class="mu-editor" disabled value="Disabled">
+  </div>
+  <div class="mu-box" layout="flex" padding="1x">
+    <input class="mu-editor" round placeholder="Input Text" value="Text">
+    <input class="mu-editor" round invalid placeholder="Input Text" value="Invalid Text">
+    <input class="mu-editor" round readonly value="Readonly">
+    <input class="mu-editor" round disabled value="Disabled">
+  </div>
+  <div class="mu-box" layout="flex" padding="1x">
+    <input class="mu-editor" solid placeholder="Input Text" value="Text">
+    <input class="mu-editor" solid invalid placeholder="Input Text" value="Invalid Text">
+    <input class="mu-editor" solid readonly value="Readonly">
+    <input class="mu-editor" solid invalid disabled value="Disabled">
+  </div>
+  <div class="mu-box" layout="flex" padding="1x">
+    <input class="mu-editor" underline placeholder="Input Text" value="Text">
+    <input class="mu-editor" underline invalid placeholder="Input Text" value="Invalid Text">
+    <input class="mu-editor" underline readonly value="Readonly">
+    <input class="mu-editor" underline invalid disabled value="Disabled">
+  </div>
+  <div class="mu-box" layout="flex" padding="1x">
+    <div class="mu-editor" solid round>
+      <span class="mu-icon ti ti-search"></span>
+      <input value="Search Something">
+    </div>
+    <div class="mu-editor">
+      <input value="Button on Hover">
+      <a class="mu-icon ti ti-x" danger visibility="hover"></a>
+      <a class="mu-icon ti ti-chevron-down"></a>
+    </div>
+    <div class="mu-editor" invalid>
+      <span class="mu-icon ti ti-backhoe"></span>
+      <input value="Button on Focus">
+      <a class="mu-icon ti ti-minimize" visibility="focus"></a>
+      <span class="mu-popup-holder"></span>
+    </div>
+    <div class="mu-editor" disabled>
+      <span class="mu-icon ti ti-backhoe"></span>
+      <input value="Disabled" disabled>
+      <a class="mu-icon ti ti-minimize"></a>
+    </div>
+  </div>
+  <div class="mu-box" layout="flex" padding="1x" flex-wrap>
+    <div class="mu-editor mu-box" width="500">
+      <label><a>User Name</a></label>
+      <input placeholder="Input User Name">
+      <label>Awesome</label>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" width="500">
+      <label>User Name</label>
+      <input value="Wolfgang Amadeus Mozart" placeholder="Input User Name">
+      <a class="mu-icon ti ti-thumb-down"></a>
+      <a class="mu-icon ti ti-thumb-up"></a>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" width="500" solid>
+      <label>User Name</label>
+      <input placeholder="Input User Name">
+      <label><a>Sign Up</a></label>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" width="500" invalid>
+      <label>User Name</label>
+      <input value="Frédéric François Chopin" placeholder="Input User Name">
+      <label><a class="mu-icon ti ti-thumb-down"></a></label>
+      <label><a class="mu-icon ti ti-thumb-up"></a></label>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" width="500" invalid solid>
+      <label>User Name</label>
+      <input value="Johann Baptist Strauss" placeholder="Input User Name">
+      <label><a class="mu-icon ti ti-thumb-down"></a></label>
+      <label><a class="mu-icon ti ti-thumb-up"></a></label>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" underline width="500">
+      <label>User Name</label>
+      <input value="Ludwig van Beethoven" placeholder="Input User Name">
+      <label>
+        <span>recommend</span>
+        <a class="mu-icon ti ti-thumb-down" danger></a>
+        <a class="mu-icon ti ti-thumb-up"></a>
+      </label>
+      <span class="mu-popup-holder"></span>
+    </div>
+    <div class="mu-space"></div>
+    <div class="mu-editor mu-box" width="500" solid invalid disabled>
+      <label>User Name</label>
+      <input value="Johann Sebastian Bach" disabled>
+      <label>
+        <span class="mu-icon ti ti-thumb-down"></span>
+        <a class="mu-icon ti ti-thumb-up"></a>
+      </label>
+    </div>
+  </div>
+</body>
+
+</html>

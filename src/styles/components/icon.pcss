@@ -1,0 +1,21 @@
+.mu-icon {
+  display: inline-block;
+  font-size: calc(1em + 2px);
+  transition: transform .2s ease-in-out;
+
+  &::before, &::after {
+    display: block;
+  }
+
+  & svg {
+    /* vertical-align: -0.15em; */
+    display: block;
+    width: 1em;
+    height: 1em;
+  }
+
+  &[reverse] svg {
+    stroke: var(--mu-text-color-reversed);
+    fill: currentColor;
+  }
+}

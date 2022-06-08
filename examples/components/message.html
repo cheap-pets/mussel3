@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Message API Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+
+  <style>
+    .mu-button + .mu-button {
+      margin-left: 8px;
+    }
+  </style>
+</head>
+
+<body class="mu-background-normal">
+  <div id="app">
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="alert">Alert</mu-button>
+      <mu-button @click="confirm">Confirm</mu-button>
+      <mu-button @click="error">Error</mu-button>
+      <mu-button @click="warn">Warn</mu-button>
+      <mu-button @click="showMessage">Show Message</mu-button>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="notifyInfo">Notify Info</mu-button>
+      <mu-button @click="notifySuccess">Notify Success</mu-button>
+      <mu-button @click="notifyWarning">Notify Warning</mu-button>
+      <mu-button @click="notifyError">Notify Error</mu-button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+      },
+      methods: {
+        alert () {
+          this
+            .$messageBox
+            .alert('Hello World !')
+            .then(btn => console.log(btn))
+        },
+        confirm () {
+          this
+            .$messageBox
+            .confirm('Hello World !')
+            .then(btn => console.log(btn))
+        },
+        error () {
+          this
+            .$messageBox
+            .error('糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！<p>进入防御状态！</p>')
+            .then(btn => console.log(btn))
+        },
+        warn () {
+          this
+            .$messageBox
+            .warn('Hello World !')
+            .then(btn => console.log(btn))
+        },
+        showMessage () {
+          this
+            .$messageBox
+            .showMessage({
+              icon: 'bolt',
+              message:'Hello World !'
+            })
+            .then(btn => console.log(btn))
+        },
+        notifyInfo () {
+          this.$messageBox.notify({
+            title: '提示',
+            message: '这是一个普通提示。',
+            type: 'alert'
+          })
+        },
+        notifySuccess () {
+          this.$messageBox.notify({
+            title: '提示',
+            message: '数据保存成功。',
+            type: 'success'
+          })
+        },
+        notifyWarning () {
+          this.$messageBox.notify({
+            type: 'warn',
+            title: '警告',
+            message: '这是一个做了危险操作的提示！'
+          })
+        },
+        notifyError () {
+          this.$messageBox.notify({
+            type: 'error',
+            message: '这是一个出错的提示！'
+          })
+        }
+      }
+    })
+
+    mussel.registerIcons({
+      bolt: 'ti ti-bolt'
+    })
+
+    mussel.install(app)
+
+    app.mount('#app')
+  </script>
+</body>

@@ -1,0 +1,80 @@
+.mu-message-box {
+  & .mu-message-box_icon {
+    font-size: 60px;
+    color: var(--mu-blue-3);
+    margin-right: $commonItemSpacing;
+
+    &[icon=warn] {
+      color: var(--mu-red-3);
+    }
+  }
+
+  & .mu-message_title {
+    font-size: calc($rootFontSize + 2px);
+  }
+}
+
+.mu-notifier-group {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  right: 0;
+}
+
+.mu-notifier-group-enter-from,
+.mu-notifier-group-leave-to {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.mu-notifier-group-move,
+.mu-notifier-group-enter-active,
+.mu-notifier-group-leave-active {
+  transition: all .5s;
+}
+
+.mu-notifier {
+  width: $notifierWidth;
+  font-size: $rootFontSize;
+  margin: $notifierMargin;
+  padding: $notifierPaddingY $notifierPaddingX;
+  background: var(--mu-notifier-background);
+  border-radius: $notifierBorderRadius;
+  box-shadow: $boxShadowPopup;
+  
+  &:hover > .mu-notifier_content {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.mu-message_title {
+  display: flex;
+  align-items: center;
+  line-height: $notifierIconSize;
+  font-weight: 600;
+
+  & > * {
+    display: inline-block;
+  }
+
+  & > .mu-icon {
+    margin-right: $inlineItemSpacing;
+    font-size: $notifierIconSize;
+    color: var(--mu-primary-color-light);
+  }
+
+  &[type=success] > .mu-icon {
+    color: var(--mu-success-color-light);
+  }
+
+  &[type=warn] > .mu-icon,
+  &[type=error] > .mu-icon {
+    color: var(--mu-danger-color-light);
+  }
+}
+
+.mu-message_content {
+  padding-left: calc($notifierIconSize + $inlineItemSpacing);
+  line-height: calc(1rem + 8px);
+}

@@ -1,0 +1,70 @@
+.mu-bar {
+  display: flex;
+  align-items: center;
+  height: $barHeight;
+  padding: 0 $barPaddingX;
+
+  & > * {
+    margin-left: $commonItemSpacing;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  & > :first-child {
+    margin-left: 0;
+  }
+}
+
+.mu-bar > label,
+.mu-bar_caption {
+  color: var(--mu-text-color-weak);
+  font-size: calc(1rem - 2px);
+}
+
+.mu-bar_caption {
+  font-weight: 600;
+
+  & + * {
+    margin-left: $commonItemSpacing;
+  }
+}
+
+.mu-bar_divider {
+  display: block;
+  margin: 0 $commonItemSpacing;
+  width: 2px;
+  height: calc(1em + 2px);
+  flex: none;
+  background-color: var(--mu-divider-color);
+
+  & + * {
+    margin-left: 0;
+  }
+}
+
+.mu-bar[align-items="stretch"] {
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: stretch;
+
+  & > label,
+  & > .mu-bar_divider,
+  & > [align-self="center"] {
+    align-self: center;
+  }
+
+  /* & > .mu-bar_divider {
+    width: 1px;
+    height: 100%;
+  } */
+
+  & > .mu-button,
+  & > .mu-dropdown > .mu-button,
+  & > .mu-editor {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

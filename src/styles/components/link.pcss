@@ -1,0 +1,22 @@
+.mu-link {
+  text-decoration: none;
+  color: var(--mu-text-color-normal);
+  cursor: pointer;
+
+  &[primary] {
+    color: var(--mu-primary-color);
+  }
+
+  &:hover {
+     color: var(--mu-primary-color-light);
+     text-decoration: underline;
+  }
+
+  &[danger] {
+    color: var(--mu-danger-color);
+
+    &:hover {
+      color: var(--mu-danger-color-light);
+    }
+  }
+}

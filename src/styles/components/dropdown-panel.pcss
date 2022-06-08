@@ -1,0 +1,44 @@
+.mu-dropdown-panel {
+  position: fixed;
+  z-index: 110;
+  display: block;
+  max-height: 300px;
+  padding: $dropdownPaddingY $dropdownPaddingX;
+  overflow: auto;
+  visibility: hidden;
+  border: $dropdownBorderWidth solid var(--mu-dropdown-border-color);
+  border-radius: $dropdownBorderRadius;
+  background: var(--mu-dropdown-background);
+  box-shadow: $boxShadowPopup;
+  transition: transform .1s, opacity .1s;
+  transform: scaleY(0);
+  opacity: 0;
+
+  &[pop-up] {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+
+  &:not([position="top"]) {
+    margin-top: $dropdownMargin;
+    transform-origin: top;
+  }
+
+  &[position="top"] {
+    margin-bottom: $dropdownMargin;
+    transform-origin: bottom;
+  }
+}
+
+.mu-dropdown-panel > .mu-list-item {
+  border-radius: $dropdownItemBorderRadius;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mu-list-item-hover-background);
+  }
+}
+
+.mu-dropdown-panel > .mu-list-divider:empty {
+  margin: $dropdownPaddingY 0;
+}

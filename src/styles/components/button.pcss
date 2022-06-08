@@ -1,0 +1,327 @@
+.mu-button-group > button,
+.mu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $buttonHeight;
+  min-width: $buttonHeight;
+  padding: 0 $buttonPaddingX;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  outline: none;
+  border: $buttonBorderWidth solid var(--mu-button-border-color-normal);
+  border-radius: $buttonBorderRadius;
+  font-family: inherit;
+  font-size: $rootFontSize;
+  line-height: $buttonLineHeight;
+  text-decoration: none;
+  background: var(--mu-button-background-normal);
+  color: var(--mu-button-text-color-normal);
+  cursor: pointer;
+
+  & > span {
+    display: block;
+  }
+
+  & > * {
+    margin-left: $inlineItemSpacing;
+  }
+
+  & > :first-child {
+    margin-left: 0;
+  }
+}
+
+.mu-button-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $buttonBorderRadius;
+  background: var(--mu-button-background-normal);
+
+  & > button {
+    flex: 1 1 0;
+    margin-left: -1px;
+    border: $buttonBorderWidth solid var(--mu-button-border-color-normal);
+    border-radius: $buttonBorderRadius;
+    background: transparent;
+    color: var(--mu-button-text-color-normal);
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:not(:first-of-type) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:last-of-type) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &[round] {
+    border-radius: calc($buttonHeight / 2);
+
+    & > button:first-of-type {
+      border-top-left-radius: calc($buttonHeight / 2);
+      border-bottom-left-radius: calc($buttonHeight / 2);
+    }
+
+    & > button:last-of-type {
+      border-top-right-radius: calc($buttonHeight / 2);
+      border-bottom-right-radius: calc($buttonHeight / 2);
+    }
+  }
+
+  & > .mu-split-button,
+  & > .mu-icon-button {
+    flex: none;
+  }
+}
+
+.mu-button-group[primary] > button,
+.mu-button[primary] {
+  color: var(--mu-text-color-reversed);
+  background: var(--mu-primary-color);
+  border-color: var(--mu-primary-color);
+
+  &[button-style="link"],
+  &[button-style="text"],
+  &[button-style="outline"] {
+    color: var(--mu-primary-color);
+
+    &:hover {
+      color: var(--mu-primary-color-light);
+    }
+  }
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-primary-color-dark);
+    border-color: var(--mu-primary-color-dark);
+  }
+
+  &:hover,
+  &[active]:hover {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-primary-color-light);
+    border-color: var(--mu-primary-color-light);
+  }
+
+  &:focus {
+    box-shadow: $buttonFocusShadowSize var(--mu-primary-color-tiny);
+  }
+
+  &[button-style="link"][active] {
+    color: var(--mu-primary-color-dark);
+  }
+}
+
+.mu-button-group[secondary] > button,
+.mu-button[secondary] {
+  color: var(--mu-text-color-reversed);
+  background: var(--mu-secondary-color);
+  border-color: var(--mu-secondary-color);
+
+  &[button-style="link"],
+  &[button-style="text"],
+  &[button-style="outline"] {
+    color: var(--mu-secondary-color);
+
+    &:hover {
+      color: var(--mu-secondary-color-light);
+    }
+  }
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-secondary-color-dark);
+    border-color: var(--mu-secondary-color-dark);
+  }
+
+  &:hover,
+  &[active]:hover {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-secondary-color-light);
+    border-color: var(--mu-secondary-color-light);
+  }
+
+  &:focus {
+    box-shadow: $buttonFocusShadowSize var(--mu-secondary-color-tiny);
+  }
+
+  &[button-style="link"][active] {
+    color: var(--mu-secondary-color-dark);
+  }
+}
+
+.mu-button-group[danger] > button,
+.mu-button[danger] {
+  color: var(--mu-text-color-reversed);
+  background: var(--mu-danger-color);
+  border-color: var(--mu-danger-color);
+
+  &[button-style="link"],
+  &[button-style="text"],
+  &[button-style="outline"] {
+    color: var(--mu-danger-color);
+
+    &:hover {
+      color: var(--mu-danger-color-light);
+    }
+  }
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-danger-color-dark);
+    border-color: var(--mu-danger-color-dark);
+  }
+
+  &:hover,
+  &[active]:hover {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-danger-color-light);
+    border-color: var(--mu-danger-color-light);
+  }
+
+  &:focus {
+    box-shadow: $buttonFocusShadowSize var(--mu-danger-color-tiny);
+  }
+
+  &[button-style="link"][active] {
+    color: var(--mu-danger-color-dark);
+  }
+}
+
+.mu-button-group[x-color] > button,
+.mu-button[x-color] {
+  color: var(--mu-text-color-reversed);
+  background: var(--mu-x-color);
+  border-color: var(--mu-x-color);
+
+  &[button-style="link"],
+  &[button-style="text"],
+  &[button-style="outline"] {
+    color: var(--mu-x-color);
+
+    &:hover {
+      color: var(--mu-x-color-light);
+    }
+  }
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-x-color-dark);
+    border-color: var(--mu-x-color-dark);
+  }
+
+  &:hover,
+  &[active]:hover {
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-x-color-light);
+    border-color: var(--mu-x-color-light);
+  }
+
+  &:focus {
+    box-shadow: $buttonFocusShadowSize var(--mu-x-color-tiny);
+  }
+
+  &[button-style="link"][active] {
+    color: var(--mu-x-color-dark);
+  }
+}
+
+.mu-button {
+  &[button-style="text"] {
+    border-color: transparent;
+  }
+
+  &[button-style="outline"] {
+    &, &:hover {
+      background: var(--mu-button-background-outline);
+    }
+  }
+
+  &[button-style="text"] {
+    &, &:hover {
+      background: transparent;
+    }
+  }
+
+  &[active] {
+    z-index: 1;
+    color: var(--mu-primary-color-dark);
+    border-color: var(--mu-primary-color-dark);
+  }
+}
+
+.mu-button-group > button,
+.mu-button {
+  &:hover {
+    z-index: 2;
+    color: var(--mu-primary-color-light);
+    border-color: var(--mu-primary-color-light);
+  }
+
+  &:focus {
+    z-index: 3;
+    box-shadow: $buttonFocusShadowSize var(--mu-primary-color-tiny);
+  }
+
+  &[round] {
+    border-radius: calc($buttonHeight / 2);
+  }
+}
+
+.mu-button-group > button {
+  &[active] {
+    z-index: 1;
+    color: var(--mu-text-color-reversed);
+    background: var(--mu-primary-color-dark);
+    border-color: var(--mu-primary-color-dark);
+
+    &:hover {
+      background: var(--mu-primary-color-light);
+      border-color: var(--mu-primary-color-light);
+    }
+  }
+}
+
+.mu-button-group {
+  &[primary],
+  &[secondary],
+  &[danger],
+  &[x-color] {
+    & > button:not(:first-of-type) {
+      border-left-color: rgba(255, 255, 255, .25);
+    }
+  }
+}
+
+.mu-button-group[disabled] > button,
+.mu-button[disabled] {
+  z-index: 1;
+  background: var(--mu-background-disabled) !important;
+  color: var(--mu-text-color-weak) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+.mu-button[button-style="link"] {
+  padding-left: 0;
+  padding-right: 0;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mu-button.mu-split-button, .mu-button.mu-icon-button {
+  padding: 0;
+}

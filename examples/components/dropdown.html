@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Dropdown Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+</head>
+
+<body class="mu-background-normal">
+  <div id="app">
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown
+        :dropdown-items="artists"
+        @dropdown:show="onShow"
+        @dropdown:itemclick="onItemClick">
+        <mu-button>{{ artist }}</mu-button>
+      </mu-dropdown>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown dropdown-trigger="click" @dropdown:show="onShow">
+        <mu-button primary>{{ artist }}</mu-button>
+        <template v-slot:dropdown>
+          <mu-list-item
+            v-for="(el, index) in artists"
+            :key="(+new Date() + '_' + index)"
+            :item="el"
+            @click="onItemClick(el)">
+          </mu-list-item>
+        </template>
+      </mu-dropdown>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown-button
+        danger
+        :caption="artist"
+        :dropdown-items="artists"
+        @dropdown:itemclick="onItemClick">
+      </mu-dropdown-button>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown-button
+        x-color="cyan"
+        split-button
+        :caption="artist"
+        :dropdown-items="artists"
+        @click="onButtonClick"
+        @dropdown:itemclick="onItemClick">
+      </mu-dropdown-button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const artist = Vue.ref('artist')
+        const artists = Vue.reactive([
+          { divider: true, label: 'GROUP 1' },
+          { label: 'Ludwig van Beethoven', value: 1 },
+          { label: 'Wolfgang Amadeus Mozart' },
+          '-',
+          { divider: true, label: 'GROUP 2' },
+          { label: 'Frédéric François Chopin' },
+          { label: 'Johann Baptist Strauss', disabled: true  }
+        ])
+
+        function onShow () {
+          console.log('show')
+        }
+
+        function onItemClick (data) {
+          artist.value = data.label
+        }
+
+        function onButtonClick () {
+          console.log('button click')
+        }
+
+        return { artist, artists, onShow, onItemClick, onButtonClick }
+      }
+    })
+
+    mussel.install(app)
+    mussel.registerIcons({
+      bug: 'ti ti-bug',
+      bolt: 'ti ti-bolt',
+      album: 'ti ti-album'
+    })
+
+    app.mount('#app')
+  </script>
+</body>

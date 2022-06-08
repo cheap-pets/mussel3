@@ -1,0 +1,67 @@
+.mu-list-item,
+.mu-list-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: $listItemHeight;
+  padding: 0 $listItemPaddingX;
+  line-height: $listItemLineHeight;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: default;
+
+  & > label {
+    flex: 1 1 0;
+    cursor: inherit;
+  }
+
+  & > * {
+    margin-left: $commonItemSpacing;
+  }
+
+  & > :first-child {
+    margin-left: 0;
+  }
+}
+
+.mu-list-item {
+  color: var(--mu-text-color-normal);
+}
+
+a.mu-list-item {
+  &:hover {
+    background: var(--mu-list-item-hover-background);
+  }
+}
+
+.mu-list-item[disabled] {
+  color: var(--mu-text-color-weak);
+  background: inherit;
+  pointer-events: none;
+  cursor: default;
+}
+
+.mu-list-divider {
+  color: var(--mu-text-color-weak);
+  font-weight: 500;
+  font-size: 0.8rem;
+
+  &:empty {
+    height: $listDividerBorderWidth;
+    border-top: $listDividerBorderWidth solid var(--mu-list-divider-border-color);
+  }
+}
+
+a.mu-navi-item {
+  height: 40px;
+  border-radius: $dropdownItemBorderRadius;
+  cursor: pointer;
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background-color: var(--mu-primary-color);
+    cursor: pointer
+  }
+}

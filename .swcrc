@@ -1,0 +1,24 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "decorators": true,
+      "decoratorsBeforeExport": true
+    },
+    "transform": {
+      "legacyDecorator": true
+    }
+  },
+  "env": {
+    "targets": {
+      "chrome": "80",
+      "firefox": "80",
+      "edge": "90"
+    },
+    "coreJs": 3
+  },
+  "module": {
+    "type": "es6"
+  },
+  "sourceMaps": true
+}

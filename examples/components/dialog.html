@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Dialog Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+</head>
+
+<body class="mu-background-normal">
+  <div id="app">
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="dialogVisible1 = true">Show Dialog 1</mu-button>
+      <mu-dialog
+        v-model:visible="dialogVisible1"
+        title="My Dialog 1"
+        mask-action="hide"
+        width="640px"
+        height="480px"
+        :buttons="buttons">
+        <div flex="1">
+          <span>{{ new Date() }}</span>
+        </div>
+      </mu-dialog>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="dialogVisible2 = true">Show Dialog 2</mu-button>
+      <mu-dialog
+        v-model:visible="dialogVisible2"
+        title="My Dialog 2"
+        width="640px"
+        height="480px"
+        :buttons="buttons">
+        <template v-slot:side-panel>
+          <div class="mu-dialog_side-panel mu-box" width="200">
+          </div>
+        </template>
+      </mu-dialog>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const dialogVisible1 = Vue.ref(false)
+        const dialogVisible2 = Vue.ref(false)
+
+        const buttons = [
+          { caption: 'Cancel', action: 'hide' },
+          { caption: 'Accept', primary: true }
+        ]
+
+        return {
+          dialogVisible1,
+          dialogVisible2,
+          buttons
+        }
+      }
+    })
+    
+    mussel.registerIcons({
+      bolt: 'ti ti-bolt'
+    })
+
+    mussel.install(app)
+
+    app.mount('#app')
+  </script>
+</body>
