@@ -9,8 +9,12 @@
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
-  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <link
+    rel="stylesheet" type="text/css"
+    href="../../dist/mussel.css" />
+  <link
+    rel="stylesheet" type="text/css"
+    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
 <body class="mu-background-normal">
@@ -72,12 +76,12 @@
       setup () {
         const artist = Vue.ref('Johann Baptist Strauss')
         const artists = Vue.reactive([
-          { divider: true, label: 'GROUP 1' },  
+          { divider: true, label: 'GROUP 1' },
           { value: 'Ludwig van Beethoven' },
           { value: 'Wolfgang Amadeus Mozart' },
           { value: 'Frédéric François Chopin' },
           '-',
-          { divider: true, label: 'GROUP 2' },  
+          { divider: true, label: 'GROUP 2' },
           { value: 'Johann Baptist Strauss', disabled: true  }
         ])
 

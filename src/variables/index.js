@@ -32,6 +32,11 @@ const variables = {
   editorBorderRadius: '4px',
   editorFocusShadowSize: '0 0 0 2px',
 
+  switchHeight: '20px',
+  switchWidth: '50px',
+  switchBallSize: '14px',
+  switchLabelFontSize: '12px',
+
   listItemHeight: '32px',
   listItemPaddingX: '12px',
   listItemPaddingY: '6px',
