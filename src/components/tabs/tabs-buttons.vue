@@ -11,7 +11,7 @@
   import { inject } from 'vue'
 
   export default {
-    name: 'MusselTabsAutoButtons',
+    name: 'MusselTabButtons',
     setup () {
       const tabs = inject('tabs')
 

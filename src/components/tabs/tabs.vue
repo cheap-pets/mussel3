@@ -3,8 +3,9 @@
     <slot name="tab-bar">
       <mu-tab-bar
         v-if="tabItems"
-        flex="none"
-        :tab-style="tabStyle">
+        v-bind="tabBarParams"
+        :tab-style="tabStyle"
+        flex="none">
         <mu-tab-button
           v-for="el in tabItems"
           :key="el.name"
@@ -26,8 +27,9 @@
       }
     },
     props: {
+      tabStyle: String,
       activeTab: String,
-      tabStyle: String
+      tabBarParams: Object
     },
     emits: ['update:activeTab', 'tabClick'],
     data () {

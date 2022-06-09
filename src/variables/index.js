@@ -11,7 +11,8 @@ const variables = {
   commonItemSpacing: '8px',
   layoutItemSpacing: '16px',
 
-  unitBorderRadius: '6px',
+  unitBorderRadius: '4px',
+  doubleBorderRadius: '8px',
 
   badgeHeight: '14px',
   badgePaddingX: '6px',
@@ -21,14 +22,14 @@ const variables = {
   buttonPaddingX: '12px',
   buttonBorderWidth: '1px',
   buttonLineHeight: '20px',
-  buttonBorderRadius: '6px',
+  buttonBorderRadius: '4px',
   buttonFocusShadowSize: '0 0 0 2px',
 
   editorHeight: '32px',
   editorPaddingX: '12px',
   editorBorderWidth: '1px',
   editorLineHeight: '20px',
-  editorBorderRadius: '6px',
+  editorBorderRadius: '4px',
   editorFocusShadowSize: '0 0 0 2px',
 
   listItemHeight: '32px',
@@ -42,13 +43,13 @@ const variables = {
   dropdownPaddingX: '4px',
   dropdownPaddingY: '4px',
   dropdownBorderWidth: '0',
-  dropdownBorderRadius: '6px',
-  dropdownItemBorderRadius: '6px',
+  dropdownBorderRadius: '8px',
+  dropdownItemBorderRadius: '4px',
 
   windowPaddingX: '24px',
   windowPaddingY: '16px',
   windowBorder: '0',
-  windowBorderRadius: '12px',
+  windowBorderRadius: '8px',
   windowTitleLineHeight: '24px',
   windowTitleFontSize: '14px',
   windowTitleFontWeight: '600',
@@ -63,7 +64,7 @@ const variables = {
   notifierMargin: '16px',
   notifierPaddingX: '8px',
   notifierPaddingY: '8px',
-  notifierBorderRadius: '6px',
+  notifierBorderRadius: '8px',
   notifierIconSize: '32px',
 
   // boxShadowLevel1: '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',

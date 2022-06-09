@@ -41,6 +41,10 @@
     border-color: var(--mu-danger-color);
   }
 
+  &[border~="divider"] {
+    border-color: var(--mu-divider-color);
+  }
+
   &[border-x],
   &[border-left] {
     border-left-width: 1px;
@@ -74,6 +78,11 @@
   &[border-x~="danger"],
   &[border-left~="danger"] {
     border-left-color: var(--mu-danger-color);
+  }
+
+  &[border-x~="divider"],
+  &[border-left~="divider"] {
+    border-left-color: var(--mu-divider-color);
   }
 
   &[border-x],
@@ -111,6 +120,11 @@
     border-right-color: var(--mu-danger-color);
   }
 
+  &[border-x~="divider"],
+  &[border-right~="divider"] {
+    border-right-color: var(--mu-divider-color);
+  }
+
   &[border-y],
   &[border-top] {
     border-top-width: 1px;
@@ -144,6 +158,11 @@
   &[border-y~="danger"],
   &[border-top~="danger"] {
     border-top-color: var(--mu-danger-color);
+  }
+
+  &[border-y~="divider"],
+  &[border-top~="divider"] {
+    border-top-color: var(--mu-divider-color);
   }
 
   &[border-y],
@@ -181,11 +200,16 @@
     border-bottom-color: var(--mu-danger-color);
   }
 
-  @for $i from 1 to 4 {
-    $v: calc($i * $unitBorderRadius);
+  &[border-y~="divider"],
+  &[border-bottom~="divider"] {
+    border-bottom-color: var(--mu-divider-color);
+  }
 
-    &[border-radius="$(i)x"] {
-      border-radius: $v;
-    }
+  &[border-radius] {
+    border-radius: $unitBorderRadius;
+  }
+
+  &[border-radius=2x] {
+    border-radius: $doubleBorderRadius;
   }
 }

@@ -24,7 +24,7 @@ import DropdownButton from './dropdown/dropdown-button.vue'
 import TabButton from './tabs/tab-button.vue'
 import TabBar from './tabs/tab-bar.vue'
 import TabPanel from './tabs/tab-panel.vue'
-import TabsAutoButtons from './tabs/tabs-auto-buttons.vue'
+import TabsButtons from './tabs/tabs-buttons.vue'
 import Tabs from './tabs/tabs.vue'
 
 /* MODAL */
@@ -54,7 +54,7 @@ export function installComponents (app) {
   app.component('mu-tab-button', TabButton)
   app.component('mu-tab-bar', TabBar)
   app.component('mu-tab-panel', TabPanel)
-  app.component('mu-tabs-auto-buttons', TabsAutoButtons)
+  app.component('mu-tabs-buttons', TabsButtons)
   app.component('mu-tabs', Tabs)
 
   app.component('mu-dialog', Dialog)
