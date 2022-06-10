@@ -6,16 +6,17 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-left: $switchBallSize;
+  padding-left: $switchHeight;
+  padding-right: $switchPaddingX;
   background-color: var(--mu-switch-background);
   border-radius: calc($switchHeight / 2);
   transition: background 0.2s ease-in-out;
   cursor: pointer;
 
   &[content]::before {
-    display: block;
     content: attr(content);
     font-size: $switchLabelFontSize;
+    line-height: 1;
     color: var(--mu-switch-inner-label-color);
   }
 
@@ -38,8 +39,8 @@
 
   &[active] {
     background-color: var(--mu-success-color);
-    padding-left: 0;
-    padding-right: $switchBallSize;
+    padding-left: $switchPaddingX;
+    padding-right: $switchHeight;
 
     &::after {
       left: calc(100% - ($switchHeight + $switchBallSize) / 2);

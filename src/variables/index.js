@@ -33,7 +33,8 @@ const variables = {
   editorFocusShadowSize: '0 0 0 2px',
 
   switchHeight: '20px',
-  switchWidth: '50px',
+  switchWidth: '40px',
+  switchPaddingX: '10px',
   switchBallSize: '14px',
   switchLabelFontSize: '12px',
 

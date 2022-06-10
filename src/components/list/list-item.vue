@@ -1,6 +1,7 @@
 <template>
   <div :class="isDivider ? 'mu-list-divider' : 'mu-list-item'" @click="onClick">
     <slot>
+      <mu-icon v-if="checkIcon" :icon="checkIcon" />
       <mu-icon v-if="itemIcon" :icon="itemIcon" />
       <label v-if="itemLabel">{{ itemLabel }}</label>
     </slot>
