@@ -39,7 +39,7 @@
           <mu-option
             v-for="(el, index) in options"
             :key="Object(el).value ?? index"
-            :item="el" />
+            v-bind="el === '-' ? { divider: true } : el" />
         </template>
       </slot>
     </mu-dropdown-panel>
@@ -54,6 +54,8 @@
     name: 'MusselComboBox',
     provide () {
       return {
+        reserveItemCheckPlace: this.reserveItemCheckPlace,
+        reserveItemIconPlace: this.reserveItemIconPlace,
         editor: this
       }
     },
@@ -68,7 +70,9 @@
       placeholder: String,
       dropdownStyle: Object,
       dropdownWidth: String,
-      dropdownHeight: String
+      dropdownHeight: String,
+      reserveItemCheckPlace: Boolean,
+      reserveItemIconPlace: Boolean
     },
     emits: ['update:value', 'dropdown:show', 'dropdown:hide'],
     data () {
@@ -141,18 +145,18 @@
       },
       mountOption (option) {
         if (!this.options) {
-          this.optionLabels[option.itemValue] = option.itemLabel
+          this.optionLabels[option.value] = option.itemLabel
         }
       },
       unmountOption (option) {
         if (!this.options) {
-          delete this.optionLabels[option.itemValue]
+          delete this.optionLabels[option.value]
         }
       },
       onOptionClick (option) {
         if (this.$attrs.onOptionClick?.(option) !== false) {
           this.dropdownVisible = false
-          this.$emit('update:value', option.itemValue)
+          this.$emit('update:value', option.value)
         }
       },
       includes (value) {

@@ -44,6 +44,8 @@ const variables = {
   listItemLineHeight: '20px',
   listItemBorderRadius: '4px',
   listDividerBorderWidth: '1px',
+  listDividerMarginY: '4px',
+  listIconWidth: '16px',
 
   dropdownMargin: '4px',
   dropdownPaddingX: '4px',

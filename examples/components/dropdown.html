@@ -9,8 +9,12 @@
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
-  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <link
+    rel="stylesheet" type="text/css"
+    href="../../dist/mussel.css" />
+  <link
+    rel="stylesheet" type="text/css"
+    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
 <body class="mu-background-normal">
@@ -41,6 +45,8 @@
         danger
         :caption="artist"
         :dropdown-items="artists"
+        reserve-item-check-place
+        reserve-item-icon-place
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
@@ -61,12 +67,13 @@
       setup () {
         const artist = Vue.ref('artist')
         const artists = Vue.reactive([
+          '-',
           { divider: true, label: 'GROUP 1' },
-          { label: 'Ludwig van Beethoven', value: 1 },
-          { label: 'Wolfgang Amadeus Mozart' },
+          { label: 'Ludwig van Beethoven', value: 1, icon: 'circleCheck' },
+          { label: 'Wolfgang Amadeus Mozart', icon: 'circleCheck', checked: true },
           '-',
           { divider: true, label: 'GROUP 2' },
-          { label: 'Frédéric François Chopin' },
+          { label: 'Frédéric François Chopin', icon: 'circleCheck' },
           { label: 'Johann Baptist Strauss', disabled: true  }
         ])
 

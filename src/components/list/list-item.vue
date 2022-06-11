@@ -1,44 +1,75 @@
 <template>
-  <div :class="isDivider ? 'mu-list-divider' : 'mu-list-item'" @click="onClick">
+  <div
+    :class="divider ? 'mu-list-divider' : 'mu-list-item'"
+    :checked="checked || null"
+    @click="onClick">
     <slot>
-      <mu-icon v-if="checkIcon" :icon="checkIcon" />
-      <mu-icon v-if="itemIcon" :icon="itemIcon" />
-      <label v-if="itemLabel">{{ itemLabel }}</label>
+      <mu-icon
+        v-if="checkIcon"
+        class="mu-list-item_check"
+        :icon="checkIcon" />
+      <mu-icon
+        v-if="itemIcon"
+        class="mu-list-item_icon"
+        :icon="itemIcon" />
+      <label
+        v-if="itemLabel"
+        class="mu-list-item_label">
+        {{ itemLabel }}
+      </label>
     </slot>
   </div>
 </template>
 
 <script>
-  import { isString } from '@/utils/type'
+  import { unref } from 'vue'
 
   export default {
     name: 'MusselListItem',
+    inject: {
+      reserveItemCheckPlace: {
+        default: false
+      },
+      reserveItemIconPlace: {
+        default: false
+      }
+    },
     props: {
-      item: null,
       icon: String,
       label: String,
-      itemStyle: {
+      divider: Boolean,
+      checked: Boolean,
+      checkMode: {
         type: String,
+        default: 'none',
         validator (v) {
-          return ['normal', 'check'].includes(v)
+          return ['none', 'normal', 'radio'].includes(v)
         }
       }
     },
     computed: {
-      isDivider () {
-        return (
-          ('divider' in this.$attrs) ||
-          this.item === '-' ||
-          Object(this.item).divider
+      checkIcon () {
+        const reserveCheckPlace = unref(this.reserveItemCheckPlace)
+
+        return !this.divider && this.checked
+          ? 'check'
+          : (
+            reserveCheckPlace && (!this.divider || this.itemLabel)
+              ? '__empty'
+              : null
+          )
+      },
+      itemIcon () {
+        const reserveIconPlace = unref(this.reserveItemIconPlace)
+
+        return this.icon || (
+          reserveIconPlace && !this.divider // || this.itemLabel
+            ? '__empty'
+            : null
         )
       },
       itemLabel () {
-        return isString(this.item)
-          ? (this.item === '-' ? null : this.item)
-          : (Object(this.item).label || this.label)
-      },
-      itemIcon () {
-        return Object(this.item).icon || this.icon
+        return this.label
       }
     },
     methods: {

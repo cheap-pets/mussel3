@@ -1,6 +1,4 @@
 <script>
-  import { isString } from '@/utils/type'
-
   import MusselListItem from '../list/list-item.vue'
 
   export default {
@@ -13,38 +11,25 @@
       value: null
     },
     computed: {
-      checked () {
-        return !this.isDivider && this.editor?.includes(this.value)
-      },
-      itemValue () {
-        return this.isDivider
-          ? undefined
-          : (
-            isString(this.item)
-              ? this.item
-              : (Object(this.item).value || this.value)
-          )
+      checkIcon () {
+        return null
+        // return !this.divider && this.editor?.includes(this.value)
+        //   ? 'check'
+        //   : null
       },
       itemLabel () {
-        const obj = Object(this.item)
-
-        return isString(this.item)
-          ? (this.item === '-' ? null : this.item)
-          : (obj.label || this.label || obj.value || this.value)
+        return this.label ?? this.value
       }
     },
     created () {
-      if (!this.isDivider) this.editor?.mountOption?.(this)
+      if (!this.divider) this.editor?.mountOption?.(this)
     },
     beforeUnmount () {
-      if (!this.isDivider) this.editor?.unmountOption?.(this)
+      if (!this.divider) this.editor?.unmountOption?.(this)
     },
     methods: {
       onClick () {
-        if (
-          !this.isDivider &&
-          this.$attrs.onClick?.() !== false
-        ) {
+        if (!this.divider && this.$attrs.onClick?.() !== false) {
           this.editor?.onOptionClick(this)
         }
       }

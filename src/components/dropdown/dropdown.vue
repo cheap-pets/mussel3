@@ -20,6 +20,8 @@
     name: 'MusselDropdown',
     provide () {
       return {
+        reserveItemCheckPlace: this.reserveItemCheckPlace,
+        reserveItemIconPlace: this.reserveItemIconPlace,
         dropdown: this
       }
     },
@@ -37,7 +39,9 @@
         validator (v) {
           return ['hover', 'click'].includes(v)
         }
-      }
+      },
+      reserveItemCheckPlace: Boolean,
+      reserveItemIconPlace: Boolean
     },
     emits: ['dropdown:itemclick', 'dropdown:show', 'dropdown:hide'],
     data () {

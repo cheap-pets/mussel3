@@ -11,20 +11,20 @@
       <template v-if="items">
         <mu-dropdown-item
           v-for="(el, index) in items"
-          :key="+new Date() + '_' + index"
-          :item="el" />
+          :key="el === '-' ? index : el"
+          v-bind="el === '-' ? { divider: true } : el" />
       </template>
     </slot>
   </div>
 </template>
 
 <script>
-  import BasePopup from '../popup/base-popup'
-
   import { within, findUpward } from '@/utils/dom'
   import { assignIf } from '@/utils/object'
   import { getClientRect } from '@/utils/client-rect'
   import { hideIf } from '@/events/global-layer-events'
+
+  import BasePopup from '../popup/base-popup'
 
   function popOnTop (pRect, height) {
     return (

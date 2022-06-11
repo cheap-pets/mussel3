@@ -1,4 +1,5 @@
 import x from '~icons/x.svg'
+import check from '~icons/check.svg'
 import circleX from '~icons/circle-x.svg'
 import circleCheck from '~icons/circle-check.svg'
 import circleAlert from '~icons/alert-circle.svg'
@@ -26,6 +27,7 @@ function registerIcons (data, options = {}) {
 registerIcons(
   {
     x,
+    check,
     circleX,
     circleCheck,
     circleAlert,
