@@ -6,10 +6,7 @@ export default {
       type: Boolean,
       default: true
     },
-    renderToBody: {
-      type: Boolean,
-      default: true
-    },
+    renderToBody: Boolean,
     visible: Boolean
   },
   emits: ['update:visible'],
@@ -28,11 +25,17 @@ export default {
     }
   },
   mounted () {
-    if (this.renderToBody) document.body.appendChild(this.$el)
+    if (this.renderToBody) {
+      document.body.appendChild(this.$el)
+    } else {
+      this.$nextTick(() => {
+        this.$.appContext.app._container?.appendChild(this.$el)
+      })
+    }
   },
   beforeUnmount () {
     this.deactivate?.()
-    if (this.renderToBody) document.body.removeChild(this.$el)
+    this.$el.parentNode?.removeChild(this.$el)
   },
   methods: {
     show () {
