@@ -34,7 +34,7 @@
           <mu-list-item
             v-for="(el, index) in artists"
             :key="(+new Date() + '_' + index)"
-            :item="el"
+            v-bind="el === '-' ? { divider: true } : el"
             @click="onItemClick(el)">
           </mu-list-item>
         </template>
@@ -99,6 +99,14 @@
       bolt: 'ti ti-bolt',
       album: 'ti ti-album'
     })
+
+    const _mount = app.mount
+
+    app.mount = function () {
+      console.log('shit')
+
+      _mount.apply(this, arguments)
+    }
 
     app.mount('#app')
   </script>

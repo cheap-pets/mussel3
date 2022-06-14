@@ -1,16 +1,11 @@
 import { createApp } from 'vue'
 
 export function renderComponent (options) {
-  const { component, props, appContext } = options
+  let app = createApp(options.component, options.props)
+
+  Object.assign(app._context, options.appContext)
 
   const container = options.container || document.body
-
-  let app = createApp(component, props)
-
-  if (appContext) {
-    Object.assign(app._context, appContext)
-  }
-
   let el = options.el || document.createElement('div')
 
   if (!options.el) container.appendChild(el)

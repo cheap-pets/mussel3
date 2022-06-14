@@ -25,13 +25,11 @@ export default {
     }
   },
   mounted () {
-    if (this.renderToBody) {
-      document.body.appendChild(this.$el)
-    } else {
-      this.$nextTick(() => {
-        this.$.appContext.app._container?.appendChild(this.$el)
-      })
-    }
+    this.$nextTick(() => {
+      const container = this.$.appContext.app._container || document.body
+
+      container.appendChild(this.$el)
+    })
   },
   beforeUnmount () {
     this.deactivate?.()
