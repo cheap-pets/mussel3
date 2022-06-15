@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { within, findUpward } from '@/utils/dom'
+  import { within, findUp } from '@/utils/dom'
   import { assignIf } from '@/utils/object'
   import { getClientRect } from '@/utils/client-rect'
   import { hideIf } from '@/events/global-layer-events'
@@ -131,7 +131,7 @@
         }
       },
       onClick (event) {
-        const trigger = findUpward(event.target, el => {
+        const trigger = findUp(event.target, el => {
           if (el.hasAttribute('dropdown-hide-trigger')) return true
           if (el === this.$el) return false
         })

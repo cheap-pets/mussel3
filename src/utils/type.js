@@ -67,6 +67,10 @@ function isEmpty (value, options = {}) {
   )
 }
 
+function isHtmlElement (value) {
+  return value instanceof HTMLElement
+}
+
 export {
   typeOf,
   isType,
@@ -78,5 +82,6 @@ export {
   isObject,
   isString,
   isIterable,
-  isEmpty
+  isEmpty,
+  isHtmlElement
 }

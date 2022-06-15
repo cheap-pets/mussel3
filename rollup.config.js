@@ -14,7 +14,7 @@ import postcssAdvanced from 'postcss-advanced-variables'
 
 import { string } from 'rollup-plugin-string'
 import { yellow } from 'colorette'
-import { variables } from './src/variables/index'
+import { variables } from './src/theme/index'
 
 const isDevEnv = process.env.dev
 

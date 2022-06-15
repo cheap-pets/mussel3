@@ -1,6 +1,6 @@
 import { generatePalettes } from '../utils/color'
 
-const BASE_COLORS = {
+const GENERABLE_COLORS = {
   red: '#f03e3e',
   pink: '#d6336c',
   grape: '#ae3ec9',
@@ -12,38 +12,28 @@ const BASE_COLORS = {
   green: '#37b24d',
   lime: '#74b816',
   yellow: '#f59f00',
-  orange: '#f76707'
+  orange: '#f76707',
+  primaryColor: '$blue',
+  secondaryColor: '$yellow',
+  successColor: '$green',
+  dangerColor: '$red'
 }
 
-const SPECIAL_COLORS = [
-  'primaryColor',
-  'secondaryColor',
-  'successColor',
-  'dangerColor'
-]
-
-const palettes = {
+const colors = {
   white: '#ffffff',
   black: '#000000',
-  gray: [
-    '#f8f9fa',
-    '#f1f3f5',
-    '#e9ecef',
-    '#dee2e6',
-    '#ced4da',
-    '#adb5bd',
-    '#868e96',
-    '#495057',
-    '#343a40',
-    '#212529'
-  ]
+  gray_0: '#f8f9fa',
+  gray_1: '#f1f3f5',
+  gray_2: '#e9ecef',
+  gray_3: '#dee2e6',
+  gray_4: '#ced4da',
+  gray_5: '#adb5bd',
+  gray_6: '#868e96',
+  gray_7: '#495057',
+  gray_8: '#343a40',
+  gray_9: '#212529',
+  ...GENERABLE_COLORS
 }
-
-Object.keys(BASE_COLORS).forEach(key => {
-  palettes[key] = generatePalettes(BASE_COLORS[key])
-})
-
-const colors = {}
 
 Object.keys(palettes).forEach(key => {
   const p = palettes[key]
@@ -79,7 +69,20 @@ function setColorVariables (values, colorKey) {
   }
 }
 
+function generateColorValues (key, value, values) {
+  const p = generatePalettes(value)
+
+  if (!p) return
+
+  for (let i = 0; i < p.length; i++) {
+    const k = key + '_' + i
+
+    if (!values[k]) values[k] = p[i]
+  }
+}
+
 export {
+  GENERABLE_COLORS,
   colors,
-  setColorVariables
+  generateColorValues
 }
