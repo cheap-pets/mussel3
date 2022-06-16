@@ -30,11 +30,9 @@ export default {
   listItemBorderRadius: '4px',
   listDividerBorderWidth: '1px',
   listDividerMarginY: '4px',
-  listIconWidth: '16px',
 
   dropdownMargin: '4px',
-  dropdownPaddingX: '4px',
-  dropdownPaddingY: '4px',
+  dropdownPadding: '4px',
   dropdownBorderWidth: '0',
   dropdownBorderRadius: '8px',
   dropdownItemBorderRadius: '4px',

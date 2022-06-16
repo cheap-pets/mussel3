@@ -139,13 +139,13 @@ function calcValue (hsv, i, isLightColor) {
   return Number(value.toFixed(0))
 }
 
-function isDark (color) {
-  const { r, g, b } = isString(color) ? toRGB(color) : color
+export function isDarkColor (color) {
+  const { r, g, b } = isString(color) ? parseRGB(color) : color
 
   return r * 0.299 + g * 0.578 + b * 0.114 < 192
 }
 
-function toRGB (color) {
+export function parseRGB (color) {
   const pattern = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/
   const rgb = hex2rgb(color) || pattern.exec(color)
 
@@ -158,8 +158,18 @@ function toRGB (color) {
     : rgb
 }
 
-function generatePalettes (baseColor) {
-  const rgb = isString(baseColor) ? toRGB(baseColor) : baseColor
+export function toRGBA (color, alapha = 1) {
+  const rgb = isString(color) ? parseRGB(color) : null
+
+  if (rgb) {
+    const { r, g, b } = rgb
+
+    return `rgba(${r}, ${g}, ${b}, ${alapha})`
+  }
+}
+
+export function generatePalettes (baseColor) {
+  const rgb = isString(baseColor) ? parseRGB(baseColor) : baseColor
 
   if (!rgb) return
 
@@ -188,9 +198,4 @@ function generatePalettes (baseColor) {
   }
 
   return palettes
-}
-
-export {
-  isDark,
-  generatePalettes
 }

@@ -18,7 +18,7 @@
 </head>
 
 <body class="mu-background-normal">
-  <div id="app" class="mu-box" position="fixed fit" layout="flex" direction="column">
+  <div id="app" class="mu-box mu-bg-black" position="fixed fit" layout="flex" direction="column">
     <div class="mu-bar mu-box mu-bg-strong">
       <label>Tap Position</label>
       <mu-combo-box class="mu-box" :clear-button="false" width="100"
@@ -113,7 +113,7 @@
       }
     })
 
-    mussel.install(app)
+    mussel.install(app, { darkMode: 'auto' })
     mussel.registerIcons({
       bug: 'ti ti-bug',
       bolt: 'ti ti-bolt',

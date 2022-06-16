@@ -17,8 +17,8 @@
     href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
-<body class="mu-background-normal">
-  <div id="app">
+<body>
+  <div id="app" class="mu-bg-normal mu-box" position="fixed fit" padding="2x">
     <mu-switch v-model:value="value1" active-label="ON" inactive-label="OFF" disabled>
     </mu-switch>
     <p></p>
@@ -38,7 +38,7 @@
       }
     })
 
-    mussel.install(app)
+    mussel.install(app, { darkMode: 'auto' })
 
     app.mount('#app')
   </script>

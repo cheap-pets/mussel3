@@ -1,10 +1,11 @@
 import path from 'path'
 
-import vue from 'rollup-plugin-vue'
 import alias from '@rollup/plugin-alias'
-import swc from 'rollup-plugin-swc'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
+
+import swc from 'rollup-plugin-swc'
+import vue from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 
 import postcssCalc from 'postcss-calc'
@@ -14,7 +15,8 @@ import postcssAdvanced from 'postcss-advanced-variables'
 
 import { string } from 'rollup-plugin-string'
 import { yellow } from 'colorette'
-import { variables } from './src/theme/index'
+
+import variables from './src/schemes/postcss-variables'
 
 const isDevEnv = process.env.dev
 
@@ -33,8 +35,14 @@ export default {
   plugins: [
     alias({
       entries: [
-        { find: '~icons', replacement: path.resolve(__dirname, 'node_modules/@tabler/icons/icons') },
-        { find: '@', replacement: path.resolve(__dirname, 'src') }
+        {
+          find: '~icons',
+          replacement: path.resolve(__dirname, 'node_modules/@tabler/icons/icons')
+        },
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, 'src')
+        }
       ]
     }),
     vue(),

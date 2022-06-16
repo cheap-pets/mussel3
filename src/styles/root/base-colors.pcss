@@ -1,5 +1,9 @@
-:root {
+.mu-root {
   /* Base Colors */
+  --mu-white: $white;
+  --mu-black: $black;
+
+  --mu-gray: $gray;
   --mu-gray-0: $gray_0;
   --mu-gray-1: $gray_1;
   --mu-gray-2: $gray_2;
@@ -11,6 +15,7 @@
   --mu-gray-8: $gray_8;
   --mu-gray-9: $gray_9;
 
+  --mu-red: $red;
   --mu-red-0: $red_0;
   --mu-red-1: $red_1;
   --mu-red-2: $red_2;
@@ -22,6 +27,7 @@
   --mu-red-8: $red_8;
   --mu-red-9: $red_9;
 
+  --mu-pink: $pink;
   --mu-pink-0: $pink_0;
   --mu-pink-1: $pink_1;
   --mu-pink-2: $pink_2;
@@ -33,6 +39,7 @@
   --mu-pink-8: $pink_8;
   --mu-pink-9: $pink_9;
 
+  --mu-grape: $grape;
   --mu-grape-0: $grape_0;
   --mu-grape-1: $grape_1;
   --mu-grape-2: $grape_2;
@@ -44,6 +51,7 @@
   --mu-grape-8: $grape_8;
   --mu-grape-9: $grape_9;
 
+  --mu-violet: $violet;
   --mu-violet-0: $violet_0;
   --mu-violet-1: $violet_1;
   --mu-violet-2: $violet_2;
@@ -55,6 +63,7 @@
   --mu-violet-8: $violet_8;
   --mu-violet-9: $violet_9;
 
+  --mu-indigo: $indigo;
   --mu-indigo-0: $indigo_0;
   --mu-indigo-1: $indigo_1;
   --mu-indigo-2: $indigo_2;
@@ -66,6 +75,7 @@
   --mu-indigo-8: $indigo_8;
   --mu-indigo-9: $indigo_9;
 
+  --mu-blue: $blue;
   --mu-blue-0: $blue_0;
   --mu-blue-1: $blue_1;
   --mu-blue-2: $blue_2;
@@ -77,6 +87,7 @@
   --mu-blue-8: $blue_8;
   --mu-blue-9: $blue_9;
 
+  --mu-cyan: $cyan;
   --mu-cyan-0: $cyan_0;
   --mu-cyan-1: $cyan_1;
   --mu-cyan-2: $cyan_2;
@@ -88,6 +99,7 @@
   --mu-cyan-8: $cyan_8;
   --mu-cyan-9: $cyan_9;
 
+  --mu-teal: $teal;
   --mu-teal-0: $teal_0;
   --mu-teal-1: $teal_1;
   --mu-teal-2: $teal_2;
@@ -99,6 +111,7 @@
   --mu-teal-8: $teal_8;
   --mu-teal-9: $teal_9;
 
+  --mu-green: $green;
   --mu-green-0: $green_0;
   --mu-green-1: $green_1;
   --mu-green-2: $green_2;
@@ -110,6 +123,7 @@
   --mu-green-8: $green_8;
   --mu-green-9: $green_9;
 
+  --mu-lime: $lime;
   --mu-lime-0: $lime_0;
   --mu-lime-1: $lime_1;
   --mu-lime-2: $lime_2;
@@ -121,6 +135,7 @@
   --mu-lime-8: $lime_8;
   --mu-lime-9: $lime_9;
 
+  --mu-yellow: $yellow;
   --mu-yellow-0: $yellow_0;
   --mu-yellow-1: $yellow_1;
   --mu-yellow-2: $yellow_2;
@@ -132,6 +147,7 @@
   --mu-yellow-8: $yellow_8;
   --mu-yellow-9: $yellow_9;
 
+  --mu-orange: $orange;
   --mu-orange-0: $orange_0;
   --mu-orange-1: $orange_1;
   --mu-orange-2: $orange_2;
@@ -143,28 +159,80 @@
   --mu-orange-8: $orange_8;
   --mu-orange-9: $orange_9;
 
-  --mu-primary-color: var(--mu-blue-5);
-  --mu-primary-color-dark: var(--mu-blue-6);
-  --mu-primary-color-light: var(--mu-blue-4);
-  --mu-primary-color-tiny: var(--mu-blue-2);
+  --mu-gray-dark: $grayDark;
+  --mu-gray-light: $grayLight;
+  --mu-gray-shadow: $grayShadow;
 
-  --mu-secondary-color: var(--mu-yellow-5);
-  --mu-secondary-color-dark: var(--mu-yellow-6);
-  --mu-secondary-color-light: var(--mu-yellow-4);
-  --mu-secondary-color-tiny: var(--mu-yellow-2);
+  --mu-red-dark: $redDark;
+  --mu-red-light: $redLight;
+  --mu-red-shadow: $redShadow;
 
-  --mu-success-color: var(--mu-green-5);
-  --mu-success-color-dark: var(--mu-green-6);
-  --mu-success-color-light: var(--mu-green-4);
-  --mu-success-color-tiny: var(--mu-green-2);
+  --mu-pink-dark: $pinkDark;
+  --mu-pink-light: $pinkLight;
+  --mu-pink-shadow: $pinkShadow;
 
-  --mu-danger-color: var(--mu-red-5);
-  --mu-danger-color-dark: var(--mu-red-6);
-  --mu-danger-color-light: var(--mu-red-4);
-  --mu-danger-color-tiny: var(--mu-red-2);
+  --mu-grape-dark: $grapeDark;
+  --mu-grape-light: $grapeLight;
+  --mu-grape-shadow: $grapeShadow;
 
-  --mu-warning-color: var(--mu-orange-5);
-  --mu-warning-color-dark: var(--mu-orange-6);
-  --mu-warning-color-light: var(--mu-orange-4);
-  --mu-warning-color-tiny: var(--mu-orange-2);
+  --mu-violet-dark: $violetDark;
+  --mu-violet-light: $violetLight;
+  --mu-violet-shadow: $violetShadow;
+
+  --mu-indigo-dark: $indigoDark;
+  --mu-indigo-light: $indigoLight;
+  --mu-indigo-shadow: $indigoShadow;
+
+  --mu-blue-dark: $blueDark;
+  --mu-blue-light: $blueLight;
+  --mu-blue-shadow: $blueShadow;
+
+  --mu-cyan-dark: $cyanDark;
+  --mu-cyan-light: $cyanLight;
+  --mu-cyan-shadow: $cyanShadow;
+
+  --mu-teal-dark: $tealDark;
+  --mu-teal-light: $tealLight;
+  --mu-teal-shadow: $tealShadow;
+
+  --mu-green-dark: $greenDark;
+  --mu-green-light: $greenLight;
+  --mu-green-shadow: $greenShadow;
+
+  --mu-lime-dark: $limeDark;
+  --mu-lime-light: $limeLight;
+  --mu-lime-shadow: $limeShadow;
+
+  --mu-yellow-dark: $yellowDark;
+  --mu-yellow-light: $yellowLight;
+  --mu-yellow-shadow: $yellowShadow;
+
+  --mu-orange-dark: $orangeDark;
+  --mu-orange-light: $orangeLight;
+  --mu-orange-shadow: $orangeShadow;
+
+  --mu-primary-color: $primaryColor;
+  --mu-primary-color-dark: $primaryColorDark;
+  --mu-primary-color-light: $primaryColorLight;
+  --mu-primary-color-shadow: $primaryColorShadow;
+
+  --mu-secondary-color: $secondaryColor;
+  --mu-secondary-color-dark: $secondaryColorDark;
+  --mu-secondary-color-light: $secondaryColorLight;
+  --mu-secondary-color-shadow: $secondaryColorShadow;
+
+  --mu-success-color: $successColor;
+  --mu-success-color-dark: $successColorDark;
+  --mu-success-color-light: $successColorLight;
+  --mu-success-color-shadow: $successColorShadow;
+
+  --mu-danger-color: $dangerColor;
+  --mu-danger-color-dark: $dangerColorDark;
+  --mu-danger-color-light: $dangerColorLight;
+  --mu-danger-color-shadow: $dangerColorShadow;
+
+  --mu-warning-color: $warningColor;
+  --mu-warning-color-dark: $warningColorDark;
+  --mu-warning-color-light: $warningColorLight;
+  --mu-warning-color-shadow: $warningColorShadow;
 }

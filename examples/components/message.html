@@ -19,8 +19,8 @@
   </style>
 </head>
 
-<body class="mu-background-normal">
-  <div id="app">
+<body>
+  <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
     <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="alert">Alert</mu-button>
       <mu-button @click="confirm">Confirm</mu-button>
@@ -108,7 +108,7 @@
       bolt: 'ti ti-bolt'
     })
 
-    mussel.install(app)
+    mussel.install(app, { darkMode: 'auto' })
 
     app.mount('#app')
   </script>

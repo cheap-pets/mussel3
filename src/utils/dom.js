@@ -16,7 +16,7 @@ export function within (target, element) {
 export function withinClass (target, className) {
   return !!findUp(
     target,
-    el => (el.classList && Array.from(el.classList).includes(className)) || null
+    el => (el.classList?.contains(className) || null)
   )
 }
 
