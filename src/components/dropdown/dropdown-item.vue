@@ -11,7 +11,7 @@
       onClick () {
         if (
           !this.isDivider &&
-          this.$attrs.onClick?.() !== false
+          this.$attrs.onItemclick?.() !== false
         ) {
           this.dropdown?.onDropdownItemClick(this.item || this)
         }

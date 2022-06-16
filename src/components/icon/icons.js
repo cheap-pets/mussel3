@@ -1,5 +1,7 @@
 import x from '~icons/x.svg'
 import check from '~icons/check.svg'
+import point from '~icons/point.svg'
+import circle from '~icons/circle.svg'
 import circleX from '~icons/circle-x.svg'
 import circleCheck from '~icons/circle-check.svg'
 import circleAlert from '~icons/alert-circle.svg'
@@ -28,6 +30,8 @@ registerIcons(
   {
     x,
     check,
+    point,
+    circle,
     circleX,
     circleCheck,
     circleAlert,

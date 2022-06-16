@@ -33,9 +33,9 @@
         <template v-slot:dropdown>
           <mu-list-item
             v-for="(el, index) in artists"
-            :key="(+new Date() + '_' + index)"
+            :key="el === '-' ? index : el"
             v-bind="el === '-' ? { divider: true } : el"
-            @click="onItemClick(el)">
+            @itemClick="onItemClick(el)">
           </mu-list-item>
         </template>
       </mu-dropdown>
@@ -54,6 +54,8 @@
       <mu-dropdown-button
         x-color="cyan"
         split-button
+        reserve-item-check-place
+        reserve-item-icon-place
         :caption="artist"
         :dropdown-items="artists"
         @click="onButtonClick"
@@ -69,12 +71,12 @@
         const artists = Vue.reactive([
           '-',
           { divider: true, label: 'GROUP 1' },
-          { label: 'Ludwig van Beethoven', value: 1, icon: 'circleCheck' },
-          { label: 'Wolfgang Amadeus Mozart', icon: 'circleCheck', checked: true },
+          { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert', radio: true  },
+          { label: 'Wolfgang Amadeus Mozart', checked: true, icon: 'circleAlert', radio: true },
           '-',
           { divider: true, label: 'GROUP 2' },
-          { label: 'Frédéric François Chopin', icon: 'circleCheck' },
-          { label: 'Johann Baptist Strauss', disabled: true  }
+          { label: 'Frédéric François Chopin', icon: 'circleAlert', checked: true },
+          { label: 'Johann Baptist Strauss', icon: 'circleAlert', checked: true  }
         ])
 
         function onShow () {
@@ -83,6 +85,19 @@
 
         function onItemClick (data) {
           artist.value = data.label
+
+          const item = artists.find(el => el.label === data.label)
+
+          if (item.label === 'Ludwig van Beethoven') {
+            item.checked = true
+            artists.find(el => el.label === 'Wolfgang Amadeus Mozart').checked= false
+          } else if (item.label === 'Wolfgang Amadeus Mozart') {
+            item.checked = true
+            artists.find(el => el.label === 'Ludwig van Beethoven').checked= false
+          } else {
+            console.log(item.checked)
+            item.checked = !item.checked
+          }
         }
 
         function onButtonClick () {
@@ -100,15 +115,6 @@
       album: 'ti ti-album'
     })
 
-    const _mount = app.mount
-
-    app.mount = function () {
-      console.log('shit')
-
-      _mount.apply(this, arguments)
-    }
-
     app.mount('#app')
-    debugger
   </script>
 </body>

@@ -62,7 +62,7 @@
 
         if (
           this.activeTabName !== tab.name &&
-          this.$attrs.onTabChange?.(tab) !== false
+          this.$attrs.onTabchange?.(tab) !== false
         ) {
           this.activeTabName = tab.name
           this.$emit('update:activeTab', tab.name)

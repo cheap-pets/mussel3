@@ -38,24 +38,23 @@
       icon: String,
       label: String,
       divider: Boolean,
-      checked: Boolean,
-      checkMode: {
-        type: String,
-        default: 'none',
+      radio: Boolean,
+      checked: {
         validator (v) {
-          return ['none', 'normal', 'radio'].includes(v)
+          return v === true || v === false
         }
       }
     },
     computed: {
       checkIcon () {
-        const reserveCheckPlace = unref(this.reserveItemCheckPlace)
+        const reservePlace = unref(this.reserveItemCheckPlace)
 
         return !this.divider && this.checked
-          ? 'check'
+          ? (this.radio ? 'point' : 'check')
           : (
-            reserveCheckPlace && (!this.divider || this.itemLabel)
-              ? '__empty'
+            (reservePlace || this.checked != null) &&
+            (!this.divider || this.itemLabel)
+              ? '__fake'
               : null
           )
       },
@@ -64,7 +63,7 @@
 
         return this.icon || (
           reserveIconPlace && !this.divider // || this.itemLabel
-            ? '__empty'
+            ? '__fake'
             : null
         )
       },
@@ -74,7 +73,7 @@
     },
     methods: {
       onClick (event) {
-        this.$attrs.onClick?.(event)
+        this.$attrs.onItemclick?.(event)
       }
     }
   }

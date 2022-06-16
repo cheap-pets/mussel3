@@ -29,7 +29,7 @@
     },
     methods: {
       onClick () {
-        if (!this.divider && this.$attrs.onClick?.() !== false) {
+        if (!this.divider && this.$attrs.onItemclick?.() !== false) {
           this.editor?.onOptionClick(this)
         }
       }

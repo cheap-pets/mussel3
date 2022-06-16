@@ -56,13 +56,8 @@
         label="Artist"
         :dropdown-style="{ width: '600px' }"
         placeholder="Artist Name"
+        :options="artistsCn"
         v-model:value="artist">
-        <template v-slot:dropdown>
-          <mu-option
-            v-for="el in artistsCn"
-            :key="el.value || '-'"
-            v-bind="el" />
-        </template>
       </mu-combo-box>
       <p class="mu-box" margin="0" margin-x="2x" align-self="center">
         {{ artist }}
