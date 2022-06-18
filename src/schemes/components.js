@@ -17,6 +17,9 @@ export default {
   editorBorderRadius: '4px',
   editorFocusShadowSize: '0 0 0 2px',
 
+  checkSize: '16px',
+  checkBorderRadius: '4px',
+
   switchHeight: '20px',
   switchWidth: '40px',
   switchPaddingX: '10px',

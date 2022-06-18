@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Switch Component Example</title>
+  <title>Selection Component Example</title>
 
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
@@ -27,14 +27,34 @@
     <p></p>
     <mu-switch v-model:value="value1" danger>
     </mu-switch>
+    <p></p>
+    <label class="mu-check">
+      <input type="checkbox" placeholder="check">
+      check me !
+    </label>
+    <p></p>
+    <mu-check v-model:checked="checked" label="check me !" disabled></mu-check>
+    <p></p>
+    <label class="mu-radio">
+      <input type="radio" placeholder="check" name="x" value="1">
+      Radio 1
+    </label>
+    <p></p>
+    <label class="mu-radio" disabled>
+      <input type="radio" placeholder="check" name="x" value="2">
+      Radio 2
+    </label>
+    <p></p>
+    <mu-radio name="x" value="3" label="Radio 3" />
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
         const value1 = Vue.ref(true)
+        const checked = Vue.ref(true)
 
-        return { value1 }
+        return { value1, checked }
       }
     })
 

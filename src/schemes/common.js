@@ -1,5 +1,5 @@
 export default {
-  rootFontSize: '14px',
+  commonFontSize: '14px',
 
   unitSpacingSize: '8px',
   inlineItemSpacing: '5px',
