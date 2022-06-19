@@ -21,7 +21,7 @@ import './components/check.pcss'
 import './components/switch.pcss'
 import './components/bar.pcss'
 import './components/tabs.pcss'
-// import './components/form.pcss'
+import './components/form.pcss'
 
 import './components/dropdown-panel.pcss'
 import './components/modal.pcss'

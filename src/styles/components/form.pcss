@@ -1,94 +1,54 @@
+.mu-form {
+  display: flex;
+  padding: $unitSpacingSize;
+  flex-wrap: wrap;
+}
+
+.mu-form-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .mu-form-field {
-  min-width: 80px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 100px;
+  padding: $unitSpacingSize;
+  font-size: $commonFontSize;
 
   & > label {
+    position: relative;
     display: inline-block;
+    flex: none;
     padding-right: 12px;
-    font-size: calc(1rem - 1px);
-    line-height: $inputElementHeight;
-
-    &:before {
-      position: absolute;
-      right: 0;
-      top: -3px;
-      display: inline-block;
-      visibility: hidden;
-      width: 10px;
-      text-align: left;
-      color: var(--mu-danger-color);
-      content: "*";
-    }
+    font-size: calc(1em - 1px);
+    color: var(--mu-text-color-weak);
   }
 
-  & > label + span {
+  & > .mu-form-field_content {
     display: inline-block;
-    line-height: $inputElementHeight;
+    flex: 1 1 0;
+  }
+
+  & > .mu-editor {
+    flex: 1 1 0;
   }
 
   &[required] > label:before {
     visibility: visible;
+    position: absolute;
+    right: 0;
+    top: -3px;
+    display: inline-block;
+    width: 10px;
+    text-align: left;
+    color: var(--mu-danger-color);
+    content: "*";
   }
 
   &[invalid] > label {
     color: var(--mu-danger-color);
-  }
-
-  & > .mu-editor,
-  & > .mu-input,
-  & > span {
-    flex: 1 1 1px;
-    width: 1px;
-  }
-}
-
-.mu-form-row {
-  width: 100%;
-}
-
-.mu-form[form-style="table"] {
-  border: 1px solid var(--mu-border-color);
-
-  & > .mu-form-row {
-    & + .mu-form-row  {
-      border-top: 1px solid var(--mu-border-color);
-    }
-    & > .mu-form-field {
-      align-items: center;
-      height: $inputElementHeight;
-      border-right: 1px solid var(--mu-border-color);
-
-      &:last-child {
-        border-right: 0;
-      }
-
-      & > label,
-      & > span {
-        overflow: hidden;
-        line-height: 20px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        padding: 0 $inputElementPaddingX;
-      }
-      
-      & > .mu-editor,
-      & > .mu-input {
-        margin: 0 4px;
-      }
-      & .mu-input {
-        border-style: dashed;
-        &:hover {
-          border-style: solid;
-        }
-      }
-      & > label:first-child {
-        display: inline-flex;
-        align-self: stretch;
-        align-items: center;
-        border-right: 1px solid var(--normal-border-color);
-        background-color: var(--mu-background-strong);
-        font-weight: 600;
-        color: var(--mu-text-color-weak);
-      }
-    }
   }
 }
