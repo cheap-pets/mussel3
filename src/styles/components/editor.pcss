@@ -102,13 +102,14 @@
     overflow: visible;
   }
 
+  [invalid] > &,
   &[invalid] {
     border-color: var(--mu-danger-color);
 
-    &[solid],
+    /* &[solid],
     & > label {
       background-color: var(--mu-red-0);
-    }
+    } */
 
     input&,
     & > input,
@@ -232,6 +233,7 @@
   border-color: transparent;
   border-bottom-color: var(--mu-editor-border-color);
 
+  [invalid] > &,
   &[invalid] {
     border-color: transparent;
     border-bottom-color: var(--mu-danger-color);
@@ -246,6 +248,7 @@
     border-bottom-color: var(--mu-primary-color-light);
   }
 
+  [invalid] > &:hover,
   &[invalid]:hover {
     border-bottom-color: var(--mu-danger-color-light);
   }
@@ -260,6 +263,7 @@
     background-color: var(--mu-editor-background);
   }
 
+  [invalid] > &,
   &[invalid] {
     border-color: var(--mu-danger-color);
     box-shadow: $editorFocusShadowSize var(--mu-danger-color-shadow);
@@ -272,6 +276,7 @@
     border-color: var(--mu-primary-color-light);
   }
 
+  [invalid] > &:hover,
   &[invalid]:hover {
     border-color: var(--mu-danger-color-light);
   }

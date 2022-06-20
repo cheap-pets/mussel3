@@ -30,7 +30,7 @@ input.mu-radio {
   flex: none;
   width: $checkSize;
   height: $checkSize;
-  margin: 0 $commonItemSpacing 0 0;
+  margin: 0;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -43,6 +43,12 @@ input.mu-radio {
     border-color: var(--mu-check-background-checked);
   }
 }
+
+.mu-check > input,
+.mu-radio > input {
+  margin-right: $unitSpacingSize;
+}
+
 
 .mu-check > input,
 input.mu-check {
@@ -58,6 +64,6 @@ input.mu-radio {
   border-radius: $checkSize;
   
   &:checked {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3ccircle cx='4' cy='4' r='2' fill='%23fff' /%3e%3c/svg%3e")
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3ccircle cx='10' cy='10' r='6' stroke='%23fff' fill='none' stroke-width='3' /%3e%3c/svg%3e")
   }
 }

@@ -16,12 +16,12 @@ export default {
 
   badgeBackground: 'rgba(0, 0, 0, .5)',
 
-  buttonBackgroundNormal: 'var(--mu-background-normal)',
+  buttonBackgroundNormal: 'transparent',
   buttonBackgroundOutline: 'transparent',
   buttonTextColorNormal: 'var(--mu-gray-7)',
   buttonBorderColorNormal: 'var(--mu-border-color)',
 
-  editorBackground: 'var(--mu-background-normal)',
+  editorBackground: 'transparent',
   editorBackgroundSolid: 'var(--mu-background-strong)',
   editorBackgroundReadonly: '#ffd',
   editorTextColor: 'var(--mu-text-color-normal)',

@@ -1,3 +1,6 @@
+/* BOX */
+import Box from './box/box.vue'
+
 /* ICON */
 import Icon from './icon/icon.vue'
 
@@ -37,6 +40,8 @@ import Dialog from './modal/dialog.vue'
 import installMessage from './message'
 
 export function installComponents (app) {
+  app.component('mu-box', Box)
+
   app.component('mu-icon', Icon)
 
   app.component('mu-button', Button)

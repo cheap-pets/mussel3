@@ -13,9 +13,7 @@ const LIGHT_COLOR_COUNT = 5
 const DARK_COLOR_COUNT = 4
 
 function hex2rgb (hex) {
-  const result =
-    /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex) ||
-    /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(hex)
+  const result = /^#?([a-f\d]{1,2})([a-f\d]{1,2})([a-f\d]{1,2})$/i.exec(hex)
 
   return result
     ? {
@@ -146,25 +144,58 @@ export function isDarkColor (color) {
 }
 
 export function parseRGB (color) {
-  const pattern = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/
-  const rgb = hex2rgb(color) || pattern.exec(color)
+  // eslint-disable-next-line max-len
+  const pattern = /^(?:rgb\((?<r>\d+),\s*(?<g>\d+),\s*(?<b>\d+)\))|(?:rgba\((?<ra>\d+),\s*(?<ga>\d+),\s*(?<ba>\d+),\s*(?<a>(?:0?\.\d+)|0|1)\))$/i
+  const result = (pattern.exec(color)?.groups) || hex2rgb(color)
 
-  return Array.isArray(rgb)
-    ? {
-        r: rgb[1],
-        g: rgb[2],
-        b: rgb[3]
-      }
-    : rgb
+  if (result) {
+    let {
+      r = result.ra,
+      g = result.ga,
+      b = result.ba,
+      a = 1
+    } = result
+
+    r = Math.max(0, Math.min(r, 255))
+    g = Math.max(0, Math.min(g, 255))
+    b = Math.max(0, Math.min(b, 255))
+    a = Math.max(0, Math.min(a, 1))
+
+    return { r, g, b, a }
+  }
 }
 
-export function toRGBA (color, alapha = 1) {
-  const rgb = isString(color) ? parseRGB(color) : null
+export function toRGBA (color, alpha) {
+  const rgba = isString(color) ? parseRGB(color) : color
 
-  if (rgb) {
-    const { r, g, b } = rgb
+  if (rgba) {
+    const { r, g, b, a } = rgba
 
-    return `rgba(${r}, ${g}, ${b}, ${alapha})`
+    alpha = isNaN(alpha) ? a : alpha
+
+    return alpha === 1
+      ? `rgb(${r}, ${g}, ${b})`
+      : `rgba(${r}, ${g}, ${b}, ${alpha})`
+  }
+}
+
+export function mix (color, mixinColor, weight = 0.5) {
+  color = isString(color) ? parseRGB(color) : null
+  mixinColor = isString(mixinColor) ? parseRGB(mixinColor) : null
+
+  if (color && mixinColor) {
+    const w = 2 * weight - 1
+    const a = color.a - mixinColor.a
+
+    const w1 = (((w * a === -1) ? w : (w + a) / (1 + w * a)) + 1) / 2
+    const w2 = 1 - w1
+
+    return toRGBA({
+      r: w1 * color.r + w2 * mixinColor.r,
+      g: w1 * color.g + w2 * mixinColor.g,
+      b: w1 * color.b + w2 * mixinColor.b,
+      a: color.a * weight + mixinColor.a * (1 - weight)
+    })
   }
 }
 

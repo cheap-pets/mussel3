@@ -1,25 +1,27 @@
 <template>
-  <div class="mu-form-field mu-flex-box" :cellpadding="cellpadding">
-    <label v-if="label" class="mu-text-ellipsis" :style="labelStyle">
+  <div
+    class="mu-form-field mu-box"
+    :style="{ width: boxWidth, height: boxHeight }">
+    <label
+      v-if="label"
+      class="mu-text-ellipsis"
+      :text-align="form.labelAlign || labelAlign"
+      :style="{ width: labelElementWidth }">
       {{ label }}
     </label>
-    <slot>
-      <span v-if="value || value === 0">{{ value }}</span>
-    </slot>
+    <slot />
   </div>
 </template>
 
 <script>
-  import './form.pcss'
-
-  import FlexItem from '../layout/flex-item.vue'
+  import MusselBox from '../box/box.vue'
 
   export default {
     name: 'MusselFormField',
-    extends: FlexItem,
+    extends: MusselBox,
     inject: {
       form: {
-        default: null
+        default: {}
       }
     },
     props: {
@@ -30,14 +32,7 @@
         validator (value) {
           return ['right', 'left', 'center'].indexOf(value) !== -1
         }
-      },
-      cellpadding: {
-        type: Boolean,
-        default () {
-          return this.form?.formStyle !== 'table'
-        }
-      },
-      value: null
+      }
     },
     computed: {
       sizeValue () {

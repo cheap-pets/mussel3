@@ -17,14 +17,14 @@
     href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
-<body class="mu-background-normal">
-  <div id="app" class="mu-box mu-bg-black" position="fixed fit" padding="2x">
+<body>
+  <div id="app" class="mu-box" position="fixed fit" padding="2x">
     <div class="mu-form mu-box" border="primary">
-      <div class="mu-form-field mu-box" width="50%">
+      <div class="mu-form-field mu-box" width="200">
         <label>Text 1</label>
         <mu-editor value="Value 1"></mu-editor>
       </div>
-      <div class="mu-form-field mu-box" width="50%" required>
+      <div class="mu-form-field mu-box" flex="1" required>
         <label>Text 2</label>
         <mu-editor value="Value 2"></mu-editor>
       </div>
@@ -33,16 +33,19 @@
           <label>Text 3</label>
           <mu-editor value="Value 3"></mu-editor>
         </div>
-        <div class="mu-form-field mu-box" flex="1">
+        <div class="mu-form-field mu-box" flex="1" invalid>
           <label>Text 4</label>
-          <mu-editor value="Value 4"></mu-editor>
+          <mu-editor underline value="Value 4"></mu-editor>
         </div>
-        <div class="mu-form-field mu-box" flex="1">
+        <div class="mu-form-field mu-box" flex="1" invalid>
           <label>Text 5</label>
-          <mu-editor value="Value 5"></mu-editor>
+          <mu-editor solid value="Value 5"></mu-editor>
         </div>
       </div>
     </div>
+    <mu-box height="200" border="primary" margin-top="2x">
+
+    </mu-box>
   </div>
 
   <script type="text/javascript">

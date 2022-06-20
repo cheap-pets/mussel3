@@ -8,11 +8,11 @@
 </template>
 
 <script>
-  import FlexBox from '../layout/flex-box.vue'
+  import Box from '../box/box.vue'
 
   export default {
     name: 'MusselForm',
-    extends: FlexBox,
+    extends: Box,
     provide () {
       return {
         form: this
