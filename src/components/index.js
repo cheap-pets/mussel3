@@ -19,6 +19,9 @@ import ComboBoxOption from './form/option.vue'
 import Check from './form/check.vue'
 import Radio from './form/radio.vue'
 import Switch from './form/switch.vue'
+import Form from './form/form.vue'
+import FormRow from './form/form-row.vue'
+import FormField from './form/form-field.vue'
 
 /* DROPDOWN */
 import Dropdown from './dropdown/dropdown.vue'
@@ -56,6 +59,9 @@ export function installComponents (app) {
   app.component('mu-check', Check)
   app.component('mu-radio', Radio)
   app.component('mu-switch', Switch)
+  app.component('mu-form', Form)
+  app.component('mu-form-row', FormRow)
+  app.component('mu-form-field', FormField)
 
   app.component('mu-dropdown', Dropdown)
   app.component('mu-dropdown-item', DropdownItem)

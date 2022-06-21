@@ -17,6 +17,13 @@
     padding: 0 $editorPaddingX;
   }
 
+  textarea& {
+    height: $textareaHeight;
+    padding: $textareaPaddingY $editorPaddingX;
+    resize: none;
+  }
+
+  textarea&,
   input&,
   & > input {
     outline: none;
@@ -110,12 +117,17 @@
     & > label {
       background-color: var(--mu-red-0);
     } */
+  }
 
-    input&,
-    & > input,
-    & > .mu-icon:not(a) {
-      color: var(--mu-danger-color);
-    }
+  [invalid] > input&,
+  [invalid] > textarea&,
+  [invalid] > & > input,
+  [invalid] > & > textarea,
+  [invalid] > & > .mu-icon:not(a),
+  &[invalid] > input,
+  &[invalid] > textarea,
+  &[invalid] > .mu-icon:not(a) {
+    color: var(--mu-danger-color);
   }
   
   &[solid] {

@@ -16,6 +16,8 @@ export default {
   editorLineHeight: '20px',
   editorBorderRadius: '4px',
   editorFocusShadowSize: '0 0 0 2px',
+  textareaHeight: '150px',
+  textareaPaddingY: '5px',
 
   checkSize: '16px',
   checkBorderRadius: '4px',

@@ -10,6 +10,7 @@ import { icons, registerIcons } from './components/icon/icons'
 
 function install (app, options = {}) {
   if (options.theme !== false) installTheme(app, options)
+  if (options.icons) registerIcons(options.icons)
 
   installComponents(app, options)
 

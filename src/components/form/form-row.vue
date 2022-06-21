@@ -1,14 +1,14 @@
 <template>
-  <div class="mu-flex-box mu-form-row">
+  <div class="mu-form-row mu-box" :style="{ width: boxWidth, height: boxHeight }">
     <slot />
   </div>
 </template>
 
 <script>
-  import FlexBox from '../layout/flex-box.vue'
+  import Box from '../box/box.vue'
 
   export default {
     name: 'MusselFormRow',
-    extends: FlexBox
+    extends: Box
   }
 </script>

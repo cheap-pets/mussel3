@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mu-flex-box mu-form"
-    :form-style="formStyle"
-    :cellpadding="cellpadding">
+  <div class="mu-form mu-box" :style="{ width: boxWidth, height: boxHeight }">
     <slot />
   </div>
 </template>
@@ -19,30 +16,7 @@
       }
     },
     props: {
-      layout: {
-        type: String,
-        default: 'flow',
-        validator (value) {
-          return ['flow', 'column', 'row'].indexOf(value) !== -1
-        }
-      },
-      formStyle: {
-        type: String,
-        default: 'normal',
-        validator (value) {
-          return ['normal', 'table'].indexOf(value) !== -1
-        }
-      },
-      cellpadding: {
-        type: Boolean,
-        default () {
-          return this.formStyle !== 'table'
-        }
-      },
-      labelWidth: {
-        type: String,
-        default: '75px'
-      },
+      labelWidth: String,
       labelAlign: String
     }
   }

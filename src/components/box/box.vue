@@ -13,19 +13,14 @@
     },
     computed: {
       boxWidth () {
-        return this.getBoxSizeStyle(this.width)
+        return getSizeValue(this.width)
       },
       boxHeight () {
-        return this.getBoxSizeStyle(this.height)
+        return getSizeValue(this.height)
       }
     },
     methods: {
-      getBoxSizeStyle (width, height) {
-        return {
-          width: getSizeValue(width),
-          height: getSizeValue(height)
-        }
-      }
+      getSizeValue
     }
   }
 </script>
