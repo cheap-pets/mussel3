@@ -28,9 +28,10 @@ export default {
   switchBallSize: '14px',
   switchLabelFontSize: '12px',
 
+  listItemIconSize: '16px',
   listItemHeight: '32px',
-  listItemPaddingX: '12px',
   listItemPaddingY: '6px',
+  listItemPaddingX: '12px',
   listItemLineHeight: '20px',
   listItemBorderRadius: '4px',
   listDividerBorderWidth: '1px',

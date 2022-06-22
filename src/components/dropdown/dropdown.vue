@@ -9,7 +9,8 @@
       v-model:visible="dropdownVisible"
       width="auto"
       :style="dropdownStyle"
-      :items="dropdownItems">
+      :items="dropdownItems"
+      :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
@@ -20,8 +21,6 @@
     name: 'MusselDropdown',
     provide () {
       return {
-        reserveItemCheckPlace: this.reserveItemCheckPlace,
-        reserveItemIconPlace: this.reserveItemIconPlace,
         dropdown: this
       }
     },
@@ -40,8 +39,7 @@
           return ['hover', 'click'].includes(v)
         }
       },
-      reserveItemCheckPlace: Boolean,
-      reserveItemIconPlace: Boolean
+      reserveIconPlace: Boolean
     },
     emits: ['dropdown:itemclick', 'dropdown:show', 'dropdown:hide'],
     data () {

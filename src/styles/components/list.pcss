@@ -4,16 +4,16 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: $listItemHeight;
-  padding: 0 $listItemPaddingX;
   line-height: $listItemLineHeight;
   overflow: hidden;
+  font-size: $commonFontSize;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: default;
 
   & > .mu-icon {
     flex: none;
+    font-size: $listItemIconSize;
 
     & ~ *:last-child {
       margin-right: calc(1em + $commonItemSpacing);
@@ -35,20 +35,23 @@
 }
 
 .mu-list-item {
+  min-height: $listItemHeight;
+  padding: $listItemPaddingY $listItemPaddingX;
   color: var(--mu-text-color-normal);
+  
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background-color: var(--mu-primary-color);
+  }
 }
 
 a.mu-list-item {
+  cursor: pointer;
+
   &:hover {
     background: var(--mu-list-item-hover-background);
   }
 }
-
-/* .mu-list-item[checked] {
-  & > .mu-list-item_check {
-    color: var(--mu-primary-color);
-  }
-} */
 
 .mu-list-item[disabled] {
   color: var(--mu-text-color-weak);
@@ -60,12 +63,11 @@ a.mu-list-item {
 .mu-list-divider {
   border-top: $listDividerBorderWidth solid var(--mu-list-divider-border-color);
   margin-top: $listDividerMarginY;
-  padding-top: $listDividerMarginY;
+  padding: $listDividerMarginY $listItemPaddingX 0;
   color: var(--mu-text-color-weak);
   
   & > label {
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.8em;
   }
 
   &:not(:empty) {
@@ -83,7 +85,7 @@ a.mu-list-item {
 }
 
 .mu-list-divider:first-child,
-.mu-list-divider + .mu-list-divider {
+.mu-list-divider:empty + .mu-list-divider {
   border-top: 0;
   margin-top: 0;
   padding-top: 0;
@@ -93,22 +95,16 @@ a.mu-list-item {
   }
 }
 
-.mu-list-item.mu-navi-item {
-  height: 40px;
-  border-radius: $dropdownItemBorderRadius;
-  cursor: pointer;
-
-  &[active] {
-    color: var(--mu-text-color-reversed);
-    background-color: var(--mu-primary-color);
-    cursor: pointer
-  }
+.mu-navi-item {
+  min-height: 40px;
 }
 
-.list-group {
-  &[reserve-icon-place],
-  &[reserve-check-place] {
 
+[reserve-icon-place] {
+  & > .mu-list-item,
+  & > .mu-list-divider {
+    & > label:first-child {
+      margin-left: calc($listItemIconSize + $commonItemSpacing);
+    }
   }
-  &[reserve-icon-place][reserve-check-place] {}
 }

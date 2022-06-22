@@ -8,12 +8,11 @@
     @mouseover.stop="onMouseOver"
     @mouseleave.stop="onMouseLeave">
     <slot>
-      <template v-if="items">
-        <mu-dropdown-item
-          v-for="(el, index) in items"
-          :key="el === '-' ? index : el"
-          v-bind="el === '-' ? { divider: true } : el" />
-      </template>
+      <component
+        :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-dropdown-item'"
+        v-for="(el, index) in items"
+        :key="el === '-' ? index : el"
+        v-bind="el === '-' ? {} : el" />
     </slot>
   </div>
 </template>

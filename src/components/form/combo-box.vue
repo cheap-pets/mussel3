@@ -31,16 +31,16 @@
     <slot name="right" />
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
+      :style="dropdownStyle"
       :dropdown-width="dropdownWidth"
       :dropdown-height="dropdownHeight"
-      :style="dropdownStyle">
+      :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown">
-        <template v-if="options">
-          <mu-option
-            v-for="(el, index) in options"
-            :key="Object(el).value ?? index"
-            v-bind="el === '-' ? { divider: true } : el" />
-        </template>
+        <component
+          :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-option'"
+          v-for="(el, index) in options"
+          :key="el === '-' ? index : el"
+          v-bind="el === '-' ? {} : el" />
       </slot>
     </mu-dropdown-panel>
   </div>
@@ -54,16 +54,14 @@
     name: 'MusselComboBox',
     provide () {
       return {
-        reserveItemCheckPlace: this.reserveItemCheckPlace,
-        reserveItemIconPlace: this.reserveItemIconPlace,
         editor: this
       }
     },
     props: {
       text: null,
-      value: null,
       label: String,
       options: Array,
+      modelValue: null,
       readonly: Boolean,
       disabled: Boolean,
       searchable: Boolean,
@@ -71,10 +69,9 @@
       dropdownStyle: Object,
       dropdownWidth: String,
       dropdownHeight: String,
-      reserveItemCheckPlace: Boolean,
-      reserveItemIconPlace: Boolean
+      reserveIconPlace: Boolean
     },
-    emits: ['update:value', 'dropdown:show', 'dropdown:hide'],
+    emits: ['update:modelValue', 'dropdown:show', 'dropdown:hide'],
     data () {
       return {
         searching: false,
@@ -89,7 +86,7 @@
         get () {
           return this.searching
             ? this.searchText
-            : this.text ?? this.optionLabels[this.value]
+            : this.text ?? this.optionLabels[this.modelValue]
         },
         set (value) {
           this.searchText = value
@@ -122,7 +119,7 @@
     methods: {
       clear () {
         if (this.$attrs.onClear) this.$attrs.onClear()
-        else this.$emit('update:value', null)
+        else this.$emit('update:modelValue', null)
       },
       toggleDropdown () {
         if (this.disabled || this.readonly) return
@@ -156,11 +153,11 @@
       onOptionClick (option) {
         if (this.$attrs.onOptionClick?.(option) !== false) {
           this.dropdownVisible = false
-          this.$emit('update:value', option.value)
+          this.$emit('update:modelValue', option.value)
         }
       },
       includes (value) {
-
+        return false
       },
       isString
     }

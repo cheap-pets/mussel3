@@ -19,42 +19,44 @@
 
 <body>
   <div id="app" class="mu-bg-normal mu-box" position="fixed fit" padding="2x">
-    <mu-switch v-model:value="value1" active-label="ON" inactive-label="OFF" disabled>
+    <mu-switch v-model="value1" active-label="ON" inactive-label="OFF" disabled>
     </mu-switch>
     <p></p>
-    <mu-switch v-model:value="value1" active-label="打开" inactive-label="关闭" primary>
+    <mu-switch v-model="value1" active-label="打开" inactive-label="关闭" primary>
     </mu-switch>
     <p></p>
-    <mu-switch v-model:value="value1" danger>
+    <mu-switch v-model="value1" danger label="DANGER">
     </mu-switch>
     <p></p>
-    <label class="mu-check">
-      <input type="checkbox" placeholder="check">
-      check me !
-    </label>
+    <mu-check v-model="check1" label="Check 1"></mu-check>
     <p></p>
-    <mu-check v-model:checked="checked" label="check me !" disabled></mu-check>
+    <mu-check v-model="check2" label="Check 2"></mu-check>
     <p></p>
-    <label class="mu-radio">
-      <input type="radio" placeholder="check" name="x" value="1">
-      Radio 1
-    </label>
+    <mu-check v-model="checked" label="Check 3" value="3"></mu-check>
     <p></p>
-    <label class="mu-radio" disabled>
-      <input type="radio" placeholder="check" name="x" value="2">
-      Radio 2
-    </label>
+    <mu-check v-model="checked" label="Check 4" value="4"></mu-check>
     <p></p>
-    <mu-radio name="x" value="3" label="Radio 3" />
+    <mu-check v-model="checked" label="Check 5" value="5" disabled></mu-check>
+    <p></p>
+    <mu-radio value="1" label="Radio 1" v-model="radioValue"></mu-radio>
+    <p></p>
+    <mu-radio value="2" label="Radio 2"></mu-radio>
+    <p></p>
+    <mu-radio value="3" label="Radio 3" v-model="radioValue"></mu-radio>
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
         const value1 = Vue.ref(true)
-        const checked = Vue.ref(true)
 
-        return { value1, checked }
+        const check1 = Vue.ref(true)
+        const check2 = Vue.ref(false)
+
+        const checked = Vue.ref(['3'])
+        const radioValue = Vue.ref(null)
+
+        return { value1, check1, check2, checked, radioValue }
       }
     })
 

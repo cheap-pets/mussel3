@@ -1,38 +1,37 @@
 <template>
   <label v-if="label" class="mu-radio">
     <input
-      v-model="isChecked"
+      v-model="radioValue"
       type="radio"
-      :name="name"
       :value="value">
     <span>{{ label }}</span>
   </label>
   <input
     v-else
-    v-model="isChecked"
+    v-model="radioValue"
     class="mu-radio"
     type="radio"
-    :name="name"
     :value="value">
 </template>
 
 <script>
   export default {
-    name: 'MusselCheck',
+    name: 'MusselRadio',
     props: {
-      name: String,
+      modelValue: null,
       label: String,
-      checked: Boolean,
-      value: null
+      value: {
+        required: true
+      }
     },
-    emits: ['update:checked'],
+    emits: ['update:modelValue'],
     computed: {
-      isChecked: {
+      radioValue: {
         get () {
-          return this.checked
+          return this.modelValue
         },
         set (v) {
-          this.$emit('update:checked', v)
+          this.$emit('update:modelValue', this.value)
         }
       }
     }

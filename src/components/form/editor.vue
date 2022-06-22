@@ -26,21 +26,21 @@
   export default {
     name: 'MusselEditor',
     props: {
-      value: null,
       label: String,
+      modelValue: null,
       readonly: Boolean,
       disabled: Boolean,
       placeholder: String,
       clearButton: Boolean
     },
-    emits: ['update:value'],
+    emits: ['update:modelValue'],
     computed: {
       inputValue: {
         get () {
-          return this.value
+          return this.modelValue
         },
         set (value) {
-          this.$emit('update:value', value)
+          this.$emit('update:modelValue', value)
         }
       },
       clearButtonVisible () {
@@ -55,7 +55,7 @@
     methods: {
       clear () {
         if (this.$attrs.onClear) this.$attrs.onClear()
-        else this.$emit('update:value', '')
+        else this.$emit('update:modelValue', '')
       },
       toggleDropdown () {
         this.expanded = !this.expanded || null

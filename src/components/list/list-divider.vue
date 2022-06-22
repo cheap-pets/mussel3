@@ -10,7 +10,8 @@
     name: 'MusselListDivider',
     props: {
       label: String,
-      icon: String
+      icon: String,
+      divider: Boolean
     }
   }
 </script>

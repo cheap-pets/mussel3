@@ -21,7 +21,8 @@
       v-model:visible="dropdownVisible"
       width="auto"
       :style="dropdownStyle"
-      :items="dropdownItems">
+      :items="dropdownItems"
+      :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
@@ -41,7 +42,8 @@
       v-model:visible="dropdownVisible"
       width="auto"
       :style="dropdownStyle"
-      :items="dropdownItems">
+      :items="dropdownItems"
+      :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </button>

@@ -1,18 +1,16 @@
 <template>
   <label v-if="label" class="mu-check">
     <input
-      v-model="isChecked"
+      v-model="checkValue"
       type="checkbox"
-      :name="name"
       :value="value">
     <span>{{ label }}</span>
   </label>
   <input
     v-else
-    v-model="isChecked"
+    v-model="checkValue"
     class="mu-check"
     type="checkbox"
-    :name="name"
     :value="value">
 </template>
 
@@ -20,19 +18,18 @@
   export default {
     name: 'MusselCheck',
     props: {
-      name: String,
+      modelValue: [Boolean, Array],
       label: String,
-      checked: Boolean,
       value: null
     },
-    emits: ['update:checked'],
+    emits: ['update:modelValue'],
     computed: {
-      isChecked: {
+      checkValue: {
         get () {
-          return this.checked
+          return this.modelValue
         },
         set (v) {
-          this.$emit('update:checked', v)
+          this.$emit('update:modelValue', v)
         }
       }
     }

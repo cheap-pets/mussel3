@@ -28,25 +28,11 @@
       </mu-dropdown>
     </div>
     <div class="mu-box" layout="flex" padding="1x">
-      <mu-dropdown dropdown-trigger="click" @dropdown:show="onShow">
-        <mu-button primary>{{ artist }}</mu-button>
-        <template v-slot:dropdown>
-          <mu-list-item
-            v-for="(el, index) in artists"
-            :key="el === '-' ? index : el"
-            v-bind="el === '-' ? { divider: true } : el"
-            @itemClick="onItemClick(el)">
-          </mu-list-item>
-        </template>
-      </mu-dropdown>
-    </div>
-    <div class="mu-box" layout="flex" padding="1x">
       <mu-dropdown-button
         danger
         :caption="artist"
         :dropdown-items="artists"
-        reserve-item-check-place
-        reserve-item-icon-place
+        reserve-icon-place
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
@@ -54,14 +40,14 @@
       <mu-dropdown-button
         x-color="cyan"
         split-button
-        reserve-item-check-place
-        reserve-item-icon-place
+        reserve-icon-place
         :caption="artist"
         :dropdown-items="artists"
         @click="onButtonClick"
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
+    <div v-for="el in x">{{ el }}</div>
   </div>
 
   <script type="text/javascript">
@@ -72,10 +58,11 @@
           '-',
           { divider: true, label: 'GROUP 1' },
           { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert', radio: true  },
-          { label: 'Wolfgang Amadeus Mozart', checked: true, icon: 'circleAlert', radio: true },
+          { label: 'Wolfgang Amadeus Mozart', checked: true, radio: true },
           '-',
           { divider: true, label: 'GROUP 2' },
-          { label: 'Frédéric François Chopin', icon: 'circleAlert', checked: true },
+          { divider: true, label: 'GROUP 3' },
+          { label: 'Frédéric François Chopin', checked: true },
           { label: 'Johann Baptist Strauss', icon: 'circleAlert', checked: true  }
         ])
 
@@ -104,7 +91,7 @@
           console.log('button click')
         }
 
-        return { artist, artists, onShow, onItemClick, onButtonClick }
+        return { artist, artists, onShow, onItemClick, onButtonClick, x: null }
       }
     })
 

@@ -1,7 +1,7 @@
 <template>
   <div
     class="mu-switch"
-    :active="value === activeValue || null"
+    :active="modelValue === activeValue || null"
     :content="innerLabel"
     @click="toggle" />
 </template>
@@ -12,7 +12,7 @@
   export default {
     name: 'MusselSwitch',
     props: {
-      value: null,
+      modelValue: null,
       activeValue: {
         type: null,
         default: true
@@ -21,25 +21,28 @@
         type: null,
         default: false
       },
+      label: String,
       activeLabel: String,
       inactiveLabel: String
     },
-    emits: ['update:value'],
+    emits: ['update:modelValue'],
     setup (props, context) {
       const innerLabel = ref(null)
 
       function toggle () {
-        const v = props.activeValue === props.value
+        const v = props.activeValue === props.modelValue
           ? props.inactiveValue
           : props.activeValue
 
-        context.emit('update:value', v)
+        context.emit('update:modelValue', v)
       }
 
       watchEffect(() => {
-        innerLabel.value = props.activeValue === props.value
-          ? props.activeLabel
-          : props.inactiveLabel
+        innerLabel.value = (
+          props.activeValue === props.modelValue
+            ? props.activeLabel
+            : props.inactiveLabel
+        ) || props.label
       })
 
       return { toggle, innerLabel }
