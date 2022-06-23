@@ -14,10 +14,6 @@
   & > .mu-icon {
     flex: none;
     font-size: $listItemIconSize;
-
-    & ~ *:last-child {
-      margin-right: calc(1em + $commonItemSpacing);
-    }
   }
 
   & > label {
@@ -99,10 +95,11 @@ a.mu-list-item {
   min-height: 40px;
 }
 
-
 [reserve-icon-place] {
   & > .mu-list-item,
   & > .mu-list-divider {
+    padding-right: calc($listItemIconSize + $listItemPaddingX);
+
     & > label:first-child {
       margin-left: calc($listItemIconSize + $commonItemSpacing);
     }

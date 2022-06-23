@@ -13,9 +13,6 @@
       value: null
     },
     computed: {
-      itemChecked () {
-        return null // this.editor?.includes(this.value)
-      },
       itemLabel () {
         return this.label || this.value
       }

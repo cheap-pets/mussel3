@@ -2,10 +2,6 @@
   <a class="mu-list-item mu-dropdown-item" @click="onClick">
     <slot>
       <mu-icon
-        v-if="checkIcon"
-        class="mu-list-item_check"
-        :icon="checkIcon" />
-      <mu-icon
         v-if="icon"
         class="mu-list-item_icon"
         :icon="icon" />
@@ -27,22 +23,6 @@
     inject: {
       dropdown: {
         default: {}
-      }
-    },
-    props: {
-      radio: Boolean,
-      checked: {
-        validator (v) {
-          return v === true || v === false
-        }
-      }
-    },
-    computed: {
-      checkIcon () {
-        return null
-      },
-      itemChecked () {
-        return this.checked || null
       }
     },
     methods: {

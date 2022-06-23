@@ -30,7 +30,12 @@
   }
 }
 
-.mu-dropdown-item {
+.mu-list-item.mu-dropdown-item {
+  display: flex;
   border-radius: $dropdownItemBorderRadius;
-  /* padding: 0 $listItemPaddingX; */
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mu-list-item-hover-background);
+  }
 }

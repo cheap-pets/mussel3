@@ -25,9 +25,11 @@ import FormField from './form/form-field.vue'
 
 /* DROPDOWN */
 import Dropdown from './dropdown/dropdown.vue'
-import DropdownItem from './dropdown/dropdown-item.vue'
-import DropdownPanel from './dropdown/dropdown-panel.vue'
 import DropdownButton from './dropdown/dropdown-button.vue'
+import DropdownPanel from './dropdown/dropdown-panel.vue'
+import DropdownItem from './dropdown/dropdown-item.vue'
+import DropdownCheckItem from './dropdown/dropdown-check-item.vue'
+import DropdownRadioItem from './dropdown/dropdown-radio-item.vue'
 
 /* TABS */
 import TabButton from './tabs/tab-button.vue'
@@ -64,9 +66,11 @@ export function installComponents (app) {
   app.component('mu-form-field', FormField)
 
   app.component('mu-dropdown', Dropdown)
-  app.component('mu-dropdown-item', DropdownItem)
-  app.component('mu-dropdown-panel', DropdownPanel)
   app.component('mu-dropdown-button', DropdownButton)
+  app.component('mu-dropdown-panel', DropdownPanel)
+  app.component('mu-dropdown-item', DropdownItem)
+  app.component('mu-dropdown-check-item', DropdownCheckItem)
+  app.component('mu-dropdown-radio-item', DropdownRadioItem)
 
   app.component('mu-tab-button', TabButton)
   app.component('mu-tab-bar', TabBar)

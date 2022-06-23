@@ -17,8 +17,8 @@
     href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
-<body class="mu-background-normal">
-  <div id="app">
+<body>
+  <div id="app" class="mu-box" position="fixed fit">
     <div class="mu-box" layout="flex" padding="1x">
       <mu-dropdown
         :dropdown-items="artists"
@@ -30,7 +30,7 @@
     <div class="mu-box" layout="flex" padding="1x">
       <mu-dropdown-button
         danger
-        :caption="artist"
+        caption="Dropdown Button"
         :dropdown-items="artists"
         reserve-icon-place
         @dropdown:itemclick="onItemClick">
@@ -41,13 +41,40 @@
         x-color="cyan"
         split-button
         reserve-icon-place
-        :caption="artist"
+        caption="Split Button"
         :dropdown-items="artists"
         @click="onButtonClick"
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
-    <div v-for="el in x">{{ el }}</div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown-button
+        x-color="grape"
+        split-button
+        reserve-icon-place
+        caption="Check & Radio"
+        @dropdown:itemclick="onItemClick">
+        <template #dropdown>
+          <mu-dropdown-check-item
+            value="Ludwig van Beethoven"
+            v-model="checkedArtists">
+          </mu-dropdown-check-item>
+          <mu-dropdown-check-item
+            value="Wolfgang Amadeus Mozart"
+            v-model="checkedArtists">
+          </mu-dropdown-check-item>
+          <mu-list-divider></mu-list-divider>
+          <mu-dropdown-radio-item
+            value="Frédéric François Chopin"
+            v-model="checkedArtist">
+          </mu-dropdown-radio-item>
+          <mu-dropdown-radio-item
+            value="Johann Baptist Strauss"
+            v-model="checkedArtist">
+          </mu-dropdown-radio-item>
+        </template>
+      </mu-dropdown-button>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -57,51 +84,50 @@
         const artists = Vue.reactive([
           '-',
           { divider: true, label: 'GROUP 1' },
-          { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert', radio: true  },
-          { label: 'Wolfgang Amadeus Mozart', checked: true, radio: true },
+          { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert'  },
+          { label: 'Wolfgang Amadeus Mozart', icon: 'circleAlert' },
           '-',
           { divider: true, label: 'GROUP 2' },
           { divider: true, label: 'GROUP 3' },
-          { label: 'Frédéric François Chopin', checked: true },
-          { label: 'Johann Baptist Strauss', icon: 'circleAlert', checked: true  }
+          { label: 'Frédéric François Chopin' },
+          { label: 'Johann Baptist Strauss', icon: 'circleAlert' }
         ])
+        const checkedArtist = Vue.ref(null)
+        const checkedArtists = Vue.ref([])
 
         function onShow () {
           console.log('show')
         }
 
-        function onItemClick (data) {
-          artist.value = data.label
-
-          const item = artists.find(el => el.label === data.label)
-
-          if (item.label === 'Ludwig van Beethoven') {
-            item.checked = true
-            artists.find(el => el.label === 'Wolfgang Amadeus Mozart').checked= false
-          } else if (item.label === 'Wolfgang Amadeus Mozart') {
-            item.checked = true
-            artists.find(el => el.label === 'Ludwig van Beethoven').checked= false
-          } else {
-            console.log(item.checked)
-            item.checked = !item.checked
-          }
+        function onItemClick (item) {
+          console.log(item.value || item.label)
         }
 
         function onButtonClick () {
           console.log('button click')
         }
 
-        return { artist, artists, onShow, onItemClick, onButtonClick, x: null }
+        return {
+          artist,
+          artists,
+          checkedArtist,
+          checkedArtists,
+          onShow,
+          onItemClick,
+          onButtonClick
+        }
       }
     })
 
-    mussel.install(app)
-    mussel.registerIcons({
-      bug: 'ti ti-bug',
-      bolt: 'ti ti-bolt',
-      album: 'ti ti-album'
-    })
-
-    app.mount('#app')
+    app
+      .use(mussel, {
+        darkMode: 'auto',
+        icons: {
+          bug: 'ti ti-bug',
+          bolt: 'ti ti-bolt',
+          album: 'ti ti-album'
+        }
+      })
+      .mount('#app')
   </script>
 </body>
