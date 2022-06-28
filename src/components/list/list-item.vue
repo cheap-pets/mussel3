@@ -19,7 +19,8 @@
     name: 'MusselListItem',
     props: {
       icon: String,
-      label: String
+      label: String,
+      value: null
     },
     computed: {
       itemLabel () {

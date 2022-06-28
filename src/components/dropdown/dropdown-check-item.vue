@@ -3,7 +3,8 @@
     <input
       v-model="checkValue"
       type="checkbox"
-      :value="value">
+      :value="value"
+      @click.stop>
     <span>{{ itemLabel ?? value }}</span>
   </label>
 </template>

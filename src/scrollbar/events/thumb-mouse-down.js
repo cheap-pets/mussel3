@@ -1,4 +1,4 @@
-import { throttle } from 'lodash-es'
+import { throttle } from 'throttle-debounce'
 import { getClientRect } from '@/utils/client-rect'
 
 function outOfRect (point, rail, isYAxis) {
@@ -32,9 +32,9 @@ export default function onThumbMouseDown (event) {
   }
 
   const throttleMove = throttle(
-    onMouseMove,
     20,
-    { leading: false, trailing: true }
+    onMouseMove,
+    { noLeading: true, noTrailing: false }
   )
 
   const onMouseUp = e => {

@@ -1,11 +1,11 @@
-import { throttle } from 'lodash-es'
+import { throttle } from 'throttle-debounce'
 
 function onDomChange () {
   this.updatePosition()
 }
 
 export default throttle(
-  onDomChange,
   50,
-  { leading: false, trailing: true }
+  onDomChange,
+  { noLeading: true, noTrailing: false }
 )

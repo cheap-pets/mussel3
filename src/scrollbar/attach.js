@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash-es'
+import { isObject } from '../utils/type'
 
 import emit from '@/events/emit'
 import methods from './methods'
@@ -54,7 +54,7 @@ function renderElements (el, options) {
 function observeMutation (ctx) {
   if (!window.MutationObserver) return
 
-  const options = isPlainObject(ctx.options.observeMutation)
+  const options = isObject(ctx.options.observeMutation)
     ? ctx.options.observeMutation
     : { attributes: true, childList: true, subtree: false }
 

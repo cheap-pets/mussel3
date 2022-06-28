@@ -3,7 +3,8 @@
     <input
       v-model="radioValue"
       type="radio"
-      :value="value">
+      :value="value"
+      @click.stop>
     <span>{{ label ?? value }}</span>
   </label>
 </template>

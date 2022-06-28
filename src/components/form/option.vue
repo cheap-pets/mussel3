@@ -9,9 +9,6 @@
         default: {}
       }
     },
-    props: {
-      value: null
-    },
     computed: {
       itemLabel () {
         return this.label || this.value
