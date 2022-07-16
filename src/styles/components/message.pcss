@@ -10,7 +10,7 @@
   }
 
   & .mu-message_title {
-    font-size: calc($commonFontSize + 2px);
+    font-size: calc(var(--mu-common-font-size) + 2px);
   }
 }
 
@@ -35,7 +35,7 @@
 
 .mu-notifier {
   width: $notifierWidth;
-  font-size: $commonFontSize;
+  font-size: var(--mu-common-font-size);
   margin: $notifierMargin;
   padding: $notifierPaddingY $notifierPaddingX;
   background: var(--mu-notifier-background);

@@ -1,4 +1,7 @@
 .mu-root {
+  --mu-common-font-size: $commonFontSize;
+  --mu-unit-spacing-size: $unitSpacingSize;
+
   font-family:
     system-ui, 
     -apple-system,
@@ -11,9 +14,7 @@
     Arial,
     sans-serif;
 
-  font-size: $commonFontSize;
+  font-size: var(--mu-common-font-size);
   color: var(--mu-text-color-normal);
   background-color: var(--mu-background-normal);
-
-  --mu-unit-spacing-size: $unitSpacingSize;
 }

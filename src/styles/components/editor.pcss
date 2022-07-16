@@ -4,7 +4,7 @@
   width: 200px;
   border: $editorBorderWidth solid var(--mu-editor-border-color);
   border-radius: $editorBorderRadius;
-  font-size: $commonFontSize;;
+  font-size: var(--mu-common-font-size);
   line-height: $editorLineHeight;
   background-color: var(--mu-editor-background);
 
@@ -27,7 +27,7 @@
   input&,
   & > input {
     outline: none;
-    font-size: $commonFontSize;
+    font-size: var(--mu-common-font-size);
     color: var(--mu-editor-text-color);
 
     &::-ms-clear {

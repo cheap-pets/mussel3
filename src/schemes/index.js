@@ -44,7 +44,7 @@ function installTheme (app, options) {
     const { darkMode, autoComplementColors, theme } = options
 
     if (el) {
-      if (el.classList && !el.classList.contains('mu-app-root')) {
+      if (el.classList && !el.classList.contains('mu-root')) {
         const isSysDarkMode =
           window.matchMedia('(prefers-color-scheme: dark)').matches
 

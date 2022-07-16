@@ -6,7 +6,7 @@
   width: 100%;
   line-height: $listItemLineHeight;
   overflow: hidden;
-  font-size: $commonFontSize;
+  font-size: var(--mu-common-font-size);
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: default;
@@ -89,10 +89,6 @@ a.mu-list-item {
   &:not(:empty) {
     height: $listItemHeight;
   }
-}
-
-.mu-navi-item {
-  min-height: 40px;
 }
 
 [reserve-icon-place] {
