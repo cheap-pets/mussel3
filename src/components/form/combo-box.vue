@@ -48,7 +48,6 @@
 
 <script>
   import { delay } from '@/utils/timer'
-  import { isString } from '@/utils/type'
 
   export default {
     name: 'MusselComboBox',
@@ -94,7 +93,7 @@
       },
       clearButtonVisible () {
         return (
-          !this.disabled && !this.readonly && this.value &&
+          !this.disabled && !this.readonly && this.modelValue &&
           (this.$attrs.onClear || !this.searchable) && !this.searching &&
           (!['0', 'none', 'false', false].includes(this.$attrs['clear-button']))
         )
@@ -158,8 +157,7 @@
       },
       includes (value) {
         return false
-      },
-      isString
+      }
     }
   }
 </script>
