@@ -90,7 +90,7 @@
         default: true
       }
     },
-    emits: ['maskClick', 'closeButtonClick', 'buttonClick'],
+    emits: ['maskClick', 'buttonClick', 'closeButtonClick', 'show', 'hide'],
     data () {
       return {
         popup: false,
@@ -111,6 +111,9 @@
       onShow () {
         document.activeElement?.blur?.()
       },
+      onHide () {
+        this.$emit('hide')
+      },
       updatePosition () {
         const { width, height } = this.dialogStyle || {}
 
@@ -118,6 +121,8 @@
           width: width ? null : this.width,
           height: height ? null : this.height
         })
+
+        this.$emit('show')
       },
       updateTranslate () {
         const tx = this.popupOffsetX

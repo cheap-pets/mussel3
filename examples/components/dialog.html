@@ -23,7 +23,9 @@
         mask-action="hide"
         width="640px"
         height="480px"
-        :buttons="buttons">
+        :buttons="buttons"
+        @show="onShow"
+        @hide="onHide">
         <div flex="1">
           <span>{{ new Date() }}</span>
         </div>
@@ -59,11 +61,17 @@
         return {
           dialogVisible1,
           dialogVisible2,
-          buttons
+          buttons,
+          onShow () {
+            console.log('show')
+          },
+          onHide () {
+            console.log('hide')
+          }
         }
       }
     })
-    
+
     mussel.registerIcons({
       bolt: 'ti ti-bolt'
     })
