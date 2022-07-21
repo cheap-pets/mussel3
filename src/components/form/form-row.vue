@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-form-row mu-box" :style="{ width: boxWidth, height: boxHeight }">
+  <div class="mu-form-row mu-box" :style="boxStyle">
     <slot />
   </div>
 </template>

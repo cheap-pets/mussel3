@@ -16,6 +16,7 @@ export default {
   editorLineHeight: '20px',
   editorBorderRadius: '4px',
   editorFocusShadowSize: '0 0 0 2px',
+
   textareaHeight: '150px',
   textareaPaddingY: '5px',
 
@@ -55,6 +56,7 @@ export default {
   barPaddingX: '12px',
 
   tabBarHeight: '40px',
+  tabButtonHeight: '24px',
   tabButtonBorderWidth: '0',
 
   notifierWidth: '320px',

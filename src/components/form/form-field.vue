@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="mu-form-field mu-box"
-    :style="{ width: boxWidth, height: boxHeight }">
+  <div class="mu-form-field mu-box" :style="boxStyle">
     <label
       v-if="label"
       class="mu-text-ellipsis"

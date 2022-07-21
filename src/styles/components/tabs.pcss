@@ -11,8 +11,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: $buttonHeight;
-  height: $buttonHeight;
+  height: $tabButtonHeight;
+  min-width: $tabButtonHeight;
   padding: 0 $buttonPaddingX;
   overflow: hidden;
   outline: none;
@@ -56,6 +56,13 @@
       background: var(--mu-background-disabled);
     }
   }
+}
+
+.mu-tabs[button-size=normal] .mu-tab-button,
+.mu-tab-bar[button-size=normal] .mu-tab-button,
+.mu-tab-button[button-size=normal] {
+  height: $buttonHeight;
+  min-width: $buttonHeight;
 }
 
 .mu-bar[tab-style=simple] {

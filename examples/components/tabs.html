@@ -17,17 +17,17 @@
     href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
-<body class="mu-background-normal">
-  <div id="app" class="mu-box mu-bg-black" position="fixed fit" layout="flex" direction="column">
+<body>
+  <div id="app" class="mu-box mu-background-normal" position="fixed fit" layout="flex" direction="column">
     <div class="mu-bar mu-box mu-bg-strong">
       <label>Tap Position</label>
       <mu-combo-box class="mu-box" :clear-button="false" width="100"
-        v-model:value="tabPosition" :options="positions">
+        v-model="tabPosition" :options="positions">
       </mu-combo-box>
       <label>Tap Style</label>
       <mu-combo-box
         class="mu-box" :clear-button="false" width="100"
-        v-model:value="tabStyle" :options="styles">
+        v-model="tabStyle" :options="styles">
       </mu-combo-box>
     </div>
 
@@ -47,6 +47,7 @@
     <mu-tabs
       v-model:active-tab="activeTab"
       margin-top="4x"
+      button-size="normal"
       height="200"
       border-y>
       <template #tab-bar>
