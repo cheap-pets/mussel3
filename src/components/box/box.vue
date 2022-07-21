@@ -1,5 +1,7 @@
 <template>
-  <div class="mu-box" :style="{ width: boxWidth, height: boxHeight }" />
+  <div class="mu-box" :style="boxStyle">
+    <slot />
+  </div>
 </template>
 
 <script>
@@ -12,15 +14,12 @@
       height: String
     },
     computed: {
-      boxWidth () {
-        return getSizeValue(this.width)
-      },
-      boxHeight () {
-        return getSizeValue(this.height)
+      boxStyle () {
+        return {
+          width: getSizeValue(this.width),
+          height: getSizeValue(this.height)
+        }
       }
-    },
-    methods: {
-      getSizeValue
     }
   }
 </script>

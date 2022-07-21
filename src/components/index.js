@@ -1,5 +1,7 @@
 /* BOX */
 import Box from './box/box.vue'
+import HBox from './box/h-box.vue'
+import VBox from './box/v-box.vue'
 
 /* ICON */
 import Icon from './icon/icon.vue'
@@ -46,6 +48,8 @@ import installMessage from './message'
 
 export function installComponents (app) {
   app.component('mu-box', Box)
+  app.component('mu-h-box', HBox)
+  app.component('mu-v-box', VBox)
 
   app.component('mu-icon', Icon)
 
