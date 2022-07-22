@@ -34,6 +34,34 @@
       <mu-button @click="notifyWarning">Notify Warning</mu-button>
       <mu-button @click="notifyError">Notify Error</mu-button>
     </div>
+    <mu-status-box
+      class="mu-bg-strong" width="500" height="300"
+      margin="1x" border="divider" border-radius="2x"
+      icon="bolt"
+      title="CAUTION !"
+      message="Something Wrong Here !">
+      <mu-button primary round>
+        Do Something ...
+      </mu-button>
+    </mu-status-box>
+    <mu-status-box
+      class="mu-bg-strong" width="500" height="400"
+      margin="1x" margin-top="2x" border="divider" border-radius="2x"
+      title="NOT FOUND !"
+      message="Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here !">
+      <template #icon>
+        <img style="margin-top: auto;" src="../images/a.jpg">
+      </template>
+      <div class="mu-box" layout="flex" margin-top="auto" align-self="stretch">
+        <mu-button primary round>
+          Create New ...
+        </mu-button>
+        <span flex="1"></span>
+        <mu-button round>
+          Dismiss
+        </mu-button>
+      </div>
+    </mu-status-box>
   </div>
 
   <script type="text/javascript">
@@ -108,7 +136,10 @@
       bolt: 'ti ti-bolt'
     })
 
-    mussel.install(app, { darkMode: 'auto', theme: { commonFontSize: '12px' } })
+    mussel.install(app, {
+      darkMode: 'auto',
+      theme: { commonFontSize: '12px' }
+    })
 
     app.mount('#app')
   </script>

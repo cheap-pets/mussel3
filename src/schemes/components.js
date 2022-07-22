@@ -54,6 +54,7 @@ export default {
 
   barHeight: '40px',
   barPaddingX: '12px',
+  barLabelFontSize: '12px',
 
   tabBarHeight: '40px',
   tabButtonHeight: '24px',

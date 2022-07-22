@@ -44,6 +44,7 @@ import Tabs from './tabs/tabs.vue'
 import Dialog from './modal/dialog.vue'
 
 /* MESSAGE */
+import StatusBox from './message/status-box.vue'
 import installMessage from './message'
 
 export function installComponents (app) {
@@ -83,6 +84,8 @@ export function installComponents (app) {
   app.component('mu-tabs', Tabs)
 
   app.component('mu-dialog', Dialog)
+
+  app.component('mu-status-box', StatusBox)
 
   installMessage(app)
 }

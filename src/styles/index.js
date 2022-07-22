@@ -18,6 +18,7 @@ import './components/dropdown.pcss'
 import './components/modal.pcss'
 import './components/dialog.pcss'
 import './components/message.pcss'
+import './components/status-box.pcss'
 
 import './box/flex-layout.pcss'
 import './box/grid-layout.pcss'

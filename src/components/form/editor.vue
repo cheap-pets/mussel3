@@ -48,7 +48,7 @@
           !this.disabled &&
           !this.readonly &&
           (this.clearButton || this.$attrs.onClear) &&
-          this.value
+          this.modelValue
         )
       }
     },

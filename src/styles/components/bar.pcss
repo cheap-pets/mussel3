@@ -3,6 +3,7 @@
   align-items: center;
   height: $barHeight;
   padding: 0 $barPaddingX;
+  font-size: var(--mu-common-font-size);
 
   & > * {
     margin-left: $commonItemSpacing;
@@ -19,7 +20,7 @@
 .mu-bar > label,
 .mu-bar_caption {
   color: var(--mu-text-color-weak);
-  font-size: calc(1rem - 2px);
+  font-size: $barLabelFontSize;
 }
 
 .mu-bar_caption {

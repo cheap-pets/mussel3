@@ -11,10 +11,17 @@
 
   <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
   <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+
+  <style>
+    .chart-dialog1 .mu-dialog_header,
+    .chart-dialog1 .mu-dialog_footer {
+      background: var(--mu-background-strong);
+    }
+  </style>
 </head>
 
-<body class="mu-background-normal">
-  <div id="app">
+<body>
+  <div id="app" class="mu-box" position="fixed fit" dark-mode>
     <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="dialogVisible1 = true">Show Dialog 1</mu-button>
       <mu-dialog
@@ -45,6 +52,40 @@
         </template>
       </mu-dialog>
     </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="dialogVisible3 = true">Show Dialog 3</mu-button>
+      <mu-dialog
+        v-model:visible="dialogVisible3"
+        class="chart-dialog"
+        title="老六专用流程"
+        mask-action="hide"
+        width="800px"
+        height="600px"
+        :buttons="[
+          { caption: '关闭' }
+        ]">
+        <mu-v-box
+          style="background: rgba(255, 255, 255, .05);"
+          height="100%" margin-x="3x" border-radius content-center>
+          <div
+            class="mu-bar mu-box"
+            position="absolute top right" margin="2x">
+            <mu-button primary>调整</mu-button>
+            <span class="mu-bar_divider mu-box"></span>
+            <mu-button disabled>启用</mu-button>
+            <mu-dropdown
+              caption="..."
+              :dropdown-items="[
+                { label: '停用流程' },
+                { label: '删除流程' }
+              ]">
+              <mu-button  danger>...</mu-button>
+            </mu-dropdown>
+          </div>
+          <img src="../images/chart.svg" style="width: 100%;">
+        </mu-v-box>
+      </mu-dialog>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -52,6 +93,7 @@
       setup () {
         const dialogVisible1 = Vue.ref(false)
         const dialogVisible2 = Vue.ref(false)
+        const dialogVisible3 = Vue.ref(false)
 
         const buttons = [
           { caption: 'Cancel', action: 'hide' },
@@ -61,6 +103,7 @@
         return {
           dialogVisible1,
           dialogVisible2,
+          dialogVisible3,
           buttons,
           onShow () {
             console.log('show')
