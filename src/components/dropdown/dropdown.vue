@@ -8,6 +8,7 @@
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
       width="auto"
+      :align="dropdownAlign"
       :style="dropdownStyle"
       :items="dropdownItems"
       :reserve-icon-place="reserveIconPlace || null">
@@ -26,6 +27,7 @@
     },
     props: {
       dropdownItems: Array,
+      dropdownAlign: String,
       dropdownStyle: Object,
       dropdownHeight: String,
       dropdownWidth: {

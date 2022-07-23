@@ -19,8 +19,9 @@
 
 <body>
   <div id="app" class="mu-box" position="fixed fit">
-    <div class="mu-box" layout="flex" padding="1x">
+    <div class="mu-box" layout="flex" padding="1x" style="padding-left: 200px;">
       <mu-dropdown
+        dropdown-align="right"
         :dropdown-items="artists"
         @dropdown:show="onShow"
         @dropdown:itemclick="onItemClick">

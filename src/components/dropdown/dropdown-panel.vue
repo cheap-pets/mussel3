@@ -32,13 +32,17 @@
     )
   }
 
-  function popOnRight (pRect, width) {
+  function popOnRight (pRect, width, align) {
     return (
+      (align === 'right') ||
       (
-        width < pRect.width ||
-        pRect.left + width > window.innerWidth
-      ) &&
-      (pRect.right >= width)
+        align === 'left'
+          ? false
+          : (
+            (width < pRect.width || pRect.left + width > window.innerWidth) &&
+            (pRect.right >= width)
+          )
+      )
     )
   }
 
@@ -63,6 +67,12 @@
       dropdown: { default: null }
     },
     props: {
+      align: {
+        type: String,
+        validator (v) {
+          return ['left', 'right'].includes(v)
+        }
+      },
       style: Object,
       width: String,
       height: String,
@@ -78,7 +88,7 @@
         const pRect = getClientRect(this.$parent.$el)
 
         const isOnTop = popOnTop(pRect, el.offsetHeight)
-        const isOnRight = popOnRight(pRect, el.offsetWidth)
+        const isOnRight = popOnRight(pRect, el.offsetWidth, this.align)
 
         const width = style.width
           ? null

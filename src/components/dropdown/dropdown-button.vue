@@ -20,6 +20,7 @@
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
       width="auto"
+      :align="dropdownAlign"
       :style="dropdownStyle"
       :items="dropdownItems"
       :reserve-icon-place="reserveIconPlace || null">
@@ -41,6 +42,7 @@
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
       width="auto"
+      :align="dropdownAlign"
       :style="dropdownStyle"
       :items="dropdownItems"
       :reserve-icon-place="reserveIconPlace || null">
