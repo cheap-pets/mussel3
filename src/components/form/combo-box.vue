@@ -32,6 +32,7 @@
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
       :style="dropdownStyle"
+      :align="dropdownAlign"
       :dropdown-width="dropdownWidth"
       :dropdown-height="dropdownHeight"
       :reserve-icon-place="reserveIconPlace || null">
@@ -65,6 +66,7 @@
       disabled: Boolean,
       searchable: Boolean,
       placeholder: String,
+      dropdownAlign: String,
       dropdownStyle: Object,
       dropdownWidth: String,
       dropdownHeight: String,
