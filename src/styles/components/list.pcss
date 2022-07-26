@@ -38,6 +38,10 @@
   &[active] {
     color: var(--mu-text-color-reversed);
     background-color: var(--mu-primary-color);
+
+    & .mu-text-color-weak {
+      color: rgba(255, 255, 255, .5);
+    }
   }
 }
 
@@ -46,6 +50,11 @@ a.mu-list-item {
 
   &:hover {
     background: var(--mu-list-item-hover-background);
+  }
+
+  &[active] {
+    color: var(--mu-text-color-reversed);
+    background-color: var(--mu-primary-color-light);
   }
 }
 

@@ -31,6 +31,7 @@
   }
 }
 
+.mu-bar,
 .mu-bar_divider {
   display: block;
   margin: 0 $commonItemSpacing;
@@ -42,6 +43,10 @@
   & + * {
     margin-left: 0;
   }
+}
+
+.mu-bar > .mu-space {
+  margin-right: auto;
 }
 
 .mu-bar[align-items="stretch"] {
