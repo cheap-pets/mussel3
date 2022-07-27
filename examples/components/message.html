@@ -71,31 +71,36 @@
       methods: {
         alert () {
           this
-            .$messageBox
+            .$mussel
+            .messageBox
             .alert('Hello World !')
             .then(btn => console.log(btn))
         },
         confirm () {
           this
-            .$messageBox
+            .$mussel
+            .messageBox
             .confirm('Hello World !')
             .then(btn => console.log(btn))
         },
         error () {
           this
-            .$messageBox
+            .$mussel
+            .messageBox
             .error('糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！糟了！敌人正在朝咱们的阵地进攻！<p>进入防御状态！</p>')
             .then(btn => console.log(btn))
         },
         warn () {
           this
-            .$messageBox
+            .$mussel
+            .messageBox
             .warn('Hello World !')
             .then(btn => console.log(btn))
         },
         showMessage () {
           this
-            .$messageBox
+            .$mussel
+            .messageBox
             .showMessage({
               icon: 'bolt',
               message:'Hello World !'
@@ -103,31 +108,43 @@
             .then(btn => console.log(btn))
         },
         notifyInfo () {
-          this.$messageBox.notify({
-            title: '提示',
-            message: '这是一个普通提示。',
-            type: 'alert'
-          })
+          this
+            .$mussel
+            .messageBox
+            .notify({
+              title: '提示',
+              message: '这是一个普通提示。',
+              type: 'alert'
+            })
         },
         notifySuccess () {
-          this.$messageBox.notify({
-            title: '提示',
-            message: '数据保存成功。',
-            type: 'success'
-          })
+          this
+            .$mussel
+            .messageBox
+            .notify({
+              title: '提示',
+              message: '数据保存成功。',
+              type: 'success'
+            })
         },
         notifyWarning () {
-          this.$messageBox.notify({
-            type: 'warn',
-            title: '警告',
-            message: '这是一个做了危险操作的提示！'
-          })
+          this
+            .$mussel
+            .messageBox
+            .notify({
+              type: 'warn',
+              title: '警告',
+              message: '这是一个做了危险操作的提示！'
+            })
         },
         notifyError () {
-          this.$messageBox.notify({
-            type: 'error',
-            message: '这是一个出错的提示！'
-          })
+          this
+            .$mussel
+            .messageBox
+            .notify({
+              type: 'error',
+              message: '这是一个出错的提示！'
+            })
         }
       }
     })

@@ -9,6 +9,8 @@ import { icons, registerIcons } from './components/icon/icons'
 // export * from './events'
 
 function install (app, options = {}) {
+  app.provide('$mussel', app.config.globalProperties.$mussel = {})
+
   if (options.theme !== false) installTheme(app, options)
   if (options.icons) registerIcons(options.icons)
 

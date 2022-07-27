@@ -208,7 +208,7 @@ function pluginNotifier (app) {
 }
 
 export default function install (app) {
-  app.config.globalProperties.$messageBox = {
+  app.config.globalProperties.$mussel.messageBox = {
     ...pluginNotifier(app),
     ...pluginMessageDialog(app)
   }
