@@ -3,7 +3,7 @@
     <label
       v-if="label"
       class="mu-text-ellipsis"
-      :text-align="form.labelAlign || labelAlign"
+      :text-align="labelAlign || form.labelAlign || null"
       :style="{ width: labelElementWidth }">
       {{ label }}
     </label>
