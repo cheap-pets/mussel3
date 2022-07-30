@@ -1,6 +1,6 @@
 {
   "name": "mussel",
-  "version": "3.0.21-alpha",
+  "version": "3.0.22-alpha",
   "description": "UI Library for Vue@3",
   "main": "dist/mussel.js",
   "files": [
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "rollup -c --environment=dev && rollup -c",
-    "build:dev": "rollup -c --watch --environment=dev"
+    "build:dev": "rollup -c --watch --environment=dev",
+    "pub": "npm run build && npm publish"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.9",
