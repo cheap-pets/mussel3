@@ -7,7 +7,7 @@
   overflow: hidden;
   border-radius: $windowBorderRadius;
   font-size: var(--mu-common-font-size);
-  background: var(--mu-background-normal);
+  background: var(--mu-dialog-background);
   box-shadow: $boxShadowWindow;
   transition: transform .2s, opacity .2s;
   opacity: 0;
@@ -32,15 +32,15 @@
 }
 
 .mu-dialog_header {
-  background: var(--mu-background-normal);
   align-items: center;
   line-height: $windowTitleLineHeight;
+  background: var(--mu-dialog-header-background);
 }
 
 .mu-dialog_footer {
   align-items: center;
   line-height: $windowTitleLineHeight;
-  /* background: var(--mu-background-strong); */
+  background: var(--mu-dialog-footer-background);
 
   & > .mu-button {
     margin-left: $unitSpacingSize;
@@ -53,6 +53,7 @@
 
 .mu-dialog_body {
   flex: 1 1 0;
+  background: var(--mu-dialog-body-background);
 }
 
 .mu-dialog_title {
