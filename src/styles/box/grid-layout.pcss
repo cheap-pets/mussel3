@@ -1,10 +1,6 @@
 .mu-box[layout=grid] {
   display: grid;
 
-  &[inline] {
-    display: inline-grid;
-  }
-
   &[direction="column"] {
     grid-auto-flow: column;
   }
@@ -38,10 +34,6 @@
   }
 
   @each $v in (start, end, center, stretch, space-around, space-between, space-evenly) {
-    &[justify-content="$v"] {
-      justify-content: $v;
-    }
-
     &[align-content="$v"] {
       align-content: $v;
     }

@@ -11,8 +11,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $tabButtonHeight;
-  min-width: $tabButtonHeight;
+  height: $smallButtonHeight;
+  min-width: $smallButtonHeight;
   padding: 0 $buttonPaddingX;
   overflow: hidden;
   outline: none;
@@ -143,6 +143,10 @@
 
 .mu-tabs[tab-position=left] > .mu-tab-bar,
 .mu-tab-bar[tab-position=left] {
+  .mu-tab-button {
+    justify-content: end;
+  }
+
   &[tab-style=simple] .mu-tab-button[active] {
     border-right: 3px solid var(--mu-primary-color);
     border-left: 3px solid transparent;

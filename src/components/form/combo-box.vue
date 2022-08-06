@@ -33,8 +33,8 @@
       v-model:visible="dropdownVisible"
       :style="dropdownStyle"
       :align="dropdownAlign"
-      :dropdown-width="dropdownWidth"
-      :dropdown-height="dropdownHeight"
+      :width="dropdownWidth"
+      :height="dropdownHeight"
       :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown">
         <component

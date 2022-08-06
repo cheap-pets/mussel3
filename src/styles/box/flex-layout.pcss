@@ -1,9 +1,5 @@
 .mu-box[layout=flex] {
   display: flex;
-  
-  &[inline] {
-    display: inline-flex;
-  }
 }
 
 .mu-box[layout=flex] {
@@ -42,22 +38,6 @@
     &[direction="column"] > .mu-space {
       height: 100%;
       width: 0;
-    }
-  }
-
-  @each $v in (flex-start, flex-end, center, space-between, space-around) {
-    &[justify-content="$v"] {
-      justify-content: $v;
-    }
-  }
-
-  @each $v in (flex-start, flex-end, center, baseline, stretch) {
-    &[align-items="$v"] {
-      align-items: $v;
-    }
-
-    & > [align-self="$v"] {
-      align-self: $v;
     }
   }
 }

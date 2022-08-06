@@ -322,6 +322,19 @@
   box-shadow: none !important;
 }
 
-.mu-button.mu-split-button, .mu-button.mu-icon-button {
-  padding: 0;
+.mu-button-group[small] > .mu-button,
+.mu-button[small] {
+  height: $smallButtonHeight;
+  min-width: $smallButtonHeight;
+}
+
+.mu-button[small] {
+  padding: 0 $smallButtonPaddingX;
+}
+
+button.mu-button {
+  &.mu-icon-button,
+  &.mu-split-button {
+    padding: 0;
+  }
 }

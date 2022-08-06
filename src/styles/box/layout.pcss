@@ -1,0 +1,28 @@
+.mu-box[layout=flex],
+.mu-box[layout=grid] {
+  &[inline] {
+    display: inline-grid;
+  }
+
+  @each $v in (
+    center, start, end, baseline, stretch,
+    flex-start, flex-end, unset, inherit
+  ) {
+    &[align-items="$v"] {
+      align-items: $v;
+    }
+
+    & > [align-self="$v"] {
+      align-self: $v;
+    }
+  }
+
+  @each $v in (
+    start, end, left, right, baseline, center, stretch,
+    flex-start, flex-end, space-around, space-between, space-evenly
+  ) {
+    &[justify-content="$v"] {
+      justify-content: $v;
+    }
+  }
+}

@@ -19,7 +19,10 @@
 
 <body>
   <div id="app" class="mu-box" position="fixed fit">
-    <div class="mu-box" layout="flex" padding="1x">
+    <div class="mu-box" padding="2x">
+      {{ artist }}
+    </div>
+    <div class="mu-box" padding="1x">
       <mu-editor
         v-model="artist"
         class="mu-box"
@@ -28,15 +31,12 @@
         width="500"
         label="Artist"
         placeholder="Artist Name">
-        <template v-slot:right>
+        <template #right>
           <mu-icon link icon="bug"></mu-icon>
         </template>
       </mu-editor>
-      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
-        {{ artist }}
-      </p>
     </div>
-    <div class="mu-box" layout="flex" padding="1x">
+    <div class="mu-box" padding="1x">
       <mu-combo-box
         v-model="artist"
         class="mu-box"
@@ -45,11 +45,29 @@
         placeholder="Artist Name"
         :options="artists">
       </mu-combo-box>
-      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
-        {{ artist }}
-      </p>
     </div>
-    <div class="mu-box" layout="flex" padding="1x" style="margin-top: 1000px">
+    <div class="mu-box" padding="1x">
+      <mu-combo-box
+        class="mu-box" width="500" dropdown-height="300px"
+        v-model="artist" :options="artistsCn">
+        <template #dropdown>
+          <mu-h-box width="100%" height="100%">
+            <mu-tab-bar
+              flex="none" tab-position="left"
+              :tab-items="tabItems" v-model:active-tab="activeTab">
+            </mu-tab-bar>
+            <mu-box flex="1">
+              <component
+                :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-option'"
+                v-for="(el, index) in artistsCn"
+                :key="el === '-' ? index : el"
+                v-bind="el === '-' ? {} : el" />
+            </mu-box>
+          </mu-h-box>
+        </template>
+      </mu-combo-box>
+    </div>
+    <div class="mu-box" position="fixed bottom left" padding="1x">
       <mu-combo-box
         v-model="artist"
         class="mu-box"
@@ -59,11 +77,10 @@
         :dropdown-style="{ width: '600px' }"
         :options="artistsCn">
       </mu-combo-box>
-      <p class="mu-box" margin="0" margin-x="2x" align-self="center">
-        {{ artist }}
-      </p>
     </div>
-    <mu-button @click="addOption">Add Option</mu-button>
+    <mu-box padding="1x">
+      <mu-button @click="addOption">Add Option</mu-button>
+    </mu-box>
   </div>
 
   <script type="text/javascript">
@@ -87,7 +104,15 @@
           { value: 'Johann Baptist Strauss', label: '斯特劳斯', disabled: true }
         ])
 
-        return { artist, artists, artistsCn }
+        const tabItems = [
+          { name: 'All Variables' },
+          { name: 'Workflow' },
+          { name: 'Business' }
+        ]
+
+        const activeTab = Vue.ref('All Variables')
+
+        return { artist, artists, artistsCn, tabItems, activeTab }
       },
       methods: {
         onDropdownShow () {

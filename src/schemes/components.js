@@ -9,6 +9,8 @@ export default {
   buttonLineHeight: '20px',
   buttonBorderRadius: '4px',
   buttonFocusShadowSize: '0 0 0 2px',
+  smallButtonHeight: '24px',
+  smallButtonPaddingX: '8px',
 
   editorHeight: '32px',
   editorPaddingX: '12px',
@@ -57,7 +59,6 @@ export default {
   barLabelFontSize: '12px',
 
   tabBarHeight: '40px',
-  tabButtonHeight: '24px',
   tabButtonBorderWidth: '0',
 
   notifierWidth: '320px',

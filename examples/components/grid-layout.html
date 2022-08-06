@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Bar Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+</head>
+
+<body>
+  <div id="app">
+    <mu-grid-box
+      position="fixed fit"
+      padding="1x" margin="2x" border="primary"
+      columns="15" rows="6">
+      <mu-grid-cell
+        margin="1x" border
+        col-start="1" col-end="5"
+        row-start="2" row-end="4">
+        A
+      </mu-grid-cell>
+      <mu-grid-cell margin="1x" border>B</mu-grid-cell>
+      <mu-grid-cell margin="1x" border>C</mu-grid-cell>
+      <mu-grid-cell margin="1x" border>D</mu-grid-cell>
+      <mu-grid-cell margin="1x" border>E</mu-grid-cell>
+    </mu-grid-box>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+      }
+    })
+
+    mussel.install(app, { darkMode: false })
+
+    app.mount('#app')
+  </script>
+</body>

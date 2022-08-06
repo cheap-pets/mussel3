@@ -22,6 +22,7 @@ import './components/status-box.pcss'
 
 import './box/flex-layout.pcss'
 import './box/grid-layout.pcss'
+import './box/layout.pcss'
 import './box/position.pcss'
 import './box/size.pcss'
 import './box/margin.pcss'

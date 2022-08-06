@@ -104,17 +104,17 @@
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
       <div class="mu-space"></div>
-      <mu-button-group x-color="cyan" width="400" round>
+      <mu-button-group x-color="cyan" width="300" round>
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
-      <mu-button-group danger width="400" round>
+      <mu-button-group danger width="300" round>
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
-      <mu-button-group width="400" disabled>
+      <mu-button-group width="300" height="60px" disabled>
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
@@ -150,7 +150,7 @@
           <line x1="6" y1="11" x2="12" y2="5" />
         </svg>`
     })
-    mussel.install(app, { darkMode: 'auto', theme: { primaryColor: '#775039'} })
+    mussel.install(app, { darkMode: 'auto', theme: { primaryColor: '#5b9c78'} })
 
     app.mount('#app')
   </script>

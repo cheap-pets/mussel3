@@ -2,6 +2,8 @@
 import Box from './box/box.vue'
 import HBox from './box/h-box.vue'
 import VBox from './box/v-box.vue'
+import GridBox from './box/grid-box.vue'
+import GridCell from './box/grid-cell.vue'
 
 /* ICON */
 import Icon from './icon/icon.vue'
@@ -51,6 +53,8 @@ export function installComponents (app) {
   app.component('mu-box', Box)
   app.component('mu-h-box', HBox)
   app.component('mu-v-box', VBox)
+  app.component('mu-grid-box', GridBox)
+  app.component('mu-grid-cell', GridCell)
 
   app.component('mu-icon', Icon)
 
