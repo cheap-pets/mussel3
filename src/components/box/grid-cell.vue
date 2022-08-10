@@ -21,15 +21,23 @@
     },
     computed: {
       boxStyle () {
+        const gridColumnEnd = isNaN(this.colEnd)
+          ? null
+          : (parseInt(this.colEnd) + 1)
+
+        const gridRowEnd = isNaN(this.rowEnd)
+          ? null
+          : (parseInt(this.rowEnd) + 1)
+
         return {
           width: getSizeValue(this.width),
           height: getSizeValue(this.height),
           gridColumnStart: this.colStart,
           gridColumnSpan: this.colSpan,
-          gridColumnEnd: this.colEnd,
+          gridColumnEnd,
           gridRowStart: this.rowStart,
           gridRowSpan: this.rowSpan,
-          gridRowEnd: this.rowEnd
+          gridRowEnd
         }
       }
     }
