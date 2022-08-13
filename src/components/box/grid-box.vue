@@ -13,12 +13,7 @@
 
   export default {
     name: 'MusselGridBox',
-    props: {
-      width: String,
-      height: String,
-      rows: String,
-      columns: String
-    },
+    props: ['width', 'height', 'rows', 'columns'],
     computed: {
       boxStyle () {
         return {

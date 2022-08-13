@@ -4,47 +4,70 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bar Component Example</title>
+  <title>Grid Layout Example</title>
 
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="../../dist/mussel.css" />
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
 <body>
-  <div id="app">
-    <mu-grid-box
-      position="fixed fit"
-      padding="1x" margin="2x" border="primary"
-      columns="15" rows="6">
-      <mu-grid-cell
-        margin="1x" border
-        col-start="1" col-end="5"
-        row-start="2" row-end="4">
-        A
+  <div id="app" class="mu-box" position="fixed fit" style="background: #000;">
+    <mu-grid-box width="480" height="270" padding="1x" style="background-color: rgba(0, 47, 167, .5);"
+      :columns="config.columns" :rows="config.rows">
+      <mu-grid-cell v-for="cell in config.cells" :key="cell" :col-start="cell.colStart" :col-end="cell.colEnd"
+        :row-start="cell.rowStart" :row-end="cell.rowEnd" style="background-color: rgba(0, 47, 167, 1);" margin="1x">
       </mu-grid-cell>
-      <mu-grid-cell margin="1x" border>B</mu-grid-cell>
-      <mu-grid-cell margin="1x" border>C</mu-grid-cell>
-      <mu-grid-cell margin="1x" border>D</mu-grid-cell>
-      <mu-grid-cell margin="1x" border>E</mu-grid-cell>
     </mu-grid-box>
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
+        const config = {
+          "layout": "grid",
+          "rows": 5,
+          "columns": 7,
+          "cells": [
+            {
+              "colStart": 1,
+              "colEnd": 2,
+              "rowStart": 1,
+              "rowEnd": 2
+            },
+            {
+              "colStart": 3,
+              "colEnd": 7,
+              "rowStart": 1,
+              "rowEnd": 2
+            },
+            {
+              "colStart": 1,
+              "colEnd": 2,
+              "rowStart": 3,
+              "rowEnd": 5
+            },
+            {
+              "colStart": 3,
+              "colEnd": 5,
+              "rowStart": 3,
+              "rowEnd": 5
+            },
+            {
+              "colStart": 6,
+              "colEnd": 7,
+              "rowStart": 3,
+              "rowEnd": 5
+            }
+          ]
+        }
+        return { config }
       }
     })
 
-    mussel.install(app, { darkMode: false })
+    mussel.install(app, { darkMode: 'auto' })
 
     app.mount('#app')
   </script>

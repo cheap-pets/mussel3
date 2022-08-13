@@ -10,8 +10,9 @@
   export default {
     name: 'MusselBox',
     props: {
-      width: String,
-      height: String
+      size: null,
+      width: null,
+      height: null
     },
     computed: {
       boxStyle () {

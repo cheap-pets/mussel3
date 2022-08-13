@@ -1,6 +1,6 @@
 {
   "name": "mussel",
-  "version": "3.0.24-alpha",
+  "version": "3.0.25-alpha",
   "description": "UI Library for Vue@3",
   "main": "dist/mussel.js",
   "files": [

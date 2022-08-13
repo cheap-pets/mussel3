@@ -9,16 +9,11 @@
 
   export default {
     name: 'MusselGridCell',
-    props: {
-      width: String,
-      height: String,
-      colStart: String,
-      colSpan: String,
-      colEnd: String,
-      rowStart: String,
-      rowSpan: String,
-      rowEnd: String
-    },
+    props: [
+      'width', 'height',
+      'colStart', 'colSpan', 'colEnd',
+      'rowStart', 'rowSpan', 'rowEnd'
+    ],
     computed: {
       boxStyle () {
         const gridColumnEnd = isNaN(this.colEnd)
