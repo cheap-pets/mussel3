@@ -6,8 +6,6 @@ import { icons, registerIcons } from './components/icon/icons'
 
 // import { installDirectives } from '@/directives'
 
-// export * from './events'
-
 function install (app, options = {}) {
   app.provide('$mussel', app.config.globalProperties.$mussel = {})
 
@@ -19,8 +17,5 @@ function install (app, options = {}) {
   // installDirectives(app)
 }
 
-export {
-  install,
-  icons,
-  registerIcons
-}
+export { EventInterceptor } from './events'
+export { install, icons, registerIcons }

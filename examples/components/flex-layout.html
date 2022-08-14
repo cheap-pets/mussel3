@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Bar Component Example</title>
+  <title>Flex Layout Component Example</title>
 
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
@@ -22,7 +22,7 @@
 <body>
   <div id="app">
     <mu-h-box class="mu-bg-normal" position="fixed fit" padding="1x">
-      <mu-box flex="1" margin="1x" border>1</mu-box>
+      <mu-box flex="1" margin="1x" border @sizechange.xxx="onResize">1</mu-box>
       <mu-box flex="1" margin="1x" border>2</mu-box>
       <mu-box flex="1" margin="1x" border>3</mu-box>
     </mu-h-box>
@@ -31,6 +31,11 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
+        function onResize (event) {
+          console.log('resize', event)
+        }
+
+        return { onResize }
       }
     })
 
