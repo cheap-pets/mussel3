@@ -54,6 +54,7 @@
         split-button
         reserve-icon-place
         caption="Check & Radio"
+        ref="btnGrape"
         @dropdown:itemclick="onItemClick">
         <template #dropdown>
           <mu-dropdown-check-item
@@ -75,6 +76,15 @@
           </mu-dropdown-radio-item>
         </template>
       </mu-dropdown-button>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>
+      <mu-dropdown-panel
+        :items="artists"
+        :sticky-target="btnGrape"
+        width="auto"
+        v-model:visible="stickyPanelVisible">
+      </mu-dropdown-panel>
     </div>
   </div>
 
@@ -108,11 +118,16 @@
           console.log('button click')
         }
 
+        const btnGrape = Vue.ref(null)
+        const stickyPanelVisible = Vue.ref(false)
+
         return {
           artist,
           artists,
           checkedArtist,
           checkedArtists,
+          btnGrape,
+          stickyPanelVisible,
           onShow,
           onItemClick,
           onButtonClick

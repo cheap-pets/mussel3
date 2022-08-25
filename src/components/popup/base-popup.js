@@ -6,6 +6,7 @@ export default {
       type: Boolean,
       default: true
     },
+    container: null,
     renderToBody: Boolean,
     visible: Boolean
   },
@@ -26,7 +27,11 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      const container = this.$.appContext.app._container || document.body
+      const container =
+        this.container?.$el ||
+        this.container ||
+        this.$.appContext.app._container ||
+        document.body
 
       container.appendChild(this.$el)
     })

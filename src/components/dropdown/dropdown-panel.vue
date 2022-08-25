@@ -76,17 +76,23 @@
       style: Object,
       width: String,
       height: String,
-      items: Array
+      items: Array,
+      stickyTarget: null
     },
     methods: {
+      getStickyTargetElement () {
+        const el = this.stickyTarget || this.$parent
+
+        return el.$el || el
+      },
       updatePosition () {
         if (!this.visible) return
 
         const el = this.$el
         const style = Object(this.style)
+        const pEl = this.getStickyTargetElement()
 
-        const pRect = getClientRect(this.$parent.$el)
-
+        const pRect = getClientRect(pEl)
         const isOnTop = popOnTop(pRect, el.offsetHeight)
         const isOnRight = popOnRight(pRect, el.offsetWidth, this.align)
 
@@ -131,7 +137,7 @@
       hideIf (target) {
         const elements = [
           // ...this.$parent.$el.querySelectorAll('[dropdown-trigger]'),
-          this.$parent.$el,
+          this.getStickyTargetElement(),
           this.$el
         ]
 

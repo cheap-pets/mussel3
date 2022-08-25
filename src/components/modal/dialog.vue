@@ -3,9 +3,9 @@
     v-if="ready"
     v-show="visible || !hidden"
     class="mu-box mu-modal-mask"
-    position="fixed fit"
     layout="flex"
     content-center
+    :position="positionStyle"
     @click="onMaskClick">
     <div
       v-show="!hidden"
@@ -102,6 +102,13 @@
           transform: 'translate3d(0, 200px, 0)',
           ...this.dialogStyle
         }
+      }
+    },
+    computed: {
+      positionStyle () {
+        return this.container
+          ? 'absolute fit'
+          : 'fixed fit'
       }
     },
     watch: {

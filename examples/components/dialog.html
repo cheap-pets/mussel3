@@ -45,6 +45,7 @@
         title="My Dialog 2"
         width="640px"
         height="480px"
+        :container="containerDiv"
         :buttons="buttons">
         <template #side-panel>
           <div class="mu-dialog_side-panel mu-box" width="200">
@@ -86,6 +87,12 @@
         </mu-v-box>
       </mu-dialog>
     </div>
+    <mu-box
+      ref="containerDiv"
+      class="mu-bg-strong"
+      overflow="hidden" width="1000" height="800"
+      border="primary">
+    </mu-box>
   </div>
 
   <script type="text/javascript">
@@ -94,6 +101,8 @@
         const dialogVisible1 = Vue.ref(false)
         const dialogVisible2 = Vue.ref(false)
         const dialogVisible3 = Vue.ref(false)
+
+        const containerDiv = Vue.ref(null)
 
         const buttons = [
           { caption: 'Cancel', action: 'hide' },
@@ -104,6 +113,7 @@
           dialogVisible1,
           dialogVisible2,
           dialogVisible3,
+          containerDiv,
           buttons,
           onShow () {
             console.log('show')
