@@ -7,10 +7,11 @@
     <slot />
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
-      width="auto"
+      :items="dropdownItems"
       :align="dropdownAlign"
       :style="dropdownStyle"
-      :items="dropdownItems"
+      :width="dropdownWidth"
+      :height="dropdownHeight"
       :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown" />
     </mu-dropdown-panel>
