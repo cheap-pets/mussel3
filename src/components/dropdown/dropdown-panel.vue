@@ -136,7 +136,6 @@
       },
       hideIf (target) {
         const elements = [
-          // ...this.$parent.$el.querySelectorAll('[dropdown-trigger]'),
           this.getStickyTargetElement(),
           this.$el
         ]

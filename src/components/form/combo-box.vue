@@ -8,14 +8,12 @@
     </slot>
     <input
       v-model="inputValue"
-      dropdown-trigger
       :disabled="disabled"
-      :readonly="readonly || !searchable"
+      :readonly="readonly || !editable"
       :placeholder="placeholder"
-      @click="toggleDropdown"
-      @blur="searching = false">
+      @click="toggleDropdown">
     <mu-icon
-      v-if="clearButtonVisible"
+      v-if="clearButtonEnabled"
       visibility="hover"
       class="mu-link"
       icon="x"
@@ -24,7 +22,6 @@
     <mu-icon
       v-if="!disabled && !readonly"
       class="mu-link"
-      dropdown-trigger
       icon="dropdown"
       :expanded="dropdownVisible || null"
       @click="toggleDropdown" />
@@ -34,8 +31,7 @@
       :style="dropdownStyle"
       :align="dropdownAlign"
       :width="dropdownWidth"
-      :height="dropdownHeight"
-      :reserve-icon-place="reserveIconPlace || null">
+      :height="dropdownHeight">
       <slot name="dropdown">
         <component
           :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-option'"
@@ -48,8 +44,6 @@
 </template>
 
 <script>
-  import { delay } from '@/utils/timer'
-
   export default {
     name: 'MusselComboBox',
     provide () {
@@ -58,25 +52,22 @@
       }
     },
     props: {
-      text: null,
       label: String,
       options: Array,
       modelValue: null,
+      clearButton: null,
+      editable: Boolean,
       readonly: Boolean,
       disabled: Boolean,
-      searchable: Boolean,
       placeholder: String,
       dropdownAlign: String,
       dropdownStyle: Object,
       dropdownWidth: String,
-      dropdownHeight: String,
-      reserveIconPlace: Boolean
+      dropdownHeight: String
     },
     emits: ['update:modelValue', 'dropdown:show', 'dropdown:hide'],
     data () {
       return {
-        searching: false,
-        searchText: '',
         optionLabels: {},
         dropdownVisible: false,
         dropdownReady: !this.options
@@ -85,19 +76,17 @@
     computed: {
       inputValue: {
         get () {
-          return this.searching
-            ? this.searchText
-            : this.text ?? this.optionLabels[this.modelValue]
+          const v = this.modelValue
+          return (v in this.optionLabels) ? this.optionLabels[v] : v
         },
         set (value) {
-          this.searchText = value
+          this.$emit('update:modelValue', value)
         }
       },
-      clearButtonVisible () {
+      clearButtonEnabled () {
         return (
           !this.disabled && !this.readonly && this.modelValue &&
-          (this.$attrs.onClear || !this.searchable) && !this.searching &&
-          (!['0', 'none', 'false', false].includes(this.$attrs['clear-button']))
+          (!['false', 'none'].includes(String(this.clearButton)))
         )
       }
     },
@@ -106,14 +95,12 @@
         deep: true,
         immediate: true,
         handler (options) {
-          if (!Array.isArray(options)) return
-          this.optionLabels = options.reduce(
-            (p, el) => {
-              p[el.value] = el.label ?? el.value
-              return p
-            },
-            {}
-          )
+          if (Array.isArray(options)) {
+            this.optionLabels = options.reduce((labels, el) => {
+              labels[el.value] = el.label ?? el.value
+              return labels
+            }, {})
+          }
         }
       }
     },
@@ -131,7 +118,7 @@
             if (!this.dropdownReady) {
               this.dropdownReady = true
 
-              return delay()
+              return this.$nextTick()
             }
           })
           .then(() => {
@@ -156,9 +143,6 @@
           this.dropdownVisible = false
           this.$emit('update:modelValue', option.value)
         }
-      },
-      includes (value) {
-        return false
       }
     }
   }

@@ -1,7 +1,7 @@
 import '@/styles'
 
 import { installTheme } from './schemes'
-import { installComponents } from './components'
+import { installComponents, components } from './components'
 import { icons, registerIcons } from './components/icon/icons'
 
 // import { installDirectives } from '@/directives'
@@ -18,4 +18,4 @@ function install (app, options = {}) {
 }
 
 export { EventInterceptor } from './events'
-export { install, icons, registerIcons }
+export { install, components, icons, registerIcons }

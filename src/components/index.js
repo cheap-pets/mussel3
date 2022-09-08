@@ -49,6 +49,41 @@ import Dialog from './modal/dialog.vue'
 import StatusBox from './message/status-box.vue'
 import installMessage from './message'
 
+export const components = {
+  Box,
+  HBox,
+  VBox,
+  GridBox,
+  GridCell,
+  Icon,
+  Button,
+  ButtonGroup,
+  ListItem,
+  ListDivider,
+  Editor,
+  ComboBox,
+  ComboBoxOption,
+  Check,
+  Radio,
+  Switch,
+  Form,
+  FormRow,
+  FormField,
+  Dropdown,
+  DropdownButton,
+  DropdownPanel,
+  DropdownItem,
+  DropdownCheckItem,
+  DropdownRadioItem,
+  TabButton,
+  TabBar,
+  TabPanel,
+  TabsButtons,
+  Tabs,
+  Dialog,
+  StatusBox
+}
+
 export function installComponents (app) {
   app.component('mu-box', Box)
   app.component('mu-h-box', HBox)
