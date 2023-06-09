@@ -10,7 +10,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   outline: none;
-  border: $buttonBorderWidth solid var(--mu-button-border-color-normal);
+  border: $buttonBorderWidth solid currentColor;
   border-radius: $buttonBorderRadius;
   font-family: inherit;
   font-size: var(--mu-common-font-size);
@@ -19,6 +19,7 @@
   background: var(--mu-button-background-normal);
   color: var(--mu-button-text-color-normal);
   cursor: pointer;
+  user-select: none;
 
   & > span {
     display: block;

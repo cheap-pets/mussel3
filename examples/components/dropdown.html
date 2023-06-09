@@ -3,7 +3,10 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
+
   <title>Dropdown Component Example</title>
 
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
@@ -19,13 +22,23 @@
 
 <body>
   <div id="app" class="mu-box" position="fixed fit">
-    <div class="mu-box" layout="flex" padding="1x" style="padding-left: 200px;">
+    <div class="mu-box" padding="1x" style="padding-left: 200px;">
       <mu-dropdown
         dropdown-align="right"
         :dropdown-items="artists"
         @dropdown:show="onShow"
         @dropdown:itemclick="onItemClick">
         <mu-button>{{ artist }}</mu-button>
+      </mu-dropdown>
+    </div>
+    <div class="mu-box" padding="1x">
+      <mu-dropdown
+        dropdown-align="top right"
+        dropdown-trigger="press"
+        :dropdown-items="artists"
+        @dropdown:show="onShow"
+        @dropdown:itemclick="onItemClick">
+        <mu-button>Press me</mu-button>
       </mu-dropdown>
     </div>
     <div class="mu-box" layout="flex" padding="1x">

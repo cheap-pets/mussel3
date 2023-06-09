@@ -25,14 +25,29 @@
 
   import BasePopup from '../popup/base-popup'
 
-  function popOnTop (pRect, height) {
+  function popOnTop (pRect, height, alignValues) {
+    const align =
+      (alignValues.includes('top') && 'top') ||
+      (alignValues.includes('bottom') && 'bottom')
+
     return (
-      (pRect.bottom + height > window.innerHeight) &&
-      (pRect.top >= height)
+      (align === 'top') ||
+      (
+        align === 'bottom'
+          ? false
+          : (
+            (pRect.bottom + height > window.innerHeight) &&
+            (pRect.top >= height)
+          )
+      )
     )
   }
 
-  function popOnRight (pRect, width, align) {
+  function popOnRight (pRect, width, alignValues) {
+    const align =
+      (alignValues.includes('right') && 'right') ||
+      (alignValues.includes('left') && 'left')
+
     return (
       (align === 'right') ||
       (
@@ -67,12 +82,7 @@
       dropdown: { default: null }
     },
     props: {
-      align: {
-        type: String,
-        validator (v) {
-          return ['left', 'right'].includes(v)
-        }
-      },
+      align: String,
       style: Object,
       width: String,
       height: String,
@@ -88,13 +98,15 @@
       updatePosition () {
         if (!this.visible) return
 
-        const el = this.$el
         const style = Object(this.style)
+        const alignValues = String(this.align).toLowerCase().split(' ')
+
+        const el = this.$el
         const pEl = this.getStickyTargetElement()
 
         const pRect = getClientRect(pEl)
-        const isOnTop = popOnTop(pRect, el.offsetHeight)
-        const isOnRight = popOnRight(pRect, el.offsetWidth, this.align)
+        const isOnTop = popOnTop(pRect, el.offsetHeight, alignValues)
+        const isOnRight = popOnRight(pRect, el.offsetWidth, alignValues)
 
         const width = style.width
           ? null

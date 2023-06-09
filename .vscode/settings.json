@@ -3,5 +3,19 @@
     "colorette",
     "itemclick",
     "tabler"
+  ],
+  "cSpell.ignoreWords": [
+    "panend",
+    "panmove",
+    "panstart",
+    "panx",
+    "panxend",
+    "panxmove",
+    "panxstart",
+    "pany",
+    "panyend",
+    "panymove",
+    "panystart",
+    "timespan"
   ]
 }

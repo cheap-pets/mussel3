@@ -2,6 +2,7 @@
   <div
     class="mu-dropdown"
     @click="onTriggerClick"
+    @press="onPress"
     @mouseover="onTriggerMouseOver"
     @mouseleave="onTriggerMouseLeave">
     <slot />
@@ -39,7 +40,7 @@
         type: String,
         default: 'hover',
         validator (v) {
-          return ['hover', 'click'].includes(v)
+          return ['hover', 'click', 'press'].includes(v)
         }
       },
       reserveIconPlace: Boolean
@@ -48,14 +49,6 @@
     data () {
       return {
         dropdownVisible: false
-      }
-    },
-    computed: {
-      isClickMode () {
-        return this.dropdownTrigger === 'click'
-      },
-      isHoverMode () {
-        return this.dropdownTrigger === 'hover'
       }
     },
     watch: {
@@ -93,15 +86,29 @@
       },
 
       onTriggerClick () {
-        if (this.isClickMode) this.toggleDropdownVisible()
+        if (this.dropdownTrigger === 'click') {
+          this.toggleDropdownVisible()
+        } else if (this.dropdownTrigger === 'press') {
+          this.hideDropdown()
+        }
+      },
+
+      onPress () {
+        if (['click', 'press'].includes(this.dropdownTrigger)) {
+          this.showDropdown()
+        }
       },
 
       onTriggerMouseOver () {
-        if (this.isHoverMode) this.showDropdown()
+        if (this.dropdownTrigger === 'hover') {
+          this.showDropdown()
+        }
       },
 
       onTriggerMouseLeave () {
-        if (this.isHoverMode) this.delayHideDropdown()
+        if (this.dropdownTrigger === 'hover') {
+          this.delayHideDropdown()
+        }
       },
 
       onDropdownItemClick (item) {
