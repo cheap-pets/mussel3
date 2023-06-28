@@ -16,13 +16,15 @@
         <mu-icon reverse :icon="icon" />
         <span>{{ title }}</span>
       </div>
-      <div class="mu-message_content" v-html="message" />
+      <div class="mu-message_content" v-html="msgHTML" />
     </div>
   </mu-dialog>
 </template>
 
 <script>
   import Dialog from '../modal/dialog.vue'
+
+  import { removeEventAttr } from '../../utils/html'
 
   export default {
     components: {
@@ -39,6 +41,11 @@
     data () {
       return {
         visible: false
+      }
+    },
+    computed: {
+      msgHTML () {
+        return removeEventAttr(this.message)
       }
     },
     mounted () {
