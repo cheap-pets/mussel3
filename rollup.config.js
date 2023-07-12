@@ -1,5 +1,7 @@
 import path from 'path'
 
+import browserslist from 'browserslist'
+
 import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
@@ -16,9 +18,12 @@ import postcssAdvanced from 'postcss-advanced-variables'
 import { string } from 'rollup-plugin-string'
 import { yellow } from 'colorette'
 
-import variables from './src/schemes/postcss-variables'
+import variables from './src/schemes/postcss-variables.js'
+
+import { fileURLToPath } from 'url'
 
 const isDevEnv = process.env.dev
+const currentDir = path.dirname(fileURLToPath(import.meta.url))
 
 export default {
   input: 'src/index.js',
@@ -37,11 +42,11 @@ export default {
       entries: [
         {
           find: '~icons',
-          replacement: path.resolve(__dirname, 'node_modules/@tabler/icons/icons')
+          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons')
         },
         {
           find: '@',
-          replacement: path.resolve(__dirname, 'src')
+          replacement: path.resolve(currentDir, 'src')
         }
       ]
     }),
@@ -59,14 +64,20 @@ export default {
         postcssNest,
         autoprefixer
       ],
-      extract: path.resolve(__dirname, isDevEnv ? 'dist/mussel.css' : 'dist/mussel.min.css')
+      extract: path.resolve(currentDir, isDevEnv ? 'dist/mussel.css' : 'dist/mussel.min.css')
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']
     }),
-    swc({
-      rollup: {
-        exclude: /\/core-js\//
+    swc.default({
+      jsc: {
+        minify: {
+          mangle: !isDevEnv
+        }
+      },
+      env: {
+        targets: browserslist.findConfig(currentDir).defaults,
+        coreJs: 3
       },
       minify: !isDevEnv
     }),

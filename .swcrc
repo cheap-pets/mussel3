@@ -1,21 +1,9 @@
 {
+  "exclude": ["node_modules/**/*.js"],
   "jsc": {
     "parser": {
-      "syntax": "ecmascript",
-      "decorators": true,
-      "decoratorsBeforeExport": true
-    },
-    "transform": {
-      "legacyDecorator": true
+      "syntax": "ecmascript"
     }
-  },
-  "env": {
-    "targets": {
-      "chrome": "80",
-      "firefox": "80",
-      "edge": "90"
-    },
-    "coreJs": 3
   },
   "module": {
     "type": "es6"
