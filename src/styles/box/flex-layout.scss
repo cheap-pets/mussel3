@@ -42,7 +42,7 @@
   }
 }
 
-.mu-box[layout=flex] > ,
+.mu-box[layout=flex] > *,
 .mu-box {
   &[flex="auto"] {
     flex-grow: 1;

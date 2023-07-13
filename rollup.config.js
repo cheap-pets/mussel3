@@ -8,17 +8,19 @@ import resolve from '@rollup/plugin-node-resolve'
 
 import swc from 'rollup-plugin-swc'
 import vue from 'rollup-plugin-vue'
-import postcss from 'rollup-plugin-postcss'
+import sass from 'rollup-plugin-sass'
 
-import postcssCalc from 'postcss-calc'
-import autoprefixer from 'autoprefixer'
-import postcssNest from 'postcss-nested'
-import postcssAdvanced from 'postcss-advanced-variables'
+// import postcss from 'postcss'
+// import autoprefixer from 'autoprefixer'
+
+// import postcssCalc from 'postcss-calc'
+// import postcssNest from 'postcss-nested'
+// import postcssAdvanced from 'postcss-advanced-variables'
 
 import { string } from 'rollup-plugin-string'
 import { yellow } from 'colorette'
 
-import variables from './src/schemes/postcss-variables.js'
+import variables from './src/schemes/variables.js'
 
 import { fileURLToPath } from 'url'
 
@@ -54,17 +56,12 @@ export default {
     string({
       include: '**/*.svg'
     }),
-    postcss({
-      extensions: ['.css', '.pcss', '.postcss'],
-      minimize: !isDevEnv,
-      plugins: [
-        postcssAdvanced({ variables }),
-        // postcssCustomProps,
-        postcssCalc,
-        postcssNest,
-        autoprefixer
-      ],
-      extract: path.resolve(currentDir, isDevEnv ? 'dist/mussel.css' : 'dist/mussel.min.css')
+    sass({
+      output: true,
+      options: {
+        data: Object.entries(variables).map(([key, value]) => `$${key}: ${value};`).join('\n'),
+        outputStyle: isDevEnv ? 'expanded' : 'compressed'
+      }
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']

@@ -1,6 +1,6 @@
 .mu-root {
   /* Base Colors */
-  --mu-white: $white;
+  --mu-white: #{$white};
   --mu-black: $black;
 
   --mu-gray: $gray;

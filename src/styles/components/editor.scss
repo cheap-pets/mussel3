@@ -13,29 +13,31 @@
     align-items: center;
   }
 
-  input& {
-    padding: 0 $editorPaddingX;
-  }
-
-  textarea& {
-    height: $textareaHeight;
-    padding: $textareaPaddingY $editorPaddingX;
-    resize: none;
-  }
-
-  textarea&,
-  input&,
-  & > input {
-    outline: none;
-    font-size: var(--mu-common-font-size);
-    color: var(--mu-editor-text-color);
-
-    &::-ms-clear {
-      display: none;
+  @at-root {
+    input#{&} {
+      padding: 0 $editorPaddingX;
     }
 
-    &::placeholder {
-      color: var(--mu-text-color-placeholder);
+    textarea#{&} {
+      height: $textareaHeight;
+      padding: $textareaPaddingY $editorPaddingX;
+      resize: none;
+    }
+
+    textarea#{&},
+    input#{&},
+    #{&} > input {
+      outline: none;
+      font-size: var(--mu-common-font-size);
+      color: var(--mu-editor-text-color);
+
+      &::-ms-clear {
+        display: none;
+      }
+
+      &::placeholder {
+        color: var(--mu-text-color-placeholder);
+      }
     }
   }
 
@@ -119,15 +121,17 @@
     } */
   }
 
-  [invalid] > input&,
-  [invalid] > textarea&,
-  [invalid] > & > input,
-  [invalid] > & > textarea,
-  [invalid] > & > .mu-icon:not(a),
-  &[invalid] > input,
-  &[invalid] > textarea,
-  &[invalid] > .mu-icon:not(a) {
-    color: var(--mu-danger-color);
+  @at-root {
+    [invalid] > input#{&},
+    [invalid] > textarea#{&},
+    [invalid] > #{&} > input,
+    [invalid] > #{&} > textarea,
+    [invalid] > #{&} > .mu-icon:not(a),
+    #{&}[invalid] > input,
+    #{&}[invalid] > textarea,
+    #{&}[invalid] > .mu-icon:not(a) {
+      color: var(--mu-danger-color);
+    }
   }
   
   &[solid] {

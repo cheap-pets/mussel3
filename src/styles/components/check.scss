@@ -2,7 +2,7 @@
 .mu-radio {
   cursor: pointer;
 
-  label& {
+  @at-root label#{&} {
     display: inline-flex;
     align-items: center;
     font-size: var(--mu-common-font-size);
@@ -18,7 +18,8 @@
 .mu-check[disabled] {
   pointer-events: none;
 
-  input&, & > input {
+  @at-root input#{&},
+  & > input {
     opacity: .5;
   }
 }
