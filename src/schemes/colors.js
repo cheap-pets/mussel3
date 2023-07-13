@@ -1,4 +1,4 @@
-import { generatePalettes, toRGBA } from '../utils/color.js'
+import { generatePalettes, toRGBA } from '../utils/color'
 
 const SPECIAL_COLORS = {
   primaryColor: '$blue',

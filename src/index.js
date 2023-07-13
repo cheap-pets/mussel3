@@ -1,4 +1,4 @@
-import '@/styles'
+import './styles'
 
 import { installTheme } from './schemes'
 import { installComponents, components } from './components'

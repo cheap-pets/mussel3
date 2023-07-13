@@ -1,74 +1,42 @@
 {
   "root": true,
-  "parser": "vue-eslint-parser",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "parser": "@babel/eslint-parser"
-  },
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+},
   "extends": [
     "standard",
-    "plugin:vue/vue3-recommended"
+    "plugin:node/recommended",
+    "plugin:security/recommended"
   ],
   "plugins": [
-    "vue"
+    "node",
+    "security"
   ],
   "env": {
-    "browser": true,
-    "es6": true
+    "commonjs": true,
+    "node": true
   },
   "rules": {
-    "prefer-const": "error",
-    "vue/html-indent": [
-      "warn",
-      2,
-      {
-        "alignAttributesVertically": false
-      }],
-    "vue/script-indent": [
-      "error",
-      2,
-      { "baseIndent": 1, "switchCase": 1 }
-    ],
-    "vue/no-v-html": 0,
-    "vue/require-prop-types": 0,
-    "vue/require-default-prop": 0,
-    "vue/max-attributes-per-line": 0,
-    "vue/component-definition-name-casing": 0,
-    "vue/html-closing-bracket-newline": [
-      "error",
-      {
-        "singleline": "never",
-        "multiline": "never"
-      }
-    ],
-    "complexity": [ 1, 10 ],
+    "prefer-const": 2,
+    "complexity": [ 1, 10],
     "max-len": [
-      "warn",
+      1,
       {
         "code": 100,
         "tabWidth": 2,
         "ignoreUrls": true,
-        "ignoreStrings": true,
+        "ignoreStrings": false,
         "ignoreComments": true,
+        "ignoreRegExpLiterals": true,
         "ignoreTrailingComments": true,
         "ignoreTemplateLiterals": true
       }
     ],
-    "no-shadow": "error",
-    "no-shadow-restricted-names": "error"
-  },
-  "overrides": [
-    {
-      "files": ["*.vue"],
-      "rules": {
-        "indent": "off",
-        "template-curly-spacing": "off"
-      }
-    },
-    {
-      "files": ["*.html"],
-      "rules": {
-        "vue/comment-directive": "off"
-      }
-    }
-  ]
+    "node/no-extraneous-require": 0,
+    "node/no-unpublished-import": 0,
+    "node/no-unsupported-features/es-syntax": 0,
+    "security/detect-object-injection": 0
+  }
 }

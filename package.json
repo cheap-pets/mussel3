@@ -3,18 +3,12 @@
   "version": "3.0.33-alpha",
   "description": "UI Library for Vue@3",
   "main": "dist/mussel.js",
-  "type": "module",
   "files": [
     "dist"
   ],
-  "config": {
-    "cz-customizable": {
-      "config": ".cz-config.cjs"
-    }
-  },
   "scripts": {
-    "build": "rollup -c --environment=dev && rollup -c",
-    "build:dev": "rollup -c --watch --environment=dev",
+    "build": "rollup -c --environment=dev --bundleConfigAsCjs && rollup -c --bundleConfigAsCjs",
+    "build:dev": "rollup -c --bundleConfigAsCjs --environment=dev --watch",
     "pub": "npm run build && npm publish"
   },
   "devDependencies": {

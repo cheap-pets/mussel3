@@ -1,10 +1,10 @@
-import common from './common.js'
-import components from './components.js'
-import updateVariableValues from './update-variable-values.js'
+import common from './common'
+import components from './components'
+import updateVariableValues from './update-variable-values'
 // import lightTheme from './theme-light'
 // import darkTheme from './theme-dark'
 
-import { colors, GENERABLE_COLORS, complementColors } from './colors.js'
+import { colors, GENERABLE_COLORS, complementColors } from './colors'
 
 const variables = {
   ...colors,

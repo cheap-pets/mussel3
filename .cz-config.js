@@ -1,6 +1,10 @@
 module.exports = {
   types: [
     {
+      value: '🎉',
+      name: ' - Initialize'
+    },
+    {
       value: '✨',
       name: ' - New Feature'
     },
@@ -11,10 +15,6 @@ module.exports = {
     {
       value: '🔨',
       name: ' - Refactor'
-    },
-    {
-      value: '🎉',
-      name: ' - Initialize'
     },
     {
       value: '💄',
@@ -54,10 +54,9 @@ module.exports = {
     }
   ],
 
+  subjectLimit: 80,
   skipQuestions: ['scope', 'body'],
   
   allowCustomScopes: false,
-  allowBreakingChanges: ['feat', 'fix'],
-
-  subjectLimit: 64
+  allowBreakingChanges: ['feat', 'fix']
 }

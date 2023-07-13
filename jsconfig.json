@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "esnext",
-    "jsx": "preserve",
-    "strictFunctionTypes": true
+    "baseUrl": ".",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "strictFunctionTypes": true,
+    "paths": {
+      "@/*": ["./src/*"] 
+    }
   },
   "exclude": [
-    "node_modules",
-    "**/node_modules/*"
+    "node_modules"
   ]
 }

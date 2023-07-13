@@ -13,7 +13,8 @@
   ],
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "vue/setup-compiler-macros": true
   },
   "rules": {
     "prefer-const": "error",
@@ -22,7 +23,8 @@
       2,
       {
         "alignAttributesVertically": false
-      }],
+      }
+    ],
     "vue/script-indent": [
       "error",
       2,
@@ -62,6 +64,12 @@
       "rules": {
         "indent": "off",
         "template-curly-spacing": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "rules": {
+        "vue/comment-directive": "off"
       }
     }
   ]
