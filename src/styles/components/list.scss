@@ -1,15 +1,19 @@
 .mu-list-item,
 .mu-list-divider {
+  cursor: default;
+
   position: relative;
+
+  overflow: hidden;
   display: flex;
   align-items: center;
+
   width: 100%;
-  line-height: $listItemLineHeight;
-  overflow: hidden;
+
   font-size: var(--mu-common-font-size);
-  white-space: nowrap;
+  line-height: $listItemLineHeight;
   text-overflow: ellipsis;
-  cursor: default;
+  white-space: nowrap;
 
   & > .mu-icon {
     flex: none;
@@ -17,8 +21,8 @@
   }
 
   & > label {
-    flex: 1 1 0;
     cursor: inherit;
+    flex: 1 1 0;
   }
 
   & > * {
@@ -59,17 +63,17 @@ a.mu-list-item {
 }
 
 .mu-list-item[disabled] {
-  color: var(--mu-text-color-weak);
-  background: inherit;
   pointer-events: none;
   cursor: default;
+  color: var(--mu-text-color-weak);
+  background: inherit;
 }
 
 .mu-list-divider {
-  border-top: $listDividerBorderWidth solid var(--mu-list-divider-border-color);
   margin-top: $listDividerMarginY;
   padding: $listDividerMarginY $listItemPaddingX 0;
   color: var(--mu-text-color-weak);
+  border-top: $listDividerBorderWidth solid var(--mu-list-divider-border-color);
   
   & > label {
     font-size: 0.8em;
@@ -91,9 +95,9 @@ a.mu-list-item {
 
 .mu-list-divider:first-child,
 .mu-list-divider:empty + .mu-list-divider {
-  border-top: 0;
   margin-top: 0;
   padding-top: 0;
+  border-top: 0;
 
   &:not(:empty) {
     height: $listItemHeight;

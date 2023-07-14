@@ -2,14 +2,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: $badgeHeight;
+
   min-width: calc($badgeHeight * 1.5);
+  height: $badgeHeight;
   padding: 0 $badgePaddingX;
+
   font-size: $badgeFontSize;
   line-height: $badgeHeight;
-  border-radius: calc($badgeHeight / 2);
-  background: var(--mu-badge-background);
   color: #fff;
+
+  background: var(--mu-badge-background);
+  border-radius: calc($badgeHeight / 2);
 
   &[primary] {
     background: var(--mu-primary-color);

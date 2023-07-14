@@ -36,8 +36,8 @@
     }
 
     &[direction="column"] > .mu-space {
-      height: 100%;
       width: 0;
+      height: 100%;
     }
   }
 }
@@ -54,7 +54,7 @@
   }
   
   @for $i from 1 to 12 {
-    &[flex~="$i"] {
+    &[flex~="#{$i}"] {
       flex: $i $i 0;
     }
   }
@@ -64,7 +64,7 @@
   }
 
   @each $v in (flex-start, flex-end, center, baseline, stretch) {
-    &[align-self="$v"] {
+    &[align-self="#{$v}"] {
       align-self: $v;
     }
   }

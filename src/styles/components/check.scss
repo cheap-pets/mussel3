@@ -29,15 +29,17 @@ input.mu-check,
 .mu-radio > input,
 input.mu-radio {
   flex: none;
+
   width: $checkSize;
   height: $checkSize;
   margin: 0;
+
+  appearance: none;
+  background-color: var(--mu-check-background);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  background-color: var(--mu-check-background);
   border: 1px solid var(--mu-check-border-color);
-  appearance: none;
 
   &:checked {
     background-color: var(--mu-check-background-checked);
@@ -69,9 +71,4 @@ input.mu-radio {
   &:checked {
     background-image: var(--mu-radio-icon);
   }
-}
-
-.mu-list-item.mu-check,
-.mu-list-item.mu-radio {
-
 }

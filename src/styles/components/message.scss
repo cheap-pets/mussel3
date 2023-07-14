@@ -1,8 +1,8 @@
 .mu-message-box {
   & .mu-message-box_icon {
+    margin-right: $commonItemSpacing;
     font-size: 60px;
     color: var(--mu-blue-3);
-    margin-right: $commonItemSpacing;
 
     &[icon=warn] {
       color: var(--mu-red-3);
@@ -23,8 +23,8 @@
 
 .mu-notifier-group-enter-from,
 .mu-notifier-group-leave-to {
-  opacity: 0;
   transform: translateX(100px);
+  opacity: 0;
 }
 
 .mu-notifier-group-move,
@@ -35,24 +35,26 @@
 
 .mu-notifier {
   width: $notifierWidth;
-  font-size: var(--mu-common-font-size);
   margin: $notifierMargin;
   padding: $notifierPaddingY $notifierPaddingX;
+
+  font-size: var(--mu-common-font-size);
+
   background: var(--mu-notifier-background);
   border-radius: $notifierBorderRadius;
   box-shadow: $boxShadowPopup;
   
   &:hover > .mu-notifier_content {
-    text-decoration: underline;
     cursor: pointer;
+    text-decoration: underline;
   }
 }
 
 .mu-message_title {
   display: flex;
   align-items: center;
-  line-height: $notifierIconSize;
   font-weight: 600;
+  line-height: $notifierIconSize;
 
   & > * {
     display: inline-block;

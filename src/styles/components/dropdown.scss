@@ -1,18 +1,22 @@
 .mu-dropdown-panel {
   position: fixed;
   z-index: 110;
+  transform: scaleY(0);
+
+  overflow: auto;
   display: block;
+
   max-height: 300px;
   padding: $dropdownPadding;
-  overflow: auto;
+
   visibility: hidden;
+  opacity: 0;
+  background: var(--mu-dropdown-background);
   border: $dropdownBorderWidth solid var(--mu-dropdown-border-color);
   border-radius: $dropdownBorderRadius;
-  background: var(--mu-dropdown-background);
   box-shadow: $boxShadowPopup;
+
   transition: transform .1s, opacity .1s;
-  transform: scaleY(0);
-  opacity: 0;
 
   &[pop-up] {
     transform: scaleY(1);
@@ -20,20 +24,20 @@
   }
 
   &:not([position="top"]) {
-    margin-top: $dropdownMargin;
     transform-origin: top;
+    margin-top: $dropdownMargin;
   }
 
   &[position="top"] {
-    margin-bottom: $dropdownMargin;
     transform-origin: bottom;
+    margin-bottom: $dropdownMargin;
   }
 }
 
 .mu-list-item.mu-dropdown-item {
+  cursor: pointer;
   display: flex;
   border-radius: $dropdownItemBorderRadius;
-  cursor: pointer;
 
   &:hover {
     background: var(--mu-list-item-hover-background);

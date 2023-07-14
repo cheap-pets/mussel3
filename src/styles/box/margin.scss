@@ -2,7 +2,7 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
 
-    &[margin="$(i)x"] {
+    &[margin="#{$i}x"] {
       margin: $v;
     }
   }
@@ -18,25 +18,25 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
 
-    &[margin-x="$(i)x"] {
-      margin-left: $v;
+    &[margin-x="#{$i}x"] {
       margin-right: $v;
+      margin-left: $v;
     }
 
-    &[margin-y="$(i)x"] {
+    &[margin-y="#{$i}x"] {
       margin-top: $v;
       margin-bottom: $v;
     }
   }
 
   &[margin-x="0"] {
-    margin-left: 0;
     margin-right: 0;
+    margin-left: 0;
   }
 
   &[margin-x="auto"] {
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
   }
 
   &[margin-y="0"] {
@@ -52,19 +52,19 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
     
-    &[margin-top="$(i)x"] {
+    &[margin-top="#{$i}x"] {
       margin-top: $v;
     }
 
-    &[margin-left="$(i)x"] {
+    &[margin-left="#{$i}x"] {
       margin-left: $v;
     }
 
-    &[margin-right="$(i)x"] {
+    &[margin-right="#{$i}x"] {
       margin-right: $v;
     }
 
-    &[margin-bottom="$(i)x"] {
+    &[margin-bottom="#{$i}x"] {
       margin-bottom: $v;
     }
   }

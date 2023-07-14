@@ -11,14 +11,14 @@
 
   &[position~=fit] {
     top: 0;
-    left: 0;
     right: 0;
     bottom: 0;
+    left: 0;
   }
   
   &[position~=left] {
-    left: 0;
     right: auto;
+    left: 0;
   }
   
   &[position~=right] {

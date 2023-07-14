@@ -1,8 +1,8 @@
 .mu-form {
   display: flex;
-  padding: $unitSpacingSize;
-  align-items: flex-start;
   flex-wrap: wrap;
+  align-items: flex-start;
+  padding: $unitSpacingSize;
 }
 
 .mu-form-row {
@@ -13,23 +13,29 @@
 
 .mu-form-field {
   position: relative;
+
   display: flex;
   align-items: center;
-  min-width: 100px;
+
   width: 100%;
+  min-width: 100px;
   padding: $unitSpacingSize;
+
   font-size: var(--mu-common-font-size);
 
   & > label {
     position: relative;
+
     display: inline-block;
     flex: none;
+
     padding-right: 12px;
+
     font-size: calc(1em - 1px);
     color: var(--mu-text-color-weak);
 
     @each $v in (left, right, center) {
-      &[text-align="$v"] {
+      &[text-align="#{$v}"] {
         text-align: $v;
       }
     }
@@ -45,15 +51,20 @@
   }
 
   &[required] > label:before {
-    visibility: visible;
-    position: absolute;
-    right: 0;
-    top: -3px;
-    display: inline-block;
-    width: 10px;
-    text-align: left;
-    color: var(--mu-danger-color);
     content: "*";
+
+    position: absolute;
+    top: -3px;
+    right: 0;
+
+    display: inline-block;
+
+    width: 10px;
+
+    color: var(--mu-danger-color);
+    text-align: left;
+
+    visibility: visible;
   }
 
   &[invalid] > label {

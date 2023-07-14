@@ -8,22 +8,26 @@
 }
 
 .mu-tab-button {
+  cursor: pointer;
+  user-select: none;
+
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $smallButtonHeight;
+
   min-width: $smallButtonHeight;
+  height: $smallButtonHeight;
   padding: 0 $buttonPaddingX;
-  overflow: hidden;
-  outline: none;
-  border-radius: $buttonBorderRadius;
+
   font-family: inherit;
   font-size: var(--mu-common-font-size);
   line-height: $buttonLineHeight;
-  text-decoration: none;
   color: var(--mu-tab-button-text-color);
-  cursor: pointer;
-  user-select: none;
+  text-decoration: none;
+
+  border-radius: $buttonBorderRadius;
+  outline: none;
 
   & > span {
     display: block;
@@ -38,19 +42,19 @@
   }
 
   &:hover {
-    background: var(--mu-tab-button-background-hover);
     color: var(--mu-tab-button-text-color-hover);
+    background: var(--mu-tab-button-background-hover);
   }
 
   &[active] {
-    background: var(--mu-tab-button-background-active);
     color: var(--mu-tab-button-text-color-active);
+    background: var(--mu-tab-button-background-active);
   }
 
   &[disabled] {
-    color: var(--mu-text-color-weak) !important;
-    cursor: default;
     pointer-events: none;
+    cursor: default;
+    color: var(--mu-text-color-weak) !important;
 
     &[active] {
       background: var(--mu-background-disabled);
@@ -61,8 +65,8 @@
 .mu-tabs[button-size=normal] .mu-tab-button,
 .mu-tab-bar[button-size=normal] .mu-tab-button,
 .mu-tab-button[button-size=normal] {
-  height: $buttonHeight;
   min-width: $buttonHeight;
+  height: $buttonHeight;
 }
 
 .mu-bar[tab-style=simple] {
@@ -72,9 +76,9 @@
     border-radius: 0;
 
     &[active] {
+      color: var(--mu-primary-color);
       border-top: 3px solid transparent;
       border-bottom: 3px solid var(--mu-primary-color);
-      color: var(--mu-primary-color);
     }
 
     &:hover {
@@ -95,7 +99,6 @@
   }
 
   &[tab-position=right] {
-    flex-direction: row;
     flex-direction: row-reverse;
   }
 }
@@ -118,8 +121,8 @@
   padding: $commonItemSpacing;
 
   & > * {
-    margin-left: 0;
     margin-top: $inlineItemSpacing;
+    margin-left: 0;
   }
 
   & > :first-child {

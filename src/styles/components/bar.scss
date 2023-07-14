@@ -1,15 +1,17 @@
 .mu-bar {
   display: flex;
   align-items: center;
+
   height: $barHeight;
   padding: 0 $barPaddingX;
+
   font-size: var(--mu-common-font-size);
 
   & > * {
-    margin-left: $commonItemSpacing;
     overflow: hidden;
-    white-space: nowrap;
+    margin-left: $commonItemSpacing;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   & > :first-child {
@@ -19,8 +21,8 @@
 
 .mu-bar > label,
 .mu-bar_caption {
-  color: var(--mu-text-color-weak);
   font-size: $barLabelFontSize;
+  color: var(--mu-text-color-weak);
 }
 
 .mu-bar_caption {
@@ -33,10 +35,12 @@
 
 .mu-bar_divider {
   display: block;
-  margin: 0 $commonItemSpacing;
+  flex: none;
+
   width: 2px;
   height: calc(1em + 2px);
-  flex: none;
+  margin: 0 $commonItemSpacing;
+
   background-color: var(--mu-divider-color);
 
   & + * {
@@ -49,9 +53,9 @@
 }
 
 .mu-bar[align-items="stretch"] {
+  align-items: stretch;
   padding-top: 0;
   padding-bottom: 0;
-  align-items: stretch;
 
   & > label,
   & > .mu-bar_divider,

@@ -1,12 +1,15 @@
 .mu-editor {
   position: relative;
-  height: $editorHeight;
+
   width: 200px;
-  border: $editorBorderWidth solid var(--mu-editor-border-color);
-  border-radius: $editorBorderRadius;
+  height: $editorHeight;
+
   font-size: var(--mu-common-font-size);
   line-height: $editorLineHeight;
+
   background-color: var(--mu-editor-background);
+  border: $editorBorderWidth solid var(--mu-editor-border-color);
+  border-radius: $editorBorderRadius;
 
   &:not(input) {
     display: flex;
@@ -19,17 +22,17 @@
     }
 
     textarea#{&} {
+      resize: none;
       height: $textareaHeight;
       padding: $textareaPaddingY $editorPaddingX;
-      resize: none;
     }
 
     textarea#{&},
     input#{&},
     #{&} > input {
-      outline: none;
       font-size: var(--mu-common-font-size);
       color: var(--mu-editor-text-color);
+      outline: none;
 
       &::-ms-clear {
         display: none;
@@ -42,23 +45,27 @@
   }
 
   & > input {
-    align-self: stretch;
     flex: 1 1 0;
+    align-self: stretch;
+
     width: 1px;
     padding: 0;
-    border: 0;
+
     background: transparent;
+    border: 0;
   }
 
   & > label {
+    overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: center;
     align-self: stretch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    justify-content: center;
+
     font-size: calc(1em - 1px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     background-color: var(--mu-editor-label-background);
 
     &[align=left] {
@@ -92,9 +99,9 @@
 
   & a,
   & .mu-link {
+    cursor: pointer;
     color: var(--mu-text-color-weak);
     text-decoration: none !important;
-    cursor: pointer;
 
     &:hover {
       color: var(--mu-primary-color-light);
@@ -106,22 +113,17 @@
   }
 
   & > .mu-popup-holder {
+    overflow: visible;
     width: 0;
     margin-left: 0;
-    overflow: visible;
-  }
-
-  [invalid] > &,
-  &[invalid] {
-    border-color: var(--mu-danger-color);
-
-    /* &[solid],
-    & > label {
-      background-color: var(--mu-red-0);
-    } */
   }
 
   @at-root {
+    [invalid] > &,
+    &[invalid] {
+      border-color: var(--mu-danger-color);
+    }
+
     [invalid] > input#{&},
     [invalid] > textarea#{&},
     [invalid] > #{&} > input,
@@ -200,12 +202,14 @@
   }
 
   &[disabled] {
-    background-color: var(--mu-background-disabled) !important;
-    border-color: var(--mu-editor-border-color) !important;
-    color: var(--mu-text-color-weak) !important;
-    box-shadow: none !important;
     pointer-events: none;
     cursor: default;
+
+    color: var(--mu-text-color-weak) !important;
+
+    background-color: var(--mu-background-disabled) !important;
+    border-color: var(--mu-editor-border-color) !important;
+    box-shadow: none !important;
 
     &[solid] {
       border-color: transparent !important;
@@ -213,8 +217,8 @@
 
     &[underline] {
       border-top-color: transparent !important;
-      border-left-color: transparent !important;
       border-right-color: transparent !important;
+      border-left-color: transparent !important;
     }
     
     & > * {
@@ -245,14 +249,16 @@
 /* underline */
 .mu-editor[underline] {
   background: var(--mu-editor-background);
-  border-radius: 0;
   border-color: transparent;
   border-bottom-color: var(--mu-editor-border-color);
+  border-radius: 0;
 
-  [invalid] > &,
-  &[invalid] {
-    border-color: transparent;
-    border-bottom-color: var(--mu-danger-color);
+  @at-root {
+    [invalid] > &,
+    &[invalid] {
+      border-color: transparent;
+      border-bottom-color: var(--mu-danger-color);
+    }
   }
 
   & > label {
@@ -264,9 +270,11 @@
     border-bottom-color: var(--mu-primary-color-light);
   }
 
-  [invalid] > &:hover,
-  &[invalid]:hover {
-    border-bottom-color: var(--mu-danger-color-light);
+  @at-root {
+    [invalid] > &:hover,
+    &[invalid]:hover {
+      border-bottom-color: var(--mu-danger-color-light);
+    }
   }
 }
 
@@ -279,10 +287,12 @@
     background-color: var(--mu-editor-background);
   }
 
-  [invalid] > &,
-  &[invalid] {
-    border-color: var(--mu-danger-color);
-    box-shadow: $editorFocusShadowSize var(--mu-danger-color-shadow);
+  @at-root {
+    [invalid] > &,
+    &[invalid] {
+      border-color: var(--mu-danger-color);
+      box-shadow: $editorFocusShadowSize var(--mu-danger-color-shadow);
+    }
   }
 }
 
@@ -292,9 +302,11 @@
     border-color: var(--mu-primary-color-light);
   }
 
-  [invalid] > &:hover,
-  &[invalid]:hover {
-    border-color: var(--mu-danger-color-light);
+  @at-root {
+    [invalid] > &:hover,
+    &[invalid]:hover {
+      border-color: var(--mu-danger-color-light);
+    }
   }
 }
 
@@ -302,9 +314,9 @@
 .mu-editor {
   & > [visibility~=hover],
   & > [visibility~=focus] {
-    visibility: hidden;
     overflow: hidden;
     width: 0;
+    visibility: hidden;
 
     &:not(:first-child) {
       margin-left: 0;
@@ -313,8 +325,8 @@
 
   &:hover > [visibility~=hover],
   &:focus-within > [visibility~=focus]  {
-    visibility: visible;
     width: auto;
+    visibility: visible;
 
     &:not(:first-child) {
       margin-left: $commonItemSpacing;

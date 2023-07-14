@@ -1,15 +1,15 @@
 .mu-link {
-  text-decoration: none;
-  color: var(--mu-text-color-normal);
   cursor: pointer;
+  color: var(--mu-text-color-normal);
+  text-decoration: none;
 
   &[primary] {
     color: var(--mu-primary-color);
   }
 
   &:hover {
-     color: var(--mu-primary-color-light);
-     text-decoration: underline;
+    color: var(--mu-primary-color-light);
+    text-decoration: underline;
   }
 
   &[danger] {

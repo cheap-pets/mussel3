@@ -1,25 +1,28 @@
-.mu-button-group > button,
 .mu-button {
+  cursor: pointer;
+  user-select: none;
+
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $buttonHeight;
+
   min-width: $buttonHeight;
+  height: $buttonHeight;
   padding: 0 $buttonPaddingX;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  outline: none;
-  border: $buttonBorderWidth solid currentColor;
-  border-radius: $buttonBorderRadius;
+
   font-family: inherit;
   font-size: var(--mu-common-font-size);
   line-height: $buttonLineHeight;
-  text-decoration: none;
-  background: var(--mu-button-background-normal);
   color: var(--mu-button-text-color-normal);
-  cursor: pointer;
-  user-select: none;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  background: var(--mu-button-background-normal);
+  border: $buttonBorderWidth solid currentColor;
+  border-radius: $buttonBorderRadius;
+  outline: none;
 
   & > span {
     display: block;
@@ -36,19 +39,24 @@
 
 .mu-button-group {
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $buttonBorderRadius;
-  background: var(--mu-button-background-normal);
 
-  & > button {
+  background: var(--mu-button-background-normal);
+  border-radius: $buttonBorderRadius;
+
+  & > .mu-button {
     flex: 1 1 0;
+
     margin-left: -1px;
+
+    color: var(--mu-button-text-color-normal);
+
+    background: transparent;
     border: $buttonBorderWidth solid var(--mu-button-border-color-normal);
     border-radius: $buttonBorderRadius;
-    background: transparent;
-    color: var(--mu-button-text-color-normal);
 
     &:first-child {
       margin-left: 0;
@@ -68,12 +76,12 @@
   &[round] {
     border-radius: calc($buttonHeight / 2);
 
-    & > button:first-of-type {
+    & > .mu-button:first-of-type {
       border-top-left-radius: calc($buttonHeight / 2);
       border-bottom-left-radius: calc($buttonHeight / 2);
     }
 
-    & > button:last-of-type {
+    & > .mu-button:last-of-type {
       border-top-right-radius: calc($buttonHeight / 2);
       border-bottom-right-radius: calc($buttonHeight / 2);
     }
@@ -85,7 +93,7 @@
   }
 }
 
-.mu-button-group[primary] > button,
+.mu-button-group[primary] > .mu-button,
 .mu-button[primary] {
   color: var(--mu-text-color-reversed);
   background: var(--mu-primary-color);
@@ -123,7 +131,7 @@
   }
 }
 
-.mu-button-group[secondary] > button,
+.mu-button-group[secondary] > .mu-button,
 .mu-button[secondary] {
   color: var(--mu-text-color-reversed);
   background: var(--mu-secondary-color);
@@ -161,7 +169,7 @@
   }
 }
 
-.mu-button-group[danger] > button,
+.mu-button-group[danger] > .mu-button,
 .mu-button[danger] {
   color: var(--mu-text-color-reversed);
   background: var(--mu-danger-color);
@@ -199,7 +207,7 @@
   }
 }
 
-.mu-button-group[x-color] > button,
+.mu-button-group[x-color] > .mu-button,
 .mu-button[x-color] {
   color: var(--mu-text-color-reversed);
   background: var(--mu-x-color);
@@ -261,7 +269,6 @@
   }
 }
 
-.mu-button-group > button,
 .mu-button {
   &:hover {
     z-index: 2;
@@ -279,7 +286,7 @@
   }
 }
 
-.mu-button-group > button {
+.mu-button-group > .mu-button {
   &[active] {
     z-index: 1;
     color: var(--mu-text-color-reversed);
@@ -298,26 +305,30 @@
   &[secondary],
   &[danger],
   &[x-color] {
-    & > button:not(:first-of-type) {
+    & > .mu-button:not(:first-of-type) {
       border-left-color: rgba(255, 255, 255, .25);
     }
   }
 }
 
-.mu-button-group[disabled] > button,
+.mu-button-group[disabled] > .mu-button,
 .mu-button[disabled] {
-  z-index: 1;
-  background: var(--mu-background-disabled) !important;
-  color: var(--mu-text-color-weak) !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
   pointer-events: none;
   cursor: default;
+
+  z-index: 1;
+
+  color: var(--mu-text-color-weak) !important;
+
+  background: var(--mu-background-disabled) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .mu-button[button-style="link"] {
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
+
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
@@ -325,17 +336,17 @@
 
 .mu-button-group[small] > .mu-button,
 .mu-button[small] {
-  height: $smallButtonHeight;
   min-width: $smallButtonHeight;
+  height: $smallButtonHeight;
 }
 
 .mu-button[small] {
   padding: 0 $smallButtonPaddingX;
 }
 
-button.mu-button {
+.mu-button {
   &.mu-icon-button,
   &.mu-split-button {
-    padding: 0;
+    padding: 0 !important;
   }
 }

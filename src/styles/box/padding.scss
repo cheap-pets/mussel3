@@ -2,7 +2,7 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
 
-    &[padding="$(i)x"] {
+    &[padding="#{$i}x"] {
       padding: $v;
     }
   }
@@ -14,20 +14,20 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
 
-    &[padding-x="$(i)x"] {
-      padding-left: $v;
+    &[padding-x="#{$i}x"] {
       padding-right: $v;
+      padding-left: $v;
     }
 
-    &[padding-y="$(i)x"] {
+    &[padding-y="#{$i}x"] {
       padding-top: $v;
       padding-bottom: $v;
     }
   }
 
   &[padding-x="0"] {
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
   }
 
   &[padding-y="0"] {
@@ -38,19 +38,19 @@
   @for $i from 1 to 4 {
     $v: calc($i * $unitSpacingSize);
     
-    &[padding-top="$(i)x"] {
+    &[padding-top="#{$i}x"] {
       padding-top: $v;
     }
 
-    &[padding-left="$(i)x"] {
+    &[padding-left="#{$i}x"] {
       padding-left: $v;
     }
 
-    &[padding-right="$(i)x"] {
+    &[padding-right="#{$i}x"] {
       padding-right: $v;
     }
 
-    &[padding-bottom="$(i)x"] {
+    &[padding-bottom="#{$i}x"] {
       padding-bottom: $v;
     }
   }

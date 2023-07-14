@@ -14,31 +14,31 @@
   }
 
   @for $i from 1 to 12 {
-    &[columns="$i"] {
+    &[columns="#{$i}"] {
       grid-template-columns: repeat($i, 1fr);
     }
 
-    &[rows="$i"] {
+    &[rows="#{$i}"] {
       grid-template-rows: repeat($i, 1fr);
     }
   }
 
   @each $v in (50, 100, 150, 200, 250, 300, 350, 400, 450, 500) {
-    &[column-size="$v"] {
+    &[column-size="#{$v}"] {
       grid-template-columns: repeat(auto-fill, #{$v}px);
     }
 
-    &[row-size="$v"] {
+    &[row-size="#{$v}"] {
       grid-template-rows: repeat(auto-fill, #{$v}px);
     }
   }
 
   @each $v in (start, end, center, stretch, space-around, space-between, space-evenly) {
-    &[align-content="$v"] {
+    &[align-content="#{$v}"] {
       align-content: $v;
     }
 
-    &[place-content="$v"] {
+    &[place-content="#{$v}"] {
       place-content: $v;
     }
   }
@@ -47,41 +47,41 @@
 .mu-box[layout=grid] > *,
 .mu-grid-cell {
   @each $v in (start, end, center, stretch) {
-    &[justify-self="$v"] {
+    &[justify-self="#{$v}"] {
       justify-self: $v;
     }
 
-    &[align-self="$v"] {
+    &[align-self="#{$v}"] {
       align-self: $v;
     }
 
-    &[place-self="$v"] {
+    &[place-self="#{$v}"] {
       place-self: $v;
     }
   }
 
   @for $i from 1 to 12 {
-    &[col-start="$i"] {
+    &[col-start="#{$i}"] {
       grid-column-start: $i;
     }
 
-    &[row-start="$i"] {
+    &[row-start="#{$i}"] {
       grid-row-start: $i;
     }
 
-    &[col-span="$i"] {
+    &[col-span="#{$i}"] {
       grid-column-end: span $i;
     }
 
-    &[row-span="$i"] {
+    &[row-span="#{$i}"] {
       grid-row-end: span $i;
     }
 
-    &[col-end="$i"] {
+    &[col-end="#{$i}"] {
       grid-column-end: calc($i + 1);
     }
 
-    &[row-end="$i"] {
+    &[row-end="#{$i}"] {
       grid-row-end: calc($i + 1);
     }
   }
