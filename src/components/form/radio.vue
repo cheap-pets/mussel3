@@ -1,9 +1,10 @@
 <template>
-  <label v-if="label" class="mu-radio">
+  <label v-if="label" class="mu-radio" :disabled="disabled || null">
     <input
       v-model="radioValue"
       type="radio"
-      :value="value">
+      :value="value"
+      :disabled="disabled || null">
     <span>{{ label }}</span>
   </label>
   <input
@@ -22,7 +23,8 @@
       label: String,
       value: {
         required: true
-      }
+      },
+      disabled: Boolean
     },
     emits: ['update:modelValue'],
     computed: {

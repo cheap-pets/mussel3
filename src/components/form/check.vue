@@ -1,9 +1,10 @@
 <template>
-  <label v-if="label" class="mu-check">
+  <label v-if="label" class="mu-check" :disabled="disabled || null">
     <input
       v-model="checkValue"
       type="checkbox"
-      :value="value">
+      :value="value"
+      :disabled="disabled || null">
     <span>{{ label }}</span>
   </label>
   <input
@@ -20,7 +21,8 @@
     props: {
       modelValue: [Boolean, Array],
       label: String,
-      value: null
+      value: null,
+      disabled: Boolean
     },
     emits: ['update:modelValue'],
     computed: {
