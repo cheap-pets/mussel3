@@ -1,9 +1,5 @@
 .mu-box[layout=flex],
 .mu-box[layout=grid] {
-  &[inline] {
-    display: inline-grid;
-  }
-
   @each $v in (
     center, start, end, baseline, stretch,
     flex-start, flex-end, unset, inherit
@@ -23,6 +19,14 @@
   ) {
     &[justify-content="#{$v}"] {
       justify-content: $v;
+    }
+  }
+
+  @for $i from 1 to 4 {
+    $v: calc($i * $unitSpacingSize);
+
+    &[gap="#{$i}x"] {
+      gap: $v;
     }
   }
 }

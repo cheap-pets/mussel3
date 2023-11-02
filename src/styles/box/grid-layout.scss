@@ -1,6 +1,10 @@
 .mu-box[layout=grid] {
   display: grid;
 
+  &[inline] {
+    display: inline-grid;
+  }
+
   &[direction="column"] {
     grid-auto-flow: column;
   }

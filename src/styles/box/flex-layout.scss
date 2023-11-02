@@ -1,5 +1,9 @@
 .mu-box[layout=flex] {
   display: flex;
+
+  &[inline] {
+    display: inline-flex;
+  }
 }
 
 .mu-box[layout=flex] {
