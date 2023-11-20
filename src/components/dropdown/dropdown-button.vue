@@ -3,20 +3,19 @@
     v-if="splitButton"
     class="mu-dropdown mu-button-group"
     @click="hideDropdown">
-    <button type="button">
+    <mu-button>
       <slot>
         <mu-icon v-if="icon" :icon="icon" />
         <span v-if="caption">{{ caption }}</span>
       </slot>
-    </button>
-    <button
+    </mu-button>
+    <mu-button
       class="mu-button mu-split-button"
-      type="button"
       @click.stop="onTriggerClick"
       @mouseover="onTriggerMouseOver"
       @mouseleave="onTriggerMouseLeave">
       <mu-icon :icon="dropdownIcon" />
-    </button>
+    </mu-button>
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
       width="auto"
@@ -27,7 +26,7 @@
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
-  <button
+  <mu-button
     v-else
     class="mu-dropdown mu-button"
     type="button"
@@ -48,7 +47,7 @@
       :reserve-icon-place="reserveIconPlace || null">
       <slot name="dropdown" />
     </mu-dropdown-panel>
-  </button>
+  </mu-button>
 </template>
 
 <script>
