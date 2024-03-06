@@ -1,42 +1,80 @@
 {
   "root": true,
-  "parser": "@babel/eslint-parser",
+  "parser": "vue-eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
-},
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "babelOptions": {
+      "configFile": "./babel.config.cjs"
+    }
+  },
   "extends": [
     "standard",
-    "plugin:node/recommended",
-    "plugin:security/recommended"
+    "plugin:vue/vue3-recommended"
   ],
   "plugins": [
-    "node",
-    "security"
+    "vue"
   ],
   "env": {
-    "commonjs": true,
-    "node": true
+    "browser": true,
+    "es6": true,
+    "vue/setup-compiler-macros": true
   },
   "rules": {
-    "prefer-const": 2,
-    "complexity": [ 1, 10],
+    "prefer-const": "error",
+    "vue/html-indent": [
+      "warn",
+      2,
+      {
+        "alignAttributesVertically": false
+      }
+    ],
+    "vue/script-indent": [
+      "error",
+      2,
+      { "baseIndent": 1, "switchCase": 1 }
+    ],
+    "vue/no-v-html": 0,
+    "vue/require-prop-types": 0,
+    "vue/require-default-prop": 0,
+    "vue/max-attributes-per-line": 0,
+    "vue/component-definition-name-casing": 0,
+    "vue/html-closing-bracket-newline": [
+      "error",
+      {
+        "singleline": "never",
+        "multiline": "never"
+      }
+    ],
+    "complexity": [ 1, 10 ],
     "max-len": [
-      1,
+      "warn",
       {
         "code": 100,
         "tabWidth": 2,
         "ignoreUrls": true,
-        "ignoreStrings": false,
+        "ignoreStrings": true,
         "ignoreComments": true,
-        "ignoreRegExpLiterals": true,
         "ignoreTrailingComments": true,
         "ignoreTemplateLiterals": true
       }
     ],
-    "node/no-extraneous-require": 0,
-    "node/no-unpublished-import": 0,
-    "node/no-unsupported-features/es-syntax": 0,
-    "security/detect-object-injection": 0
-  }
+    "no-shadow": "error",
+    "no-shadow-restricted-names": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "rules": {
+        "indent": "off",
+        "template-curly-spacing": "off"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "rules": {
+        "vue/comment-directive": "off"
+      }
+    }
+  ]
 }

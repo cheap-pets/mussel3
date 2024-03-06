@@ -7,7 +7,6 @@ export default {
       default: true
     },
     container: null,
-    renderToBody: Boolean,
     visible: Boolean
   },
   emits: ['update:visible'],

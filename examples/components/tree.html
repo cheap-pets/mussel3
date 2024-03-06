@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Tree Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
+    <mu-tree :nodes="nodes" :indent="32" :active-node="5">
+      <template #default="scoped">
+        <label class="mu-tree-node_label">
+          {{ scoped.node.label }}
+        </label>
+        <mu-dropdown
+          dropdown-align="right"
+          :dropdown-items="artists">
+          <mu-button button-style="text">...</mu-button>
+        </mu-dropdown>
+      </template>
+    </mu-tree>
+  </div>
+  <script type="text/javascript">
+    function generateRandomTree(maxCount, maxLevel) {
+      let count = 0
+
+      function createNode(level) {
+        count++
+
+        const node = {
+          id: count,
+          label: `Node ${count}`
+        }
+        
+        const childrenCount = Math.floor(Math.random() * 10)
+
+        if (childrenCount && level < maxLevel && count < maxCount) {
+          node.childNodes = []
+
+          for (let i = 0; i < childrenCount; i++) {
+            node.childNodes.push(createNode(level + 1))
+          }
+        }
+        
+        return node;
+      }
+
+      return createNode(0)
+    }
+
+    const data = generateRandomTree(100, 5)
+
+    const artists = [
+      '-',
+      { divider: true, label: 'GROUP 1' },
+      { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert'  },
+      { label: 'Wolfgang Amadeus Mozart', icon: 'circleAlert' },
+      '-',
+      { divider: true, label: 'GROUP 2' },
+      { divider: true, label: 'GROUP 3' },
+      { label: 'Frédéric François Chopin' },
+      { label: 'Johann Baptist Strauss', icon: 'circleAlert' }
+    ]
+
+    const app = Vue.createApp({
+      setup () {
+        const nodes = data.childNodes
+
+        return { nodes, artists }
+      }
+    })
+
+    mussel.install(app, { darkMode: 'auto' })
+    app.mount('#app')
+  </script>
+</body>

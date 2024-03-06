@@ -9,6 +9,8 @@
   max-height: 300px;
   padding: $dropdownPadding;
 
+  text-align: start;
+
   visibility: hidden;
   opacity: 0;
   background: var(--mu-dropdown-background);

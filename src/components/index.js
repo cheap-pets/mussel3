@@ -16,6 +16,10 @@ import ButtonGroup from './button/button-group.vue'
 import ListItem from './list/list-item.vue'
 import ListDivider from './list/list-divider.vue'
 
+/* TREE */
+import Tree from './tree/tree-view.vue'
+import TreeNode from './tree/tree-node.vue'
+
 /* FORM */
 import Editor from './form/editor.vue'
 import ComboBox from './form/combo-box.vue'
@@ -60,6 +64,8 @@ export const components = {
   ButtonGroup,
   ListItem,
   ListDivider,
+  Tree,
+  TreeNode,
   Editor,
   ComboBox,
   ComboBoxOption,
@@ -98,6 +104,9 @@ export function installComponents (app) {
 
   app.component('mu-list-item', ListItem)
   app.component('mu-list-divider', ListDivider)
+
+  app.component('mu-tree', Tree)
+  app.component('mu-tree-node', TreeNode)
 
   app.component('mu-editor', Editor)
   app.component('mu-combo-box', ComboBox)

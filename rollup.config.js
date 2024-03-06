@@ -53,7 +53,9 @@ export default {
         }
       ]
     }),
-    vue(),
+    vue({
+      inlineTemplate: !isDevEnv
+    }),
     string({
       include: '**/*.svg'
     }),

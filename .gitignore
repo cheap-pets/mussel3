@@ -5,8 +5,5 @@ logs
 # Dependency directories
 node_modules/
 
-# Package manager's lock files
-pnpm-lock.yaml
-
 # Output directories
 dist/

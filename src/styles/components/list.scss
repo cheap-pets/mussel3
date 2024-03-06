@@ -6,6 +6,7 @@
 
   overflow: hidden;
   display: flex;
+  gap: $commonItemSpacing;
   align-items: center;
 
   width: 100%;
@@ -22,15 +23,12 @@
 
   & > label {
     cursor: inherit;
+
+    overflow: hidden;
     flex: 1 1 0;
-  }
 
-  & > * {
-    margin-left: $commonItemSpacing;
-  }
-
-  & > :first-child {
-    margin-left: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

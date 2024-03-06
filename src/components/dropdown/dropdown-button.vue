@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="splitButton"
-    class="mu-dropdown mu-button-group"
+    class="mu-dropdown mu-dropdown-button mu-button-group"
     @click="hideDropdown">
     <mu-button>
       <slot>
@@ -28,7 +28,7 @@
   </div>
   <mu-button
     v-else
-    class="mu-dropdown mu-button"
+    class="mu-dropdown mu-dropdown-button mu-button"
     type="button"
     @click="onTriggerClick"
     @mouseover="onTriggerMouseOver"

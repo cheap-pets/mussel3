@@ -1,4 +1,4 @@
-import { isString } from '../utils/type'
+import { isString } from '../utils/type.js'
 
 const RGB_MAX = 255
 const HUE_MAX = 360

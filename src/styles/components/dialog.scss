@@ -21,7 +21,7 @@
     opacity: 1;
   }
 
-  &:not(pop-up),
+  &:not([pop-up]),
   &[dragging] {
     user-select: none;
   }

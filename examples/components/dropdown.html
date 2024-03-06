@@ -9,15 +9,11 @@
 
   <title>Dropdown Component Example</title>
 
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link
-    rel="stylesheet" type="text/css"
-    href="../../dist/mussel.css" />
-  <link
-    rel="stylesheet" type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
 </head>
 
 <body>
@@ -34,7 +30,7 @@
     <div class="mu-box" padding="1x">
       <mu-dropdown
         dropdown-align="top right"
-        dropdown-trigger="press"
+        dropdown-trigger="click"
         :dropdown-items="artists"
         @dropdown:show="onShow"
         @dropdown:itemclick="onItemClick">
@@ -46,7 +42,6 @@
         danger
         caption="Dropdown Button"
         :dropdown-items="artists"
-        reserve-icon-place
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
@@ -91,6 +86,30 @@
       </mu-dropdown-button>
     </div>
     <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown-button
+        x-color="gray"
+        split-button
+        caption="仅可查看"
+        ref="btnGrape"
+        @dropdown:itemclick="onItemClick">
+        <template #dropdown>
+          <mu-list-divider label="协作权限"></mu-list-divider>
+          <mu-dropdown-radio-item
+            label="仅可查看"
+            :value="true"
+            v-model="permission">
+          </mu-dropdown-radio-item>
+          <mu-dropdown-radio-item
+            label="允许编辑"
+            :value="false"
+            v-model="permission">
+          </mu-dropdown-radio-item>
+          <mu-list-divider></mu-list-divider>
+          <mu-dropdown-item icon="x" label="取消共享"></mu-dropdown-item>
+        </template>
+      </mu-dropdown-button>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>
       <mu-dropdown-panel
         :items="artists"
@@ -118,6 +137,7 @@
         ])
         const checkedArtist = Vue.ref(null)
         const checkedArtists = Vue.ref([])
+        const permission = Vue.ref(false)
 
         function onShow () {
           console.log('show')
@@ -141,6 +161,7 @@
           checkedArtists,
           btnGrape,
           stickyPanelVisible,
+          permission,
           onShow,
           onItemClick,
           onButtonClick
