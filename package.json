@@ -32,6 +32,11 @@
     "vite": "^5.1.4",
     "vue": "^3.4.21"
   },
+  "config": {
+    "cz-customizable": {
+      "config": ".cz-config.cjs"
+    }
+  },
   "repository": "https://github.com/cheap-pets/mussel3.git",
   "author": "scrollbar-ww <scrollbar@163.com>",
   "license": "MIT"
