@@ -6,7 +6,13 @@ import circleX from '~icons/circle-x.svg'
 import circleCheck from '~icons/circle-check.svg'
 import circleAlert from '~icons/alert-circle.svg'
 import triangleAlert from '~icons/alert-triangle.svg'
-import chevronDown from '~icons/chevron-down.svg' // './svg/dropdown.svg'
+import dotsVert from '~icons/dots-vertical.svg'
+
+import file from '~icons/file.svg'
+import folder from '~icons/folder.svg'
+import folderOpen from '~icons/folder-open.svg'
+
+import chevronDown from '~icons/chevron-down.svg'
 
 // dropdown svg background
 // url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>")
@@ -39,6 +45,10 @@ registerIcons(
     circleCheck,
     circleAlert,
     triangleAlert,
+    dotsVert,
+    file,
+    folder,
+    folderOpen,
     dropdown: chevronDown
   },
   { type: 'svg' }

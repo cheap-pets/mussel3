@@ -17,10 +17,22 @@
 
 <body>
   <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
-    <mu-tree :nodes="nodes" :indent="32" :active-node="5">
-      <template #default="scoped">
+    <mu-tree
+      :data="data"
+      :props="{ title: 'label' }"
+      :node-icons="false"
+      :expand-icons="{ expand: 'folder', collapse: 'folderOpen' }"
+      :active-node="activeNode"
+      :auto-expand-level="2"
+      :hover-buttons="buttons"
+      style="height: 100%; --mu-tree-node-height: 28px;"
+      @node-click="onNodeClick"
+      @node-button-click="onNodeButtonClick">
+      <template #default1="{ node }"
+        <mu-icon class="mu-tree-node_icon" :icon="node.icon">
+        </mu-icon>
         <label class="mu-tree-node_label">
-          {{ scoped.node.label }}
+          {{ node.label }}
         </label>
         <mu-dropdown
           dropdown-align="right"
@@ -39,7 +51,9 @@
 
         const node = {
           id: count,
-          label: `Node ${count}`
+          // icon: 'point',
+          label: `Node ${count}`,
+          disabled: count % 7 === 0
         }
         
         const childrenCount = Math.floor(Math.random() * 10)
@@ -58,7 +72,7 @@
       return createNode(0)
     }
 
-    const data = generateRandomTree(100, 5)
+    const root = generateRandomTree(100, 5)
 
     const artists = [
       '-',
@@ -74,13 +88,39 @@
 
     const app = Vue.createApp({
       setup () {
-        const nodes = data.childNodes
+        const data = root.childNodes
+        const activeNode = Vue.ref()
 
-        return { nodes, artists }
+        const buttons = [
+          {
+            icon: 'circle',
+            title: 'button 0'
+          },
+          {
+            icon: 'x',
+            title: 'button 1',
+            danger: true
+          },
+          {
+            icon: 'check',
+            title: 'button 2',
+            success: true
+          }
+        ]
+
+        function onNodeClick (node) {
+          activeNode.value = node
+        }
+
+        function onNodeButtonClick (node, button) {
+          console.log(node.label, button.title)
+        }
+
+        return { data, activeNode, buttons, artists, onNodeClick, onNodeButtonClick }
       }
     })
 
-    mussel.install(app, { darkMode: 'auto' })
+    mussel.install(app, { darkMode: false })
     app.mount('#app')
   </script>
 </body>

@@ -20,3 +20,37 @@
     stroke: var(--mu-text-color-reversed);
   }
 }
+
+.mu-icon.mu-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: var(--mu-button-text-color-normal);
+
+  border-radius: $buttonBorderRadius;
+
+  &[primary] {
+    color: var(--mu-primary-color);
+  }
+
+  &[success] {
+    color: var(--mu-success-color);
+  }
+
+  &[danger] {
+    color: var(--mu-danger-color);
+  }
+
+  &:hover {
+    color: var(--mu-primary-color-light);
+  }
+
+  &[success]:hover {
+    color: var(--mu-success-color-light);
+  }
+  
+  &[danger]:hover {
+    color: var(--mu-danger-color-light);
+  }
+}
