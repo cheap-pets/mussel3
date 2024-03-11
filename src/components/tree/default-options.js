@@ -4,6 +4,7 @@ export const DEFAULT_DATA_PROPS = {
   label: 'label',
   title: 'title',
   isLeaf: 'isLeaf',
+  checked: undefined,
   disabled: 'disabled',
   childNodes: 'childNodes'
 }

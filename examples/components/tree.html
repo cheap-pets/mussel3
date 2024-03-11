@@ -12,35 +12,174 @@
 
   <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
   <style>
+    body {
+      margin: 0;
+    }
+
+    h2 {
+      margin: 0;
+      padding: 16px 16px 0;
+    }
+
+    h3 {
+      margin: 0;
+      padding: 8px;
+      background-color: #ddd;
+    }
+
+    .mu-tree {
+      --mu-tree-node-height: 28px;
+
+      width: 100%;
+      height: 200px;
+      margin-top: 8px;
+    }
   </style>
 </head>
 
 <body>
-  <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
-    <mu-tree
-      :data="data"
-      :props="{ title: 'label' }"
-      :node-icons="false"
-      :expand-icons="{ expand: 'folder', collapse: 'folderOpen' }"
-      :active-node="activeNode"
-      :auto-expand-level="2"
-      :hover-buttons="buttons"
-      style="height: 100%; --mu-tree-node-height: 28px;"
-      @node-click="onNodeClick"
-      @node-button-click="onNodeButtonClick">
-      <template #default1="{ node }"
-        <mu-icon class="mu-tree-node_icon" :icon="node.icon">
-        </mu-icon>
-        <label class="mu-tree-node_label">
-          {{ node.label }}
-        </label>
-        <mu-dropdown
-          dropdown-align="right"
-          :dropdown-items="artists">
-          <mu-button button-style="text">...</mu-button>
-        </mu-dropdown>
-      </template>
-    </mu-tree>
+  <h2>Tree Examples</h2>
+  <div
+    id="app"
+    class="mu-box mu-bg-normal"
+    width="100%"
+    layout="flex"
+    flex-wrap
+    gap="2x"
+    padding="2x">
+    <div class="mu-box" width="40%" border>
+      <h3>1. Basic Style</h3>
+      <mu-tree
+        :data="data"
+        :active-node="activeNode"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>2. Setup Data Props</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :props="{ label: 'alias', title: 'label', icon: 'icon2' }"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>3. Hide Node Icon</h3>
+      <mu-tree
+        :data="data"
+        :active-node="activeNode"
+        :node-icons="false"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>4. Setup Default Node Icon</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :node-icons="{ folder: 'check', folderOpen: 'check', leaf: 'x' }"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>5. Setup Default Expand Icon</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :expand-icons="{ expand: 'folder', collapse: 'folderOpen', leaf: 'file' }"
+        :node-icons="{ folder: 'point', folderOpen: 'point', leaf: 'point' }"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>6. Hide Expand Icon (List Like)</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :expand-icons="false"
+        :props="{ childNodes: '' }"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>7. Custom Node Template</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        @node-click="onNodeClick">
+        <template #default="{ node }">
+          <mu-icon
+            icon="circle"
+            :style="{ color: node.id % 5 === 0 ? 'red' : undefined }">
+          </mu-icon>
+          <label
+            class="mu-tree-node_label"
+            :style="{ color: node.id % 5 === 0 ? 'red' : undefined }">
+            {{ node.label }} (id: {{ node.id }})
+          </label>
+        </template>
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>8. Hover Buttons</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :hover-buttons="buttons"
+        @node-click="onNodeClick"
+        @node-button-click="onNodeButtonClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>9. Auto Expand Level</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        :auto-expand-level="3"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>10. Context Menu (*Temporary)</h3>
+      <mu-tree
+        flex="1"
+        :data="data"
+        :active-node="activeNode"
+        @node-click="onNodeClick">
+        <template #default="{ node }">
+          <label class="mu-tree-node_label">
+            {{ node.label }}
+          </label>
+          <mu-dropdown
+            class="mu-tree-node_hover-button"
+            dropdown-align="right"
+            dropdown-trigger="click"
+            :dropdown-style="{ minWidth: '150px' }"
+            :dropdown-items="contextMenus">
+            <mu-icon class="mu-icon-button" icon="dotsVert"></mu-icon>
+          </mu-dropdown>
+        </template>
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>11. Checkbox</h3>
+      <mu-tree
+        flex="1"
+        checkbox
+        :data="data"
+        :active-node="activeNode"
+        :props="{ checked1: 'checked' }"
+        @update:node-checked="onUpdateNodeChecked">
+      </mu-tree>
+    </div>
   </div>
   <script type="text/javascript">
     function generateRandomTree(maxCount, maxLevel) {
@@ -51,12 +190,14 @@
 
         const node = {
           id: count,
-          // icon: 'point',
+          icon: count % 5 === 0 && 'point',
+          icon2: 'x',
           label: `Node ${count}`,
+          alias: `Node Alias ${count}`,
           disabled: count % 7 === 0
         }
         
-        const childrenCount = Math.floor(Math.random() * 10)
+        const childrenCount = Math.floor(Math.random() * 10) + 1
 
         if (childrenCount && level < maxLevel && count < maxCount) {
           node.childNodes = []
@@ -74,21 +215,19 @@
 
     const root = generateRandomTree(100, 5)
 
-    const artists = [
-      '-',
-      { divider: true, label: 'GROUP 1' },
-      { label: 'Ludwig van Beethoven', value: 1, icon: 'circleAlert'  },
-      { label: 'Wolfgang Amadeus Mozart', icon: 'circleAlert' },
-      '-',
-      { divider: true, label: 'GROUP 2' },
-      { divider: true, label: 'GROUP 3' },
-      { label: 'Frédéric François Chopin' },
-      { label: 'Johann Baptist Strauss', icon: 'circleAlert' }
+    const contextMenus = [
+      { divider: true, label: 'File' },
+      { label: 'Copy' },
+      { label: 'Move' },
+      { label: 'Remove' },
+      { divider: true, label: 'Follow' },
+      { label: 'WeChat' },
+      { label: 'FaceBook' }
     ]
 
     const app = Vue.createApp({
       setup () {
-        const data = root.childNodes
+        const data = Vue.ref(root.childNodes)
         const activeNode = Vue.ref()
 
         const buttons = [
@@ -113,10 +252,33 @@
         }
 
         function onNodeButtonClick (node, button) {
-          console.log(node.label, button.title)
+          console.log('Button Clicked:', node.label, button.title)
         }
 
-        return { data, activeNode, buttons, artists, onNodeClick, onNodeButtonClick }
+        function checkNodeRecursively (node) {
+          node.checked = true
+          
+          if (node.childNodes) {
+            node.childNodes.forEach(checkNodeRecursively)
+          }
+        }
+
+        function onUpdateNodeChecked (node, checked) {
+          console.log('Node Checked Change:', node.label, checked)
+
+          if (checked) checkNodeRecursively(node)
+          else node.checked = false
+        }
+
+        return {
+          data,
+          activeNode,
+          buttons,
+          contextMenus,
+          onNodeClick,
+          onNodeButtonClick,
+          onUpdateNodeChecked
+        }
       }
     })
 

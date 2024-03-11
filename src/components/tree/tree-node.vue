@@ -13,6 +13,10 @@
       :icon="expandIcon"
       @click.stop="toggleExpand"
       @dblclick.stop />
+    <mu-check
+      v-if="hasCheck"
+      v-model="checked"
+      @dblclick.stop />
     <slot :node="node">
       <mu-icon
         v-if="nodeIcon !==false"
@@ -63,8 +67,11 @@
     autoExpandLevel,
     onNodeClick,
     onNodeButtonClick,
+    // onUpdateNodeChecked,
     getNodeExpanded,
-    setNodeExpanded
+    setNodeExpanded,
+    getNodeSelected,
+    setNodeSelected
   } = tree
 
   const data = computed(() =>
@@ -76,6 +83,19 @@
   )
 
   const hasChild = computed(() => !(data.value.isLeaf ?? !data.value.childNodes?.length))
+  const hasCheck = computed(() => tree.checkbox.value)
+
+  const checked = computed({
+    get () {
+      return tree.props.value.checked
+        ? !!data.value.checked
+        : !!getNodeSelected(props.node)
+    },
+    set (v) {
+      setNodeSelected(props.node, v)
+      // onUpdateNodeChecked(props.node, v)
+    }
+  })
 
   const expandIcon = computed(() =>
     (expandIcons.value !== false) &&
@@ -142,7 +162,7 @@
     align-items: center;
 
     width: 100%;
-    min-height: var(--mu-tree-node-height) ;
+    min-height: var(--mu-tree-node-height);
     padding: var(--mu-tree-node-padding-y) var(--mu-tree-node-padding-x);
 
     font-size: var(--mu-common-font-size);
@@ -182,18 +202,13 @@
       user-select: none;
     }
 
-    &[active] {
-      color: var(--mu-text-color-reversed);
-      background-color: var(--mu-primary-color);
-
-      &:hover {
-        color: var(--mu-text-color-normal);
-        background-color: var(--mu-primary-color-shadow);
-      }
-    }
-
     &:hover {
       background: var(--mu-list-item-hover-background);
+    }
+
+    &[active] {
+      color: var(--mu-primary-color);
+      background-color: var(--mu-primary-color-shadow);
     }
 
     &[disabled] {

@@ -62,7 +62,7 @@ function complementColors (values, key) {
 
   if (!values[darkKey]) values[darkKey] = palettes[6]
   if (!values[lightKey]) values[lightKey] = palettes[4]
-  if (!values[shadowKey]) values[shadowKey] = toRGBA(color, 0.3)
+  if (!values[shadowKey]) values[shadowKey] = toRGBA(color, 0.15)
 }
 
 export {
