@@ -5,7 +5,7 @@
     :disabled="data.disabled || null"
     :active="active || null"
     :style="{ paddingLeft }"
-    @click="onNodeClick(node)"
+    @click="tree.emit('nodeClick', node)"
     @dblclick="toggleExpand">
     <mu-icon
       v-if="expandIcon !== false"
@@ -14,7 +14,7 @@
       @click.stop="toggleExpand"
       @dblclick.stop />
     <mu-check
-      v-if="hasCheck"
+      v-if="checkbox"
       v-model="checked"
       @dblclick.stop />
     <slot :node="node">
@@ -31,30 +31,23 @@
       :key="button"
       v-bind="button"
       class="mu-icon-button mu-tree-node_hover-button"
-      @click="onNodeButtonClick(node, button)" />
+      @click="tree.emit('nodeButtonClick', node, button)" />
   </a>
   <template v-if="expanded">
-    <mu-tree-node
-      v-for="child in data.childNodes"
-      :key="child[tree.props.key]"
-      :node="child"
-      :level="level + 1">
-      <template #default>
-        <slot :node="child" />
+    <mu-tree-nodes :nodes="data.childNodes" :level="level + 1">
+      <template #default="scoped">
+        <slot :node="scoped.node" />
       </template>
-    </mu-tree-node>
+    </mu-tree-nodes>
   </template>
 </template>
 
 <script setup>
-  import { ref, computed, toRaw, inject, onMounted } from 'vue'
+  import { computed, toRaw, inject } from 'vue'
 
   const props = defineProps({
     node: Object,
-    level: {
-      type: Number,
-      default: 0
-    }
+    level: Number
   })
 
   const tree = inject('tree')
@@ -65,13 +58,8 @@
     activeNode,
     hoverButtons,
     autoExpandLevel,
-    onNodeClick,
-    onNodeButtonClick,
-    // onUpdateNodeChecked,
-    getNodeExpanded,
-    setNodeExpanded,
-    getNodeSelected,
-    setNodeSelected
+    checkbox,
+    checkedNodesKeys
   } = tree
 
   const data = computed(() =>
@@ -83,17 +71,16 @@
   )
 
   const hasChild = computed(() => !(data.value.isLeaf ?? !data.value.childNodes?.length))
-  const hasCheck = computed(() => tree.checkbox.value)
+  const checkedProp = computed(() => tree.props.value.checked)
 
   const checked = computed({
     get () {
-      return tree.props.value.checked
+      return checkedProp.value
         ? !!data.value.checked
-        : !!getNodeSelected(props.node)
+        : checkedNodesKeys.value?.has(data.value.key)
     },
     set (v) {
-      setNodeSelected(props.node, v)
-      // onUpdateNodeChecked(props.node, v)
+      tree.emit('nodeCheckChange', props.node, v)
     }
   })
 
@@ -102,7 +89,12 @@
     (
       (
         hasChild.value
-          ? ((expanded.value && expandIcons.value.collapse) || expandIcons.value.expand)
+          ? (
+            (
+              expanded.value &&
+              expandIcons.value.collapse
+            ) || expandIcons.value.expand
+          )
           : expandIcons.value.leaf
       ) ||
       null
@@ -131,23 +123,28 @@
     (data.value.key != null && data.value.key === activeNode.value)
   )
 
-  // const expanded = computed(() => (hasChild.value && expandedNodes.value.get(props.node)) || null)
-  const expanded = ref(null)
+  const expanded = computed(() =>
+    (
+      hasChild.value &&
+      tree.getNodeExpanded(props.node)
+    ) || null
+  )
+
+  function initExpanded () {
+    const level = autoExpandLevel.value ?? -1
+    const oldExpanded = tree.getNodeExpanded(props.node)
+    const newExpanded = (oldExpanded ?? props.level <= level) && !!hasChild.value
+
+    if (newExpanded !== oldExpanded) tree.setNodeExpanded(props.node, newExpanded)
+  }
 
   function toggleExpand () {
     if (hasChild.value) {
-      setNodeExpanded(props.node, expanded.value = !expanded.value)
+      tree.setNodeExpanded(props.node, !expanded.value, true)
     }
   }
 
-  onMounted(() => {
-    const oldExpanded = getNodeExpanded(props.node)
-    const newExpanded = (oldExpanded ?? props.level <= autoExpandLevel.value) && !!hasChild.value
-
-    if (newExpanded !== oldExpanded) setNodeExpanded(props.node, newExpanded)
-
-    expanded.value = newExpanded || null
-  })
+  initExpanded()
 </script>
 
 <style lang="scss">

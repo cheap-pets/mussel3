@@ -22,9 +22,24 @@
     }
 
     h3 {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      height: 40px;
       margin: 0;
-      padding: 8px;
+      padding: 0 8px;
       background-color: #ddd;
+    }
+
+    h3 > .mu-button {
+      flex: none;
+      height: 28px;
+      margin-left: auto;
+      padding: 0 8px;
+    }
+
+    h3 > .mu-button + .mu-button {
+      margin-left: 0;
     }
 
     .mu-tree {
@@ -113,15 +128,15 @@
         :data="data"
         :active-node="activeNode"
         @node-click="onNodeClick">
-        <template #default="{ node }">
+        <template #default="scoped">
           <mu-icon
             icon="circle"
-            :style="{ color: node.id % 5 === 0 ? 'red' : undefined }">
+            :style="{ color: scoped.node.id % 5 === 0 ? 'red' : undefined }">
           </mu-icon>
           <label
             class="mu-tree-node_label"
-            :style="{ color: node.id % 5 === 0 ? 'red' : undefined }">
-            {{ node.label }} (id: {{ node.id }})
+            :style="{ color: scoped.node.id % 5 === 0 ? 'red' : undefined }">
+            Custom: {{ scoped.node.label }} (id: {{ scoped.node.id }})
           </label>
         </template>
       </mu-tree>
@@ -138,8 +153,13 @@
       </mu-tree>
     </div>
     <div class="mu-box" width="40%" border>
-      <h3>9. Auto Expand Level</h3>
+      <h3>
+        9. Auto Expand Level
+        <mu-button @click="expandTree.expandAll()">Expand All</mu-button>
+        <mu-button @click="expandTree.collapseAll()">Collapse All</mu-button>
+      </h3>
       <mu-tree
+        ref="expandTree"
         flex="1"
         :data="data"
         :active-node="activeNode"
@@ -170,13 +190,24 @@
       </mu-tree>
     </div>
     <div class="mu-box" width="40%" border>
-      <h3>11. Checkbox</h3>
+      <h3>11. Checkbox - With "Checked" Data Property</h3>
       <mu-tree
         flex="1"
         checkbox
         :data="data"
         :active-node="activeNode"
-        :props="{ checked1: 'checked' }"
+        :props="{ checked: 'checked' }"
+        @update:node-checked="onUpdateNodeChecked">
+      </mu-tree>
+    </div>
+    <div class="mu-box" width="40%" border>
+      <h3>12. Checkbox - Without "Checked" Data Property</h3>
+      <mu-tree
+        flex="1"
+        checkbox
+        :data="data"
+        :active-node="activeNode"
+        :props="{ checked: 'checked' }"
         @update:node-checked="onUpdateNodeChecked">
       </mu-tree>
     </div>
@@ -186,8 +217,6 @@
       let count = 0
 
       function createNode(level) {
-        count++
-
         const node = {
           id: count,
           icon: count % 5 === 0 && 'point',
@@ -196,8 +225,10 @@
           alias: `Node Alias ${count}`,
           disabled: count % 7 === 0
         }
-        
-        const childrenCount = Math.floor(Math.random() * 10) + 1
+
+        count++
+
+        const childrenCount = Math.max(level ? 0 : 1, Math.floor(Math.random() * 10))
 
         if (childrenCount && level < maxLevel && count < maxCount) {
           node.childNodes = []
@@ -213,7 +244,7 @@
       return createNode(0)
     }
 
-    const root = generateRandomTree(100, 5)
+    const root = generateRandomTree(200, 5)
 
     const contextMenus = [
       { divider: true, label: 'File' },
@@ -270,11 +301,14 @@
           else node.checked = false
         }
 
+        const expandTree = Vue.ref()
+
         return {
           data,
           activeNode,
           buttons,
           contextMenus,
+          expandTree,
           onNodeClick,
           onNodeButtonClick,
           onUpdateNodeChecked

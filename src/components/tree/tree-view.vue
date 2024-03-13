@@ -1,13 +1,15 @@
 <template>
   <div class="mu-tree">
-    <mu-tree-node v-for="el in data" :key="el[properties.key]" :node="el">
-      <slot :node="el" />
-    </mu-tree-node>
+    <mu-tree-nodes :key="refreshKey" :nodes="data" :level="0">
+      <template #default="{ node }">
+        <slot :node="node" />
+      </template>
+    </mu-tree-nodes>
   </div>
 </template>
 
 <script setup>
-  import { toRaw, toRef, computed, provide } from 'vue'
+  import { ref, toRaw, toRef, computed, provide } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
 
   const props = defineProps({
@@ -16,6 +18,7 @@
     props: Object,
     checkbox: Boolean,
     cascadedCheck: Boolean,
+    checkedNodesKeys: Set,
     hoverButtons: Array,
     autoExpandLevel: Number,
     activeNode: [Object, String, Number],
@@ -29,7 +32,7 @@
     }
   })
 
-  const emit = defineEmits(['nodeClick', 'nodeButtonClick', 'update:nodeChecked'])
+  const emit = defineEmits(['nodeClick', 'nodeButtonClick', 'nodeCheckChange'])
 
   const properties = computed(() =>
     Object.fromEntries(
@@ -51,90 +54,63 @@
 
   const checkbox = toRef(props, 'checkbox')
   const cascadedCheck = toRef(props, 'cascadedCheck')
+  const checkedNodesKeys = toRef(props, 'checkedNodesKeys')
+
   const activeNode = toRef(props, 'activeNode')
   const hoverButtons = toRef(props, 'hoverButtons')
-  const autoExpandLevel = toRef(props, 'autoExpandLevel')
 
-  function onNodeClick (node) {
-    emit('nodeClick', node)
-  }
+  const autoExpandLevel = ref(props.autoExpandLevel)
+  const expandedNodes = ref()
+  const refreshKey = ref('root' + (+new Date()))
 
-  function onNodeButtonClick (node, button) {
-    emit('nodeButtonClick', node, button)
-  }
-
-  // function onUpdateNodeChecked (node, checked) {
-  //   emit('update:nodeChecked', node, checked)
-  // }
-
-  let expandedNodes = new WeakMap()
-
-  function resetExpandedNodes () {
-    expandedNodes = new WeakMap()
-  }
+  expandedNodes.value = new WeakMap()
 
   function getNodeExpanded (node) {
-    return expandedNodes.get(toRaw(node))
+    return expandedNodes.value.get(toRaw(node))
   }
 
-  function setNodeExpanded (node, value) {
-    expandedNodes.set(toRaw(node), value)
+  function setNodeExpanded (node, value, stopAutoExpand) {
+    expandedNodes.value.set(toRaw(node), value)
+
+    if (stopAutoExpand) autoExpandLevel.value = 0
   }
 
-  let selectedNodes = new WeakMap()
+  function expandAll (options = {}) {
+    const { level = Math.min(props.autoExpandLevel || 0) } = options
 
-  function resetSelectedNodes () {
-    selectedNodes = new WeakMap()
+    autoExpandLevel.value = level
+    expandedNodes.value = new WeakMap()
+    refreshKey.value = 'root' + (+new Date())
   }
 
-  function getNodeSelected (node) {
-    return selectedNodes.get(toRaw(node))
-  }
-
-  function setNodeSelected (node, value) {
-    if (properties.value.checked) {
-      emit('update:nodeChecked', node, value)
-    } else {
-      selectedNodes.set(toRaw(node), value)
-    }
-  }
-
-  function getSelectedNodes () {
-
-  }
-
-  function setSelectedNodes (nodes) {
-
-  }
-
-  function setSelectedNodesByKeys (keys) {
-
+  function collapseAll () {
+    autoExpandLevel.value = null
+    expandedNodes.value = new WeakMap()
+    refreshKey.value = 'root' + (+new Date())
   }
 
   provide('tree', {
+    emit,
     props: properties,
+
     nodeIcons,
     expandIcons,
     hoverButtons,
+
+    activeNode,
+
     checkbox,
     cascadedCheck,
-    activeNode,
+    checkedNodesKeys,
+
     autoExpandLevel,
-    onNodeClick,
-    onNodeButtonClick,
-    // onUpdateNodeChecked,
     getNodeExpanded,
-    setNodeExpanded,
-    getNodeSelected,
-    setNodeSelected
+    setNodeExpanded
   })
 
   defineExpose({
-    resetExpandedNodes,
-    resetSelectedNodes,
-    getSelectedNodes,
-    setSelectedNodes,
-    setSelectedNodesByKeys
+    expandAll,
+    collapseAll
   })
 </script>
 

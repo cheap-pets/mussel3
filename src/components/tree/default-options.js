@@ -3,10 +3,10 @@ export const DEFAULT_DATA_PROPS = {
   icon: 'icon',
   label: 'label',
   title: 'title',
-  isLeaf: 'isLeaf',
-  checked: undefined,
   disabled: 'disabled',
-  childNodes: 'childNodes'
+  childNodes: 'childNodes',
+  isLeaf: undefined,
+  checked: undefined
 }
 
 export const DEFAULT_EXPAND_ICONS = {
