@@ -12,7 +12,10 @@ import file from '~icons/file.svg'
 import folder from '~icons/folder.svg'
 import folderOpen from '~icons/folder-open.svg'
 
-import chevronDown from '~icons/chevron-down.svg'
+import keyUp from '~icons/chevron-up.svg'
+import keyDown from '~icons/chevron-down.svg'
+import keyLeft from '~icons/chevron-left.svg'
+import keyRight from '~icons/chevron-right.svg'
 
 // dropdown svg background
 // url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>")
@@ -49,7 +52,11 @@ registerIcons(
     file,
     folder,
     folderOpen,
-    dropdown: chevronDown
+    keyUp,
+    keyDown,
+    keyLeft,
+    keyRight,
+    dropdown: keyDown
   },
   { type: 'svg' }
 )

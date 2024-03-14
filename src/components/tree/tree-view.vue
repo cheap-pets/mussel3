@@ -16,10 +16,10 @@
     ui: Object,
     data: Array,
     props: Object,
+    buttons: Array,
     checkbox: Boolean,
     cascadedCheck: Boolean,
     checkedNodesKeys: Set,
-    hoverButtons: Array,
     autoExpandLevel: Number,
     activeNode: [Object, String, Number],
     nodeIcons: {
@@ -32,15 +32,23 @@
     }
   })
 
-  const emit = defineEmits(['nodeClick', 'nodeButtonClick', 'nodeCheckChange'])
+  const emit = defineEmits([
+    'nodeClick',
+    'nodeExpand',
+    'nodeCollapse',
+    'nodeButtonClick',
+    'nodeCheckChange'
+  ])
 
-  const properties = computed(() =>
+  const nodeProps = computed(() =>
     Object.fromEntries(
       Object
         .entries({ ...DEFAULT_DATA_PROPS, ...props.props })
         .filter(([key, prop]) => !!prop)
     )
   )
+
+  const keyProp = computed(() => nodeProps.value.key)
 
   const nodeIcons = computed(() => (
     (props.nodeIcons !== false) &&
@@ -57,7 +65,7 @@
   const checkedNodesKeys = toRef(props, 'checkedNodesKeys')
 
   const activeNode = toRef(props, 'activeNode')
-  const hoverButtons = toRef(props, 'hoverButtons')
+  const buttons = toRef(props, 'buttons')
 
   const autoExpandLevel = ref(props.autoExpandLevel)
   const expandedNodes = ref()
@@ -70,32 +78,35 @@
   }
 
   function setNodeExpanded (node, value, stopAutoExpand) {
-    expandedNodes.value.set(toRaw(node), value)
+    if (stopAutoExpand) autoExpandLevel.value = null
 
-    if (stopAutoExpand) autoExpandLevel.value = 0
+    expandedNodes.value.set(toRaw(node), value)
+    emit(value ? 'nodeExpand' : 'nodeCollapse', node)
   }
 
-  function expandAll (options = {}) {
-    const { level = Math.min(props.autoExpandLevel || 0) } = options
-
+  function resetExpandLevel (level) {
     autoExpandLevel.value = level
     expandedNodes.value = new WeakMap()
     refreshKey.value = 'root' + (+new Date())
   }
 
+  function expandAll (options = {}) {
+    resetExpandLevel(options.level || props.autoExpandLevel || 0)
+  }
+
   function collapseAll () {
-    autoExpandLevel.value = null
-    expandedNodes.value = new WeakMap()
-    refreshKey.value = 'root' + (+new Date())
+    resetExpandLevel(null)
   }
 
   provide('tree', {
     emit,
-    props: properties,
 
+    nodeProps,
+    keyProp,
+
+    buttons,
     nodeIcons,
     expandIcons,
-    hoverButtons,
 
     activeNode,
 

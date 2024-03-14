@@ -1,7 +1,7 @@
 <template>
   <mu-tree-node
     v-for="el in nodes"
-    :key="el[tree.props.key]"
+    :key="el[keyProp]"
     :node="el"
     :level="level">
     <template #default="scoped">
@@ -18,5 +18,5 @@
     level: Number
   })
 
-  const tree = inject('tree')
+  const { keyProp } = inject('tree')
 </script>

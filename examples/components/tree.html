@@ -14,6 +14,7 @@
   <style>
     body {
       margin: 0;
+      min-width: 1200px;
     }
 
     h2 {
@@ -42,6 +43,11 @@
       margin-left: 0;
     }
 
+    .demo-panel {
+      width: calc(50% - 10px);
+      border: 1px solid #ccc;
+    }
+
     .mu-tree {
       --mu-tree-node-height: 28px;
 
@@ -62,7 +68,7 @@
     flex-wrap
     gap="2x"
     padding="2x">
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 1" class="demo-panel">
       <h3>1. Basic Style</h3>
       <mu-tree
         :data="data"
@@ -70,17 +76,16 @@
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 2" class="demo-panel">
       <h3>2. Setup Data Props</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         :props="{ label: 'alias', title: 'label', icon: 'icon2' }"
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 3" class="demo-panel">
       <h3>3. Hide Node Icon</h3>
       <mu-tree
         :data="data"
@@ -89,20 +94,18 @@
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 4" class="demo-panel">
       <h3>4. Setup Default Node Icon</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         :node-icons="{ folder: 'check', folderOpen: 'check', leaf: 'x' }"
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
-      <h3>5. Setup Default Expand Icon</h3>
+    <div v-if="!demo || demo === 5" class="demo-panel">
+      <h3>5. Setup Expand Icon</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         :expand-icons="{ expand: 'folder', collapse: 'folderOpen', leaf: 'file' }"
@@ -110,10 +113,9 @@
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 6" class="demo-panel">
       <h3>6. Hide Expand Icon (List Like)</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         :expand-icons="false"
@@ -121,10 +123,9 @@
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 7" class="demo-panel">
       <h3>7. Custom Node Template</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         @node-click="onNodeClick">
@@ -141,18 +142,17 @@
         </template>
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
-      <h3>8. Hover Buttons</h3>
+    <div v-if="!demo || demo === 8" class="demo-panel">
+      <h3>8. Node Buttons</h3>
       <mu-tree
-        flex="1"
         :data="data"
+        :buttons="buttons"
         :active-node="activeNode"
-        :hover-buttons="buttons"
         @node-click="onNodeClick"
         @node-button-click="onNodeButtonClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 9" class="demo-panel">
       <h3>
         9. Auto Expand Level
         <mu-button @click="expandTree.expandAll()">Expand All</mu-button>
@@ -160,17 +160,15 @@
       </h3>
       <mu-tree
         ref="expandTree"
-        flex="1"
         :data="data"
         :active-node="activeNode"
         :auto-expand-level="3"
         @node-click="onNodeClick">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
+    <div v-if="!demo || demo === 10" class="demo-panel">
       <h3>10. Context Menu (*Temporary)</h3>
       <mu-tree
-        flex="1"
         :data="data"
         :active-node="activeNode"
         @node-click="onNodeClick">
@@ -179,7 +177,7 @@
             {{ node.label }}
           </label>
           <mu-dropdown
-            class="mu-tree-node_hover-button"
+            class="mu-tree-node_button"
             dropdown-align="right"
             dropdown-trigger="click"
             :dropdown-style="{ minWidth: '150px' }"
@@ -189,26 +187,37 @@
         </template>
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
-      <h3>11. Checkbox - With "Checked" Data Property</h3>
+    <div v-if="!demo || demo === 11" class="demo-panel">
+      <h3>11. Checkbox with "checked" Node Prop</h3>
       <mu-tree
-        flex="1"
         checkbox
         :data="data"
         :active-node="activeNode"
         :props="{ checked: 'checked' }"
-        @update:node-checked="onUpdateNodeChecked">
+        @node-check-change="onUpdateNodeChecked">
       </mu-tree>
     </div>
-    <div class="mu-box" width="40%" border>
-      <h3>12. Checkbox - Without "Checked" Data Property</h3>
+    <div v-if="!demo || demo === 12" class="demo-panel">
+      <h3>
+        12. Checkbox with 'checked-nodes-keys' Prop
+        <mu-button @click="checkedNodesKeys.clear()">Uncheck All</mu-button>
+      </h3>
       <mu-tree
-        flex="1"
         checkbox
         :data="data"
         :active-node="activeNode"
-        :props="{ checked: 'checked' }"
-        @update:node-checked="onUpdateNodeChecked">
+        :checked-nodes-keys="checkedNodesKeys"
+        @node-check-change="onUpdateCheckedNodesKeys">
+      </mu-tree>
+    </div>
+    <div v-if="!demo || demo === 13" class="demo-panel">
+      <h3>13. Lazy Load</h3>
+      <mu-tree
+        checkbox
+        :data="data"
+        :active-node="activeNode"
+        :props="{ childNodes: 'children', isLeaf: 'isLeaf' }"
+        @node-expand="loadChildren">
       </mu-tree>
     </div>
   </div>
@@ -258,23 +267,26 @@
 
     const app = Vue.createApp({
       setup () {
+        const demo = 0
         const data = Vue.ref(root.childNodes)
         const activeNode = Vue.ref()
+        const expandTree = Vue.ref()
 
         const buttons = [
           {
-            icon: 'circle',
-            title: 'button 0'
-          },
-          {
             icon: 'x',
             title: 'button 1',
-            danger: true
+            danger: true,
+            hover: true
           },
           {
             icon: 'check',
             title: 'button 2',
-            success: true
+            success: true,
+            hover: true
+          },
+          {
+            icon: 'keyRight'
           }
         ]
 
@@ -295,23 +307,41 @@
         }
 
         function onUpdateNodeChecked (node, checked) {
-          console.log('Node Checked Change:', node.label, checked)
+          node.checked = checked
+        }
+    
+        const checkedNodesKeys = Vue.ref(new Set())
+    
+        function onUpdateCheckedNodesKeys (node, checked) {
+          if (checked) checkedNodesKeys.value.add(node.id)
+          else checkedNodesKeys.value.delete(node.id)
+        }
+    
+        function loadChildren (node) {
+          console.log('expand node:', node.id)
 
-          if (checked) checkNodeRecursively(node)
-          else node.checked = false
+          if (!node.children && !node.isLeaf) {
+            if (node.childNodes?.length) {
+              node.children = node.childNodes
+            } else {
+              node.isLeaf = true
+            }
+          }
         }
 
-        const expandTree = Vue.ref()
-
         return {
+          demo,
           data,
           activeNode,
           buttons,
           contextMenus,
           expandTree,
+          checkedNodesKeys,
           onNodeClick,
           onNodeButtonClick,
-          onUpdateNodeChecked
+          onUpdateNodeChecked,
+          onUpdateCheckedNodesKeys,
+          loadChildren
         }
       }
     })

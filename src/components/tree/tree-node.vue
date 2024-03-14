@@ -27,10 +27,10 @@
       </label>
     </slot>
     <mu-icon
-      v-for="button in hoverButtons"
-      :key="button"
-      v-bind="button"
-      class="mu-icon-button mu-tree-node_hover-button"
+      v-for="btn in buttons"
+      :key="btn"
+      v-bind="btn"
+      class="mu-icon-button mu-tree-node_button"
       @click="tree.emit('nodeButtonClick', node, button)" />
   </a>
   <template v-if="expanded">
@@ -47,37 +47,42 @@
 
   const props = defineProps({
     node: Object,
-    level: Number
+    level: Number,
+    key1: null
   })
 
   const tree = inject('tree')
 
   const {
+    buttons,
     nodeIcons,
     expandIcons,
-    activeNode,
-    hoverButtons,
+    nodeProps,
     autoExpandLevel,
     checkbox,
-    checkedNodesKeys
+    checkedNodesKeys,
+    activeNode
   } = tree
 
-  const data = computed(() =>
-    Object.fromEntries(
-      Object
-        .entries(tree.props.value)
-        .map(([key, prop]) => [key, props.node[prop]])
+  const data = computed(() => Object.fromEntries(
+    Object
+      .entries(nodeProps.value)
+      .map(([key, prop]) => [key, props.node[prop]])
+  ))
+
+  const isLeaf = computed(() =>
+    !data.value.childNodes?.length &&
+    (
+      !nodeProps.value.isLeaf ||
+      data.value.isLeaf
     )
   )
 
-  const hasChild = computed(() => !(data.value.isLeaf ?? !data.value.childNodes?.length))
-  const checkedProp = computed(() => tree.props.value.checked)
-
   const checked = computed({
     get () {
-      return checkedProp.value
-        ? !!data.value.checked
-        : checkedNodesKeys.value?.has(data.value.key)
+      return checkedNodesKeys.value
+        ? checkedNodesKeys.value.has(data.value.key)
+        : !!data.value.checked
     },
     set (v) {
       tree.emit('nodeCheckChange', props.node, v)
@@ -88,14 +93,14 @@
     (expandIcons.value !== false) &&
     (
       (
-        hasChild.value
-          ? (
+        isLeaf.value
+          ? expandIcons.value.leaf
+          : (
             (
               expanded.value &&
               expandIcons.value.collapse
             ) || expandIcons.value.expand
           )
-          : expandIcons.value.leaf
       ) ||
       null
     )
@@ -106,9 +111,9 @@
     (
       data.value.icon ||
       (
-        hasChild.value
-          ? ((expanded.value && nodeIcons.value.folderOpen) || nodeIcons.value.folder)
-          : nodeIcons.value.leaf
+        isLeaf.value
+          ? nodeIcons.value.leaf
+          : ((expanded.value && nodeIcons.value.folderOpen) || nodeIcons.value.folder)
       ) ||
       null
     )
@@ -125,7 +130,7 @@
 
   const expanded = computed(() =>
     (
-      hasChild.value &&
+      !isLeaf.value &&
       tree.getNodeExpanded(props.node)
     ) || null
   )
@@ -133,13 +138,13 @@
   function initExpanded () {
     const level = autoExpandLevel.value ?? -1
     const oldExpanded = tree.getNodeExpanded(props.node)
-    const newExpanded = (oldExpanded ?? props.level <= level) && !!hasChild.value
+    const newExpanded = (oldExpanded ?? props.level <= level) && !isLeaf.value
 
     if (newExpanded !== oldExpanded) tree.setNodeExpanded(props.node, newExpanded)
   }
 
   function toggleExpand () {
-    if (hasChild.value) {
+    if (!isLeaf.value) {
       tree.setNodeExpanded(props.node, !expanded.value, true)
     }
   }
@@ -181,10 +186,14 @@
       }
     }
 
-    & > .mu-tree-node_hover-button {
-      display: none;
-      height: 20px;
+    & > .mu-tree-node_button {
+      line-height: 0;
       width: 20px;
+      text-align: center;
+
+      &[hover] {
+        display: none;
+      }
     }
 
     & > .mu-tree-node_label {
@@ -201,6 +210,10 @@
 
     &:hover {
       background: var(--mu-list-item-hover-background);
+
+      & > .mu-tree-node_button[hover] {
+        display: inline-flex;
+      }
     }
 
     &[active] {
@@ -218,12 +231,6 @@
     &[expanded] {
       & > .mu-tree-node_expand-icon {
         transform: rotate(0);
-      }
-    }
-
-    &:hover {
-      & > .mu-tree-node_hover-button {
-        display: inline-flex;
       }
     }
   }
