@@ -125,7 +125,7 @@
   })
 </script>
 
-<style lang="scss">
+<style>
   .mu-tree {
     --mu-tree-node-height: 32px;
     --mu-tree-node-indent: 16px;

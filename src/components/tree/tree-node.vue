@@ -152,7 +152,7 @@
   initExpanded()
 </script>
 
-<style lang="scss">
+<style>
   .mu-tree-node {
     cursor: pointer;
 
@@ -169,7 +169,6 @@
 
     font-size: var(--mu-common-font-size);
     line-height: $listItemLineHeight;
-
     color: var(--mu-text-color-normal);
 
     & > .mu-icon {
@@ -187,8 +186,8 @@
     }
 
     & > .mu-tree-node_button {
-      line-height: 0;
       width: 20px;
+      line-height: 0;
       text-align: center;
 
       &[hover] {
@@ -198,14 +197,13 @@
 
     & > .mu-tree-node_label {
       cursor: inherit;
+      user-select: none;
 
       overflow: hidden;
       flex: 1 1 0;
 
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      user-select: none;
     }
 
     &:hover {
@@ -224,8 +222,8 @@
     &[disabled] {
       pointer-events: none;
       cursor: default;
-      background: inherit;
       color: var(--mu-text-color-weak);
+      background: inherit;
     }
 
     &[expanded] {
