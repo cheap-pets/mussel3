@@ -7,6 +7,9 @@
     <template #default="scoped">
       <slot :node="scoped.node" />
     </template>
+    <template #buttons="scoped">
+      <slot name="buttons" :node="scoped.node" />
+    </template>
   </mu-tree-node>
 </template>
 

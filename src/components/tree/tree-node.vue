@@ -26,17 +26,22 @@
         {{ data.label }}
       </label>
     </slot>
-    <mu-icon
-      v-for="btn in buttons"
-      :key="btn"
-      v-bind="btn"
-      class="mu-icon-button mu-tree-node_button"
-      @click="tree.emit('nodeButtonClick', node, button)" />
+    <slot name="buttons" :node="node">
+      <mu-icon
+        v-for="btn in buttons"
+        :key="btn"
+        v-bind="btn"
+        class="mu-icon-button mu-tree-node_button"
+        @click="tree.emit('nodeButtonClick', node, button)" />
+    </slot>
   </a>
   <template v-if="expanded">
     <mu-tree-nodes :nodes="data.childNodes" :level="level + 1">
       <template #default="scoped">
         <slot :node="scoped.node" />
+      </template>
+      <template #buttons="scoped">
+        <slot name="buttons" :node="scoped.node" />
       </template>
     </mu-tree-nodes>
   </template>
@@ -89,6 +94,24 @@
     }
   })
 
+  /*
+  const expanded = computed(() =>
+    (
+      !isLeaf.value &&
+      tree.getNodeExpanded(props.node)
+    ) || null
+  )
+  */
+
+  const expanded = computed(() => {
+    const level = autoExpandLevel.value ?? -1
+    const value = tree.getNodeExpanded(props.node)
+
+    return value == null && level != null && props.level <= level
+      ? tree.setNodeExpanded(props.node, !isLeaf.value)
+      : value
+  })
+
   const expandIcon = computed(() =>
     (expandIcons.value !== false) &&
     (
@@ -128,13 +151,13 @@
     (data.value.key != null && data.value.key === activeNode.value)
   )
 
-  const expanded = computed(() =>
-    (
-      !isLeaf.value &&
-      tree.getNodeExpanded(props.node)
-    ) || null
-  )
+  function toggleExpand () {
+    if (!isLeaf.value) {
+      tree.setNodeExpanded(props.node, !expanded.value, true)
+    }
+  }
 
+  /*
   function initExpanded () {
     const level = autoExpandLevel.value ?? -1
     const oldExpanded = tree.getNodeExpanded(props.node)
@@ -143,13 +166,8 @@
     if (newExpanded !== oldExpanded) tree.setNodeExpanded(props.node, newExpanded)
   }
 
-  function toggleExpand () {
-    if (!isLeaf.value) {
-      tree.setNodeExpanded(props.node, !expanded.value, true)
-    }
-  }
-
   initExpanded()
+  */
 </script>
 
 <style>

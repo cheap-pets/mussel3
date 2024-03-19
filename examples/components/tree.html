@@ -140,6 +140,15 @@
             Custom: {{ scoped.node.label }} (id: {{ scoped.node.id }})
           </label>
         </template>
+        <template #buttons="scoped">
+          <mu-icon
+            v-if="scoped.node.id % 3 > 0"
+            icon="x"
+            danger
+            hover
+            class="mu-icon-button mu-tree-node_button"
+            @click="tree.emit('nodeButtonClick', node, { title: 'Custom Button' })" />
+        </template>
       </mu-tree>
     </div>
     <div v-if="!demo || demo === 8" class="demo-panel">
@@ -167,7 +176,21 @@
       </mu-tree>
     </div>
     <div v-if="!demo || demo === 10" class="demo-panel">
-      <h3>10. Context Menu (*Temporary)</h3>
+      <h3>
+        10. Expand Nodes
+        <mu-button @click="expandToActive">Expand to</mu-button>
+        <mu-button @click="expandNodes">Expand Random</mu-button>
+        <mu-button @click="expandTree2.collapseAll()">Collapse All</mu-button>
+      </h3>
+      <mu-tree
+        ref="expandTree2"
+        :data="data"
+        :active-node="activeNode"
+        @node-click="onNodeClick">
+      </mu-tree>
+    </div>
+    <div v-if="!demo || demo === 11" class="demo-panel">
+      <h3>11. Context Menu (*Temporary)</h3>
       <mu-tree
         :data="data"
         :active-node="activeNode"
@@ -187,8 +210,8 @@
         </template>
       </mu-tree>
     </div>
-    <div v-if="!demo || demo === 11" class="demo-panel">
-      <h3>11. Checkbox with "checked" Node Prop</h3>
+    <div v-if="!demo || demo === 12" class="demo-panel">
+      <h3>12. Checkbox with "checked" Node Prop</h3>
       <mu-tree
         checkbox
         :data="data"
@@ -197,9 +220,9 @@
         @node-check-change="onUpdateNodeChecked">
       </mu-tree>
     </div>
-    <div v-if="!demo || demo === 12" class="demo-panel">
+    <div v-if="!demo || demo === 13" class="demo-panel">
       <h3>
-        12. Checkbox with 'checked-nodes-keys' Prop
+        13. Checkbox with 'checked-nodes-keys' Prop
         <mu-button @click="checkedNodesKeys.clear()">Uncheck All</mu-button>
       </h3>
       <mu-tree
@@ -210,8 +233,8 @@
         @node-check-change="onUpdateCheckedNodesKeys">
       </mu-tree>
     </div>
-    <div v-if="!demo || demo === 13" class="demo-panel">
-      <h3>13. Lazy Load</h3>
+    <div v-if="!demo || demo === 14" class="demo-panel">
+      <h3>14. Lazy Load</h3>
       <mu-tree
         checkbox
         :data="data"
@@ -222,6 +245,10 @@
     </div>
   </div>
   <script type="text/javascript">
+    function getRandomInt(n) {
+      return Math.floor(Math.random() * n)
+    }
+
     function generateRandomTree(maxCount, maxLevel) {
       let count = 0
 
@@ -237,7 +264,7 @@
 
         count++
 
-        const childrenCount = Math.max(level ? 0 : 1, Math.floor(Math.random() * 10))
+        const childrenCount = Math.max(level ? 0 : 1, getRandomInt(10))
 
         if (childrenCount && level < maxLevel && count < maxCount) {
           node.childNodes = []
@@ -271,6 +298,7 @@
         const data = Vue.ref(root.childNodes)
         const activeNode = Vue.ref()
         const expandTree = Vue.ref()
+        const expandTree2 = Vue.ref()
 
         const buttons = [
           {
@@ -316,6 +344,26 @@
           if (checked) checkedNodesKeys.value.add(node.id)
           else checkedNodesKeys.value.delete(node.id)
         }
+
+        function expandToActive () {
+          expandTree2.value.expandTo(activeNode.value)
+          // or expandTo(activeNode.value.id)
+        }
+
+        function expandNodes () {
+          const nodes = []
+
+          let childNodes = data.value.filter(el => el.childNodes)
+
+          while (childNodes?.length) {
+            const node = childNodes[getRandomInt(childNodes.length)]
+
+            nodes.push(node)
+            childNodes = node.childNodes.filter(el => el.childNodes)
+          }
+
+          if (nodes.length) expandTree2.value.expand(...nodes)
+        }
     
         function loadChildren (node) {
           console.log('expand node:', node.id)
@@ -336,11 +384,14 @@
           buttons,
           contextMenus,
           expandTree,
+          expandTree2,
           checkedNodesKeys,
           onNodeClick,
           onNodeButtonClick,
           onUpdateNodeChecked,
           onUpdateCheckedNodesKeys,
+          expandToActive,
+          expandNodes,
           loadChildren
         }
       }

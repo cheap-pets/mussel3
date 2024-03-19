@@ -4,6 +4,9 @@
       <template #default="{ node }">
         <slot :node="node" />
       </template>
+      <template #buttons="{ node }">
+        <slot name="buttons" :node="node" />
+      </template>
     </mu-tree-nodes>
   </div>
 </template>
@@ -82,12 +85,51 @@
 
     expandedNodes.value.set(toRaw(node), value)
     emit(value ? 'nodeExpand' : 'nodeCollapse', node)
+
+    return value
   }
 
   function resetExpandLevel (level) {
     autoExpandLevel.value = level
     expandedNodes.value = new WeakMap()
-    refreshKey.value = 'root' + (+new Date())
+    // refreshKey.value = 'root' + (+new Date())
+  }
+
+  function walkTo (node) {
+    const target = toRaw(node)
+
+    function walkDeep (nodes) {
+      const result = []
+
+      for (const el of nodes) {
+        if (el === target || (keyProp.value && el[keyProp.value] === target)) {
+          result.push(el)
+          break
+        } else if (el.childNodes) {
+          const deepResult = walkDeep(el.childNodes)
+
+          if (deepResult.length) result.push(el, ...deepResult)
+        }
+
+        if (result.length) break
+      }
+
+      return result
+    }
+
+    return walkDeep(toRaw(props.data))
+  }
+
+  function expand (...nodes) {
+    nodes.forEach(el => setNodeExpanded(el, true, true))
+  }
+
+  function expandTo (node) {
+    expand(...walkTo(node))
+  }
+
+  function collapse (...nodes) {
+    nodes.forEach(el => setNodeExpanded(el, false, true))
   }
 
   function expandAll (options = {}) {
@@ -120,6 +162,9 @@
   })
 
   defineExpose({
+    expand,
+    expandTo,
+    collapse,
     expandAll,
     collapseAll
   })
