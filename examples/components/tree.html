@@ -68,6 +68,9 @@
     flex-wrap
     gap="2x"
     padding="2x">
+    <div style="width: 100%;">
+      <mu-combo-box class="mu-box" width="400" v-model="demo" :options="demos">
+    </div>
     <div v-if="!demo || demo === 1" class="demo-panel">
       <h3>1. Basic Style</h3>
       <mu-tree
@@ -178,7 +181,7 @@
     <div v-if="!demo || demo === 10" class="demo-panel">
       <h3>
         10. Expand Nodes
-        <mu-button @click="expandToActive">Expand to</mu-button>
+        <mu-button @click="expandToActive">Expand To Active</mu-button>
         <mu-button @click="expandNodes">Expand Random</mu-button>
         <mu-button @click="expandTree2.collapseAll()">Collapse All</mu-button>
       </h3>
@@ -222,7 +225,7 @@
     </div>
     <div v-if="!demo || demo === 13" class="demo-panel">
       <h3>
-        13. Checkbox with 'checked-nodes-keys' Prop
+        13. Checkbox with "checked-nodes-keys" Prop
         <mu-button @click="checkedNodesKeys.clear()">Uncheck All</mu-button>
       </h3>
       <mu-tree
@@ -245,7 +248,25 @@
     </div>
   </div>
   <script type="text/javascript">
-    function getRandomInt(n) {
+    const demos = [
+      { value: 0, label: 'Show All', },
+      { value: 1, label: '01. Basic Style', },
+      { value: 2, label: '02. Setup Data Props', },
+      { value: 3, label: '03. Hide Node Icon', },
+      { value: 4, label: '04. Setup Default Node Icon', },
+      { value: 5, label: '05. Setup Expand Icon', },
+      { value: 6, label: '06. Hide Expand Icon (List Like)', },
+      { value: 7, label: '07. Custom Node Template', },
+      { value: 8, label: '08. Node Buttons', },
+      { value: 9, label: '09. Auto Expand Level', },
+      { value: 10, label: '10. Expand Nodes', },
+      { value: 11, label: '11. Context Menu', },
+      { value: 12, label: '12. Checkbox with "checked" Node Prop', },
+      { value: 13, label: '13. Checkbox with "checked-nodes-keys" Prop', },
+      { value: 14, label: '14. Lazy Load', }
+    ]
+
+    function getRandomInt (n) {
       return Math.floor(Math.random() * n)
     }
 
@@ -294,11 +315,25 @@
 
     const app = Vue.createApp({
       setup () {
-        const demo = 0
         const data = Vue.ref(root.childNodes)
         const activeNode = Vue.ref()
         const expandTree = Vue.ref()
         const expandTree2 = Vue.ref()
+
+        const demoIdx = Vue.ref(
+          parseInt(window.localStorage.getItem('tree_demo_index')) ||
+          0
+        )
+
+        const demo = Vue.computed({
+          get () {
+            return demoIdx.value
+          },
+          set (v) {
+            demoIdx.value = parseInt(v)
+            window.localStorage.setItem('tree_demo_index', v)
+          }
+        })
 
         const buttons = [
           {
@@ -378,6 +413,7 @@
         }
 
         return {
+          demos,
           demo,
           data,
           activeNode,

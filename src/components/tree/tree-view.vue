@@ -1,6 +1,6 @@
 <template>
   <div class="mu-tree">
-    <mu-tree-nodes :key="refreshKey" :nodes="data" :level="0">
+    <mu-tree-nodes :nodes="data" :level="0">
       <template #default="{ node }">
         <slot :node="node" />
       </template>
@@ -12,8 +12,9 @@
 </template>
 
 <script setup>
-  import { ref, toRaw, toRef, computed, provide } from 'vue'
+  import { toRef, computed, provide } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
+  import { useExpand } from './tree-hooks'
 
   const props = defineProps({
     ui: Object,
@@ -70,66 +71,24 @@
   const activeNode = toRef(props, 'activeNode')
   const buttons = toRef(props, 'buttons')
 
-  const autoExpandLevel = ref(props.autoExpandLevel)
-  const expandedNodes = ref()
-  const refreshKey = ref('root' + (+new Date()))
-
-  expandedNodes.value = new WeakMap()
-
-  function getNodeExpanded (node) {
-    return expandedNodes.value.get(toRaw(node))
-  }
-
-  function setNodeExpanded (node, value, stopAutoExpand) {
-    if (stopAutoExpand) autoExpandLevel.value = null
-
-    expandedNodes.value.set(toRaw(node), value)
+  function onNodeExpandedChange (node, value) {
     emit(value ? 'nodeExpand' : 'nodeCollapse', node)
-
-    return value
   }
 
-  function resetExpandLevel (level) {
-    autoExpandLevel.value = level
-    expandedNodes.value = new WeakMap()
-    // refreshKey.value = 'root' + (+new Date())
-  }
+  const {
+    expandLevel,
+    getNodeExpanded,
+    setNodeExpanded,
+    resetExpandLevel,
+    walkTo,
+    expand,
+    collapse
+  } = useExpand({ keyProp: keyProp.value, onNodeExpandedChange })
 
-  function walkTo (node) {
-    const target = toRaw(node)
+  expandLevel.value = props.autoExpandLevel
 
-    function walkDeep (nodes) {
-      const result = []
-
-      for (const el of nodes) {
-        if (el === target || (keyProp.value && el[keyProp.value] === target)) {
-          result.push(el)
-          break
-        } else if (el.childNodes) {
-          const deepResult = walkDeep(el.childNodes)
-
-          if (deepResult.length) result.push(el, ...deepResult)
-        }
-
-        if (result.length) break
-      }
-
-      return result
-    }
-
-    return walkDeep(toRaw(props.data))
-  }
-
-  function expand (...nodes) {
-    nodes.forEach(el => setNodeExpanded(el, true, true))
-  }
-
-  function expandTo (node) {
-    expand(...walkTo(node))
-  }
-
-  function collapse (...nodes) {
-    nodes.forEach(el => setNodeExpanded(el, false, true))
+  function expandTo (target) {
+    expand(...walkTo(props.data, target))
   }
 
   function expandAll (options = {}) {
@@ -156,15 +115,15 @@
     cascadedCheck,
     checkedNodesKeys,
 
-    autoExpandLevel,
+    expandLevel,
     getNodeExpanded,
     setNodeExpanded
   })
 
   defineExpose({
     expand,
-    expandTo,
     collapse,
+    expandTo,
     expandAll,
     collapseAll
   })

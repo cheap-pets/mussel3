@@ -50,12 +50,7 @@
 <script setup>
   import { computed, toRaw, inject } from 'vue'
 
-  const props = defineProps({
-    node: Object,
-    level: Number,
-    key1: null
-  })
-
+  const props = defineProps(['node', 'level'])
   const tree = inject('tree')
 
   const {
@@ -63,7 +58,7 @@
     nodeIcons,
     expandIcons,
     nodeProps,
-    autoExpandLevel,
+    expandLevel,
     checkbox,
     checkedNodesKeys,
     activeNode
@@ -94,17 +89,8 @@
     }
   })
 
-  /*
-  const expanded = computed(() =>
-    (
-      !isLeaf.value &&
-      tree.getNodeExpanded(props.node)
-    ) || null
-  )
-  */
-
   const expanded = computed(() => {
-    const level = autoExpandLevel.value ?? -1
+    const level = expandLevel.value ?? -1
     const value = tree.getNodeExpanded(props.node)
 
     return value == null && level != null && props.level <= level
@@ -156,18 +142,6 @@
       tree.setNodeExpanded(props.node, !expanded.value, true)
     }
   }
-
-  /*
-  function initExpanded () {
-    const level = autoExpandLevel.value ?? -1
-    const oldExpanded = tree.getNodeExpanded(props.node)
-    const newExpanded = (oldExpanded ?? props.level <= level) && !isLeaf.value
-
-    if (newExpanded !== oldExpanded) tree.setNodeExpanded(props.node, newExpanded)
-  }
-
-  initExpanded()
-  */
 </script>
 
 <style>
