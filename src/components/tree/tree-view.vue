@@ -12,9 +12,12 @@
 </template>
 
 <script setup>
-  import { toRef, computed, provide } from 'vue'
+  import { toRef, computed, provide, inject } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
   import { useExpand } from './tree-hooks'
+
+  const { globalTreeOptions = {} } = inject('$mussel')
+  const { expandIcons: globalExpandIcons, nodeIcons: globalNodeIcons } = globalTreeOptions
 
   const props = defineProps({
     ui: Object,
@@ -56,12 +59,12 @@
 
   const nodeIcons = computed(() => (
     (props.nodeIcons !== false) &&
-    { ...DEFAULT_NODE_ICONS, ...props.nodeIcons }
+    { ...DEFAULT_NODE_ICONS, ...globalNodeIcons, ...props.nodeIcons }
   ))
 
   const expandIcons = computed(() => (
     (props.expandIcons !== false) &&
-    { ...DEFAULT_EXPAND_ICONS, ...props.expandIcons }
+    { ...DEFAULT_EXPAND_ICONS, ...globalExpandIcons, ...props.expandIcons }
   ))
 
   const checkbox = toRef(props, 'checkbox')
@@ -83,9 +86,11 @@
     walkTo,
     expand,
     collapse
-  } = useExpand({ keyProp: keyProp.value, onNodeExpandedChange })
-
-  expandLevel.value = props.autoExpandLevel
+  } = useExpand({
+    keyProp: keyProp.value,
+    expandLevel: props.autoExpandLevel,
+    onNodeExpandedChange
+  })
 
   function expandTo (target) {
     expand(...walkTo(props.data, target))

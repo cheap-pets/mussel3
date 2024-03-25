@@ -433,7 +433,14 @@
       }
     })
 
-    mussel.install(app, { darkMode: false })
+    mussel.install(app, {
+      darkMode: false,
+      tree: {
+        nodeIcons: {
+          leaf: 'circleCheck'
+        }
+      }
+    })
     app.mount('#app')
   </script>
 </body>

@@ -7,7 +7,7 @@ export function useExpand (options = {}) {
     onNodeExpandedChange
   } = options
 
-  const expandLevel = ref()
+  const expandLevel = ref(options.expandLevel)
 
   function useKeyBased () {
     const map = ref({})
