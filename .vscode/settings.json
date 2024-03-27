@@ -21,6 +21,7 @@
     "panyend",
     "panymove",
     "panystart",
+    "sizechange",
     "timespan"
   ]
 }

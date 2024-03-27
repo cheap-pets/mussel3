@@ -28,6 +28,7 @@
     "rollup-plugin-sass": "^1.12.21",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-swc": "^0.2.1",
+    "throttle-debounce": "^5.0.0",
     "unplugin-vue": "^5.0.4",
     "vite": "^5.1.5",
     "vue": "^3.4.21"
