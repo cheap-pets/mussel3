@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Scrollbar Example</title>
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <style>
+    .scroll-container {
+      position: relative;
+      width: 500px;
+      height: 500px;
+    }
+    .scroll-element {
+      width: 3000px;
+      height: 30000px;
+      background-image: linear-gradient(45deg, yellow, red, yellow);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-mu-scrollbar class="scroll-container">
+      <div class="scroll-element">
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup (props, context) {
+      }
+    })
+
+    mussel.install(app)
+
+    app.mount('#app')
+  </script>
+</body>

@@ -107,8 +107,8 @@
           : (
             (
               expanded.value &&
-              expandIcons.value.collapse
-            ) || expandIcons.value.expand
+              expandIcons.value.expanded
+            ) || expandIcons.value.collapsed
           )
       ) ||
       null

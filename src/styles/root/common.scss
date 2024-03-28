@@ -1,6 +1,6 @@
 .mu-root {
-
-  font-size: var(--mu-common-font-size);
+  --mu-common-font-size: $commonFontSize;
+  --mu-unit-spacing-size: $unitSpacingSize;
 
   font-family:
     system-ui, 
@@ -13,8 +13,7 @@
     Helvetica,
     Arial,
     sans-serif;
+  font-size: var(--mu-common-font-size);
   color: var(--mu-text-color-normal);
   background-color: var(--mu-background-normal);
-  --mu-common-font-size: $commonFontSize;
-  --mu-unit-spacing-size: $unitSpacingSize;
 }

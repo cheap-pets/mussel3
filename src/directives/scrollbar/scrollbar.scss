@@ -1,8 +1,10 @@
 .mu-scrollbar {
-  --mu-scrollbar_width: 6px;
-  --mu-scrollbar_track-color: rgba(0, 0, 0, .01);
+  --mu-scrollbar_width: 8px;
+  --mu-scrollbar_edge-spacing: 4px;
+  --mu-scrollbar_border-radius: 4px;
+  --mu-scrollbar_track-color: rgba(0, 0, 0, .1);
   --mu-scrollbar_thumb-color: rgba(0, 0, 0, .25);
-  --mu-scrollbar_thumb-hover-color: rgba(0, 0, 0, .35);
+  --mu-scrollbar_thumb-active-color: rgba(0, 0, 0, .35);
 
   will-change: scroll-position;
   scrollbar-width: none;
@@ -10,31 +12,35 @@
   overflow: auto;
 }
 
-.mu-scrollbar_track-x
+.mu-scrollbar_track-x,
 .mu-scrollbar_track-y {
+  will-change: transform;
   user-select: none;
-
+  
   position: absolute;
   z-index: 10;
 
   opacity: 0;
   background: var(--mu-scrollbar_track-color);
+  border-radius: var(--mu-scrollbar_border-radius);
 
   transition: opacity .5s ease-in-out;
 
   & > .mu-scrollbar_thumb {
-    cursor: pointer;
     position: absolute;
     background: var(--mu-scrollbar_thumb-color);
-    border-radius: 4px;
+    border-radius: var(--mu-scrollbar_border-radius);
 
     &:hover {
-      background: var(--mu-scrollbar_thumb-hover-color);
+      background: var(--mu-scrollbar_thumb-active-color);
     }
   }
 }
 
 .mu-scrollbar_track-x {
+  right: var(--mu-scrollbar_edge-spacing);
+  bottom: var(--mu-scrollbar_edge-spacing);
+  left: var(--mu-scrollbar_edge-spacing);
   height: var(--mu-scrollbar_width);
 
   & > .mu-scrollbar_thumb {
@@ -43,6 +49,9 @@
 }
 
 .mu-scrollbar_track-y {
+  top: var(--mu-scrollbar_edge-spacing);
+  right: var(--mu-scrollbar_edge-spacing);
+  bottom: var(--mu-scrollbar_edge-spacing);
   width: var(--mu-scrollbar_width);
 
   & > .mu-scrollbar_thumb {
@@ -53,7 +62,7 @@
 .mu-scrollbar {
   &:hover,
   &[scrollbar-visible="always"] {
-    & > .mu-scrollbar_track-x
+    & > .mu-scrollbar_track-x,
     & > .mu-scrollbar_track-y {
       opacity: 1;
     }
@@ -62,9 +71,9 @@
   &[scrollbar-visible="hidden"] {
     overflow: hidden;
 
-    & > .mu-scrollbar_track-x
+    & > .mu-scrollbar_track-x,
     & > .mu-scrollbar_track-y {
-      display: none;
+      display: none !important;
     }
   }
 }
