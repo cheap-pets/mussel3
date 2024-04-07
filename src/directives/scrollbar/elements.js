@@ -1,9 +1,5 @@
 import { h } from '../../utils/h'
-import {
-  cacheComputedStyle,
-  updatePositionLF,
-  updatePositionHF
-} from './update-position'
+import { updatePositionHF, updatePositionLF } from './update-position'
 
 function onTrackXMouseDown (event) {
 
@@ -14,58 +10,26 @@ function onTrackYMouseDown (event) {
 }
 
 function onResize (event) {
-  updatePositionLF(event.target)
+  updatePositionHF(event.target)
 }
 
 function onScroll (event) {
-  updatePositionHF(event.target)
+  updatePositionLF(event.target)
 }
 
 function onMouseEnter (event) {
-  cacheComputedStyle(event.target)
   updatePositionHF(event.target)
 }
 
-function absMin (value, maxValue) {
-  return maxValue && Math.abs(value) > maxValue
-    ? Math.sign(value) * maxValue
-    : value
-}
-
-function onMouseWheel (el, event) {
-  event.preventDefault()
-  event.stopPropagation()
-
-  const wheelSpeed = 1
-  const max = 10
-  const magnification = event.deltaMode === 1 ? 10 : 1
-
-  let x = absMin(event.deltaX * magnification * wheelSpeed, max)
-  let y = absMin(event.deltaY * magnification * wheelSpeed, max)
-
-  if (event.shiftKey) [x, y] = [y, x]
-
-  const deltaX = x // ((x || !this.hiddenY) ? x : y)
-  const deltaY = y // ((y || !this.hiddenX) ? y : x)
-
-  console.log(x, y, event)
-
-  if (deltaX) {
-    el.scrollLeft += deltaX
-  }
-
-  if (deltaY) {
-    el.scrollTop += deltaY
-  }
-}
-
-export function setupElements (el) {
+export function createElements (el) {
   const thumbX = h('.mu-scrollbar_thumb')
   const thumbY = h('.mu-scrollbar_thumb')
   const trackX = h('.mu-scrollbar_track-x', [thumbX])
   const trackY = h('.mu-scrollbar_track-y', [thumbY])
+  const tracks = h('.mu-scrollbar_tracks', [trackX, trackY])
 
-  h(el, { class: 'mu-scrollbar' }, [trackX, trackY])
+  el.classList.add('mu-scrollbar')
+  el.insertBefore(tracks, el.firstChild)
 
   trackX.addEventListener('mousedown', onTrackXMouseDown)
   trackY.addEventListener('mousedown', onTrackYMouseDown)
@@ -73,7 +37,7 @@ export function setupElements (el) {
   el.addEventListener('scroll', onScroll)
   el.addEventListener('sizechange', onResize)
   el.addEventListener('mouseenter', onMouseEnter)
-  el.addEventListener('mousewheel', event => onMouseWheel(el, event))
+  // el.addEventListener('mousewheel', event => onMouseWheel(el, event))
 
   return {
     trackX,

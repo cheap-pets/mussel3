@@ -1,20 +1,20 @@
 import './scrollbar.scss'
 
-import { setupElements } from './elements'
+import { createElements } from './elements'
 import { createMutationObserver } from './observers'
-import { cacheComputedStyle } from './update-position'
+import { updatePositionLF } from './update-position'
 import { SCROLLBAR_SYMBOL as ctxKey } from './constants'
 
 export default {
   mounted (el) {
     const ctx = el[ctxKey] = {
-      elements: setupElements(el),
+      elements: createElements(el),
       mutationObserver: createMutationObserver(el)
     }
 
-    cacheComputedStyle(el)
-
     ctx.ready = true
+
+    updatePositionLF(el)
   },
 
   beforeUnmount (el) {
