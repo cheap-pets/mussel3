@@ -105,5 +105,5 @@ export function createElements (el, ctx) {
 
 export function removeElements (el, ctx) {
   el.removeEventListener('sizechange', onResize)
-  ctx.elements.tracks.remove()
+  el.removeChild(ctx.elements.tracks)
 }
