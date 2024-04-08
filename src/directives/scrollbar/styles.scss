@@ -1,14 +1,19 @@
 .mu-scrollbar {
   --mu-scrollbar_width: 8px;
-  --mu-scrollbar_edge-spacing: 4px;
+  --mu-scrollbar_margin: 4px;
   --mu-scrollbar_border-radius: 4px;
-  --mu-scrollbar_track-color: rgba(0, 0, 0, .1);
+  --mu-scrollbar_track-color: rgba(0, 0, 0, 0);
+  --mu-scrollbar_thumb-min-length: 32px;
   --mu-scrollbar_thumb-color: rgba(0, 0, 0, .25);
   --mu-scrollbar_thumb-active-color: rgba(0, 0, 0, .35);
 
   scrollbar-width: none;
   position: relative;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .mu-scrollbar_tracks {
@@ -49,28 +54,20 @@
 }
 
 .mu-scrollbar_track-x {
-  // right: var(--mu-scrollbar_edge-spacing);
-  // bottom: var(--mu-scrollbar_edge-spacing);
-  // left: var(--mu-scrollbar_edge-spacing);
-
-  // width: calc(100% - 8px);
   height: var(--mu-scrollbar_width);
 
   & > .mu-scrollbar_thumb {
+    min-width: var(--mu-scrollbar_thumb-min-length);
     height: 100%;
   }
 }
 
 .mu-scrollbar_track-y {
-  // top: var(--mu-scrollbar_edge-spacing);
-  // right: var(--mu-scrollbar_edge-spacing);
-  // bottom: var(--mu-scrollbar_edge-spacing);
-
-  // height: calc(100% - 8px);
   width: var(--mu-scrollbar_width);
 
   & > .mu-scrollbar_thumb {
     width: 100%;
+    min-height: var(--mu-scrollbar_thumb-min-length);
   }
 }
 
