@@ -4,6 +4,7 @@ import HBox from './box/h-box.vue'
 import VBox from './box/v-box.vue'
 import GridBox from './box/grid-box.vue'
 import GridCell from './box/grid-cell.vue'
+import ScrollBox from './scrollbar/scroll-box.vue'
 
 /* ICON */
 import Icon from './icon/icon.vue'
@@ -60,6 +61,7 @@ export const components = {
   VBox,
   GridBox,
   GridCell,
+  ScrollBox,
   Icon,
   Button,
   ButtonGroup,
@@ -100,6 +102,7 @@ export function installComponents (app, options) {
   app.component('mu-v-box', VBox)
   app.component('mu-grid-box', GridBox)
   app.component('mu-grid-cell', GridCell)
+  app.component('mu-scroll-box', ScrollBox)
 
   app.component('mu-icon', Icon)
 

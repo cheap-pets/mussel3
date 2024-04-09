@@ -1,5 +1,5 @@
 import { h } from '../../utils/h'
-import { updatePosition, refreshTracks } from './positions'
+import { updatePosition, refreshTracks, showTracks } from './positions'
 
 function onTrackXMouseDown (event, el, ctx) {
   const { trackX, thumbX } = ctx.elements
@@ -73,8 +73,8 @@ function onScroll (event) {
   updatePosition(event.target)
 }
 
-function onMouseEnter (event) {
-  updatePosition(event.target)
+function onMouseEnter (el, ctx) {
+  showTracks(el, ctx)
 }
 
 export function createElements (el, ctx) {
@@ -82,17 +82,27 @@ export function createElements (el, ctx) {
   const thumbY = h('.mu-scrollbar_thumb')
   const trackX = h('.mu-scrollbar_track-x', [thumbX])
   const trackY = h('.mu-scrollbar_track-y', [thumbY])
-  const tracks = h('.mu-scrollbar_tracks', [trackX, trackY])
+
+  const existedTracks =
+    el.firstChild?.classList?.contains('mu-scrollbar_tracks') &&
+    el.firstChild
+
+  const tracks = h(existedTracks || '.mu-scrollbar_tracks', [trackX, trackY])
+
+  if (existedTracks) {
+    ctx.existedTracks = true
+  } else {
+    el.insertBefore(tracks, el.firstChild)
+  }
 
   el.classList.add('mu-scrollbar')
-  el.insertBefore(tracks, el.firstChild)
 
   trackX.addEventListener('mousedown', event => onTrackXMouseDown(event, el, ctx))
   trackY.addEventListener('mousedown', event => onTrackYMouseDown(event, el, ctx))
 
   el.addEventListener('scroll', onScroll)
   el.addEventListener('sizechange', onResize)
-  el.addEventListener('mouseenter', onMouseEnter)
+  el.addEventListener('mouseenter', event => onMouseEnter(el, ctx))
 
   ctx.elements = {
     tracks,
@@ -105,5 +115,20 @@ export function createElements (el, ctx) {
 
 export function removeElements (el, ctx) {
   el.removeEventListener('sizechange', onResize)
-  el.removeChild(ctx.elements.tracks)
+
+  const {
+    tracks,
+    trackX,
+    trackY
+  } = ctx.elements
+
+  if (ctx.existedTracks) {
+    tracks.removeChild(trackX)
+    tracks.removeChild(trackY)
+  } else {
+    el.removeChild(tracks)
+  }
+
+  delete ctx.elements
+  delete ctx.existedTracks
 }

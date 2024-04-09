@@ -1,39 +1,10 @@
 import { throttle, debounce } from 'throttle-debounce'
 import { SYMBOL } from './constants'
 
-/*
-function updateTracksVisible (el, ctx, elTracks) {
-  let xScrollable = false
-  let yScrollable = false
-
-  const isValidChild = child => child.nodeType === 1 && child !== elTracks
-  const isDone = () => xScrollable && yScrollable
-
-  for (const child of el.childNodes) {
-    if (!isValidChild(child)) continue
-
-    if (!xScrollable && ctx.trackX && child.offsetLeft + child.offsetWidth > ctx.clientWidth) {
-      xScrollable = true
-    }
-
-    if (!yScrollable && ctx.trackY && child.offsetTop + child.offsetHeight > ctx.clientHeight) {
-      yScrollable = true
-    }
-
-    if (isDone()) break
-  }
-
-  ctx.trackX = xScrollable
-  ctx.trackY = yScrollable
-
-  console.log(xScrollable, yScrollable)
-}
-*/
-
 function updateTracks (el, ctx) {
   const computedStyle = window.getComputedStyle(el)
 
-  const { /* tracks, */ trackX, thumbX, trackY, thumbY } = ctx.elements
+  const { trackX, thumbX, trackY, thumbY } = ctx.elements
   const { scrollWidth, clientWidth, scrollHeight, clientHeight } = el
   const { overflowX, overflowY, paddingTop, paddingLeft } = computedStyle
 
@@ -45,8 +16,6 @@ function updateTracks (el, ctx) {
     scrollHeight,
     clientHeight
   })
-
-  // if (ctx.trackX || ctx.trackY) updateTracksVisible(el, ctx, tracks)
 
   const trackWidth = computedStyle.getPropertyValue('--mu-scrollbar_width')
   const trackMargin = computedStyle.getPropertyValue('--mu-scrollbar_margin')
@@ -121,14 +90,14 @@ export const updatePosition = throttle(30, (el, updateTracksQuickly) => {
   }
 })
 
-const showTracks = debounce(300, (el, ctx) => {
+export const showTracks = debounce(300, (el, ctx) => {
   ctx.tracksReady = true
   ctx.elements.tracks.style.display = null
 
   updatePosition(el, true)
 }, { atBegin: false })
 
-const hideTracks = debounce(100, (ctx) => {
+const hideTracks = debounce(100, ctx => {
   ctx.tracksReady = false
   ctx.elements.tracks.style.display = 'none'
 }, { atBegin: true })

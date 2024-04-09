@@ -5,7 +5,7 @@ import { updatePosition } from './positions'
 import { createElements, removeElements } from './elements'
 import { createObservers, removeObservers } from './observers'
 
-export function attach (el) {
+function attach (el) {
   const ctx = el[SYMBOL] = {}
 
   createElements(el, ctx)
@@ -17,7 +17,7 @@ export function attach (el) {
   })
 }
 
-export function detach (el) {
+function detach (el) {
   const ctx = el[SYMBOL]
 
   ctx.ready = false
@@ -28,7 +28,7 @@ export function detach (el) {
   delete el[SYMBOL]
 }
 
-export default {
-  mounted: attach,
-  beforeUnmount: detach
+export {
+  attach,
+  detach
 }
