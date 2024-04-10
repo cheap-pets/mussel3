@@ -10,7 +10,6 @@
 
   export default {
     mounted () {
-      console.log(this.$el.className)
       attach(this.$el)
     },
     beforeUnmount () {

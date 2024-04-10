@@ -1,7 +1,4 @@
-import { throttle, debounce } from 'throttle-debounce'
-import { SYMBOL } from './constants'
-
-function updateTracks (el, ctx) {
+export function updateTracks (el, ctx) {
   const computedStyle = window.getComputedStyle(el)
 
   const { trackX, thumbX, trackY, thumbY } = ctx.elements
@@ -49,10 +46,7 @@ function updateTracks (el, ctx) {
   }
 }
 
-const updateTracksLF = throttle(2000, updateTracks)
-const updateTracksHF = throttle(30, updateTracks)
-
-function updateThumbX (el, ctx) {
+export function updateThumbX (el, ctx) {
   if (!ctx.trackX) return
 
   const { scrollLeft } = el
@@ -65,7 +59,7 @@ function updateThumbX (el, ctx) {
   thumbX.style.left = `${scrollLeft * ctx.ratioX}px`
 }
 
-function updateThumbY (el, ctx) {
+export function updateThumbY (el, ctx) {
   if (!ctx.trackY) return
 
   const { scrollTop } = el
@@ -76,37 +70,4 @@ function updateThumbY (el, ctx) {
     (trackY.clientHeight - thumbY.clientHeight) / (scrollHeight - clientHeight)
 
   thumbY.style.top = `${scrollTop * ctx.ratioY}px`
-}
-
-export const updatePosition = throttle(30, (el, updateTracksQuickly) => {
-  const ctx = el[SYMBOL]
-
-  if (ctx.ready && ctx.tracksReady) {
-    if (updateTracksQuickly) updateTracksHF(el, ctx)
-    else updateTracksLF(el, ctx)
-
-    updateThumbX(el, ctx)
-    updateThumbY(el, ctx)
-  }
-})
-
-export const showTracks = debounce(300, (el, ctx) => {
-  ctx.tracksReady = true
-  ctx.elements.tracks.style.display = null
-
-  updatePosition(el, true)
-}, { atBegin: false })
-
-const hideTracks = debounce(100, ctx => {
-  ctx.tracksReady = false
-  ctx.elements.tracks.style.display = 'none'
-}, { atBegin: true })
-
-export function refreshTracks (el) {
-  const ctx = el[SYMBOL]
-
-  if (ctx.ready) {
-    hideTracks(ctx)
-    window.requestAnimationFrame(() => showTracks(el, ctx))
-  }
 }
