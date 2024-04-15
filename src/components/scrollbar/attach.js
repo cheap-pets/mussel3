@@ -1,5 +1,3 @@
-import './styles.scss'
-
 import { throttle } from 'throttle-debounce'
 
 import { h } from '../../utils/h'

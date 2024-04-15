@@ -21,6 +21,7 @@
     "autoprefixer": "^10.4.19",
     "browserslist": "^4.23.0",
     "core-js": "^3.36.1",
+    "mussel-scrollbar": "^1.0.0",
     "postcss": "^8.4.38",
     "postcss-discard-comments": "^6.0.2",
     "postcss-simple-vars": "^7.0.1",

@@ -1,9 +1,9 @@
 import { SYMBOL } from './constants'
 
-export { attach } from './attach'
+export { attach, detach } from 'mussel-scrollbar'
 
-export function detach (el) {
-  el[SYMBOL]?.remove()
+// export function detach (el) {
+//   el[SYMBOL]?.remove()
 
-  delete el[SYMBOL]
-}
+//   delete el[SYMBOL]
+// }

@@ -60,7 +60,8 @@ export default {
       include: '**/*.svg'
     }),
     sass({
-      include: ['**/*.css', '**/*.scss'],
+      include: ['**/*.css', '**/*.scss' ],
+      exclude: [],
       output: true,
       options: {
         data: Object.entries(variables).map(([key, value]) => `$${key}: ${value};`).join('\n'),
