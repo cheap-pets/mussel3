@@ -31,9 +31,13 @@ function parseSelector (selector) {
   }
 }
 
+function setTextContent (el, content) {
+  el.appendChild(document.createTextNode(content))
+}
+
 function setAttributes (el, attributes) {
   if (isString(attributes)) {
-    el.appendChild(document.createTextNode(attributes))
+    setTextContent(el, attributes)
   } else if (isObject(attributes)) {
     Object
       .entries(attributes)
@@ -68,7 +72,12 @@ export function h (selector, attributes, children) {
   if (id) element.setAttribute('id', id)
   if (className) element.className = className
   if (attributes) setAttributes(element, attributes)
-  if (Array.isArray(children)) children.forEach(el => element.appendChild(el))
+
+  if (Array.isArray(children)) {
+    children.forEach(el => element.appendChild(el))
+  } else if (isString(children)) {
+    setTextContent(element, children)
+  }
 
   return element
 }
