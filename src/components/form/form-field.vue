@@ -14,7 +14,7 @@
 <script>
   import MusselBox from '../box/box.vue'
 
-  import { getSizeValue } from '@/utils/size'
+  import { resolveSize } from '@/utils/size'
 
   export default {
     name: 'MusselFormField',
@@ -31,7 +31,7 @@
     },
     computed: {
       labelElementWidth () {
-        return getSizeValue(this.labelWidth || this.form.labelWidth)
+        return resolveSize(this.labelWidth || this.form.labelWidth)
       }
     }
   }

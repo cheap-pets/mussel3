@@ -1,24 +1,23 @@
 <template>
-  <div class="mu-box" :style="boxStyle">
+  <div class="mu-box" :style="style">
     <slot />
   </div>
 </template>
 
 <script>
-  import { getSizeValue } from '@/utils/size'
+  import { resolveSize } from '@/utils/size'
 
   export default {
     name: 'MusselBox',
     props: {
-      size: null,
       width: null,
       height: null
     },
     computed: {
-      boxStyle () {
+      style () {
         return {
-          width: getSizeValue(this.width),
-          height: getSizeValue(this.height)
+          width: resolveSize(this.width),
+          height: resolveSize(this.height)
         }
       }
     }

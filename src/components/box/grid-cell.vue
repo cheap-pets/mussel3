@@ -1,11 +1,11 @@
 <template>
-  <div class="mu-box" :style="boxStyle">
+  <div class="mu-box mu-grid-cell" :style="style">
     <slot />
   </div>
 </template>
 
 <script>
-  import { getSizeValue } from '@/utils/size'
+  import { resolveSize } from '@/utils/size'
 
   export default {
     name: 'MusselGridCell',
@@ -15,24 +15,16 @@
       'rowStart', 'rowSpan', 'rowEnd'
     ],
     computed: {
-      boxStyle () {
-        const gridColumnEnd = isNaN(this.colEnd)
-          ? null
-          : (parseInt(this.colEnd) + 1)
-
-        const gridRowEnd = isNaN(this.rowEnd)
-          ? null
-          : (parseInt(this.rowEnd) + 1)
-
+      style () {
         return {
-          width: getSizeValue(this.width),
-          height: getSizeValue(this.height),
+          width: resolveSize(this.width),
+          height: resolveSize(this.height),
           gridColumnStart: this.colStart,
           gridColumnSpan: this.colSpan,
-          gridColumnEnd,
+          gridColumnEnd: this.colEnd || 1,
           gridRowStart: this.rowStart,
           gridRowSpan: this.rowSpan,
-          gridRowEnd
+          gridRowEnd: this.rowEnd || 1
         }
       }
     }

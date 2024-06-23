@@ -8,12 +8,7 @@ import resolve from '@rollup/plugin-node-resolve'
 
 import swc from 'rollup-plugin-swc'
 import vue from 'unplugin-vue/rollup'
-import sass from 'rollup-plugin-sass'
-
-import postcss from 'postcss'
-import autoprefixer from 'autoprefixer'
-import simpleVars from 'postcss-simple-vars'
-import discardComments from 'postcss-discard-comments'
+import sass from '@cheap-pets/rollup-plugin-postcss-scss'
 
 import { string } from 'rollup-plugin-string'
 
@@ -34,6 +29,7 @@ export default {
     file: isDevEnv ? 'dist/mussel.js' : 'dist/mussel.min.js',
     format: 'umd',
     name: 'mussel',
+    assetFileNames: '[name].[ext]',
     globals: {
       vue: 'Vue'
     },
@@ -60,17 +56,9 @@ export default {
       include: '**/*.svg'
     }),
     sass({
-      include: ['**/*.css', '**/*.scss' ],
-      exclude: [],
-      output: true,
-      options: {
-        data: Object.entries(variables).map(([key, value]) => `$${key}: ${value};`).join('\n'),
-        outputStyle: isDevEnv ? 'expanded' : 'compressed',
-        stripComments: true
-      },
-      processor: css => postcss([simpleVars({ variables }), discardComments, autoprefixer])
-        .process(css, { from: undefined })
-        .then(result => result.css)
+      extract: true,
+      minify: isDevEnv ? 0 : 1,
+      variables
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']

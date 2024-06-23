@@ -1,4 +1,6 @@
-.mu-box[layout=flex] {
+.mu-box[layout=flex],
+.mu-h-box,
+.mu-v-box {
   display: flex;
 
   &[inline] {
@@ -6,24 +8,42 @@
   }
 }
 
+.mu-h-box,
+.mu-box[layout=flex] {
+  flex-direction: row;
+
+  &[reverse] {
+    flex-direction: row-reverse;
+  }
+
+  &[flex-wrap] > .mu-space {
+    width: 100%;
+    height: 0;
+  }
+}
+
+.mu-v-box,
+.mu-box[layout=flex][direction="column"] {
+  flex-direction: column;
+
+  &[reverse] {
+    flex-direction: column-reverse;
+  }
+
+  &[flex-wrap] > .mu-space {
+    width: 0;
+    height: 100%;
+  }
+}
+
+.mu-h-box,
+.mu-v-box,
 .mu-box[layout=flex] {
   align-items: stretch;
   
   &[content-center] {
     align-items: center;
     justify-content: center;
-  }
-
-  &[direction="column"] {
-    flex-direction: column;
-  }
-
-  &[reverse] {
-    flex-direction: row-reverse;
-
-    &[direction="column"] {
-      flex-direction: column-reverse;
-    }
   }
 
   &:not([flex-wrap]) > .mu-space {
@@ -33,21 +53,13 @@
   &[flex-wrap] {
     flex-wrap: wrap;
     align-items: flex-start;
-
-    &:not([direction="column"]) > .mu-space {
-      width: 100%;
-      height: 0;
-    }
-
-    &[direction="column"] > .mu-space {
-      width: 0;
-      height: 100%;
-    }
   }
 }
 
-.mu-box[layout=flex] > *,
-.mu-box {
+.mu-box, 
+.mu-h-box > *,
+.mu-v-box > *,
+.mu-box[layout=flex] > * {
   &[flex="auto"] {
     flex-grow: 1;
     flex-shrink: 1;

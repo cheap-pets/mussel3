@@ -6,36 +6,43 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Flex Layout Component Example</title>
 
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="../../dist/mussel.css" />
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <style>
+    .block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--mu-border-color);
+      background-color: #333;
+      text-align: center;
+      font-size: 2rem;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    <mu-h-box class="mu-bg-normal" position="fixed fit" padding="1x">
-      <mu-box flex="1" margin="1x" border @sizechange.xxx="onResize">1</mu-box>
-      <mu-box flex="1" margin="1x" border>2</mu-box>
-      <mu-box flex="1" margin="1x" border>3</mu-box>
+    <mu-h-box class="mu-bg-normal" position="fixed fit" padding="1x" gap="1x">
+      <div class="block" flex="1" style="min-width: 100px;">1</div>
+      <mu-flex-splitter></mu-flex-splitter>
+      <mu-v-box flex="1" gap="1x" style="overflow: hidden; max-width: 50%;">
+        <div class="block" flex="1">2A</div>
+        <mu-flex-splitter></mu-flex-splitter>
+        <div class="block" flex="1">2B</div>
+      </mu-v-box>
+      <mu-flex-splitter draggable="true"></mu-flex-splitter>
+      <div class="block" flex="1">3</div>
     </mu-h-box>
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
-        function onResize (event) {
-          console.log('resize', event)
-        }
-
-        return { onResize }
       }
     })
 

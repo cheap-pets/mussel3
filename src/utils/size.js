@@ -1,16 +1,17 @@
-export function getSizeValue (s) {
-  const pattern = /^(auto|((?<value>[0-9]*(\.[0-9]+)?)(?<unit>px|%)?))$/i
-  const result = pattern.exec(s)
+const SIZE_VALUE_PATTERN = /^(auto|((?<value>[0-9]*(\.[0-9]+)?)(?<unit>px|%)?))$/i
 
-  if (result) {
-    const { value = 'auto', unit } = result.groups
+export function resolveSize (s) {
+  const matched = SIZE_VALUE_PATTERN.exec(s)
+
+  if (matched) {
+    const { value = 'auto', unit } = matched.groups
 
     return Number(value)
-      ? (
-          unit
-            ? `${value}${unit}`
-            : (value <= 1 ? `${value * 100}%` : `${value}px`)
-        )
-      : (value === 'auto' ? 'auto' : '0')
+      ? unit
+        ? `${value}${unit}`
+        : value > 1
+          ? `${value}px`
+          : `${value * 100}%`
+      : value
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-box" layout="flex" direction="column" :style="boxStyle">
+  <div class="mu-box mu-v-box" :style="style">
     <slot />
   </div>
 </template>

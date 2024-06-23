@@ -1,11 +1,11 @@
 <template>
-  <div class="mu-box" layout="grid" :style="boxStyle">
+  <div class="mu-box mu-grid-box" :style="style">
     <slot />
   </div>
 </template>
 
 <script>
-  import { getSizeValue } from '@/utils/size'
+  import { resolveSize } from '@/utils/size'
 
   function getGridTemplateValues (v) {
     return isNaN(v) ? undefined : `repeat(${v}, 1fr)`
@@ -15,10 +15,10 @@
     name: 'MusselGridBox',
     props: ['width', 'height', 'rows', 'columns'],
     computed: {
-      boxStyle () {
+      style () {
         return {
-          width: getSizeValue(this.width),
-          height: getSizeValue(this.height),
+          width: resolveSize(this.width),
+          height: resolveSize(this.height),
           gridTemplateRows: getGridTemplateValues(this.rows),
           gridTemplateColumns: getGridTemplateValues(this.columns)
         }

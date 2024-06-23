@@ -1,3 +1,4 @@
+.mu-grid-box,
 .mu-box[layout=grid] {
   display: grid;
 
@@ -49,6 +50,7 @@
 }
 
 .mu-box[layout=grid] > *,
+.mu-grid-box > *,
 .mu-grid-cell {
   @each $v in (start, end, center, stretch) {
     &[justify-self="#{$v}"] {
