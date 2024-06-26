@@ -16,7 +16,7 @@
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
   import { useExpand } from './tree-hooks'
 
-  const { globalTreeOptions = {} } = inject('$mussel')
+  const { tree: globalTreeOptions = {} } = inject('$mussel').globalOptions
   const { expandIcons: globalExpandIcons, nodeIcons: globalNodeIcons } = globalTreeOptions
 
   const props = defineProps({

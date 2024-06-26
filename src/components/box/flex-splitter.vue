@@ -3,44 +3,45 @@
     ref="el"
     class="mu-flex-splitter"
     :direction="direction"
+    :appearance="appearance || defaultAppearance"
     @dblclick="onDblClick"
     @mousedown="onMouseDown">
-    <slot name="handle">
-      <svg class="mu-flex-splitter_handle" xmlns="http://www.w3.org/2000/svg" :viewBox="svg.viewBox">
-        <path stroke="currentColor" stroke-width="1" :d="svg.d" />
+    <slot>
+      <svg
+        v-if="stripe"
+        class="mu-flex-splitter_stripe"
+        xmlns="http://www.w3.org/2000/svg"
+        :viewBox="stripeSVG.viewBox">
+        <path stroke="currentColor" stroke-width="1" :d="stripeSVG.pathD" />
       </svg>
     </slot>
   </div>
 </template>
 
 <script setup>
-  import { ref, computed, provide } from 'vue'
+  import { ref, computed, inject, provide, onMounted } from 'vue'
 
   const el = ref()
+  const direction = ref()
 
   const props = defineProps({
     collapseButton: Boolean,
-    collapseThreshold: { type: Number, default: 150 }
+    collapseThreshold: { type: Number, default: 150 },
+    appearance: { type: String, validator: v => ['SLIM', 'THICK'].includes(v.toUpperCase()) }
   })
 
-  const direction = computed(() => {
-    const parent = el.value?.parentNode
-    const flexDirection = parent && window.getComputedStyle(parent).flexDirection
+  const { splitter: defaultOptions = {} } = inject('$mussel').globalOptions
+  const { appearance: defaultAppearance = 'slim', stripe = true } = defaultOptions
 
-    return flexDirection && (
-      flexDirection.startsWith('column') ? 'column' : 'row'
-    )
-  })
-
-  const svg = computed(() =>
+  const stripeSVG = computed(() =>
     direction.value === 'row'
       ? {
         viewBox: '0 0 4 23',
-        d: 'M0 1h4M0 4h4M0 7h4M0 10h4M0 13h4M0 16h4M0 19h4M0 22h4'
+        pathD: 'M0 1h4M0 4h4M0 7h4M0 10h4M0 13h4M0 16h4M0 19h4M0 22h4'
       }
       : {
         viewBox: '0 0 23 4',
-        d: 'M1 0v4M4 0v4M7 0v4M10 0v4M13 0v4M16 0v4M19 0v4M22 0v4'
+        pathD: 'M1 0v4M4 0v4M7 0v4M10 0v4M13 0v4M16 0v4M19 0v4M22 0v4'
       }
   )
 
@@ -54,7 +55,7 @@
     )
   }
 
-  function resetSiblingsFlexSize () {
+  function updateSiblingsFlexSize () {
     Array
       .from(el.value.parentNode.children)
       .reduce((result, child) => {
@@ -109,7 +110,9 @@
     function calcPixelValue (value) {
       return /^\d+(\.\d+)?%$/.test(value)
         ? Math.round(parseFloat(value) * parentSize / 100)
-        : parseInt(value)
+        : /^(\d*\.?\d+)(px)?$/.test(value)
+          ? parseInt(value)
+          : 0
     }
 
     function getComputedStyle (element) {
@@ -117,37 +120,41 @@
 
       return isRowDirection
         ? {
-          min: calcPixelValue(style.minWidth) || 0,
-          max: calcPixelValue(style.maxWidth) || 0,
+          min: calcPixelValue(style.minWidth),
+          max: calcPixelValue(style.maxWidth),
           size: element.offsetWidth
         }
         : {
-          min: calcPixelValue(style.minHeight) || 0,
-          max: calcPixelValue(style.maxHeight) || 0,
+          min: calcPixelValue(style.minHeight),
+          max: calcPixelValue(style.maxHeight),
           size: element.offsetHeight
         }
     }
 
-    const { min: prevMinSize, max: prevMaxSize, size: prevInitSize } = getComputedStyle(prevSibling)
-    const { min: nextMinSize, max: nextMaxSize, size: nextInitSize } = getComputedStyle(nextSibling)
+    const { min: prevMinSize, max: prevMaxSize, size: prevStartSize } = getComputedStyle(prevSibling)
+    const { min: nextMinSize, max: nextMaxSize, size: nextStartSize } = getComputedStyle(nextSibling)
 
-    const totalSize = prevInitSize + nextInitSize
-    const minOffset = Math.max(prevMinSize, nextMaxSize ? totalSize - nextMaxSize : 0) - prevInitSize
-    const maxOffset = Math.min(prevMaxSize || totalSize, totalSize - nextMinSize) - prevInitSize
+    const totalSize = prevStartSize + nextStartSize
 
     return {
       totalSize,
+      minOffset: Math.max(prevMinSize, nextMaxSize ? totalSize - nextMaxSize : 0) - prevStartSize,
+      maxOffset: Math.min(prevMaxSize || totalSize, totalSize - nextMinSize) - prevStartSize,
       prevMinSize,
       nextMinSize,
-      prevInitSize,
-      nextInitSize,
-      minOffset,
-      maxOffset
+      prevInitSize: calcPixelValue(prevSibling.getAttribute('init-size')),
+      nextInitSize: calcPixelValue(nextSibling.getAttribute('init-size')),
+      prevStartSize,
+      nextStartSize
     }
   }
 
   function isCollapsible (node) {
     return ![null, 'false'].includes(node.getAttribute('collapsible'))
+  }
+
+  function isCollapsed (node) {
+    return node.classList.contains('mu-flex-collapsed')
   }
 
   let paramsCache
@@ -169,28 +176,21 @@
 
     if (!siblings) return
 
-    resetSiblingsFlexSize()
+    updateSiblingsFlexSize()
 
     const { prevSibling, nextSibling } = siblings
 
-    const rangeParams = getResizeRange(prevSibling, nextSibling)
-
-    const { prevMinSize, nextMinSize } = rangeParams
+    const ct = props.collapseThreshold
+    const params = getResizeRange(prevSibling, nextSibling)
 
     paramsCache = {
       prevSibling,
       nextSibling,
       prevCollapsible: isCollapsible(prevSibling),
       nextCollapsible: isCollapsible(nextSibling),
-      ...rangeParams,
-      prevCollapseThreshold:
-        prevMinSize
-          ? prevMinSize - props.collapseThreshold
-          : props.collapseThreshold,
-      nextCollapseThreshold:
-        nextMinSize
-          ? nextMinSize - props.collapseThreshold
-          : props.collapseThreshold
+      prevCollapseThreshold: params.prevMinSize ? params.prevMinSize - ct : ct,
+      nextCollapseThreshold: params.nextMinSize ? params.nextMinSize - ct : ct,
+      ...params
     }
 
     resetParamsCacheTimer()
@@ -205,15 +205,21 @@
 
     const {
       totalSize, minOffset, maxOffset,
-      prevInitSize, nextInitSize,
-      prevSibling, nextSibling
+      prevSibling, prevInitSize, prevStartSize,
+      nextSibling, nextInitSize, nextStartSize
     } = params
 
-    const offset = Math.trunc(totalSize / 2) - prevInitSize
+    if (isCollapsed(prevSibling) || isCollapsed(nextSibling)) return
+
+    const offset = prevInitSize
+      ? prevInitSize - prevStartSize
+      : nextInitSize
+        ? nextInitSize - nextInitSize
+        : Math.trunc(totalSize / 2) - prevStartSize
 
     if (offset >= minOffset && offset <= maxOffset) {
-      prevSibling.style.flexBasis = `${prevInitSize + offset}px`
-      nextSibling.style.flexBasis = `${nextInitSize - offset}px`
+      prevSibling.style.flexBasis = `${prevStartSize + offset}px`
+      nextSibling.style.flexBasis = `${nextStartSize - offset}px`
     }
   }
 
@@ -222,21 +228,19 @@
 
     if (!params) return
 
-    const { pageX: startX, pageY: startY } = event
-
     const {
       totalSize, minOffset, maxOffset,
-      prevSibling, nextSibling,
-      prevInitSize, nextInitSize,
-      prevCollapsible, nextCollapsible,
-      prevCollapseThreshold, nextCollapseThreshold
+      prevSibling, prevStartSize, prevCollapsible, prevCollapseThreshold,
+      nextSibling, nextStartSize, nextCollapsible, nextCollapseThreshold
     } = params
+
+    const { pageX: startX, pageY: startY } = event
 
     function calcAndCollapse (offset) {
       const collapseTarget =
-        prevCollapsible && (prevInitSize + offset < prevCollapseThreshold)
+        prevCollapsible && (prevStartSize + offset < prevCollapseThreshold)
           ? prevSibling
-          : nextCollapsible && (nextInitSize - offset < nextCollapseThreshold)
+          : nextCollapsible && (nextStartSize - offset < nextCollapseThreshold)
             ? nextSibling
             : null
 
@@ -264,8 +268,8 @@
 
       if (!calcAndCollapse(offset)) {
         offset = Math.max(minOffset, Math.min(offset, maxOffset))
-        prevSibling.style.flexBasis = `${prevInitSize + offset}px`
-        nextSibling.style.flexBasis = `${nextInitSize - offset}px`
+        prevSibling.style.flexBasis = `${prevStartSize + offset}px`
+        nextSibling.style.flexBasis = `${nextStartSize - offset}px`
       }
     }
 
@@ -282,20 +286,29 @@
     window.addEventListener('mouseup', onMouseUp)
   }
 
+  onMounted(() => {
+    const parent = el.value.parentNode
+    const flexDirection = window.getComputedStyle(parent).flexDirection
+
+    direction.value = flexDirection && (
+      flexDirection.startsWith('column') ? 'column' : 'row'
+    )
+  })
+
   provide('direction', direction)
 </script>
 
 <style>
   .mu-flex-splitter {
-    --mu-flex-splitter-size: 2px;
-    --mu-flex-splitter-hover-size: 6px;
+    --mu-flex-splitter-slim-size: 2px;
+    --mu-flex-splitter-thick-size: 6px;
 
-    --mu-flex-splitter-bg: #555;
-    --mu-flex-splitter-hover-bg: #666;
+    --mu-flex-splitter-bg: var(--mu-border-color);
+    --mu-flex-splitter-hover-bg: var(--mu-divider-color);
     --mu-flex-splitter-active-bg: var(--mu-primary-color);
 
-    --mu-flex-splitter-handle-size: calc(var(--mu-flex-splitter-hover-size) - 2px);
-    --mu-flex-splitter-handle-color: #fff;
+    --mu-flex-splitter-stripe-size: calc(var(--mu-flex-splitter-thick-size) - 2px);
+    --mu-flex-splitter-stripe-color: #fff;
 
     cursor: col-resize;
     user-select: none;
@@ -305,7 +318,7 @@
 
     overflow: visible;
     display: none;
-    flex: 0 0 var(--mu-flex-splitter-size);
+    flex: 0 0 var(--mu-flex-splitter-slim-size);
     align-items: center;
     align-self: stretch;
     justify-content: center;
@@ -320,6 +333,10 @@
       display: flex;
     }
 
+    &[appearance="thick"] {
+      flex-basis: var(--mu-flex-splitter-thick-size);
+    }
+
     &:hover::before {
       background: var(--mu-flex-splitter-hover-bg);
     }
@@ -331,8 +348,12 @@
     &:hover,
     &[active] {
       z-index: 20;
+    }
 
-      & > .mu-flex-splitter_handle {
+    &:hover,
+    &[active],
+    &[appearance="thick"] {
+      & > .mu-flex-splitter_stripe {
         display: block;
       }
     }
@@ -340,16 +361,16 @@
     &[resizable="false"] {
       pointer-events: none;
 
-      & > .mu-flex-splitter_handle {
+      & > .mu-flex-splitter_stripe {
         display: none !important;
       }
     }
   }
 
-  .mu-flex-splitter_handle {
+  .mu-flex-splitter_stripe {
     position: absolute;
     display: none;
-    color: var(--mu-flex-splitter-handle-color);
+    color: var(--mu-flex-splitter-stripe-color);
   }
 
   .mu-flex-splitter[direction="row"] {
@@ -358,17 +379,18 @@
     &::before {
       top: 0;
       bottom: 0;
-      width: var(--mu-flex-splitter-size);
+      width: var(--mu-flex-splitter-slim-size);
     }
 
-    & > .mu-flex-splitter_handle {
-      width: var(--mu-flex-splitter-handle-size);
+    & > .mu-flex-splitter_stripe {
+      width: var(--mu-flex-splitter-stripe-size);
     }
 
     &:hover,
-    &[active] {
+    &[active],
+    &[appearance="thick"] {
       &::before {
-        width: var(--mu-flex-splitter-hover-size);
+        width: var(--mu-flex-splitter-thick-size);
       }
     }
   }
@@ -379,17 +401,18 @@
     &::before {
       right: 0;
       left: 0;
-      height: var(--mu-flex-splitter-size);
+      height: var(--mu-flex-splitter-slim-size);
     }
 
-    & > .mu-flex-splitter_handle {
-      height: var(--mu-flex-splitter-handle-size);
+    & > .mu-flex-splitter_stripe {
+      height: var(--mu-flex-splitter-stripe-size);
     }
 
     &:hover,
-    &[active] {
+    &[active],
+    &[appearance="thick"] {
       &::before {
-        height: var(--mu-flex-splitter-hover-size);
+        height: var(--mu-flex-splitter-thick-size);
       }
     }
   }

@@ -29,7 +29,7 @@ function setTheme (options = {}) {
   })
 }
 
-function installTheme (app, options) {
+function installTheme (app, { darkMode, autoComplementColors, theme }) {
   const mount = app.mount
 
   app.mount = rootContainer => {
@@ -40,8 +40,6 @@ function installTheme (app, options) {
             ? document.querySelector(rootContainer)
             : null
         )
-
-    const { darkMode, autoComplementColors, theme } = options
 
     if (el) {
       if (el.classList && !el.classList.contains('mu-root')) {

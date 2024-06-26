@@ -97,8 +97,6 @@ export const components = {
 }
 
 export function installComponents (app, options) {
-  const { $mussel } = app.config.globalProperties
-
   app.component('mu-box', Box)
   app.component('mu-h-box', HBox)
   app.component('mu-v-box', VBox)
@@ -114,8 +112,6 @@ export function installComponents (app, options) {
 
   app.component('mu-list-item', ListItem)
   app.component('mu-list-divider', ListDivider)
-
-  if (options.tree) $mussel.globalTreeOptions = options.tree
 
   app.component('mu-tree', Tree)
   app.component('mu-tree-node', TreeNode)
