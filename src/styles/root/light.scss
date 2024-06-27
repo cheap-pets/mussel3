@@ -1,6 +1,6 @@
 .mu-root {
   /* Common Elements Colors */
-  --mu-background-normal: rgb(255, 255, 255);
+  --mu-background-normal: rgb(240, 240, 240);
   --mu-background-hover: rgba(0, 0, 0, .05);
   --mu-background-strong: rgba(0, 0, 0, .05);
   --mu-background-disabled: rgba(0, 0, 0, .1);
@@ -11,7 +11,9 @@
   --mu-text-color-placeholder: var(--mu-gray-5);
 
   --mu-border-color: #ccc;
-  --mu-divider-color: #E5E5E5;
+  --mu-border-hover-color: #b2b2b2;
+
+  --mu-divider-color: rgba(0, 0 ,0 , .2);
 
   /* Component Colors */
   --mu-mask-background: rgba(0, 0, 0, .5);

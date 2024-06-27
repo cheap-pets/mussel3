@@ -1,6 +1,6 @@
 .mu-root[dark-mode] {
   /* Common Elements Colors */
-  --mu-background-normal: rgba(30, 30, 30);
+  --mu-background-normal: rgb(15, 15, 15);
   --mu-background-hover: rgba(255, 255, 255, .05);
   --mu-background-strong: rgba(255, 255, 255, .03);
   --mu-background-disabled: rgba(255, 255, 255, .05);
@@ -10,8 +10,10 @@
   --mu-text-color-weak: rgba(255, 255, 255, .5);
   --mu-text-color-placeholder: rgba(255, 255, 255, .3);
 
-  --mu-border-color: #4B4B4B;
-  --mu-divider-color: #353535;
+  --mu-border-color: #404040;
+  --mu-border-hover-color: #4D4D4D;
+  
+  --mu-divider-color: rgba(255, 255, 255, .2);
 
   /* Component Colors */
   --mu-mask-background: rgba(255, 255, 255, .15);
@@ -44,7 +46,7 @@
   /* --mu-list-item-hover-background: var(--mu-background-hover); */
   /* --mu-list-divider-border-color: var(--mu-divider-color); */
 
-  --mu-dropdown-background: #333;
+  --mu-dropdown-background: #222;
   /* --mu-dropdown-border-color: var(--mu-border-color); */
 
   /* --mu-tab-panel-background: var(--mu-background-normal); */

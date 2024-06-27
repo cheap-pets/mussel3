@@ -26,8 +26,8 @@
 
   const props = defineProps({
     collapseButton: Boolean,
-    collapseThreshold: { type: Number, default: 150 },
-    appearance: { type: String, validator: v => ['SLIM', 'THICK'].includes(v.toUpperCase()) }
+    collapseThreshold: { type: Number, default: 200 },
+    appearance: { type: String, validator: v => ['SLIM', 'FULL'].includes(v.toUpperCase()) }
   })
 
   const { splitter: defaultOptions = {} } = inject('$mussel').globalOptions
@@ -45,13 +45,13 @@
       }
   )
 
-  function isResizableElement (node) {
-    const { position, display } = window.getComputedStyle(node)
+  function isResizableElement (element) {
+    const { position, display } = window.getComputedStyle(element)
 
     return (
-      (display !== 'none' || node.classList.contains('mu-flex-collapsed')) &&
+      (display !== 'none' || element.classList.contains('mu-flex-collapsed')) &&
       !['fixed', 'absolute', 'sticky'].includes(position) &&
-      !node.classList.contains('mu-flex-splitter')
+      !element.classList.contains('mu-flex-splitter')
     )
   }
 
@@ -108,11 +108,23 @@
     const parentSize = isRowDirection ? parentNode.clientWidth : parentNode.clientHeight
 
     function calcPixelValue (value) {
-      return /^\d+(\.\d+)?%$/.test(value)
-        ? Math.round(parseFloat(value) * parentSize / 100)
-        : /^(\d*\.?\d+)(px)?$/.test(value)
-          ? parseInt(value)
-          : 0
+      return !value
+        ? 0
+        : /^\d+(\.\d+)?%$/.test(value)
+          ? Math.round(parseFloat(value) * parentSize / 100)
+          : /^(\d*\.?\d+)(px)?$/.test(value)
+            ? parseInt(value)
+            : 0
+    }
+
+    function getRecoverSize (element) {
+      const attr = element.getAttribute('recover-size')
+
+      return attr === 'auto'
+        ? isRowDirection
+          ? element.offsetWidth - element.clientWidth + element.scrollWidth
+          : element.offsetHeight - element.clientHeight + element.scrollHeight
+        : calcPixelValue(attr)
     }
 
     function getComputedStyle (element) {
@@ -142,19 +154,19 @@
       maxOffset: Math.min(prevMaxSize || totalSize, totalSize - nextMinSize) - prevStartSize,
       prevMinSize,
       nextMinSize,
-      prevInitSize: calcPixelValue(prevSibling.getAttribute('init-size')),
-      nextInitSize: calcPixelValue(nextSibling.getAttribute('init-size')),
       prevStartSize,
-      nextStartSize
+      nextStartSize,
+      prevRecoverSize: getRecoverSize(prevSibling),
+      nextRecoverSize: getRecoverSize(nextSibling)
     }
   }
 
-  function isCollapsible (node) {
-    return ![null, 'false'].includes(node.getAttribute('collapsible'))
+  function isCollapsible (element) {
+    return ![null, 'false'].includes(element.getAttribute('collapsible'))
   }
 
-  function isCollapsed (node) {
-    return node.classList.contains('mu-flex-collapsed')
+  function isCollapsed (element) {
+    return element.classList.contains('mu-flex-collapsed')
   }
 
   let paramsCache
@@ -184,13 +196,15 @@
     const params = getResizeRange(prevSibling, nextSibling)
 
     paramsCache = {
+      ...params,
       prevSibling,
       nextSibling,
-      prevCollapsible: isCollapsible(prevSibling),
-      nextCollapsible: isCollapsible(nextSibling),
-      prevCollapseThreshold: params.prevMinSize ? params.prevMinSize - ct : ct,
-      nextCollapseThreshold: params.nextMinSize ? params.nextMinSize - ct : ct,
-      ...params
+      prevCollapseOffset:
+        isCollapsible(prevSibling) &&
+        Math.min(params.prevMinSize / 2 || ct, ct) - params.prevStartSize,
+      nextCollapseOffset:
+        isCollapsible(nextSibling) &&
+        params.nextStartSize - Math.min(params.nextMinSize / 2 || ct, ct)
     }
 
     resetParamsCacheTimer()
@@ -205,16 +219,16 @@
 
     const {
       totalSize, minOffset, maxOffset,
-      prevSibling, prevInitSize, prevStartSize,
-      nextSibling, nextInitSize, nextStartSize
+      prevSibling, prevStartSize, prevRecoverSize,
+      nextSibling, nextStartSize, nextRecoverSize
     } = params
 
     if (isCollapsed(prevSibling) || isCollapsed(nextSibling)) return
 
-    const offset = prevInitSize
-      ? prevInitSize - prevStartSize
-      : nextInitSize
-        ? nextInitSize - nextInitSize
+    const offset = prevRecoverSize
+      ? prevRecoverSize - prevStartSize
+      : nextRecoverSize
+        ? nextStartSize - nextRecoverSize
         : Math.trunc(totalSize / 2) - prevStartSize
 
     if (offset >= minOffset && offset <= maxOffset) {
@@ -230,17 +244,17 @@
 
     const {
       totalSize, minOffset, maxOffset,
-      prevSibling, prevStartSize, prevCollapsible, prevCollapseThreshold,
-      nextSibling, nextStartSize, nextCollapsible, nextCollapseThreshold
+      prevSibling, prevStartSize, prevCollapseOffset,
+      nextSibling, nextStartSize, nextCollapseOffset
     } = params
 
     const { pageX: startX, pageY: startY } = event
 
     function calcAndCollapse (offset) {
       const collapseTarget =
-        prevCollapsible && (prevStartSize + offset < prevCollapseThreshold)
+        prevCollapseOffset && (offset < prevCollapseOffset)
           ? prevSibling
-          : nextCollapsible && (nextStartSize - offset < nextCollapseThreshold)
+          : nextCollapseOffset && (offset > nextCollapseOffset)
             ? nextSibling
             : null
 
@@ -301,13 +315,13 @@
 <style>
   .mu-flex-splitter {
     --mu-flex-splitter-slim-size: 2px;
-    --mu-flex-splitter-thick-size: 6px;
+    --mu-flex-splitter-full-size: 6px;
 
     --mu-flex-splitter-bg: var(--mu-border-color);
-    --mu-flex-splitter-hover-bg: var(--mu-divider-color);
+    --mu-flex-splitter-hover-bg: var(--mu-border-hover-color);
     --mu-flex-splitter-active-bg: var(--mu-primary-color);
 
-    --mu-flex-splitter-stripe-size: calc(var(--mu-flex-splitter-thick-size) - 2px);
+    --mu-flex-splitter-stripe-size: calc(var(--mu-flex-splitter-full-size) - 2px);
     --mu-flex-splitter-stripe-color: #fff;
 
     cursor: col-resize;
@@ -333,8 +347,8 @@
       display: flex;
     }
 
-    &[appearance="thick"] {
-      flex-basis: var(--mu-flex-splitter-thick-size);
+    &[appearance="full"] {
+      flex-basis: var(--mu-flex-splitter-full-size);
     }
 
     &:hover::before {
@@ -352,7 +366,7 @@
 
     &:hover,
     &[active],
-    &[appearance="thick"] {
+    &[appearance="full"] {
       & > .mu-flex-splitter_stripe {
         display: block;
       }
@@ -388,9 +402,9 @@
 
     &:hover,
     &[active],
-    &[appearance="thick"] {
+    &[appearance="full"] {
       &::before {
-        width: var(--mu-flex-splitter-thick-size);
+        width: var(--mu-flex-splitter-full-size);
       }
     }
   }
@@ -410,9 +424,9 @@
 
     &:hover,
     &[active],
-    &[appearance="thick"] {
+    &[appearance="full"] {
       &::before {
-        height: var(--mu-flex-splitter-thick-size);
+        height: var(--mu-flex-splitter-full-size);
       }
     }
   }
