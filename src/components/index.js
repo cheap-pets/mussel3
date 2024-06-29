@@ -4,8 +4,9 @@ import HBox from './box/h-box.vue'
 import VBox from './box/v-box.vue'
 import GridBox from './box/grid-box.vue'
 import GridCell from './box/grid-cell.vue'
+
 import ScrollBox from './scrollbar/scroll-box.vue'
-import FlexSplitter from './box/flex-splitter.vue'
+import FlexSplitter from './splitter/flex-splitter.vue'
 
 /* ICON */
 import Icon from './icon/icon.vue'
@@ -103,6 +104,7 @@ export function installComponents (app, options) {
   app.component('mu-grid-box', GridBox)
   app.component('mu-grid-cell', GridCell)
   app.component('mu-scroll-box', ScrollBox)
+
   app.component('mu-flex-splitter', FlexSplitter)
 
   app.component('mu-icon', Icon)

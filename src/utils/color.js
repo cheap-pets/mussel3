@@ -54,11 +54,7 @@ function rgb2hsv (r, g, b) {
     : (
         max === r
           ? (g - b) / d + (g < b ? 6 : 0)
-          : (
-              max === g
-                ? (b - r) / d + 2
-                : (r - g) / d + 4
-            )
+          : (max === g ? (b - r) / d + 2 : (r - g) / d + 4)
       ) / 6
 
   return {
@@ -138,12 +134,12 @@ function calcValue (hsv, i, isLightColor) {
 }
 
 export function isDarkColor (color) {
-  const { r, g, b } = isString(color) ? parseRGB(color) : color
+  const { r, g, b } = isString(color) ? resolveRGBA(color) : color
 
   return r * 0.299 + g * 0.578 + b * 0.114 < 192
 }
 
-export function parseRGB (color) {
+export function resolveRGBA (color) {
   // eslint-disable-next-line max-len
   const pattern = /^(?:rgb\((?<r>\d+),\s*(?<g>\d+),\s*(?<b>\d+)\))|(?:rgba\((?<ra>\d+),\s*(?<ga>\d+),\s*(?<ba>\d+),\s*(?<a>(?:0?\.\d+)|0|1)\))$/i
   const result = (pattern.exec(color)?.groups) || hex2rgb(color)
@@ -166,7 +162,7 @@ export function parseRGB (color) {
 }
 
 export function toRGBA (color, alpha) {
-  const rgba = isString(color) ? parseRGB(color) : color
+  const rgba = isString(color) ? resolveRGBA(color) : color
 
   if (rgba) {
     const { r, g, b, a } = rgba
@@ -180,8 +176,8 @@ export function toRGBA (color, alpha) {
 }
 
 export function mix (color, mixinColor, weight = 0.5) {
-  color = isString(color) ? parseRGB(color) : null
-  mixinColor = isString(mixinColor) ? parseRGB(mixinColor) : null
+  color = isString(color) ? resolveRGBA(color) : null
+  mixinColor = isString(mixinColor) ? resolveRGBA(mixinColor) : null
 
   if (color && mixinColor) {
     const w = 2 * weight - 1
@@ -200,7 +196,7 @@ export function mix (color, mixinColor, weight = 0.5) {
 }
 
 export function generatePalettes (baseColor) {
-  const rgb = isString(baseColor) ? parseRGB(baseColor) : baseColor
+  const rgb = isString(baseColor) ? resolveRGBA(baseColor) : baseColor
 
   if (!rgb) return
 
