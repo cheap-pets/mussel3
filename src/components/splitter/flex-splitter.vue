@@ -3,20 +3,19 @@
     ref="el"
     class="mu-flex-splitter"
     :direction="direction"
-    :appearance="appearance || defaultAppearance"
     @dblclick="onDblClick"
     @mousedown="onMouseDown">
     <slot>
       <svg-stripe
-        v-if="stripe"
+        v-if="stripeOrientation"
         class="mu-flex-splitter_stripe"
-        :orientation="direction === 'row' ? 'vertical' : 'horizontal'" />
+        :orientation="stripeOrientation" />
     </slot>
   </div>
 </template>
 
 <script setup>
-  import { ref, inject, provide, onMounted } from 'vue'
+  import { ref, computed, inject, provide, onMounted } from 'vue'
 
   import SvgStripe from '../svg/svg-stripe.vue'
 
@@ -25,17 +24,18 @@
   const el = ref()
   const direction = ref()
 
+  const { splitter: splitterOptions = {} } = inject('$mussel').globalOptions
+
   const props = defineProps({
-    appearance: {
-      type: String,
-      validator: v => ['SLIM', 'FULL'].includes(v.toUpperCase())
-    },
     collapseButton: Boolean,
     collapseThreshold: { type: Number, default: 200 }
   })
 
-  const { splitter: defaultOptions = {} } = inject('$mussel').globalOptions
-  const { appearance: defaultAppearance = 'slim', stripe = true } = defaultOptions
+  const stripeOrientation = computed(() =>
+    splitterOptions.stripe && (
+      direction.value === 'row' ? 'vertical' : 'horizontal'
+    )
+  )
 
   function isResizableElement (element) {
     const { position, display } = window.getComputedStyle(element)
@@ -314,11 +314,9 @@
 
   onMounted(() => {
     const parent = el.value.parentNode
-    const flexDirection = window.getComputedStyle(parent).flexDirection
+    const value = window.getComputedStyle(parent).flexDirection
 
-    direction.value = flexDirection && (
-      flexDirection.startsWith('column') ? 'column' : 'row'
-    )
+    direction.value = value && (value.startsWith('column') ? 'column' : 'row')
   })
 
   provide('direction', direction)

@@ -129,7 +129,7 @@
   )
 
   const paddingLeft = computed(() =>
-    `calc(var(--mu-tree-node-indent) * ${props.level} + var(--mu-tree-node-padding-x))`
+    `calc(var(--mu-tree_node-indent) * ${props.level} + var(--mu-tree_node-padding-x))`
   )
 
   const active = computed(() =>
@@ -156,8 +156,8 @@
     align-items: center;
 
     width: 100%;
-    min-height: var(--mu-tree-node-height);
-    padding: var(--mu-tree-node-padding-y) var(--mu-tree-node-padding-x);
+    min-height: var(--mu-tree_node-height);
+    padding: var(--mu-tree_node-padding-y) var(--mu-tree_node-padding-x);
 
     font-size: var(--mu-common-font-size);
     line-height: $listItemLineHeight;

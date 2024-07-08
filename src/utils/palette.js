@@ -86,9 +86,9 @@ export function generateNeutralPalette (baseColor) {
   const hsv = rgb2hsv(rgb.r, rgb.g, rgb.b)
 
   return Array.from({ length: 9 }, (_, i) => {
-    const newS = Math.max(0, hsv.s * 0.3 * (1 - i / (9 - 1)))
-    const newV = 10 + (80 * i / (9 - 1))
+    const s = Math.max(0, hsv.s * 0.3 * (1 - i / (9 - 1)))
+    const v = 10 + (80 * i / (9 - 1))
 
-    return hsv2hex(hsv.h, newS, newV)
+    return hsv2hex(hsv.h, s, v)
   })
 }

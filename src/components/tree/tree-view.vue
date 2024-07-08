@@ -136,10 +136,10 @@
 
 <style>
   .mu-tree {
-    --mu-tree-node-height: 32px;
-    --mu-tree-node-indent: 16px;
-    --mu-tree-node-padding-y: 4px;
-    --mu-tree-node-padding-x: 8px;
+    --mu-tree_node-height: 32px;
+    --mu-tree_node-indent: 16px;
+    --mu-tree_node-padding-y: 4px;
+    --mu-tree_node-padding-x: 8px;
 
     overflow: auto;
   }
