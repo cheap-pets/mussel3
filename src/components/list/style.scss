@@ -1,0 +1,91 @@
+.mu-list-item,
+.mu-list-divider {
+  cursor: default;
+
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  gap: var(--mu-base-spacing);
+  align-items: center;
+
+  width: 100%;
+
+  font-size: var(--mu-common-font-size);
+  line-height: var(--mu-common-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  & > .mu-icon {
+    flex: none;
+    font-size: calc(1em + 2px);
+  }
+
+  & > label {
+    cursor: inherit;
+
+    overflow: hidden;
+    flex: 1 1 0;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.mu-list-item {
+  min-height: var(--mu-list-item-height);
+  padding: 6px 12px;
+  color: var(--mu-text-color-normal);
+}
+
+a.mu-list-item {
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mu-bg-hover);
+  }
+}
+
+.mu-list-item,
+a.mu-list-item {
+  &[active] {
+    color: #fff;
+    background-color: var(--mu-primary-color);
+
+    & .mu-text-color-weak {
+      color: rgba(255, 255, 255, .5);
+    }
+  }
+}
+
+.mu-list-item[disabled] {
+  pointer-events: none;
+  cursor: default;
+  color: var(--mu-text-color-weak);
+  background: inherit;
+}
+
+.mu-list-divider {
+  margin-top: 4px;
+  padding-top: 4px;
+  color: var(--mu-text-color-weak);
+  border-top: 1px solid var(--mu-divider-color);
+  
+  & > label {
+    font-size: 0.8em;
+  }
+}
+
+.mu-list-divider:empty {
+  &:first-child,
+  & + .mu-list-divider:empty {
+    display: none;
+  }
+}
+
+.mu-list-divider:first-child,
+.mu-list-divider:empty + .mu-list-divider {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}

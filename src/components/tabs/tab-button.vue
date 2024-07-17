@@ -1,6 +1,6 @@
 <template>
   <a
-    class="mu-tab-button"
+    class="mu-tabs_button"
     :active="active || undefined"
     :disabled="disabled || undefined"
     :title="title || buttonCaption">
@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: 'MusselTabButton',
+    name: 'MusselTabsButton',
     props: {
       icon: String,
       name: String,

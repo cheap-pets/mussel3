@@ -1,0 +1,325 @@
+.mu-editor {
+  --mu-editor_height: 32px;
+  --mu-editor_input-padding: 0 12px;
+  --mu-editor_line-height: 20px;
+  --mu-editor_font-size: var(--mu-common-font-size);
+  --mu-editor_item-spacing: var(--mu-base-spacing);
+
+  --mu-editor_textarea-height: 112px;
+  --mu-editor_textarea-padding: 5px 12px;
+
+  --mu-editor_color: var(--mu-text-color-normal);
+  --mu-editor_placeholder-color: var(--mu-text-color-placeholder);
+
+
+  --mu-editor_border-color: var(--mu-border-color);
+  --mu-editor_border-width: 1px;
+  --mu-editor_border-radius: var(--mu-widget-border-radius);
+
+  --mu-editor_bg: var(--mu-bg-normal);
+  --mu-editor_bg-readonly: #ffd;
+
+  --mu-editor_label-bg: var(--mu-bg-strong);
+  --mu-editor_label-color: var(--mu-text-color-weak);
+
+  --mu-editor_icon-size: calc(var(--mu-editor_font-size) + 2px);
+  --mu-editor_icon-color: var(--mu-text-color-weak);
+
+  --mu-editor_focus-border-color: var(--mu-primary-color);
+  --mu-editor_focus-shadow-color: var(--mu-primary-shadow-color);
+  --mu-editor_focus-shadow: 0 0 0 2px var(--mu-editor_focus-shadow-color);
+
+  --mu-editor_hover-border-color: var(--mu-primary-color-4);
+
+  &[solid] {
+    --mu-editor_bg: var(--mu-bg-strong);
+  }
+
+  &[round] {
+    --mu-editor_border-radius: calc(var(--mu-editor_height) / 2);
+  }
+
+  &[invalid] {
+    --mu-editor_border-color: var(--mu-danger-color);
+    --mu-editor_focus-border-color: var(--mu-danger-color);
+    --mu-editor_focus-shadow-color: var(--mu-danger-shadow-color);
+    --mu-editor_hover-border-color: var(--mu-danger-color-4);
+  }
+}
+
+.mu-editor {
+  position: relative;
+
+  width: 200px;
+  height: var(--mu-input-height);
+
+  font-size: var(--mu-common-font-size);
+  line-height: var(--mu-editor_line-height);
+
+  background-color: var(--mu-editor_bg);
+  border: var(--mu-editor_border-width) solid var(--mu-editor_border-color);
+  border-radius: var(--mu-editor_border-radius);
+
+  &:not(input) {
+    display: flex;
+    align-items: center;
+  }
+
+  @at-root {
+    input#{&} {
+      padding: var(--mu-editor_input-padding);
+    }
+
+    textarea#{&} {
+      resize: none;
+      height: var(--mu-editor_textarea-height);
+      padding: var(--mu-editor_textarea-padding);
+    }
+
+    textarea#{&},
+    input#{&},
+    #{&} > input {
+      font-size: var(--mu-editor_font-size);
+      color: var(--mu-editor_color);
+      outline: none;
+
+      &::-ms-clear {
+        display: none;
+      }
+
+      &::placeholder {
+        color: var(--mu-editor_placeholder-color);
+      }
+    }
+  }
+
+  & > input {
+    flex: 1 1 0;
+    align-self: stretch;
+
+    width: 1px;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+  }
+
+  & > label {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    justify-content: center;
+
+    font-size: calc(1em - 1px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    background-color: var(--mu-editor_label-bg);
+
+    &[align=left] {
+      justify-content: start;
+    }
+
+    &[align=right] {
+      justify-content: end;
+    }
+
+    &:first-child {
+      border-top-left-radius: var(--mu-editor_border-radius);
+      border-bottom-left-radius: var(--mu-editor_border-radius);
+    }
+  }
+
+  & > .mu-icon {
+    font-size: var(--mu-editor_icon-size);
+  }
+
+  & > input ~ label:last-of-type {
+    border-top-right-radius: var(--mu-editor_border-radius);
+    border-bottom-right-radius: var(--mu-editor_border-radius);
+  }
+
+  & > span,
+  & > label,
+  & > .mu-icon {
+    color: var(--mu-text-color-weak);
+  }
+
+  & a,
+  & .mu-link {
+    cursor: pointer;
+    color: var(--mu-text-color-weak);
+    text-decoration: none !important;
+
+    &:hover {
+      color: var(--mu-primary-color-light);
+    }
+
+    &[danger]:hover {
+      color: var(--mu-danger-color-light);
+    }
+  }
+
+  & > .mu-popup-holder {
+    overflow: visible;
+    width: 0;
+    margin-left: 0;
+  }
+  
+  &[solid] {
+    border-color: transparent;
+
+    & > label {
+      background-color: transparent;
+    }
+  }
+}
+
+/* spacing */
+.mu-editor {
+  & > * {
+    margin-left: var(--mu-editor_item-spacing);
+  }
+
+  & > :first-child {
+    margin-left: 10px;
+  }
+
+  & > :last-child {
+    margin-right: 10px;
+  }
+
+  & > label {
+    padding: var(--mu-editor_input-padding);
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    & + label,
+    & + .mu-icon {
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    & > * {
+      margin-left: var(--mu-editor_item-spacing);
+    }
+
+    & > :first-child {
+      margin-left: 0;
+    }
+
+    & + .mu-popup-holder {
+      margin-right: 0;
+    }
+  }
+}
+
+/* readonly, disabled */
+.mu-editor {
+  &[readonly] {
+    background-color: var(--mu-editor_bg-readonly) !important;
+
+    & > label {
+      background: inherit !important;
+    }
+  }
+
+  &[disabled] {
+    pointer-events: none;
+    cursor: default;
+
+    color: var(--mu-text-color-weak) !important;
+
+    background-color: var(--mu-bg-disabled) !important;
+    border-color: var(--mu-border-color) !important;
+    box-shadow: none !important;
+
+    &[solid] {
+      border-color: transparent !important;
+    }
+
+    &[underline] {
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-left-color: transparent !important;
+    }
+    
+    & > * {
+      color: var(--mu-text-color-weak) !important;
+    }
+  }
+}
+
+/* underline */
+.mu-editor[underline] {
+  background: var(--mu-editor_bg);
+  border-color: transparent;
+  border-bottom-color: var(--mu-editor_border-color);
+  border-radius: 0;
+
+  @at-root {
+    [invalid] > &,
+    &[invalid] {
+      border-color: transparent;
+      border-bottom-color: var(--mu-danger-color);
+    }
+  }
+
+  & > label {
+    background-color: transparent;
+    border-radius: 0 !important;
+  }
+
+  &:hover {
+    border-bottom-color: var(--mu-primary-color-4);
+  }
+
+  @at-root {
+    [invalid] > &:hover,
+    &[invalid]:hover {
+      border-bottom-color: var(--mu-danger-color-4);
+    }
+  }
+}
+
+/* focus-within */
+.mu-editor:focus-within {
+  border-color: var(--mu-editor_focus-border);
+  box-shadow: var(--mu-editor_focus-shadow);
+}
+
+/* hover */
+.mu-editor:hover {
+  border-color: var(--mu-editor_hover-border-color);
+}
+
+/* visibility control */
+.mu-editor {
+  & > [visibility~=hover],
+  & > [visibility~=focus] {
+    overflow: hidden;
+    width: 0;
+    visibility: hidden;
+
+    &:not(:first-child) {
+      margin-left: 0;
+    }
+  }
+
+  &:hover > [visibility~=hover],
+  &:focus-within > [visibility~=focus]  {
+    width: auto;
+    visibility: visible;
+
+    &:not(:first-child) {
+      margin-left: var(--mu-editor_item-spacing);
+    }
+  }
+}

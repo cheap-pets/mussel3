@@ -18,7 +18,7 @@ function hack (prototype) {
 hack(Element.prototype)
 hack(Document.prototype)
 
-const EventInterceptor = {
+export const EventInterceptor = {
   register (type, interceptor) {
     registeredInterceptors[type] = interceptor
   },
@@ -26,5 +26,3 @@ const EventInterceptor = {
     delete registeredInterceptors[type]
   }
 }
-
-export default EventInterceptor

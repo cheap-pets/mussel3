@@ -1,31 +1,34 @@
-import './styles/index.scss'
+import './styles'
 
-import { installTheme } from './schemes'
-import { installComponents, components } from './components'
-import { registerIcons } from './components/icon/icons'
-import { installDirectives } from './directives'
+import { install as installTheme } from './theme'
+import { install as installDirectives } from './directives'
+import { install as installIcons } from './components/icon/icons'
+import { install as installComponents } from './components'
 
-import * as scrollbar from './components/scrollbar'
+import { deprecated } from './utils/function'
 
 function install (app, options = {}) {
   const {
-    theme,
-    darkMode,
-    autoComplementColors,
-    icons = {},
-    ...globalOptions
+    icons, theme, darkMode,
+    ...componentOptions
   } = options
 
-  const $mussel = app.config.globalProperties.$mussel = { globalOptions }
+  const $mussel = { options: componentOptions }
 
   app.provide('$mussel', $mussel)
+  app.config.globalProperties.$mussel = $mussel
 
-  registerIcons(icons)
-  installTheme(app, { theme, darkMode, autoComplementColors })
+  installIcons(icons)
   installDirectives(app)
-  installComponents(app, globalOptions)
+  installComponents(app)
+  installTheme(app, { theme, darkMode })
 }
 
-export { icons, registerIcons } from './components/icon/icons'
-export { EventInterceptor } from './events'
-export { install, components, scrollbar }
+const registerIcons = deprecated(
+  installIcons,
+  'Function "registerIcons" is deprecated and will be removed in future versions, use "installIcons" instead.'
+)
+
+export * as scrollbar from 'mussel-scrollbar'
+export { EventInterceptor } from './events/interceptor'
+export { install, installIcons, registerIcons }

@@ -1,11 +1,11 @@
 <template>
-  <div class="mu-button-group" :style="boxStyle">
+  <div class="mu-button-group" :style="style">
     <slot />
   </div>
 </template>
 
 <script>
-  import Box from '../box/box.vue'
+  import Box from '../layout/box/box.vue'
 
   export default {
     name: 'MusselButtonGroup',

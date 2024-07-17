@@ -17,7 +17,9 @@
 </template>
 
 <script>
-  import Box from '../box/box.vue'
+  import './status-box.scss'
+
+  import Box from '../layout/box/box.vue'
 
   export default {
     name: 'MusselStatusBox',

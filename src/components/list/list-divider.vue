@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-list-divider">
+  <div class="mu-list-item mu-list-divider">
     <mu-icon v-if="icon" :icon="icon" />
     <label v-if="label">{{ label }}</label>
   </div>

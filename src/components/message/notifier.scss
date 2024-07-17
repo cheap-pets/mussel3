@@ -1,0 +1,37 @@
+.mu-notifier-group {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  right: 0;
+}
+
+.mu-notifier-group-enter-from,
+.mu-notifier-group-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.mu-notifier-group-move,
+.mu-notifier-group-enter-active,
+.mu-notifier-group-leave-active {
+  transition: all .5s;
+}
+
+.mu-notifier {
+  cursor: pointer;
+
+  width: 320px;
+  margin: 16px;
+  padding: 8px;
+
+  font-size: var(--mu-common-font-size);
+  color: #fff;
+
+  background: var(--mu-bg-normal);
+  border-radius: var(--mu-window-border-radius);
+  box-shadow: var(--mu-shadow-popup);
+
+  & .mu-icon {
+    color: var(--mu-gray-0);
+  }
+}

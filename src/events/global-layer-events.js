@@ -1,4 +1,4 @@
-import { isString } from '../utils/type'
+import { isString } from '@/utils/type'
 
 function callbackIf (name, callback) {
   const popup = window['__mussel_' + name]

@@ -1,5 +1,4 @@
 import path from 'path'
-
 import browserslist from 'browserslist'
 
 import alias from '@rollup/plugin-alias'
@@ -14,7 +13,7 @@ import { string } from 'rollup-plugin-string'
 
 import { fileURLToPath } from 'url'
 
-import variables from './src/schemes/variables.js'
+import { colors } from './src/theme.js'
 
 const isDevEnv = process.env.dev
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
@@ -58,7 +57,7 @@ export default {
     sass({
       extract: true,
       minify: isDevEnv ? 0 : 1,
-      variables
+      variables: colors
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']

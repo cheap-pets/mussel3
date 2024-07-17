@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" class="mu-root">
+<html lang="zh">
 
 <head>
   <meta charset="utf-8">
@@ -16,7 +16,7 @@
       padding: 20px;
       overflow: hidden;
       border: 1px solid var(--mu-border-color);
-      background-color: var(--mu-background-strong);
+      background-color: var(--mu-bg-strong);
       text-align: center;
       font-size: 2rem;
     }
@@ -24,7 +24,7 @@
     #app {
       position: fixed;
       inset: 0;
-      background-color: var(--mu-background-normal);
+      background-color: var(--mu-bg-normal);
     }
   </style>
 </head>
@@ -61,7 +61,7 @@
     mussel.install(
       app,
       {
-        darkMode: 'auto',
+        darkMode: false,
         splitter: {
           stripe: true,
           appearance: 'slim'

@@ -1,4 +1,4 @@
-export default function dispatchCustomEvent (el, type, options) {
+export function dispatchCustomEvent (el, type, options) {
   const event = new CustomEvent(type, {
     canBubble: false,
     cancelable: true,

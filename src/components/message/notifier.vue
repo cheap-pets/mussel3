@@ -1,32 +1,18 @@
 <template>
   <transition-group name="mu-notifier-group" tag="div" class="mu-notifier-group">
-    <div
+    <mu-message
       v-for="el in messages"
       :key="el.id"
-      :link="!!el.callback || ''"
       class="mu-notifier"
-      @click="onClick(el)">
-      <div class="mu-message_title" :type="el.type">
-        <mu-icon reverse :icon="el.icon" />
-        <span>{{ el.title }}</span>
-      </div>
-      <div class="mu-message_content mu-text-ellipsis">
-        {{ el.message }}
-      </div>
-    </div>
+      v-bind="el" />
   </transition-group>
 </template>
 
-<script>
-  export default {
-    name: 'MusselNotifier',
-    props: {
-      messages: Array
-    },
-    methods: {
-      onClick (message) {
-        message.callback?.(message.detail)
-      }
-    }
-  }
+<script setup>
+  import './notifier.scss'
+
+  import MuMessage from './message.vue'
+
+  defineOptions({ name: 'MuNotifier' })
+  defineProps({ messages: Array })
 </script>

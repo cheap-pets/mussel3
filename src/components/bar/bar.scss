@@ -1,0 +1,55 @@
+.mu-bar {
+  --mu-bar_height: 40px;
+  --mu-bar_padding: 0 8px;
+  --mu-bar_item-spacing: var(--mu-base-spacing);
+  --mu-bar_font-size: var(--mu-common-font-size);
+  --mu-bar_label-color: var(--mu-text-color-weak);
+}
+
+.mu-bar {
+  display: flex;
+  gap: var(--mu-bar_item-spacing);
+  align-items: center;
+
+  height: var(--mu-bar_height);
+  padding: var(--mu-bar_padding);
+
+  font-size: var(--mu-bar_font-size);
+
+  & > :first-child {
+    margin-left: 0;
+  }
+
+  & > .mu-label {
+    color: var(--mu-bar_label-color);
+  }
+
+  & > .mu-divider {
+    flex: none;
+  }
+
+  & > .mu-space {
+    flex: 1 1 0;
+  }  
+}
+
+.mu-bar[align-items="stretch"] {
+  align-items: stretch;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  & > label,
+  & > .mu-bar_divider,
+  & > [align-self="center"] {
+    align-self: center;
+  }
+
+  & > .mu-button,
+  & > .mu-dropdown > .mu-button,
+  & > .mu-editor {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}

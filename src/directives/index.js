@@ -1,14 +1,8 @@
-import { attach, detach } from '../components/scrollbar'
+import { attach, detach } from 'mussel-scrollbar'
 
-const ScrollbarDirective = {
-  mounted: attach,
-  beforeUnmount: detach
-}
-
-function installDirectives (app) {
-  app.directive('mu-scrollbar', ScrollbarDirective)
-}
-
-export {
-  installDirectives
+export function install (app) {
+  app.directive('mu-scrollbar', {
+    mounted: attach,
+    beforeUnmount: detach
+  })
 }

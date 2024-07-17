@@ -8,6 +8,8 @@
 </template>
 
 <script>
+  import './style.scss'
+
   export default {
     name: 'MusselButton',
     props: {

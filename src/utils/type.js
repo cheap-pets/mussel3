@@ -1,4 +1,4 @@
-function typeOf (value) {
+export function typeOf (value) {
   return Object
     .prototype
     .toString
@@ -7,30 +7,30 @@ function typeOf (value) {
     .toLowerCase()
 }
 
-function isType (value, type) {
+export function isType (value, type) {
   return typeOf(value) === type
 }
 
-function isArray (value) {
+export function isArray (value) {
   return Array.isArray(value)
 }
 
-function isBoolean (value) {
+export function isBoolean (value) {
   return typeOf(value) === 'boolean'
 }
 
-function isClass (value) {
+export function isClass (value) {
   return (
     (typeOf(value) === 'function') &&
     !Reflect.ownKeys(value).some(el => el === 'arguments' || el === 'caller')
   )
 }
 
-function isDate (value) {
+export function isDate (value) {
   return typeOf(value) === 'date'
 }
 
-function isFunction (value) {
+export function isFunction (value) {
   return [
     // 'proxy'
     'function',
@@ -39,19 +39,25 @@ function isFunction (value) {
   ].includes(typeOf(value))
 }
 
-function isObject (value) {
+export function isObject (value) {
   return typeOf(value) === 'object'
 }
 
-function isString (value) {
+export function isString (value) {
   return typeOf(value) === 'string'
 }
 
-function isIterable (value) {
+const SVG_PATTERN = /<svg(?=[\s>])('[^']*'|"[^"]*"|[^'">])*>[\s\S]*?<\/svg>/i
+
+export function isSvgString (value) {
+  return isString(value) && SVG_PATTERN.test(value)
+}
+
+export function isIterable (value) {
   return Symbol.iterator in Object(value)
 }
 
-function isEmpty (value, options = {}) {
+export function isEmpty (value, options = {}) {
   const { skipString, skipBoolean } = options
 
   const t = typeOf(value)
@@ -67,21 +73,6 @@ function isEmpty (value, options = {}) {
   )
 }
 
-function isHtmlElement (value) {
+export function isHtmlElement (value) {
   return value instanceof HTMLElement
-}
-
-export {
-  typeOf,
-  isType,
-  isArray,
-  isBoolean,
-  isClass,
-  isFunction,
-  isDate,
-  isObject,
-  isString,
-  isIterable,
-  isEmpty,
-  isHtmlElement
 }

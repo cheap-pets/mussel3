@@ -1,5 +1,4 @@
-import dispatchCustomEvent from '../../custom-event'
-
+import { dispatchCustomEvent } from '../../custom-event'
 import { GESTURE_DIRECTION as DIRECTION } from '../constant'
 
 function check (touch, direction, options) {

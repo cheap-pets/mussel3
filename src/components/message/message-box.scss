@@ -1,0 +1,9 @@
+.mu-message-box {
+  & .mu-message-box_icon {
+    font-size: 60px;
+  }
+
+  & .mu-message_title {
+    font-size: calc(1em + 2px);
+  }
+}

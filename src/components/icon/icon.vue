@@ -1,43 +1,29 @@
 <template>
   <span
     class="mu-icon"
-    :class="clsContent"
+    :class="data.iconClass"
     :icon="icon"
-    v-html="svgContent" />
+    v-html="data.iconSVG" />
 </template>
 
-<script>
-  import { ref, watch } from 'vue'
+<script setup>
+  import './icon.scss'
 
+  import { computed } from 'vue'
   import { icons } from './icons'
 
-  export default {
-    name: 'MusselIcon',
-    props: {
-      icon: String
-    },
-    setup (props) {
-      const svgContent = ref(null)
-      const clsContent = ref(null)
+  defineOptions({ name: 'MusselIcon' })
 
-      const setContent = () => {
-        const icon = props.icon ? Object(icons[props.icon]) : {}
+  const props = defineProps({
+    icon: String
+  })
 
-        svgContent.value = icon.type === 'svg' ? icon.content : undefined
-        clsContent.value = icon.type === 'class' ? icon.content : undefined
-      }
+  const data = computed(() => {
+    const { type, content } = (props.icon && icons[props.icon]) || {}
 
-      watch(() => props.icon, setContent, { immediate: true })
-
-      return {
-        svgContent,
-        clsContent
-      }
-    },
-    computed: {
-      svg () {
-        return icons[this.icon]
-      }
+    return {
+      iconSVG: (type === 'svg' && content) || undefined,
+      iconClass: (type === 'class' && content) || undefined
     }
-  }
+  })
 </script>

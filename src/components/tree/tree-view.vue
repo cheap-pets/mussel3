@@ -12,12 +12,13 @@
 </template>
 
 <script setup>
+  import './style.scss'
+
   import { toRef, computed, provide, inject } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
   import { useExpand } from './tree-hooks'
 
-  const { tree: globalTreeOptions = {} } = inject('$mussel').globalOptions
-  const { expandIcons: globalExpandIcons, nodeIcons: globalNodeIcons } = globalTreeOptions
+  const { tree: treeOptions = {} } = inject('$mussel').options
 
   const props = defineProps({
     ui: Object,
@@ -59,12 +60,12 @@
 
   const nodeIcons = computed(() => (
     (props.nodeIcons !== false) &&
-    { ...DEFAULT_NODE_ICONS, ...globalNodeIcons, ...props.nodeIcons }
+    { ...DEFAULT_NODE_ICONS, ...treeOptions.nodeIcons, ...props.nodeIcons }
   ))
 
   const expandIcons = computed(() => (
     (props.expandIcons !== false) &&
-    { ...DEFAULT_EXPAND_ICONS, ...globalExpandIcons, ...props.expandIcons }
+    { ...DEFAULT_EXPAND_ICONS, ...treeOptions.expandIcons, ...props.expandIcons }
   ))
 
   const checkbox = toRef(props, 'checkbox')
@@ -133,14 +134,3 @@
     collapseAll
   })
 </script>
-
-<style>
-  .mu-tree {
-    --mu-tree_node-height: 32px;
-    --mu-tree_node-indent: 16px;
-    --mu-tree_node-padding-y: 4px;
-    --mu-tree_node-padding-x: 8px;
-
-    overflow: auto;
-  }
-</style>

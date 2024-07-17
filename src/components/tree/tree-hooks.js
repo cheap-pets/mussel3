@@ -1,5 +1,5 @@
 import { ref, toRaw } from 'vue'
-import { isObject } from '../../utils/type'
+import { isObject } from '@/utils/type'
 
 export function useExpand (options = {}) {
   const {

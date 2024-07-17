@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import { attach, detach } from './index'
+  import { attach, detach } from 'mussel-scrollbar'
 
   export default {
     name: 'MusselScrollBox',

@@ -1,150 +1,46 @@
-/* BOX */
-import Box from './box/box.vue'
-import HBox from './box/h-box.vue'
-import VBox from './box/v-box.vue'
-import GridBox from './box/grid-box.vue'
-import GridCell from './box/grid-cell.vue'
+import * as SvgComponents from './svg'
+import * as LayoutComponents from './layout'
+import * as ButtonComponents from './button'
+import * as ListComponents from './list'
+import * as TreeComponents from './tree'
+import * as TabsComponents from './tabs'
+import * as BarComponents from './bar'
+import * as FormComponents from './form'
+import * as InputComponents from './input'
+import * as PopupComponents from './popup'
+import * as MessageComponents from './message'
 
-import ScrollBox from './scrollbar/scroll-box.vue'
-import FlexSplitter from './splitter/flex-splitter.vue'
+import MuIcon from './icon/icon.vue'
+import MuBadge from './badge/badge.vue'
+import MuScrollBox from './scrollbar/scroll-box.vue'
 
-/* ICON */
-import Icon from './icon/icon.vue'
+import { paramCase } from '@/utils/case'
 
-/* BUTTON */
-import Button from './button/button.vue'
-import ButtonGroup from './button/button-group.vue'
+export function install (app) {
+  function installComponents (components) {
+    Object.keys(components).forEach(key =>
+      key.startsWith('Mu') &&
+      app.component(paramCase(key), components[key])
+    )
 
-/* LIST */
-import ListItem from './list/list-item.vue'
-import ListDivider from './list/list-divider.vue'
+    components.install?.(app)
+  }
 
-/* TREE */
-import Tree from './tree/tree-view.vue'
-import TreeNode from './tree/tree-node.vue'
-import TreeNodes from './tree/tree-nodes.vue'
+  installComponents(SvgComponents)
+  installComponents(LayoutComponents)
+  installComponents(ButtonComponents)
+  installComponents(ListComponents)
+  installComponents(TreeComponents)
+  installComponents(TabsComponents)
+  installComponents(BarComponents)
+  installComponents(FormComponents)
+  installComponents(InputComponents)
+  installComponents(PopupComponents)
+  installComponents(MessageComponents)
 
-/* FORM */
-import Editor from './form/editor.vue'
-import ComboBox from './form/combo-box.vue'
-import ComboBoxOption from './form/option.vue'
-import Check from './form/check.vue'
-import Radio from './form/radio.vue'
-import Switch from './form/switch.vue'
-import Form from './form/form.vue'
-import FormRow from './form/form-row.vue'
-import FormField from './form/form-field.vue'
-
-/* DROPDOWN */
-import Dropdown from './dropdown/dropdown.vue'
-import DropdownButton from './dropdown/dropdown-button.vue'
-import DropdownPanel from './dropdown/dropdown-panel.vue'
-import DropdownItem from './dropdown/dropdown-item.vue'
-import DropdownCheckItem from './dropdown/dropdown-check-item.vue'
-import DropdownRadioItem from './dropdown/dropdown-radio-item.vue'
-
-/* TABS */
-import TabButton from './tabs/tab-button.vue'
-import TabBar from './tabs/tab-bar.vue'
-import TabPanel from './tabs/tab-panel.vue'
-import TabsButtons from './tabs/tabs-buttons.vue'
-import Tabs from './tabs/tabs.vue'
-
-/* MODAL */
-import Dialog from './modal/dialog.vue'
-
-/* MESSAGE */
-import StatusBox from './message/status-box.vue'
-import installMessage from './message'
-
-export const components = {
-  Box,
-  HBox,
-  VBox,
-  GridBox,
-  GridCell,
-  ScrollBox,
-  FlexSplitter,
-  Icon,
-  Button,
-  ButtonGroup,
-  ListItem,
-  ListDivider,
-  Tree,
-  TreeNode,
-  TreeNodes,
-  Editor,
-  ComboBox,
-  ComboBoxOption,
-  Check,
-  Radio,
-  Switch,
-  Form,
-  FormRow,
-  FormField,
-  Dropdown,
-  DropdownButton,
-  DropdownPanel,
-  DropdownItem,
-  DropdownCheckItem,
-  DropdownRadioItem,
-  TabButton,
-  TabBar,
-  TabPanel,
-  TabsButtons,
-  Tabs,
-  Dialog,
-  StatusBox
-}
-
-export function installComponents (app, options) {
-  app.component('mu-box', Box)
-  app.component('mu-h-box', HBox)
-  app.component('mu-v-box', VBox)
-  app.component('mu-grid-box', GridBox)
-  app.component('mu-grid-cell', GridCell)
-  app.component('mu-scroll-box', ScrollBox)
-
-  app.component('mu-flex-splitter', FlexSplitter)
-
-  app.component('mu-icon', Icon)
-
-  app.component('mu-button', Button)
-  app.component('mu-button-group', ButtonGroup)
-
-  app.component('mu-list-item', ListItem)
-  app.component('mu-list-divider', ListDivider)
-
-  app.component('mu-tree', Tree)
-  app.component('mu-tree-node', TreeNode)
-  app.component('mu-tree-nodes', TreeNodes)
-
-  app.component('mu-editor', Editor)
-  app.component('mu-combo-box', ComboBox)
-  app.component('mu-option', ComboBoxOption)
-  app.component('mu-check', Check)
-  app.component('mu-radio', Radio)
-  app.component('mu-switch', Switch)
-  app.component('mu-form', Form)
-  app.component('mu-form-row', FormRow)
-  app.component('mu-form-field', FormField)
-
-  app.component('mu-dropdown', Dropdown)
-  app.component('mu-dropdown-button', DropdownButton)
-  app.component('mu-dropdown-panel', DropdownPanel)
-  app.component('mu-dropdown-item', DropdownItem)
-  app.component('mu-dropdown-check-item', DropdownCheckItem)
-  app.component('mu-dropdown-radio-item', DropdownRadioItem)
-
-  app.component('mu-tab-button', TabButton)
-  app.component('mu-tab-bar', TabBar)
-  app.component('mu-tab-panel', TabPanel)
-  app.component('mu-tabs-buttons', TabsButtons)
-  app.component('mu-tabs', Tabs)
-
-  app.component('mu-dialog', Dialog)
-
-  app.component('mu-status-box', StatusBox)
-
-  installMessage(app)
+  installComponents({
+    MuIcon,
+    MuBadge,
+    MuScrollBox
+  })
 }

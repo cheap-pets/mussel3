@@ -1,0 +1,31 @@
+.mu-message_title {
+  display: flex;
+  gap: var(--mu-base-spacing);
+  align-items: center;
+
+  font-weight: 600;
+  line-height: 32px;
+
+  & > * {
+    display: inline-block;
+  }
+
+  & > .mu-icon {
+    font-size: 32px;
+    color: var(--mu-primary-color-4);
+  }
+
+  &[type=success] > .mu-icon {
+    color: var(--mu-success-color-4);
+  }
+
+  &[type=warn] > .mu-icon,
+  &[type=error] > .mu-icon {
+    color: var(--mu-danger-color-4);
+  }
+}
+
+.mu-message_content {
+  padding-left: 40px;
+  line-height: calc(1em + 8px);
+}

@@ -1,0 +1,76 @@
+.mu-check,
+.mu-radio {
+  --mu-check_size: 16px;
+  --mu-check_font-size: var(--mu-common-font-size);
+  --mu-check_content-spacing: var(--mu-base-spacing);
+
+  --mu-check_bg: var(--mu-bg-normal);
+  --mu-check_border-color: var(--mu-border-color);
+  --mu-check_checked-bg: var(--mu-primary-color);
+  --mu-check_checked-border-color: var(--mu-border-color);
+}
+
+.mu-check {
+  --mu-check_border-radius: var(--mu-widget-border-radius);
+  --mu-check_bg-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+.mu-radio {
+  --mu-check_border-radius: calc(var(--mu-check_size) / 2);
+  --mu-check_bg-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3ccircle fill='none' stroke='%23fff' stroke-width='3' cx='10' cy='10' r='6' /%3e%3c/svg%3e");
+}
+
+.mu-check,
+.mu-radio {
+  cursor: pointer;
+
+  @at-root label#{&} {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--mu-common-font-size);
+    line-height: var(--mu-check_size);
+
+    & > span {
+      display: block;
+    }
+  }
+
+  & > span {
+    margin-left: var(--mu-check_content-spacing);
+  }
+}
+
+.mu-radio[disabled],
+.mu-check[disabled] {
+  pointer-events: none;
+
+  @at-root input#{&},
+  & > input {
+    opacity: .5;
+  }
+}
+
+.mu-check > input,
+input.mu-check,
+.mu-radio > input,
+input.mu-radio {
+  flex: none;
+
+  width: var(--mu-check_size);
+  height: var(--mu-check_size);
+  margin: 0;
+
+  appearance: none;
+  background-color: var(--mu-check_bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--mu-check_border-color);
+  border-radius: var(--mu-check_border-radius);
+
+  &:checked {
+    background-color: var(--mu-check_checked-bg);
+    background-image: var(--mu-check_bg-image);
+    border-color: var(--mu-check_checked-border-color);
+  }
+}

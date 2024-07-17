@@ -1,0 +1,23 @@
+.mu-shadow-layer {
+  box-shadow: var(--mu-shadow-layer);
+}
+
+.mu-shadow-layer-hover {
+  box-shadow: var(--mu-shadow-layer);
+
+  &:hover {
+    box-shadow: var(--mu-shadow-floating);
+  }
+}
+
+.mu-shadow-popup {
+  box-shadow: var(--mu-shadow-popup);
+}
+
+.mu-shadow-floating {
+  box-shadow: var(--mu-shadow-floating);
+}
+
+.mu-shadow-window {
+  box-shadow: var(--mu-shadow-window);
+}

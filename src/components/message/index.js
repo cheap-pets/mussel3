@@ -1,12 +1,12 @@
 import { reactive } from 'vue'
 
-import lang from '../../lang'
+import lang from '@/langs'
 import MessageBox from './message-box.vue'
 import Notifier from './notifier.vue'
 
-import { delay } from '../../utils/timer'
-import { isString } from '../../utils/type'
-import { renderComponent } from '../../utils/vue'
+import { delay } from '@/utils/timer'
+import { isString } from '@/utils/type'
+import { renderComponent } from '@/utils/vue'
 
 const Buttons = {
   OK: {
@@ -207,9 +207,12 @@ function pluginNotifier (app) {
   }
 }
 
-export default function install (app) {
+function install (app) {
   app.config.globalProperties.$mussel.messageBox = {
     ...pluginNotifier(app),
     ...pluginMessageDialog(app)
   }
 }
+
+export { default as MuStatusBox } from './status-box.vue'
+export { install }

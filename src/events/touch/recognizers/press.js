@@ -1,4 +1,4 @@
-import dispatchCustomEvent from '../../custom-event'
+import { dispatchCustomEvent } from '../../custom-event'
 
 function check (el, gs, options) {
   const touch = gs.changedTouches?.[0]

@@ -1,0 +1,145 @@
+.mu-root {
+  --mu-red: $red;
+  --mu-pink: $pink;
+  --mu-grape: $grape;
+  --mu-violet: $violet;
+  --mu-indigo: $indigo;
+  --mu-blue: $blue;
+  --mu-cyan: $cyan;
+  --mu-teal: $teal;
+  --mu-green: $green;
+  --mu-lime: $lime;
+  --mu-yellow: $yellow;
+  --mu-orange: $orange;
+
+  --mu-gray: $gray;
+  --mu-gray-0: $gray0;
+  --mu-gray-1: $gray1;
+  --mu-gray-2: $gray2;
+  --mu-gray-3: $gray3;
+  --mu-gray-4: $gray4;
+  --mu-gray-5: $gray5;
+  --mu-gray-6: $gray6;
+  --mu-gray-7: $gray7;
+  --mu-gray-8: $gray8;
+  --mu-gray-9: $gray9;
+
+  --mu-primary-color: $primaryColor;
+  --mu-primary-color-0: $primaryColor0;
+  --mu-primary-color-1: $primaryColor1;
+  --mu-primary-color-2: $primaryColor2;
+  --mu-primary-color-3: $primaryColor3;
+  --mu-primary-color-4: $primaryColor4;
+  --mu-primary-color-5: $primaryColor5;
+  --mu-primary-color-6: $primaryColor6;
+  --mu-primary-color-7: $primaryColor7;
+  --mu-primary-color-8: $primaryColor8;
+  --mu-primary-color-9: $primaryColor9;
+
+  --mu-accent-color: $accentColor;
+  --mu-accent-color-0: $accentColor0;
+  --mu-accent-color-1: $accentColor1;
+  --mu-accent-color-2: $accentColor2;
+  --mu-accent-color-3: $accentColor3;
+  --mu-accent-color-4: $accentColor4;
+  --mu-accent-color-5: $accentColor5;
+  --mu-accent-color-6: $accentColor6;
+  --mu-accent-color-7: $accentColor7;
+  --mu-accent-color-8: $accentColor8;
+  --mu-accent-color-9: $accentColor9;
+
+  --mu-success-color: $successColor;
+  --mu-success-color-0: $successColor0;
+  --mu-success-color-1: $successColor1;
+  --mu-success-color-2: $successColor2;
+  --mu-success-color-3: $successColor3;
+  --mu-success-color-4: $successColor4;
+  --mu-success-color-5: $successColor5;
+  --mu-success-color-6: $successColor6;
+  --mu-success-color-7: $successColor7;
+  --mu-success-color-8: $successColor8;
+  --mu-success-color-9: $successColor9;
+
+  --mu-warning-color: $warningColor;
+  --mu-warning-color-0: $warningColor0;
+  --mu-warning-color-1: $warningColor1;
+  --mu-warning-color-2: $warningColor2;
+  --mu-warning-color-3: $warningColor3;
+  --mu-warning-color-4: $warningColor4;
+  --mu-warning-color-5: $warningColor5;
+  --mu-warning-color-6: $warningColor6;
+  --mu-warning-color-7: $warningColor7;
+  --mu-warning-color-8: $warningColor8;
+  --mu-warning-color-9: $warningColor9;
+
+  --mu-danger-color: $dangerColor;
+  --mu-danger-color-0: $dangerColor0;
+  --mu-danger-color-1: $dangerColor1;
+  --mu-danger-color-2: $dangerColor2;
+  --mu-danger-color-3: $dangerColor3;
+  --mu-danger-color-4: $dangerColor4;
+  --mu-danger-color-5: $dangerColor5;
+  --mu-danger-color-6: $dangerColor6;
+  --mu-danger-color-7: $dangerColor7;
+  --mu-danger-color-8: $dangerColor8;
+  --mu-danger-color-9: $dangerColor9;
+}
+
+.mu-root {
+  --mu-bg-normal: #fff;
+  --mu-bg-strong: var(--mu-gray-0);
+  --mu-bg-disabled: var(--mu-gray-2);
+  --mu-bg-hover: var(--mu-gray-2);
+
+  --mu-border-color: var(--mu-gray-3);
+  --mu-border-color-hover: var(--mu-gray-2);
+
+  --mu-divider-color: var(--mu-gray-2);
+
+  --mu-text-color-normal: var(--mu-gray-9);
+  --mu-text-color-weak: var(--mu-gray-5);
+  --mu-text-color-placeholder: var(--mu-gray-7);
+
+  --mu-mask-bg: rgba(0, 0, 0, .5);
+  --mu-popup-bg: #fff;
+}
+
+.mu-root {
+  --mu-base-spacing: 8px;
+
+  --mu-widget-border-radius: 4px;
+  --mu-window-border-radius: 8px;
+
+  --mu-input-height: 32px;
+  --mu-input-height-compact: 24px;
+
+  --mu-list-item-height: 32px;
+  --mu-list-item-height-compact: 32px;
+
+  --mu-common-font-size: 14px;
+  --mu-common-line-height: 20px;
+
+  --mu-z-index-above: 1;
+  --mu-z-index-popup: 10;
+  --mu-z-index-modal: 100;
+  --mu-z-index-alert: 1000;
+
+  --mu-shadow-layer: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --mu-shadow-popup: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --mu-shadow-floating: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --mu-shadow-window: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+.mu-root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: var(--mu-base-font-size);
+  color: var(--mu-text-color-normal);
+  background-color: var(--mu-bg-normal);
+}

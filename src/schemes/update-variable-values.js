@@ -1,14 +1,14 @@
-export default function updateValues (values) {
-  const check = {}
+export function updateVariableValues (values) {
+  const cache = {}
 
   function updateValue (key) {
     const value = values[key]
 
-    if (key in check) {
-      return check[key]
+    if (key in cache) {
+      return cache[key]
     } else if (value.indexOf?.('$') === 0) {
-      check[key] = null
-      check[key] = values[key] = updateValue(value.substr(1))
+      cache[key] = null
+      cache[key] = values[key] = updateValue(value.substr(1))
     } else {
       return value
     }

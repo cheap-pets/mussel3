@@ -2,60 +2,40 @@
   <mu-dialog
     v-model:visible="visible"
     class="mu-message-box"
-    :render-to-body="false"
     :buttons="buttons"
     close-button
     @button-click="onButtonClick"
     @close-button-click="onButtonClick">
-    <!-- <div class="mu-box" layout="flex" align-items="center" flex="1">
-      <mu-icon v-if="icon" class="mu-message-box_icon" :icon="icon" />
-      <div class="mu-message-box_message" v-html="message" />
-    </div> -->
-    <div class="mu-box" flex="1" padding-x="4x" padding-y="0">
-      <div class="mu-message_title mu-box" :type="type" margin-bottom="1x">
-        <mu-icon reverse :icon="icon" />
-        <span>{{ title }}</span>
-      </div>
-      <div class="mu-message_content" v-html="msgHTML" />
-    </div>
+    <mu-message
+      class="mu-box" flex="1" padding-x="4x" padding-y="0"
+      v-bind="{ icon, title, message, type }" />
   </mu-dialog>
 </template>
 
-<script>
-  import Dialog from '../modal/dialog.vue'
+<script setup>
+  import './message-box.scss'
 
-  import { removeEventAttr } from '../../utils/html'
+  import MuMessage from './message.vue'
 
-  export default {
-    components: {
-      'mu-dialog': Dialog
-    },
-    props: {
-      icon: null,
-      type: String,
-      title: String,
-      message: String,
-      buttons: Array,
-      callback: null
-    },
-    data () {
-      return {
-        visible: false
-      }
-    },
-    computed: {
-      msgHTML () {
-        return removeEventAttr(this.message)
-      }
-    },
-    mounted () {
-      this.visible = true
-    },
-    methods: {
-      onButtonClick (btn) {
-        this.visible = false
-        this.callback?.(btn?.raw || btn)
-      }
-    }
+  import { ref, onMounted } from 'vue'
+
+  const props = defineProps({
+    icon: null,
+    type: String,
+    title: String,
+    message: String,
+    buttons: Array,
+    callback: null
+  })
+
+  const visible = ref()
+
+  function onButtonClick (btn) {
+    visible.value = false
+    props.callback?.(btn?.raw || btn)
   }
+
+  onMounted(() => {
+    visible.value = true
+  })
 </script>

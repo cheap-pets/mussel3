@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import MusselBox from '../box/box.vue'
+  import MusselBox from '../layout/box/box.vue'
 
   import { resolveSize } from '@/utils/size'
 

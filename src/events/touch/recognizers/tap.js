@@ -1,4 +1,4 @@
-import dispatchCustomEvent from '../../custom-event'
+import { dispatchCustomEvent } from '../../custom-event'
 
 export const tap = {
   recognize (ctx, gs, event) {

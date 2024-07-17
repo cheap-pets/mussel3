@@ -1,3 +1,5 @@
+import { isString, isSvgString } from '@/utils/type'
+
 import x from '~icons/x.svg'
 import check from '~icons/check.svg'
 import point from '~icons/point.svg'
@@ -17,28 +19,25 @@ import keyDown from '~icons/chevron-down.svg'
 import keyLeft from '~icons/chevron-left.svg'
 import keyRight from '~icons/chevron-right.svg'
 
-// dropdown svg background
-// url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>")
-
 const icons = {}
 
-function isSvg (data) {
-  return /<svg(?=[\s>])('[^']*'|"[^"]*"|[^'">])*>[\s\S]*?<\/svg>/i.test(data)
-}
+function install (data = {}, options) {
+  options = isString(options) ? { type: options } : { ...options }
 
-function registerIcons (data, options = {}) {
-  Object.keys(data).forEach(key => {
-    const content = data[key]
+  if (!['svg', 'class'].includes(options.type)) {
+    delete options.type
+  }
 
+  Object.entries(data).forEach(([key, content]) => {
     icons[key] = {
-      type: options.type || isSvg(content) ? 'svg' : 'class',
-      content,
-      ...options
+      ...options,
+      type: options.type || (isSvgString(content) ? 'svg' : 'class'),
+      content
     }
   })
 }
 
-registerIcons(
+install(
   {
     x,
     check,
@@ -58,11 +57,7 @@ registerIcons(
     keyRight,
     dropdown: keyDown
   },
-  { type: 'svg' }
+  'svg'
 )
 
-export {
-  icons,
-  isSvg,
-  registerIcons
-}
+export { icons, install }
