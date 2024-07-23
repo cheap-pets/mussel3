@@ -8,7 +8,7 @@
     <slot>
       <mu-svg-stripe
         v-if="stripeOrientation"
-        class="mu-flex-splitter_stripe"
+        class="mu-flex-splitter_handle"
         :orientation="stripeOrientation" />
     </slot>
   </div>

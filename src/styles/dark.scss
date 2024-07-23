@@ -1,18 +1,17 @@
 .mu-dark {
-  --mu-bg-normal: var(--mu-gray-9);
-  --mu-bg-strong: var(--mu-gray-8);
-  --mu-bg-disabled: var(--mu-gray-7);
-  --mu-bg-hover: var(--mu-gray-7);
-
-  --mu-border-color: var(--mu-gray-6);
-  --mu-border-color-hover: var(--mu-gray-5);
-
-  --mu-divider-color: var(--mu-gray-7);
+  --mu-gray: var(--mu-gray-4);
 
   --mu-text-color-normal: var(--mu-gray-1);
   --mu-text-color-weak: var(--mu-gray-5);
   --mu-text-color-placeholder: var(--mu-gray-2);
 
-  --mu-mask-bg: rgba(255, 255, 255, .15);
-  --mu-popup-bg: var(--mu-gray-8);
+  --mu-border-color: var(--mu-gray-6);
+  --mu-divider-color: var(--mu-gray-7);
+
+  --mu-bg-normal: var(--mu-gray-9);
+  --mu-bg-strong: var(--mu-gray-8);
+  --mu-bg-disabled: var(--mu-gray-7);
+  --mu-bg-hover: var(--mu-gray-7);
+  --mu-bg-popup: var(--mu-gray-8);
+  --mu-bg-mask: rgba(255, 255, 255, .15);
 }

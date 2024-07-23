@@ -140,6 +140,12 @@ export function mix (color1, color2, weight = 0.5) {
   }
 }
 
+export function setAlpha (color, alpha = 1) {
+  const rgb = str2rgba(color)
+
+  return rgb && rgba2str({ ...rgb, a: alpha })
+}
+
 export function isBright (color, threshold = 0.179) {
   const rgb = str2rgba(color)
 

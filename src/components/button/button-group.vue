@@ -1,14 +1,24 @@
 <template>
-  <div class="mu-button-group" :style="style">
+  <div class="mu-button-group">
     <slot />
   </div>
 </template>
 
-<script>
-  import Box from '../layout/box/box.vue'
+<script setup>
+  import './button-group.scss'
 
-  export default {
-    name: 'MusselButtonGroup',
-    extends: Box
-  }
+  import { provide } from 'vue'
+
+  const props = defineProps([
+    'primary',
+    'accent',
+    'danger',
+    'xColor',
+    'small',
+    'round',
+    'disabled',
+    'buttonStyle'
+  ])
+
+  provide('buttonAttributes', props)
 </script>

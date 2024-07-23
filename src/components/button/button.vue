@@ -1,5 +1,10 @@
 <template>
-  <button class="mu-button" :type="type" :active="active || undefined">
+  <button
+    class="mu-button"
+    :type="type || 'button'"
+    :active="active || null"
+    :style="{ '--mu-x-color': color }"
+    v-bind="attrs">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />
       <span v-if="caption">{{ caption }}</span>
@@ -7,19 +12,36 @@
   </button>
 </template>
 
-<script>
-  import './style.scss'
+<script setup>
+  import './button.scss'
 
-  export default {
-    name: 'MusselButton',
-    props: {
-      type: {
-        type: String,
-        default: 'button'
-      },
-      icon: String,
-      caption: String,
-      active: Boolean
+  import { computed, inject } from 'vue'
+  import { kebabCase } from '@/utils/case'
+
+  defineOptions({ name: 'MusselButton' })
+
+  const props = defineProps({
+    type: String,
+    icon: String,
+    caption: String,
+    active: Boolean,
+    xColor: String,
+    buttonStyle: String
+  })
+
+  const inheritedAttrs = inject('buttonAttributes', {})
+
+  const color = computed(() => props.xColor || inheritedAttrs.xColor)
+
+  const attrs = computed(() => Object.assign(
+    Object.fromEntries(
+      Object
+        .entries(inheritedAttrs)
+        .map(([key, value]) => [kebabCase(key), value])
+    ),
+    {
+      'button-style': props.active ? undefined : (inheritedAttrs.buttonStyle || props.buttonStyle),
+      'x-color': color.value && ''
     }
-  }
+  ))
 </script>

@@ -12,10 +12,6 @@
 
   <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
   <style>
-    .mu-button:not(.mu-icon-button) {
-      min-width: 100px;
-    }
-
     .mu-button-group,
     :not(.mu-button-group) > .mu-button {
       margin: 8px;
@@ -44,13 +40,13 @@
       <mu-button primary disabled>DISABLED</mu-button>
     </div>
     <div class="mu-box" layout="flex" padding="1x">
-      <mu-button secondary>NORMAL</mu-button>
-      <mu-button secondary button-style="text">TEXT</mu-button>
-      <mu-button secondary button-style="outline">OUTLINE</mu-button>
-      <mu-button secondary button-style="link">LINK</mu-button>
-      <mu-button secondary active>ACTIVE</mu-button>
-      <mu-button secondary button-style="link" disabled>DISABLED</mu-button>
-      <mu-button secondary disabled>DISABLED</mu-button>
+      <mu-button accent>NORMAL</mu-button>
+      <mu-button accent button-style="text">TEXT</mu-button>
+      <mu-button accent button-style="outline">OUTLINE</mu-button>
+      <mu-button accent button-style="link">LINK</mu-button>
+      <mu-button accent active>ACTIVE</mu-button>
+      <mu-button accent button-style="link" disabled>DISABLED</mu-button>
+      <mu-button accent disabled>DISABLED</mu-button>
     </div>
     <div class="mu-box" layout="flex" padding="1x">
       <mu-button danger>NORMAL</mu-button>
@@ -79,30 +75,34 @@
     </div>
     <div class="mu-box" layout="flex" padding="1x">
       <mu-button class="mu-icon-button" icon="album"></mu-button>
-      <mu-button icon="bolt" primary caption="ENGLISH"></mu-button>
-      <mu-button icon="box" secondary caption="中文"></mu-button>
-      <mu-button icon="arrowUp" danger caption="混合 MIX"></mu-button>
+      <mu-button icon="folder" primary caption="ENGLISH"></mu-button>
+      <mu-button icon="file" secondary caption="中文"></mu-button>
+      <mu-button icon="dotsVert" danger caption="混合 MIX"></mu-button>
     </div>
     <div class="mu-box" layout="flex" padding="1x">
-      <mu-button><span>badge</span><span class="mu-badge">1</span></mu-button>
+      <mu-button><span>badge</span><span class="mu-badge">Default</span></mu-button>
       <mu-button><span>badge</span><span class="mu-badge" primary>Primary</span></mu-button>
       <mu-button><span>badge</span><span class="mu-badge" accent>Accent</span></mu-button>
       <mu-button><span>badge</span><span class="mu-badge" warning>Warning</span></mu-button>
       <mu-button><span>badge</span><span class="mu-badge" danger>Danger</span></mu-button>
     </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-button small caption="SMALL"></mu-button>
+      <mu-button small primary caption="SMALL"></mu-button>
+    </div>
     <div class="mu-box" layout="flex" flex-wrap padding="1x">
       <mu-button-group width="400">
-        <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
-        <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
-        <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
+        <mu-button :primary="activeItem === 1 || null" @click="select(1)">One</mu-button>
+        <mu-button :primary="activeItem === 2 || null" @click="select(2)">Two</mu-button>
+        <mu-button :primary="activeItem === 3 || null" @click="select(3)">Three</mu-button>
       </mu-button-group>
-      <mu-button-group primary width="400">
+      <mu-button-group primary width="400" button-style="text">
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
       <div class="mu-space"></div>
-      <mu-button-group x-color="cyan" width="300" round>
+      <mu-button-group x-color="var(--mu-cyan)" width="300">
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
@@ -112,7 +112,7 @@
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
-      <mu-button-group width="300" height="60px" disabled>
+      <mu-button-group width="300" height="60px" button-style="outline" disabled>
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
@@ -139,7 +139,7 @@
     })
 
     mussel.install(app, {
-      darkMode: false,
+      darkMode: true,
       icon: {
         bolt: 'ti ti-bolt',
         album: 'ti ti-album',

@@ -1,23 +1,23 @@
-.mu-shadow-layer {
-  box-shadow: var(--mu-shadow-layer);
-}
-
-.mu-shadow-layer-hover {
-  box-shadow: var(--mu-shadow-layer);
-
-  &:hover {
-    box-shadow: var(--mu-shadow-floating);
-  }
+.mu-shadow-float {
+  box-shadow: var(--mu-shadow-float);
 }
 
 .mu-shadow-popup {
   box-shadow: var(--mu-shadow-popup);
 }
 
-.mu-shadow-floating {
-  box-shadow: var(--mu-shadow-floating);
+.mu-shadow-layer {
+  box-shadow: var(--mu-shadow-layer);
 }
 
-.mu-shadow-window {
-  box-shadow: var(--mu-shadow-window);
+.mu-shadow-modal {
+  box-shadow: var(--mu-shadow-modal);
+}
+
+.mu-shadow-focus:focus {
+  box-shadow: var(--mu-shadow-focus);
+}
+
+.mu-shadow-focus-within:focus-within {
+  box-shadow: var(--mu-shadow-focus);
 }

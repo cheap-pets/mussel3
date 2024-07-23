@@ -2,8 +2,8 @@ import path from 'path'
 import browserslist from 'browserslist'
 
 import alias from '@rollup/plugin-alias'
-import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
+// import commonjs from '@rollup/plugin-commonjs'
 
 import swc from 'rollup-plugin-swc'
 import vue from 'unplugin-vue/rollup'
@@ -12,8 +12,7 @@ import sass from '@cheap-pets/rollup-plugin-postcss-scss'
 import { string } from 'rollup-plugin-string'
 
 import { fileURLToPath } from 'url'
-
-import { colors } from './src/theme.js'
+import { getColorVariables } from './src/theme.js'
 
 const isDevEnv = process.env.dev
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
@@ -57,7 +56,7 @@ export default {
     sass({
       extract: true,
       minify: isDevEnv ? 0 : 1,
-      variables: colors
+      variables: getColorVariables()
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']
@@ -73,8 +72,8 @@ export default {
         coreJs: 3
       },
       minify: !isDevEnv
-    }),
-    commonjs()
+    })
+    // commonjs()
   ],
   onwarn: warning => {
     const { code, plugin, id, input, message } = warning

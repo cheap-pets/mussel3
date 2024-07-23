@@ -23,6 +23,7 @@
   --mu-gray-7: $gray7;
   --mu-gray-8: $gray8;
   --mu-gray-9: $gray9;
+  // --mu-gray-rgb: $grayRgb;
 
   --mu-primary-color: $primaryColor;
   --mu-primary-color-0: $primaryColor0;
@@ -35,18 +36,7 @@
   --mu-primary-color-7: $primaryColor7;
   --mu-primary-color-8: $primaryColor8;
   --mu-primary-color-9: $primaryColor9;
-
-  --mu-accent-color: $accentColor;
-  --mu-accent-color-0: $accentColor0;
-  --mu-accent-color-1: $accentColor1;
-  --mu-accent-color-2: $accentColor2;
-  --mu-accent-color-3: $accentColor3;
-  --mu-accent-color-4: $accentColor4;
-  --mu-accent-color-5: $accentColor5;
-  --mu-accent-color-6: $accentColor6;
-  --mu-accent-color-7: $accentColor7;
-  --mu-accent-color-8: $accentColor8;
-  --mu-accent-color-9: $accentColor9;
+  // --mu-primary-rgb: $primaryRgb;
 
   --mu-success-color: $successColor;
   --mu-success-color-0: $successColor0;
@@ -59,6 +49,7 @@
   --mu-success-color-7: $successColor7;
   --mu-success-color-8: $successColor8;
   --mu-success-color-9: $successColor9;
+  // --mu-success-rgb: $successRgb;
 
   --mu-warning-color: $warningColor;
   --mu-warning-color-0: $warningColor0;
@@ -71,6 +62,7 @@
   --mu-warning-color-7: $warningColor7;
   --mu-warning-color-8: $warningColor8;
   --mu-warning-color-9: $warningColor9;
+  // --mu-warning-rgb: $warningRgb;
 
   --mu-danger-color: $dangerColor;
   --mu-danger-color-0: $dangerColor0;
@@ -83,51 +75,72 @@
   --mu-danger-color-7: $dangerColor7;
   --mu-danger-color-8: $dangerColor8;
   --mu-danger-color-9: $dangerColor9;
+  // --mu-danger-rgb: $dangerRgb;
+
+  --mu-accent-color: $accentColor;
+  --mu-accent-color-0: $accentColor0;
+  --mu-accent-color-1: $accentColor1;
+  --mu-accent-color-2: $accentColor2;
+  --mu-accent-color-3: $accentColor3;
+  --mu-accent-color-4: $accentColor4;
+  --mu-accent-color-5: $accentColor5;
+  --mu-accent-color-6: $accentColor6;
+  --mu-accent-color-7: $accentColor7;
+  --mu-accent-color-8: $accentColor8;
+  --mu-accent-color-9: $accentColor9;
+  // --mu-accent-rgb: $accentRgb;
 }
 
 .mu-root {
-  --mu-bg-normal: #fff;
-  --mu-bg-strong: var(--mu-gray-0);
-  --mu-bg-disabled: var(--mu-gray-2);
-  --mu-bg-hover: var(--mu-gray-2);
-
-  --mu-border-color: var(--mu-gray-3);
-  --mu-border-color-hover: var(--mu-gray-2);
-
-  --mu-divider-color: var(--mu-gray-2);
+  --mu-gray: var(--mu-gray-6);
 
   --mu-text-color-normal: var(--mu-gray-9);
-  --mu-text-color-weak: var(--mu-gray-5);
+  --mu-text-color-weak: var(--mu-gray-4);
   --mu-text-color-placeholder: var(--mu-gray-7);
 
-  --mu-mask-bg: rgba(0, 0, 0, .5);
-  --mu-popup-bg: #fff;
+  --mu-border-color: var(--mu-gray-3);
+  --mu-divider-color: var(--mu-gray-2);
+
+  --mu-bg-normal: #fff;
+  --mu-bg-strong: var(--mu-gray-0);
+  --mu-bg-disabled: var(--mu-gray-1);
+  --mu-bg-hover: var(--mu-gray-2);
+  --mu-bg-popup: #fff;
+  --mu-bg-mask: rgba(0, 0, 0, .5);
+  
+  --mu-shadow-color: rgba(0, 0, 0, .1);
+  --mu-shadow-primary: $shadowPrimary;
+  --mu-shadow-success: $shadowSuccess;
+  --mu-shadow-warning: $shadowWarning;
+  --mu-shadow-danger: $shadowDanger;
+  --mu-shadow-accent: $shadowAccent;
 }
 
 .mu-root {
+  --mu-z-index-float: 1;
+  --mu-z-index-popup: 10;
+  --mu-z-index-modal: 100;
+  --mu-z-index-ontop: 1000;
+
   --mu-base-spacing: 8px;
-
-  --mu-widget-border-radius: 4px;
-  --mu-window-border-radius: 8px;
-
-  --mu-input-height: 32px;
-  --mu-input-height-compact: 24px;
-
-  --mu-list-item-height: 32px;
-  --mu-list-item-height-compact: 32px;
 
   --mu-common-font-size: 14px;
   --mu-common-line-height: 20px;
 
-  --mu-z-index-above: 1;
-  --mu-z-index-popup: 10;
-  --mu-z-index-modal: 100;
-  --mu-z-index-alert: 1000;
+  --mu-input-height: 32px;
+  --mu-input-height-small: 24px;
 
-  --mu-shadow-layer: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --mu-shadow-popup: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  --mu-shadow-floating: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  --mu-shadow-window: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  --mu-list-item-height: 32px;
+  --mu-list-item-height-small: 24px;
+
+  --mu-widget-border-radius: 4px;
+  --mu-window-border-radius: 8px;
+
+  --mu-shadow-focus: 0 0 0 2px var(--mu-primary-color);
+  --mu-shadow-float: 0 1px 3px 0 var(--mu-shadow-color), 0 1px 2px -1px var(--mu-shadow-color);
+  --mu-shadow-popup: 0 4px 6px -1px var(--mu-shadow-color), 0 2px 4px -2px var(--mu-shadow-color);
+  --mu-shadow-layer: 0 10px 15px -3px var(--mu-shadow-color), 0 4px 6px -4px var(--mu-shadow-color);
+  --mu-shadow-modal: 0 20px 25px -5px var(--mu-shadow-color), 0 8px 10px -6px var(--mu-shadow-color);
 }
 
 *, ::before, ::after {
@@ -139,7 +152,7 @@
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  font-size: var(--mu-base-font-size);
+  font-size: var(--mu-common-font-size);
   color: var(--mu-text-color-normal);
   background-color: var(--mu-bg-normal);
 }

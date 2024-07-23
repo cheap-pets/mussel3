@@ -1,4 +1,4 @@
-import './styles'
+import './styles/index.scss'
 
 import { install as installTheme } from './theme'
 import { install as installDirectives } from './directives'

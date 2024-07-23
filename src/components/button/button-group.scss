@@ -1,0 +1,25 @@
+.mu-button-group {
+  display: inline-flex;
+  align-items: stretch;
+
+  & > .mu-button {
+    border-color: var(--mu-button_color);
+
+    &:not(:first-of-type) {
+      margin-left: -1px;
+      border-left-color: rgb(from var(--mu-x-color) calc(r * 1.25) calc(g * 1.25) calc(b * 1.25));
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:last-of-type) {
+      border-right-color: rgb(from var(--mu-x-color) calc(r * 1.25) calc(g * 1.25) calc(b * 1.25));
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:disabled {
+      border-color: var(--mu-bg-disabled);
+    }
+  }
+}

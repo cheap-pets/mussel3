@@ -1,0 +1,117 @@
+.mu-button {
+  --mu-button_height: var(--mu-input-height);
+
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+
+  min-width: var(--mu-input-height);
+  height: var(--mu-button_height);
+  padding: 0 15px;
+
+  font-family: inherit;
+  font-size: var(--mu-common-font-size);
+  line-height: var(--mu-common-line-height);
+  text-decoration: none;
+  white-space: nowrap;
+
+  border-radius: var(--mu-widget-border-radius);
+  outline: none;
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgb(from var(--mu-button_color) r g b / 0.15);
+  }
+}
+
+.mu-button {
+  --mu-x-color: var(--mu-gray);
+  --mu-button_color: var(--mu-x-color);
+
+  color: var(--mu-button_color);
+  background: transparent;
+  border: 1px solid var(--mu-button_color);
+
+  &[active] {
+    --mu-x-color: var(--mu-primary-color);
+    --mu-button_color: rgb(from var(--mu-x-color) calc(r * 0.75) calc(g * 0.75) calc(b * 0.75));
+
+    z-index: 1;
+  }
+
+  &:hover {
+    --mu-x-color: var(--mu-primary-color);
+    --mu-button_color: rgb(from var(--mu-x-color) calc(r * 1.25) calc(g * 1.25) calc(b * 1.25));
+
+    z-index: 2;
+  }
+}
+
+.mu-button {
+  @each $v in (primary, accent, danger) {
+    &[#{$v}] {
+      --mu-x-color: var(--mu-#{$v}-color);
+    }
+  }
+
+  &[x-color],
+  &[primary],
+  &[accent],
+  &[danger] {
+    color: #fff;
+    background: var(--mu-button_color);
+  }
+}
+
+.mu-button {
+  &:disabled {
+    pointer-events: none;
+    color: var(--mu-text-color-weak) !important;
+    background: var(--mu-bg-disabled);
+    border-color: var(--mu-bg-disabled);
+  }
+
+  &[button-style="text"],
+  &[button-style="link"],
+  &[button-style="outline"] {
+    color: var(--mu-button_color);
+    background: transparent;
+  }
+
+  &[button-style="text"],
+  &[button-style="link"] {
+    border-color: transparent;
+  }
+
+  &[button-style="text"]:hover {
+    border-color: var(--mu-button_color);
+  }
+
+  &[button-style="link"] {
+    padding: 0;
+    box-shadow: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.mu-button {
+  &[small] {
+    --mu-button_height: var(--mu-input-height-small);
+
+    padding: 0 7px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  &[round] {
+    border-radius: calc(var(--mu-button_height) / 2);
+  }
+}
