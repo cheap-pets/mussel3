@@ -8,6 +8,7 @@ import * as BarComponents from './bar'
 import * as FormComponents from './form'
 import * as InputComponents from './input'
 import * as PopupComponents from './popup'
+import * as DropdownComponents from './dropdown'
 import * as MessageComponents from './message'
 
 import MuIcon from './icon/icon.vue'
@@ -36,6 +37,7 @@ export function install (app) {
   installComponents(FormComponents)
   installComponents(InputComponents)
   installComponents(PopupComponents)
+  installComponents(DropdownComponents)
   installComponents(MessageComponents)
 
   installComponents({

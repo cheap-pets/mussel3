@@ -3,13 +3,14 @@
     ref="el"
     class="mu-flex-splitter"
     :direction="direction"
+    :appearance="appearance || splitterOptions.appearance"
     @dblclick="onDblClick"
     @mousedown="onMouseDown">
     <slot>
       <mu-svg-stripe
-        v-if="stripeOrientation"
+        v-if="handleDirection"
         class="mu-flex-splitter_handle"
-        :orientation="stripeOrientation" />
+        :direction="handleDirection" />
     </slot>
   </div>
 </template>
@@ -19,20 +20,24 @@
 
   import { ref, computed, inject, provide, onMounted } from 'vue'
 
+  const { splitter: splitterOptions = {} } = inject('$mussel').options
+
   const el = ref()
   const direction = ref()
 
-  const { splitter: splitterOptions = {} } = inject('$mussel').options
-
   const props = defineProps({
+    appearance: String,
     collapseButton: Boolean,
     collapseThreshold: { type: Number, default: 200 }
   })
 
-  const stripeOrientation = computed(() =>
-    splitterOptions.stripe && (
-      direction.value === 'row' ? 'vertical' : 'horizontal'
-    )
+  const HandleDirectionMap = {
+    row: 'vertical',
+    column: 'horizontal'
+  }
+
+  const handleDirection = computed(() =>
+    (splitterOptions.handle !== false) && HandleDirectionMap[direction.value]
   )
 
   function isResizableElement (element) {

@@ -39,15 +39,15 @@
         1
         <div style="width: 1000px">Content</div>
       </div>
-      <mu-flex-splitter slim></mu-flex-splitter>
+      <mu-flex-splitter appearance="normal"></mu-flex-splitter>
       <mu-v-box
         flex="1" collapsible
         style="overflow: hidden; min-width: 300px;">
         <div class="block" flex="1">2A</div>
-        <mu-flex-splitter concealed></mu-flex-splitter>
+        <mu-flex-splitter></mu-flex-splitter>
         <div class="block" flex="1">2B</div>
       </mu-v-box>
-      <mu-flex-splitter resizable="false" appearance="thick"></mu-flex-splitter>
+      <mu-flex-splitter resizable="false"></mu-flex-splitter>
       <div class="block" flex="1">3</div>
     </mu-h-box>
   </div>
@@ -63,7 +63,7 @@
       {
         darkMode: false,
         splitter: {
-          stripe: true,
+          handle: true,
           appearance: 'slim'
         }
       }

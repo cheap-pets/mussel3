@@ -8,7 +8,7 @@
   import { computed } from 'vue'
 
   const props = defineProps({
-    orientation: {
+    direction: {
       type: String,
       default: 'horizontal',
       validator: v => ['horizontal', 'vertical'].includes(v)
@@ -22,24 +22,24 @@
   })
 
   const data = computed(() => {
-    const { orientation, padding, width, spacing, strokeWidth } = props
+    const { direction, padding, width, spacing, strokeWidth } = props
 
-    const safePadding = Math.max(
+    const offsetPadding = Math.max(
       padding,
       Math.ceil(strokeWidth / 2)
     )
 
-    let [x, y] = orientation === 'horizontal'
-      ? [safePadding, padding]
-      : [padding, safePadding]
+    let [x, y] = direction === 'horizontal'
+      ? [offsetPadding, padding]
+      : [padding, offsetPadding]
 
-    const draw = orientation === 'horizontal'
+    const draw = direction === 'horizontal'
       ? end => {
         const s = `M${x} ${y}v${width}`
 
         if (end) {
           y += width + padding
-          x += safePadding
+          x += offsetPadding
         } else {
           x += spacing + strokeWidth
         }
@@ -51,7 +51,7 @@
 
         if (end) {
           x += width + padding
-          y += safePadding
+          y += offsetPadding
         } else {
           y += spacing + strokeWidth
         }

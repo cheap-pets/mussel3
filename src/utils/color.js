@@ -161,3 +161,143 @@ export function isBright (color, threshold = 0.179) {
 
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) > threshold
 }
+
+/*
+ * These functions are adapted from [@ant-design/colors],
+ * available at [https://github.com/ant-design/ant-design-colors].
+ */
+
+const HUE_STEP = 2
+const SATURATION_STEP_1 = 16
+const SATURATION_STEP_2 = 5
+const BRIGHTNESS_STEP_1 = 5
+const BRIGHTNESS_STEP_2 = 15
+
+const LIGHT_COLOR_COUNT = 5
+const DARK_COLOR_COUNT = 4
+
+function calcHue ({ h }, distance, light) {
+  const hue = h >= 60 && h <= 240
+    ? (light ? h - HUE_STEP * distance : h + HUE_STEP * distance)
+    : (light ? h + HUE_STEP * distance : h - HUE_STEP * distance)
+
+  return (hue + 360) % 360
+}
+
+function calcSaturation ({ h, s }, distance, light) {
+  return h === 0 && s === 0
+    ? s
+    : Math.min(
+      Math.max(
+        light
+          ? (s - SATURATION_STEP_1 * distance)
+          : (
+              distance === DARK_COLOR_COUNT
+                ? s + SATURATION_STEP_1
+                : s + SATURATION_STEP_2 * distance
+            ),
+        6
+      ),
+      light && distance === LIGHT_COLOR_COUNT ? 10 : 100
+    )
+}
+
+function calcValue ({ v }, distance, light) {
+  return Math.min(
+    light
+      ? v + BRIGHTNESS_STEP_1 * distance
+      : v - BRIGHTNESS_STEP_2 * distance,
+    100
+  )
+}
+
+export function generatePalette (color) {
+  const rgb = str2rgba(color)
+
+  if (!rgb) return
+
+  const hsv = rgb2hsv(rgb)
+  const palette = []
+
+  for (let i = 1; i <= 10; i++) {
+    const light = i < 6
+    const distance = light ? 6 - i : i - 6
+
+    palette.push(
+      distance
+        ? hsv2hex({
+          h: calcHue(hsv, distance, light),
+          s: calcSaturation(hsv, distance, light),
+          v: calcValue(hsv, distance, light)
+        })
+        : hsv2hex(hsv)
+    )
+  }
+
+  return palette
+}
+
+export function generateAdjacentColors (color, distance = 1) {
+  const rgb = str2rgba(color)
+
+  if (!rgb) return
+
+  distance = Math.min(Math.max(distance, 1), 5)
+
+  const hsv = rgb2hsv(rgb)
+
+  return {
+    color,
+    light: hsv2hex({
+      h: calcHue(hsv, distance, true),
+      s: calcSaturation(hsv, distance, true),
+      v: calcValue(hsv, distance, true)
+    }),
+    dark: hsv2hex({
+      h: calcHue(hsv, distance),
+      s: calcSaturation(hsv, distance),
+      v: calcValue(hsv, distance)
+    })
+  }
+}
+
+export function generateAccentColor (primaryColor) {
+  const rgb = str2rgba(primaryColor)
+
+  if (!rgb) return
+
+  const hsv = rgb2hsv(rgb)
+
+  return hsv2hex({
+    h: (hsv.h + 123) % 360,
+    s: Math.max(0, hsv.s - 10),
+    v: Math.max(0, hsv.v - 11)
+  })
+}
+
+export function generateAccentPalette (primaryColor) {
+  return generatePalette(
+    generateAccentColor(primaryColor)
+  )
+}
+
+export function generateNeutralPalette (primaryColor, length = 10) {
+  const rgb = str2rgba(primaryColor)
+
+  if (!rgb) return
+
+  const hsv = rgb2hsv(rgb)
+  const palette = []
+
+  for (let i = length - 1; i >= 0; i--) {
+    palette.push(
+      hsv2hex({
+        h: hsv.h,
+        s: Math.max(0, hsv.s * 0.3 * (1 - i / (length - 1))),
+        v: 5 + (90 * i / (length - 1))
+      })
+    )
+  }
+
+  return palette
+}

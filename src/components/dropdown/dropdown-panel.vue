@@ -20,12 +20,12 @@
 <script>
   import './dropdown-panel.scss'
 
-  import { within, findUp } from '@/utils/dom'
   import { assignIf } from '@/utils/object'
+  import { within, findUp } from '@/utils/dom'
   import { getClientRect } from '@/utils/client-rect'
   import { hideIf } from '@/events/global-layer-events'
 
-  import BasePopup from '../base-popup'
+  import BasePopup from '../popup/base-popup'
 
   function popOnTop (pRect, height, alignValues) {
     const align =

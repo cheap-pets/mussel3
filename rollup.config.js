@@ -12,10 +12,12 @@ import sass from '@cheap-pets/rollup-plugin-postcss-scss'
 import { string } from 'rollup-plugin-string'
 
 import { fileURLToPath } from 'url'
-import { getColorVariables } from './src/theme.js'
+import { generatePreCssVariables } from './src/theme.js'
 
 const isDevEnv = process.env.dev
 const currentDir = path.dirname(fileURLToPath(import.meta.url))
+
+const scssVariables = generatePreCssVariables()
 
 function warn (...args) {
   console.warn('\x1b[33m%s', ...args, '\x1b[0m')
@@ -39,7 +41,7 @@ export default {
       entries: [
         {
           find: '~icons',
-          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons')
+          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons/outline')
         },
         {
           find: '@',
@@ -56,7 +58,7 @@ export default {
     sass({
       extract: true,
       minify: isDevEnv ? 0 : 1,
-      variables: getColorVariables()
+      variables: scssVariables,
     }),
     resolve({
       mainFields: ['module', 'main', 'browser']

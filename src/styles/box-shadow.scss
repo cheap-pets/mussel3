@@ -14,10 +14,18 @@
   box-shadow: var(--mu-shadow-modal);
 }
 
-.mu-shadow-focus:focus {
-  box-shadow: var(--mu-shadow-focus);
+.mu-shadow-focus {
+  --mu-shadow-color: var(--mu-shadow-primary);
+
+  &:focus {
+    box-shadow: var(--mu-shadow-focus);
+  }
 }
 
-.mu-shadow-focus-within:focus-within {
-  box-shadow: var(--mu-shadow-focus);
+.mu-shadow-focus-within {
+  --mu-shadow-color: var(--mu-shadow-primary);
+
+  &:focus-within {
+    box-shadow: var(--mu-shadow-focus);
+  }
 }

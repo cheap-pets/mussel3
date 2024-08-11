@@ -20,8 +20,7 @@
   <div id="app" class="mu-box" position="fixed fit">
     <div class="mu-box" padding="1x" style="padding-left: 200px;">
       <mu-dropdown
-        dropdown-align="right"
-        :dropdown-items="artists"
+        :dropdown-panel="{ align: right, items: artists }"
         @dropdown:show="onShow"
         @dropdown:itemclick="onItemClick">
         <mu-button>{{ artist }}</mu-button>
@@ -109,7 +108,7 @@
         </template>
       </mu-dropdown-button>
     </div>
-    <div class="mu-box" layout="flex" padding="1x">
+    <!-- <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>
       <mu-dropdown-panel
         :items="artists"
@@ -117,7 +116,7 @@
         width="auto"
         v-model:visible="stickyPanelVisible">
       </mu-dropdown-panel>
-    </div>
+    </div> -->
   </div>
 
   <script type="text/javascript">
@@ -169,15 +168,15 @@
       }
     })
 
-    app
-      .use(mussel, {
-        darkMode: 'auto',
-        icons: {
-          bug: 'ti ti-bug',
-          bolt: 'ti ti-bolt',
-          album: 'ti ti-album'
-        }
-      })
-      .mount('#app')
+    mussel.install(app, {
+      darkMode: false,
+      icons: {
+        bug: 'ti ti-bug',
+        bolt: 'ti ti-bolt',
+        album: 'ti ti-album'
+      }
+    })
+  
+    app.mount('#app')
   </script>
 </body>

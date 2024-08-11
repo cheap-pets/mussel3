@@ -1,53 +1,37 @@
 <template>
-  <div
-    class="mu-switch"
-    :active="modelValue === activeValue || null"
-    :content="innerLabel"
-    @click="toggle" />
+  <div class="mu-switch" :active="isActive" :label="innerLabel" @click="toggle" />
 </template>
 
-<script>
+<script setup>
   import './switch.scss'
 
-  import { ref, watchEffect } from 'vue'
+  import { computed } from 'vue'
 
-  export default {
-    name: 'MusselSwitch',
-    props: {
-      modelValue: null,
-      activeValue: {
-        type: null,
-        default: true
-      },
-      inactiveValue: {
-        type: null,
-        default: false
-      },
-      label: String,
-      activeLabel: String,
-      inactiveLabel: String
-    },
-    emits: ['update:modelValue'],
-    setup (props, context) {
-      const innerLabel = ref(null)
+  defineOptions({ name: 'MusselSwitch' })
 
-      function toggle () {
-        const v = props.activeValue === props.modelValue
-          ? props.inactiveValue
-          : props.activeValue
+  const props = defineProps({
+    modelValue: null,
+    label: String,
+    activeLabel: String,
+    inactiveLabel: String,
+    activeValue: { default: true },
+    inactiveValue: { default: false }
+  })
 
-        context.emit('update:modelValue', v)
-      }
+  const emit = defineEmits(['update:modelValue'])
 
-      watchEffect(() => {
-        innerLabel.value = (
-          props.activeValue === props.modelValue
-            ? props.activeLabel
-            : props.inactiveLabel
-        ) || props.label
-      })
+  const isActive = computed(() =>
+    props.activeValue === props.modelValue || null
+  )
 
-      return { toggle, innerLabel }
-    }
+  const innerLabel = computed(() =>
+    (isActive.value ? props.activeLabel : props.inactiveLabel) || props.label
+  )
+
+  function toggle () {
+    emit(
+      'update:modelValue',
+      isActive.value ? props.inactiveValue : props.activeValue
+    )
   }
 </script>

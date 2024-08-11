@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" class="mu-root">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Combobox Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css">
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
+
+  <style>
+    .group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      padding: 8px;
+      margin: 8px;
+    }
+
+    .mu-combo-box {
+      width: 350px;
+    }
+
+    h2 {
+      margin: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid currentColor;
+    }
+
+    h3 {
+      width: 100%;
+      margin: 0;
+      color: var(--mu-text-color-normal);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="mu-box" position="fixed fit">
+    <h2>COMBOBOX</h2>
+    <div class="group">
+      <mu-combo-box
+        v-model="artist"
+        clear-button
+        :options="artists"
+        @dropdown:show="onDropdownShow">
+      </mu-combo-box>
+    </div>
+    <div class="group mu-box" position="fixed bottom left">
+      <mu-combo-box
+        v-model="artist"
+        :options="artistsCn"
+        :dropdown-panel="{ width: '600px' }">
+      </mu-combo-box>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const artist = Vue.ref('Johann Baptist Strauss')
+        const artists = [
+          { divider: true, label: 'GROUP 1' },
+          { value: 'Ludwig van Beethoven' },
+          { value: 'Wolfgang Amadeus Mozart' },
+          { value: 'Frédéric François Chopin' },
+          { divider: true, label: 'GROUP 2' },
+          { value: 'Johann Baptist Strauss', disabled: true  }
+        ]
+
+        const artistsCn = [
+          { value: 'Ludwig van Beethoven', label: '贝多芬' },
+          { value: 'Wolfgang Amadeus Mozart', label: '莫扎特' },
+          { value: 'Frédéric François Chopin', label: '肖邦' },
+          '-',
+          { value: 'Johann Baptist Strauss', label: '斯特劳斯', disabled: true }
+        ]
+
+        return { artist, artists, artistsCn }
+      },
+      methods: {
+        onDropdownShow () {
+          console.log('dropdown show')
+        }
+      }
+    })
+
+    mussel.install(app, {
+      darkMode: false,
+      icons: {
+        bug: 'ti ti-bug',
+        bolt: 'ti ti-bolt',
+        album: 'ti ti-album'
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

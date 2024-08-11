@@ -33,12 +33,12 @@
     display: flex;
   }
 
-  &[concealed]::before {
+  &[appearance="concealed"]::before {
     background: transparent;
   }
 
-  &[slim],
-  &[concealed] {
+  &[appearance="slim"],
+  &[appearance="concealed"] {
     flex-basis: 0;
   }
 
@@ -71,8 +71,8 @@
 }
 
 .mu-flex-splitter {
-  &[slim],
-  &[concealed] {
+  &[appearance="slim"],
+  &[appearance="concealed"] {
     & > .mu-flex-splitter_handle {
       display: none;
     }
@@ -95,7 +95,7 @@
     width: var(--mu-flex-splitter_size);
   }
 
-  &[slim]::before {
+  &[appearance="slim"]::before {
     width: var(--mu-flex-splitter_slim-size);
   }
 
@@ -118,7 +118,7 @@
     height: var(--mu-flex-splitter_size);
   }
 
-  &[slim]::before {
+  &[appearance="slim"]::before {
     height: var(--mu-flex-splitter_slim-size);
   }
 

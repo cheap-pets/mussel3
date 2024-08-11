@@ -1,52 +1,31 @@
 .mu-icon {
   display: inline-block;
-
   width: 1em;
-
   font-size: calc(1em + 2px);
-
-  border-radius: var(--mu-widget-border-radius);
-
-  transition: transform .2s ease-in-out;
 
   &::before, &::after {
     display: block;
   }
 
-  & svg {
-    /* vertical-align: -0.15em; */
+  & > svg {
     display: block;
     width: 1em;
     height: 1em;
   }
 }
 
-.mu-icon.mu-icon-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.mu-expand-icon {
+  transition: transform .1s ease-in-out;
 
-  &[primary] {
-    color: var(--mu-primary-color);
+  &[expanded] {
+    transform: rotate(-90deg);
   }
+}
 
-  &[success] {
-    color: var(--mu-success-color);
-  }
+.mu-dropdown-icon {
+  transition: transform .1s ease-in-out;
 
-  &[danger] {
-    color: var(--mu-danger-color);
-  }
-
-  &:hover {
-    color: var(--mu-primary-color-4);
-  }
-
-  &[success]:hover {
-    color: var(--mu-success-color-4);
-  }
-  
-  &[danger]:hover {
-    color: var(--mu-danger-color-4);
+  &[expanded] {
+    transform: rotate(-180deg);
   }
 }

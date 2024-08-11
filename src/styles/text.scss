@@ -2,8 +2,12 @@
   color: var(--mu-text-color-normal);
 }
 
+.mu-text-color-body {
+  color: var(--mu-text-color-normal);
+}
+
 .mu-text-color-weak {
-  color: var(--mu-text-color-weak);
+  color: var(--mu-text-color-subtle);
 }
 
 .mu-text-color-placeholder {

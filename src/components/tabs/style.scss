@@ -27,7 +27,7 @@
   color: var(--mu-text-color-normal);
   text-decoration: none;
 
-  border-radius: var(--mu-widget-border-radius);
+  border-radius: var(--mu-common-border-radius);
   outline: none;
 
   & > span {
@@ -46,7 +46,7 @@
   &[disabled] {
     pointer-events: none;
     cursor: default;
-    color: var(--mu-text-color-weak) !important;
+    color: var(--mu-text-color-subtle) !important;
     background: var(--mu-bg-disabled) !important;
   }
 }

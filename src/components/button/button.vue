@@ -1,13 +1,8 @@
 <template>
-  <button
-    class="mu-button"
-    :type="type || 'button'"
-    :active="active || null"
-    :style="{ '--mu-x-color': color }"
-    v-bind="attrs">
+  <button ref="el" class="mu-button" v-bind="attrs">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />
-      <span v-if="caption">{{ caption }}</span>
+      {{ caption }}
     </slot>
   </button>
 </template>
@@ -15,33 +10,93 @@
 <script setup>
   import './button.scss'
 
-  import { computed, inject } from 'vue'
+  import { ref, inject, computed } from 'vue'
   import { kebabCase } from '@/utils/case'
+  import { getComputedXColor } from '@/theme'
+  import { generateAdjacentColors } from '@/utils/color'
 
   defineOptions({ name: 'MusselButton' })
 
   const props = defineProps({
-    type: String,
     icon: String,
     caption: String,
     active: Boolean,
-    xColor: String,
-    buttonStyle: String
+    primary: Boolean,
+    danger: Boolean,
+    accent: Boolean,
+    xColor: [Boolean, String],
+    small: Boolean,
+    round: Boolean,
+    disabled: Boolean,
+    type: {
+      type: String,
+      default: 'button'
+    },
+    buttonStyle: {
+      type: String,
+      validator: v => ['normal', 'outline', 'text', 'link'].includes(v)
+    }
   })
 
-  const inheritedAttrs = inject('buttonAttributes', {})
+  const el = ref()
 
-  const color = computed(() => props.xColor || inheritedAttrs.xColor)
+  const GROUP_FIRST_ATTRS = ['disabled']
+  const LOCAL_FIRST_ATTRS = ['primary', 'danger', 'accent', 'xColor']
 
-  const attrs = computed(() => Object.assign(
-    Object.fromEntries(
-      Object
-        .entries(inheritedAttrs)
-        .map(([key, value]) => [kebabCase(key), value])
-    ),
-    {
-      'button-style': props.active ? undefined : (inheritedAttrs.buttonStyle || props.buttonStyle),
-      'x-color': color.value && ''
+  const GROUP_ONLY_ATTRS = ['small', 'round', 'buttonStyle']
+  const LOCAL_ONLY_ATTRS = ['type', 'active']
+
+  const inheritedProps = inject('groupedButtonOptions', { grouped: false })
+  const isGrouped = inheritedProps.grouped !== false
+
+  const attrs = computed(() => {
+    if (!el.value) return
+
+    const result = {}
+
+    function assignValue (key, value) {
+      if (value) {
+        result[kebabCase(key)] = (value === true ? '' : value)
+        return true
+      }
     }
-  ))
+
+    GROUP_FIRST_ATTRS.forEach(key =>
+      assignValue(key, inheritedProps[key]) ||
+      assignValue(key, props[key])
+    )
+
+    GROUP_ONLY_ATTRS.forEach(key => isGrouped
+      ? assignValue(key, inheritedProps[key])
+      : assignValue(key, props[key])
+    )
+
+    if (!LOCAL_FIRST_ATTRS.find(key => assignValue(key, props[key]))) {
+      LOCAL_FIRST_ATTRS.find(key => assignValue(key, inheritedProps[key]))
+    }
+
+    LOCAL_ONLY_ATTRS.forEach(key => assignValue(key, props[key]))
+
+    if (result['x-color']) {
+      const xColors = generateAdjacentColors(
+        getComputedXColor(result['x-color'], el.value)
+      )
+
+      if (xColors) {
+        result.style = {
+          '--mu-x-color': xColors.color,
+          '--mu-x-color-dark': xColors.dark,
+          '--mu-x-color-light': xColors.light
+        }
+
+        result['x-color'] = ''
+      }
+    }
+
+    if (isGrouped && result.active === '' && result['button-style']) {
+      delete result['button-style']
+    }
+
+    return result
+  })
 </script>

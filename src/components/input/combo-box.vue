@@ -1,149 +1,130 @@
 <template>
-  <div
-    class="mu-editor mu-combo-box"
-    :readonly="readonly || null"
-    :disabled="disabled || null">
-    <slot name="left">
-      <label v-if="label">{{ label }}</label>
-    </slot>
-    <input
-      v-model="inputValue"
-      :disabled="disabled"
-      :readonly="readonly || !editable"
-      :placeholder="placeholder"
-      @click="toggleDropdown">
-    <mu-icon
-      v-if="clearButtonEnabled"
-      visibility="hover"
-      class="mu-link"
-      icon="x"
-      danger
-      @click="clear" />
-    <mu-icon
-      v-if="!disabled && !readonly"
-      class="mu-link"
-      icon="dropdown"
-      :expanded="dropdownVisible || null"
-      @click="toggleDropdown" />
+  <div class="mu-editor mu-combo-box" v-bind="controlState">
+    <label v-if="label">{{ label }}</label>
+    <slot name="left" />
+    <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
+    <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="onClear" />
+    <mu-icon v-if="expandable" v-bind="dropdownIconBindings" @click="onTriggerClick" />
     <slot name="right" />
-    <mu-dropdown-panel
-      v-model:visible="dropdownVisible"
-      :style="dropdownStyle"
-      :align="dropdownAlign"
-      :width="dropdownWidth"
-      :height="dropdownHeight">
+    <mu-dropdown-panel v-model:visible="dropdownVisible" v-bind="dropdownPanelBindings">
       <slot name="dropdown">
         <component
-          :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-option'"
-          v-for="(el, index) in options"
-          :key="el === '-' ? index : el"
-          v-bind="el === '-' ? {} : el" />
+          :is="(el === '-' || el.divider) ? 'mu-list-divider' : 'mu-option'"
+          v-for="el in options"
+          :key="el[optionKey] || generateUUID()"
+          v-bind="el === '-' ? undefined : el" />
       </slot>
     </mu-dropdown-panel>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'MusselComboBox',
-    provide () {
-      return {
-        editor: this
-      }
-    },
-    props: {
-      label: String,
-      options: Array,
-      modelValue: null,
-      clearButton: null,
-      editable: Boolean,
-      readonly: Boolean,
-      disabled: Boolean,
-      placeholder: String,
-      dropdownAlign: String,
-      dropdownStyle: Object,
-      dropdownWidth: String,
-      dropdownHeight: String
-    },
-    emits: ['update:modelValue', 'dropdown:show', 'dropdown:hide'],
-    data () {
-      return {
-        optionLabels: {},
-        dropdownVisible: false,
-        dropdownReady: !this.options
-      }
-    },
-    computed: {
-      inputValue: {
-        get () {
-          const v = this.modelValue
-          return (v in this.optionLabels) ? this.optionLabels[v] : v
-        },
-        set (value) {
-          this.$emit('update:modelValue', value)
-        }
-      },
-      clearButtonEnabled () {
-        return (
-          !this.disabled && !this.readonly && this.modelValue &&
-          (!['false', 'none'].includes(String(this.clearButton)))
-        )
-      }
-    },
-    watch: {
-      options: {
-        deep: true,
-        immediate: true,
-        handler (options) {
-          if (Array.isArray(options)) {
-            this.optionLabels = options.reduce((labels, el) => {
-              labels[el.value] = el.label ?? el.value
-              return labels
-            }, {})
-          }
-        }
-      }
-    },
-    methods: {
-      clear () {
-        if (this.$attrs.onClear) this.$attrs.onClear()
-        else this.$emit('update:modelValue', null)
-      },
-      toggleDropdown () {
-        if (this.disabled || this.readonly) return
+<script setup>
+  import { ref, computed, provide, watch } from 'vue'
+  import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
+  import { dropdownEvents, useDropdown } from '../dropdown/hooks/dropdown'
 
-        Promise
-          .resolve()
-          .then(() => {
-            if (!this.dropdownReady) {
-              this.dropdownReady = true
+  defineOptions({ name: 'MusselComboBox' })
 
-              return this.$nextTick()
-            }
-          })
-          .then(() => {
-            const v = !this.dropdownVisible
+  const props = defineProps({
+    editable: Boolean,
+    dropdownPanel: Object,
+    options: Array,
+    optionKey: { type: String, default: 'value' },
+    ...commonInputProps
+  })
 
-            this.dropdownVisible = v
-            this.$emit(v ? 'dropdown:show' : 'dropdown:hide')
-          })
-      },
-      mountOption (option) {
-        if (!this.options) {
-          this.optionLabels[option.value] = option.itemLabel
-        }
-      },
-      unmountOption (option) {
-        if (!this.options) {
-          delete this.optionLabels[option.value]
-        }
-      },
-      onOptionClick (option) {
-        if (this.$attrs.onOptionClick?.(option) !== false) {
-          this.dropdownVisible = false
-          this.$emit('update:modelValue', option.value)
-        }
-      }
+  const emit = defineEmits([
+    ...commonInputEvents,
+    ...dropdownEvents
+  ])
+
+  const {
+    controlState,
+    inputBindings,
+    clearIconBindings,
+    clearable,
+    clear
+  } = useCommonInput(props, emit)
+
+  const {
+    dropdownVisible,
+    dropdownIconBindings,
+    dropdownPanelBindings,
+    showDropdown,
+    hideDropdown,
+    onTriggerClick
+  } = useDropdown(props, emit)
+
+  const optionLabels = ref({})
+
+  const expandable = computed(() => !props.disabled && !props.readonly)
+
+  const inputValue = computed({
+    get () {
+      const { displayValue, modelValue: v } = props
+
+      return displayValue === undefined
+        ? v in optionLabels.value
+          ? optionLabels.value[v]
+          : v
+        : displayValue
+    },
+    set (value) {
+      emit('update:modelValue', value)
+    }
+  })
+
+  watch(
+    () => props.options,
+    () => {
+      optionLabels.value =
+        props.options?.reduce(
+          (result, option) => Object.assign(result, {
+            [option.value]: option.label ?? option.value
+          }),
+          {}
+        ) || {}
+    },
+    {
+      deep: true,
+      immediate: true
+    }
+  )
+
+  function mountOption (option) {
+    if (!props.options) {
+      optionLabels.value[option.value] = option.itemLabel
     }
   }
+
+  function unmountOption (option) {
+    if (!props.options) {
+      delete optionLabels.value[option.value]
+    }
+  }
+
+  function onClear () {
+    clear()
+    hideDropdown()
+  }
+
+  function onOptionClick (option) {
+    emit('update:modelValue', option.value)
+    hideDropdown()
+  }
+
+  function generateUUID () {
+    return crypto.randomUUID()
+  }
+
+  provide('comboBox', {
+    mountOption,
+    unmountOption,
+    onOptionClick
+  })
+
+  defineExpose({
+    showDropdown,
+    hideDropdown
+  })
 </script>

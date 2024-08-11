@@ -14,14 +14,12 @@
       @click.stop="onTriggerClick"
       @mouseover="onTriggerMouseOver"
       @mouseleave="onTriggerMouseLeave">
-      <mu-icon :icon="dropdownIcon" />
+      <mu-icon v-bind="dropdownIconBindings" />
     </mu-button>
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
-      width="auto"
-      :align="dropdownAlign"
-      :style="dropdownStyle"
-      :items="dropdownItems">
+      v-bind="dropdownPanelBindings"
+      width="auto">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
@@ -36,39 +34,36 @@
       <mu-icon v-if="icon" :icon="icon" />
       <span v-if="caption">{{ caption }}</span>
     </slot>
-    <mu-icon :icon="dropdownIcon" />
+    <mu-icon v-bind="dropdownIconBindings" />
     <mu-dropdown-panel
       v-model:visible="dropdownVisible"
-      width="auto"
-      :align="dropdownAlign"
-      :style="dropdownStyle"
-      :items="dropdownItems">
+      v-bind="dropdownPanelBindings"
+      width="auto">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </mu-button>
 </template>
 
-<script>
-  import Dropdown from './dropdown.vue'
+<script setup>
+  import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
 
-  export default {
-    name: 'MusselDropdownButton',
-    extends: Dropdown,
-    props: {
-      dropdownTrigger: {
-        type: String,
-        default: 'click',
-        validator (v) {
-          return ['hover', 'click'].includes(v)
-        }
-      },
-      icon: String,
-      caption: String,
-      splitButton: Boolean,
-      dropdownIcon: {
-        type: String,
-        default: 'dropdown'
-      }
-    }
-  }
+  defineOptions({ name: 'MusselDropdownButton' })
+
+  const props = defineProps({
+    ...dropdownProps,
+    splitButton: Boolean,
+    icon: String,
+    caption: String
+  })
+
+  const emit = defineEmits([...dropdownEvents])
+
+  const {
+    dropdownVisible,
+    dropdownIconBindings,
+    dropdownPanelBindings,
+    onTriggerClick,
+    onTriggerMouseOver,
+    onTriggerMouseLeave
+  } = useDropdown(props, emit)
 </script>

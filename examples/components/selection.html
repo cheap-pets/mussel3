@@ -9,40 +9,55 @@
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link
-    rel="stylesheet" type="text/css"
-    href="../../dist/mussel.css" />
-  <link
-    rel="stylesheet" type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+
+  <style>
+    .group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      padding: 8px;
+      margin: 8px;
+    }
+
+    h2 {
+      margin: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid currentColor;
+    }
+
+    h3 {
+      width: 100%;
+      margin: 0;
+      color: var(--mu-text-color-normal);
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app" class="mu-bg-normal mu-box" position="fixed fit" padding="2x">
-    <mu-switch v-model="value1" active-label="ON" inactive-label="OFF" disabled>
-    </mu-switch>
-    <p></p>
-    <mu-switch v-model="value1" active-label="打开" inactive-label="关闭" primary>
-    </mu-switch>
-    <p></p>
-    <mu-switch v-model="value1" danger label="DANGER">
-    </mu-switch>
-    <p></p>
-    <mu-check v-model="check1" label="Check 1"></mu-check>
-    <p></p>
-    <mu-check v-model="check2" label="Check 2"></mu-check>
-    <p></p>
-    <mu-check v-model="checked" label="Check 3" value="3"></mu-check>
-    <p></p>
-    <mu-check v-model="checked" label="Check 4" value="4"></mu-check>
-    <p></p>
-    <mu-check v-model="checked" label="Check 5" value="5" disabled></mu-check>
-    <p></p>
-    <mu-radio value="1" label="Radio 1" v-model="radioValue"></mu-radio>
-    <p></p>
-    <mu-radio value="2" label="Radio 2"></mu-radio>
-    <p></p>
-    <mu-radio value="3" label="Radio 3" v-model="radioValue"></mu-radio>
+  <div id="app" class="mu-bg-normal mu-box" position="fixed fit">
+    <h2>SWITCH, CHECK & RADIO</h2>
+    <div class="group">
+      <h3>SWITCH</h3>
+      <mu-switch v-model="value1"></mu-switch>
+      <mu-switch v-model="value1" active-label="ON" inactive-label="OFF" success></mu-switch>
+      <mu-switch v-model="value1" label="CAUTION" danger disabled></mu-switch>
+    </div>
+    <div class="group">
+      <h3>CHECK</h3>
+      <mu-check v-model="check1" label="Check 1"></mu-check>
+      <mu-check v-model="check2" label="Check 2"></mu-check>
+      <mu-check v-model="checked" label="Check 3" value="3"></mu-check>
+      <mu-check v-model="checked" label="Check 4" value="4"></mu-check>
+      <mu-check v-model="checked" label="Check 5" value="5" disabled></mu-check>
+    </div>
+    <div class="group">
+      <h3>RADIO</h3>
+      <mu-radio value="1" label="Radio 1" v-model="radioValue"></mu-radio>
+      <mu-radio value="2" label="Radio 2"></mu-radio>
+      <mu-radio value="3" label="Radio 3" v-model="radioValue"></mu-radio>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -60,7 +75,7 @@
       }
     })
 
-    mussel.install(app, { darkMode: 'auto' })
+    mussel.install(app, { darkMode: false })
 
     app.mount('#app')
   </script>

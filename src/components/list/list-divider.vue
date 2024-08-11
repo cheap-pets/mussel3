@@ -1,17 +1,19 @@
 <template>
-  <div class="mu-list-item mu-list-divider">
-    <mu-icon v-if="icon" :icon="icon" />
-    <label v-if="label">{{ label }}</label>
+  <div class="mu-list-divider">
+    <slot>
+      <mu-icon v-if="icon" :icon="icon" />
+      <label v-if="label">{{ label }}</label>
+    </slot>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'MusselListDivider',
-    props: {
-      label: String,
-      icon: String,
-      divider: Boolean
-    }
-  }
+<script setup>
+  defineOptions({
+    name: 'MusselListDivider'
+  })
+
+  defineProps({
+    icon: String,
+    label: String
+  })
 </script>

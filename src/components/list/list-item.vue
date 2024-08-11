@@ -1,31 +1,26 @@
 <template>
-  <div class="mu-list-item">
+  <component :is="componentTag" class="mu-list-item">
     <slot>
-      <mu-icon
-        v-if="icon"
-        class="mu-list-item_icon"
-        :icon="icon" />
-      <label
-        v-if="itemLabel"
-        class="mu-list-item_label">
-        {{ itemLabel }}
-      </label>
+      <mu-icon v-if="icon" class="mu-list-item_icon" :icon="icon" />
+      <label v-if="label" class="mu-list-item_label">{{ label }}</label>
     </slot>
-  </div>
+  </component>
 </template>
 
-<script>
-  export default {
-    name: 'MusselListItem',
-    props: {
-      icon: String,
-      label: String,
-      value: null
-    },
-    computed: {
-      itemLabel () {
-        return this.label
-      }
-    }
-  }
+<script setup>
+  import './list-item.scss'
+
+  import { computed } from 'vue'
+
+  defineOptions({
+    name: 'MusselListItem'
+  })
+
+  const props = defineProps({
+    tag: String,
+    icon: String,
+    label: String
+  })
+
+  const componentTag = computed(() => props.tag === 'a' ? 'a' : 'div')
 </script>

@@ -25,88 +25,103 @@
   --mu-gray-9: $gray9;
   // --mu-gray-rgb: $grayRgb;
 
-  --mu-primary-color: $primaryColor;
-  --mu-primary-color-0: $primaryColor0;
-  --mu-primary-color-1: $primaryColor1;
-  --mu-primary-color-2: $primaryColor2;
-  --mu-primary-color-3: $primaryColor3;
-  --mu-primary-color-4: $primaryColor4;
-  --mu-primary-color-5: $primaryColor5;
-  --mu-primary-color-6: $primaryColor6;
-  --mu-primary-color-7: $primaryColor7;
-  --mu-primary-color-8: $primaryColor8;
-  --mu-primary-color-9: $primaryColor9;
+  --mu-primary-color: $primary;
+  --mu-primary-color-0: $primary0;
+  --mu-primary-color-1: $primary1;
+  --mu-primary-color-2: $primary2;
+  --mu-primary-color-3: $primary3;
+  --mu-primary-color-4: $primary4;
+  --mu-primary-color-5: $primary5;
+  --mu-primary-color-6: $primary6;
+  --mu-primary-color-7: $primary7;
+  --mu-primary-color-8: $primary8;
+  --mu-primary-color-9: $primary9;
   // --mu-primary-rgb: $primaryRgb;
 
-  --mu-success-color: $successColor;
-  --mu-success-color-0: $successColor0;
-  --mu-success-color-1: $successColor1;
-  --mu-success-color-2: $successColor2;
-  --mu-success-color-3: $successColor3;
-  --mu-success-color-4: $successColor4;
-  --mu-success-color-5: $successColor5;
-  --mu-success-color-6: $successColor6;
-  --mu-success-color-7: $successColor7;
-  --mu-success-color-8: $successColor8;
-  --mu-success-color-9: $successColor9;
+  --mu-success-color: $success;
+  --mu-success-color-0: $success0;
+  --mu-success-color-1: $success1;
+  --mu-success-color-2: $success2;
+  --mu-success-color-3: $success3;
+  --mu-success-color-4: $success4;
+  --mu-success-color-5: $success5;
+  --mu-success-color-6: $success6;
+  --mu-success-color-7: $success7;
+  --mu-success-color-8: $success8;
+  --mu-success-color-9: $success9;
   // --mu-success-rgb: $successRgb;
 
-  --mu-warning-color: $warningColor;
-  --mu-warning-color-0: $warningColor0;
-  --mu-warning-color-1: $warningColor1;
-  --mu-warning-color-2: $warningColor2;
-  --mu-warning-color-3: $warningColor3;
-  --mu-warning-color-4: $warningColor4;
-  --mu-warning-color-5: $warningColor5;
-  --mu-warning-color-6: $warningColor6;
-  --mu-warning-color-7: $warningColor7;
-  --mu-warning-color-8: $warningColor8;
-  --mu-warning-color-9: $warningColor9;
+  --mu-warning-color: $warning;
+  --mu-warning-color-0: $warning0;
+  --mu-warning-color-1: $warning1;
+  --mu-warning-color-2: $warning2;
+  --mu-warning-color-3: $warning3;
+  --mu-warning-color-4: $warning4;
+  --mu-warning-color-5: $warning5;
+  --mu-warning-color-6: $warning6;
+  --mu-warning-color-7: $warning7;
+  --mu-warning-color-8: $warning8;
+  --mu-warning-color-9: $warning9;
   // --mu-warning-rgb: $warningRgb;
 
-  --mu-danger-color: $dangerColor;
-  --mu-danger-color-0: $dangerColor0;
-  --mu-danger-color-1: $dangerColor1;
-  --mu-danger-color-2: $dangerColor2;
-  --mu-danger-color-3: $dangerColor3;
-  --mu-danger-color-4: $dangerColor4;
-  --mu-danger-color-5: $dangerColor5;
-  --mu-danger-color-6: $dangerColor6;
-  --mu-danger-color-7: $dangerColor7;
-  --mu-danger-color-8: $dangerColor8;
-  --mu-danger-color-9: $dangerColor9;
+  --mu-danger-color: $danger;
+  --mu-danger-color-0: $danger0;
+  --mu-danger-color-1: $danger1;
+  --mu-danger-color-2: $danger2;
+  --mu-danger-color-3: $danger3;
+  --mu-danger-color-4: $danger4;
+  --mu-danger-color-5: $danger5;
+  --mu-danger-color-6: $danger6;
+  --mu-danger-color-7: $danger7;
+  --mu-danger-color-8: $danger8;
+  --mu-danger-color-9: $danger9;
   // --mu-danger-rgb: $dangerRgb;
 
-  --mu-accent-color: $accentColor;
-  --mu-accent-color-0: $accentColor0;
-  --mu-accent-color-1: $accentColor1;
-  --mu-accent-color-2: $accentColor2;
-  --mu-accent-color-3: $accentColor3;
-  --mu-accent-color-4: $accentColor4;
-  --mu-accent-color-5: $accentColor5;
-  --mu-accent-color-6: $accentColor6;
-  --mu-accent-color-7: $accentColor7;
-  --mu-accent-color-8: $accentColor8;
-  --mu-accent-color-9: $accentColor9;
+  --mu-accent-color: $accent;
+  --mu-accent-color-0: $accent0;
+  --mu-accent-color-1: $accent1;
+  --mu-accent-color-2: $accent2;
+  --mu-accent-color-3: $accent3;
+  --mu-accent-color-4: $accent4;
+  --mu-accent-color-5: $accent5;
+  --mu-accent-color-6: $accent6;
+  --mu-accent-color-7: $accent7;
+  --mu-accent-color-8: $accent8;
+  --mu-accent-color-9: $accent9;
   // --mu-accent-rgb: $accentRgb;
 }
 
 .mu-root {
-  --mu-gray: var(--mu-gray-6);
+  --mu-gray-l0: var(--mu-gray-0);
+  --mu-gray-l1: var(--mu-gray-1);
+  --mu-gray-l2: var(--mu-gray-2);
+  --mu-gray-l3: var(--mu-gray-3);
+  --mu-gray-l4: var(--mu-gray-4);
+  --mu-gray-l5: var(--mu-gray-5);
+  --mu-gray-l6: var(--mu-gray-6);
+  --mu-gray-l7: var(--mu-gray-7);
+  --mu-gray-l8: var(--mu-gray-8);
+  --mu-gray-l9: var(--mu-gray-9);
+}
 
-  --mu-text-color-normal: var(--mu-gray-9);
-  --mu-text-color-weak: var(--mu-gray-4);
-  --mu-text-color-placeholder: var(--mu-gray-7);
-
-  --mu-border-color: var(--mu-gray-3);
-  --mu-divider-color: var(--mu-gray-2);
+.mu-root {
+  --mu-text-color-normal: var(--mu-gray-7);
+  --mu-text-color-body: var(--mu-gray-8);
+  --mu-text-color-muted: var(--mu-gray-4);
+  --mu-text-color-subtle: var(--mu-gray-3);
+  --mu-text-color-placeholder: var(--mu-gray-2);
 
   --mu-bg-normal: #fff;
   --mu-bg-strong: var(--mu-gray-0);
-  --mu-bg-disabled: var(--mu-gray-1);
-  --mu-bg-hover: var(--mu-gray-2);
-  --mu-bg-popup: #fff;
+  --mu-bg-overlay: #fff;
+  --mu-bg-readonly: #ffd;
+  --mu-bg-disabled: var(--mu-gray-0);
   --mu-bg-mask: rgba(0, 0, 0, .5);
+  --mu-bg-translucent: rgba(0, 0, 0, .08);
+
+  --mu-border-color: var(--mu-gray-3);
+  --mu-border-color-muted: var(--mu-gray-2);
+  --mu-border-color-strong: var(--mu-gray-4);
   
   --mu-shadow-color: rgba(0, 0, 0, .1);
   --mu-shadow-primary: $shadowPrimary;
@@ -127,16 +142,14 @@
   --mu-common-font-size: 14px;
   --mu-common-line-height: 20px;
 
-  --mu-input-height: 32px;
-  --mu-input-height-small: 24px;
-
-  --mu-list-item-height: 32px;
-  --mu-list-item-height-small: 24px;
-
-  --mu-widget-border-radius: 4px;
+  --mu-common-border-radius: 4px;
   --mu-window-border-radius: 8px;
 
-  --mu-shadow-focus: 0 0 0 2px var(--mu-primary-color);
+  --mu-input-size: 32px;
+  --mu-input-size-small: 24px;
+  --mu-input-size-large: 40px;
+
+  --mu-shadow-focus: 0 0 0 2px;
   --mu-shadow-float: 0 1px 3px 0 var(--mu-shadow-color), 0 1px 2px -1px var(--mu-shadow-color);
   --mu-shadow-popup: 0 4px 6px -1px var(--mu-shadow-color), 0 2px 4px -2px var(--mu-shadow-color);
   --mu-shadow-layer: 0 10px 15px -3px var(--mu-shadow-color), 0 4px 6px -4px var(--mu-shadow-color);
@@ -153,6 +166,6 @@
     'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: var(--mu-common-font-size);
-  color: var(--mu-text-color-normal);
+  color: var(--mu-text-color-body);
   background-color: var(--mu-bg-normal);
 }

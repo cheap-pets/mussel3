@@ -10,133 +10,171 @@
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
   <link
-    rel="stylesheet" type="text/css"
+    rel="stylesheet"
+    type="text/css"
     href="../../dist/mussel.css" />
+
   <link
-    rel="stylesheet" type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
+
+    <style>
+      .group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+  
+        padding: 8px;
+        margin: 8px;
+      }
+
+      .mu-editor {
+        width: 250px;
+      }
+
+      h2 {
+        margin: 16px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid currentColor;
+      }
+
+      h3 {
+        width: 100%;
+        margin: 0;
+        color: var(--mu-text-color-normal);
+      }
+    </style>
 </head>
 
 <body>
-  <div id="app" class="mu-box" position="fixed fit">
-    <div class="mu-box" padding="2x">
-      {{ artist }}
+  <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
+    <h2>EDITOR</h2>
+    <div class="group">
+      <h3>BASIC</h3>
+      <mu-editor v-model="value" placeholder="Input Text"></mu-editor>
+      <mu-editor v-model="value" placeholder="Input Text" clear-button></mu-editor>
+      <mu-editor v-model="value" placeholder="Input Text" clear-button></mu-editor>
     </div>
-    <div class="mu-box" padding="1x">
-      <mu-editor
-        v-model="artist"
-        class="mu-box"
-        underline
-        clear-button
-        width="500"
-        label="Artist"
-        placeholder="Artist Name">
+    <div class="group">
+      <h3>ICON & BUTTON</h3>
+      <mu-editor v-model="value">
+        <template #left>
+          <mu-icon icon="bug"></mu-icon>
+        </template>
+      </mu-editor>
+      <mu-editor v-model="value" clear-button>
         <template #right>
-          <mu-icon link icon="bug"></mu-icon>
+          <mu-icon icon="check"></mu-icon>
+        </template>
+      </mu-editor>
+      <mu-editor v-model="value" clear-button>
+        <template #right>
+          <mu-icon tag="a" icon="bolt" primary></mu-icon>
         </template>
       </mu-editor>
     </div>
-    <div class="mu-box" padding="1x">
-      <mu-combo-box
-        v-model="artist"
-        class="mu-box"
-        width="500"
-        label="Artist"
-        placeholder="Artist Name"
-        :options="artists">
-      </mu-combo-box>
-    </div>
-    <div class="mu-box" padding="1x">
-      <mu-combo-box
-        class="mu-box" width="500" dropdown-height="300px"
-        v-model="artist" :options="artistsCn">
-        <template #dropdown>
-          <mu-h-box width="100%" height="100%">
-            <mu-tab-bar
-              flex="none" tab-position="left"
-              :tab-items="tabItems" v-model:active-tab="activeTab">
-            </mu-tab-bar>
-            <mu-box flex="1">
-              <component
-                :is="el === '-' || el.divider ? 'mu-list-divider' : 'mu-option'"
-                v-for="(el, index) in artistsCn"
-                :key="el === '-' ? index : el"
-                v-bind="el === '-' ? {} : el" />
-            </mu-box>
-          </mu-h-box>
+    <div class="group">
+      <h3>LABEL</h3>
+      <mu-editor>
+        <template #left>
+          <span>Name</span>
         </template>
-      </mu-combo-box>
+      </mu-editor>
+      <mu-editor type="number">
+        <template #right>
+          <span>PCS</span>
+        </template>
+      </mu-editor>
+      <div style="width: 100%;"></div>
+      <mu-editor label="Name"></mu-editor>
+      <mu-editor type="number">
+        <template #right>
+          <label>
+            <mu-icon tag="a" icon="folderOpen" primary></mu-icon>
+          </label>
+        </template>
+      </mu-editor>
+      <mu-editor label="Addr">
+        <template #left>
+          <span>http://</span>
+        </template>
+        <template #right>
+          <span>.com</span>
+        </template>
+      </mu-editor>
     </div>
-    <div class="mu-box" position="fixed bottom left" padding="1x">
-      <mu-combo-box
-        v-model="artist"
-        class="mu-box"
-        width="500"
-        label="Artist"
-        placeholder="Artist Name"
-        :dropdown-style="{ width: '600px' }"
-        :options="artistsCn">
-      </mu-combo-box>
+    <div class="group">
+      <h3>Style & State</h3>
+      <mu-editor v-model="value" placeholder="Underline" input-style="underline" clear-button></mu-editor>
+      <mu-editor v-model="value" placeholder="Round" round clear-button></mu-editor>
+      <mu-editor v-model="value" placeholder="Solid" input-style="solid" clear-button></mu-editor>
+      <mu-editor v-model="value" placeholder="Round & Solid" round input-style="solid" clear-button></mu-editor>
+      <div style="width: 100%;"></div>
+      <mu-editor label="Name" placeholder="Underline" input-style="underline">
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
+      <mu-editor label="Name" placeholder="Round" round>
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
+      <mu-editor label="Name" placeholder="Solid" input-style="solid">
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
+      <div style="width: 100%;"></div>
+      <mu-editor v-model="value" placeholder="Invalid Input" invalid></mu-editor>
+      <mu-editor v-model="value" placeholder="Readonly" readonly></mu-editor>
+      <mu-editor v-model="value" placeholder="Disabled" disabled></mu-editor>
+      <div style="width: 100%;"></div>
+      <mu-editor label="Name" placeholder="Underline" input-style="underline" invalid>
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
+      <mu-editor v-model="value" label="Total" placeholder="Readonly" input-style="underline" round readonly>
+        <template #right>
+          <span>RPM</span>
+        </template>
+      </mu-editor>
+      <mu-editor v-model="value" label="Name" placeholder="Disabled" input-style="underline" disabled>
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
+      <mu-editor v-model="value" label="Name" placeholder="Disabled" input-style="solid" disabled>
+        <template #right>
+          <a primary>Open</a>
+        </template>
+      </mu-editor>
     </div>
-    <mu-box padding="1x">
-      <mu-button @click="addOption">Add Option</mu-button>
-    </mu-box>
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
-        const artist = Vue.ref('Johann Baptist Strauss')
-        const artists = Vue.reactive([
-          { divider: true, label: 'GROUP 1' },
-          { value: 'Ludwig van Beethoven' },
-          { value: 'Wolfgang Amadeus Mozart' },
-          { value: 'Frédéric François Chopin' },
-          { divider: true, label: 'GROUP 2' },
-          { value: 'Johann Baptist Strauss', disabled: true  }
-        ])
+        const value = Vue.ref('')
 
-        const artistsCn = Vue.reactive([
-          { value: 'Ludwig van Beethoven', label: '贝多芬' },
-          { value: 'Wolfgang Amadeus Mozart', label: '莫扎特' },
-          { value: 'Frédéric François Chopin', label: '肖邦' },
-          { divider: true },
-          { value: 'Johann Baptist Strauss', label: '斯特劳斯', disabled: true }
-        ])
-
-        const tabItems = [
-          { name: 'All Variables' },
-          { name: 'Workflow' },
-          { name: 'Business' }
-        ]
-
-        const activeTab = Vue.ref('All Variables')
-
-        return { artist, artists, artistsCn, tabItems, activeTab }
+        return {
+          value
+        }
       },
       methods: {
-        onDropdownShow () {
-          console.log('dropdown show')
-        },
-        addOption () {
-          const  v = (new Date()).toString()
 
-          this.artist = v
-          this.artists.push({
-            value: v
-          })
-          this.artistsCn.push({
-            value: v
-          })
-        }
       }
     })
 
-    mussel.install(app, { darkMode: 'auto' })
-    mussel.registerIcons({
-      bug: 'ti ti-bug',
-      bolt: 'ti ti-bolt',
-      album: 'ti ti-album'
+    mussel.install(app, {
+      darkMode: false,
+      icons: {
+        bug: 'ti ti-bug',
+        bolt: 'ti ti-bolt',
+        album: 'ti ti-album'
+      }
     })
 
     app.mount('#app')

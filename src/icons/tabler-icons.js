@@ -1,0 +1,18 @@
+export { default as x } from '~icons/x.svg'
+export { default as check } from '~icons/check.svg'
+export { default as point } from '~icons/point.svg'
+export { default as circle } from '~icons/circle.svg'
+export { default as circleX } from '~icons/circle-x.svg'
+export { default as circleCheck } from '~icons/circle-check.svg'
+export { default as circleAlert } from '~icons/alert-circle.svg'
+export { default as triangleAlert } from '~icons/alert-triangle.svg'
+export { default as dotsVert } from '~icons/dots-vertical.svg'
+
+export { default as file } from '~icons/file.svg'
+export { default as folder } from '~icons/folder.svg'
+export { default as folderOpen } from '~icons/folder-open.svg'
+
+export { default as keyUp } from '~icons/chevron-up.svg'
+export { default as keyDown } from '~icons/chevron-down.svg'
+export { default as keyLeft } from '~icons/chevron-left.svg'
+export { default as keyRight } from '~icons/chevron-right.svg'

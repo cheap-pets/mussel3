@@ -1,29 +1,23 @@
+<!-- eslint-disable vue/no-v-text-v-html-on-component -->
+
 <template>
-  <span
-    class="mu-icon"
-    :class="data.iconClass"
+  <component
+    :is="componentTag"
+    :class="['mu-icon', data.cls]"
     :icon="icon"
-    v-html="data.iconSVG" />
+    v-html="data.svg" />
 </template>
 
 <script setup>
   import './icon.scss'
 
   import { computed } from 'vue'
-  import { icons } from './icons'
+  import { useIcon } from './icon-hook'
 
   defineOptions({ name: 'MusselIcon' })
 
-  const props = defineProps({
-    icon: String
-  })
+  const props = defineProps({ icon: String, tag: String })
+  const data = useIcon(props).data
 
-  const data = computed(() => {
-    const { type, content } = (props.icon && icons[props.icon]) || {}
-
-    return {
-      iconSVG: (type === 'svg' && content) || undefined,
-      iconClass: (type === 'class' && content) || undefined
-    }
-  })
+  const componentTag = computed(() => props.tag === 'a' ? 'a' : 'span')
 </script>

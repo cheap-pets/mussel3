@@ -1,6 +1,0 @@
-import './root.scss'
-import './dark.scss'
-import './text.scss'
-import './link.scss'
-import './background.scss'
-import './box-shadow.scss'
