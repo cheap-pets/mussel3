@@ -5,13 +5,18 @@
     @mouseover="onTriggerMouseOver"
     @mouseleave="onTriggerMouseLeave">
     <slot />
-    <mu-dropdown-panel v-model:visible="dropdownVisible" v-bind="dropdownPanelBindings">
+    <mu-dropdown-panel
+      v-model:visible="dropdownVisible"
+      v-bind="dropdownPanelBindings"
+      width="auto">
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
 </template>
 
 <script setup>
+  import './dropdown.scss'
+
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
 
   defineOptions({ name: 'MusselDropdown' })

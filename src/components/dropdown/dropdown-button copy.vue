@@ -1,23 +1,19 @@
 <template>
   <div
-    class="mu-dropdown mu-dropdown-button"
-    :class="{ 'mu-button-group': splitButton }"
-    @click="onClick"
-    @mouseover="onMouseOver"
-    @mouseleave="onMouseLeave">
+    v-if="splitButton"
+    class="mu-dropdown mu-dropdown-button mu-button-group"
+    @click="hideDropdown">
     <mu-button>
       <slot>
         <mu-icon v-if="icon" :icon="icon" />
         <span v-if="caption">{{ caption }}</span>
       </slot>
-      <mu-icon v-if="!splitButton" v-bind="dropdownIconBindings" />
     </mu-button>
     <mu-button
-      v-if="splitButton"
       class="mu-button mu-icon-button"
       @click.stop="onTriggerClick"
-      @mouseover.stop="onTriggerMouseOver"
-      @mouseleave.stop="onTriggerMouseLeave">
+      @mouseover="onTriggerMouseOver"
+      @mouseleave="onTriggerMouseLeave">
       <mu-icon v-bind="dropdownIconBindings" />
     </mu-button>
     <mu-dropdown-panel
@@ -27,12 +23,31 @@
       <slot name="dropdown" />
     </mu-dropdown-panel>
   </div>
+  <mu-button
+    v-else
+    class="mu-dropdown mu-dropdown-button mu-button"
+    type="button"
+    @click="onTriggerClick"
+    @mouseover="onTriggerMouseOver"
+    @mouseleave="onTriggerMouseLeave">
+    <slot>
+      <mu-icon v-if="icon" :icon="icon" />
+      <span v-if="caption">{{ caption }}</span>
+    </slot>
+    <mu-icon v-bind="dropdownIconBindings" />
+    <mu-dropdown-panel
+      v-model:visible="dropdownVisible"
+      v-bind="dropdownPanelBindings"
+      width="auto">
+      <slot name="dropdown" />
+    </mu-dropdown-panel>
+  </mu-button>
 </template>
 
 <script setup>
   import './dropdown-button.scss'
 
-  import { buttonGroupProps, useButtonGroup } from '../button/hooks/button-group'
+  import { buttonGroupProps, useButtonGroup } from '../button/button-group-hook'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
 
   defineOptions({ name: 'MusselDropdownButton' })
@@ -53,22 +68,8 @@
     dropdownVisible,
     dropdownIconBindings,
     dropdownPanelBindings,
-    hideDropdown,
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave
   } = useDropdown(props, emit)
-
-  function onClick () {
-    if (!props.splitButton) onTriggerClick()
-    else hideDropdown()
-  }
-
-  function onMouseOver () {
-    if (!props.splitButton) onTriggerMouseOver()
-  }
-
-  function onMouseLeave () {
-    if (!props.splitButton) onTriggerMouseLeave()
-  }
 </script>

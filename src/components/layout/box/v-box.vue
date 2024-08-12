@@ -1,14 +1,14 @@
 <template>
-  <div class="mu-box mu-v-box" :style="style">
+  <div class="mu-v-box mu-box" :style="style">
     <slot />
   </div>
 </template>
 
-<script>
-  import Box from './box.vue'
+<script setup>
+  import { sizeProps, useSize } from '@/hooks/size'
 
-  export default {
-    name: 'MusselVBox',
-    extends: Box
-  }
+  defineOptions({ name: 'MusselVBox' })
+
+  const props = defineProps({ ...sizeProps })
+  const style = useSize(props).sizeStyle
 </script>

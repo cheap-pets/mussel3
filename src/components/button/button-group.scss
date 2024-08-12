@@ -38,6 +38,10 @@
       border-color: var(--mu-button_color);
     }
 
+    &[button-style="text"]:hover {
+      border-color: var(--mu-button_color);
+    }
+
     &[disabled] {
       border-color: var(--mu-border-color-muted);
     }

@@ -85,37 +85,46 @@ export function getComputedXColor (xColor, el) {
     : xColor
 }
 
-export function install (app, { theme, darkMode }) {
-  const mount = app.mount
+function setRoot (element, darkMode, theme) {
+  element.classList.add('mu-root')
 
-  app.mount = container => {
-    const el =
-      (isHtmlElement(container) && container) ||
-      (isString(container) && document.querySelector(container)) ||
-      document.documentElement
+  if (darkMode) {
+    element.classList.add('mu-dark')
+  }
 
-    el.classList.add('mu-root')
-
-    if (darkMode) el.classList.add('mu-dark')
-
-    if (theme) {
-      Object
-        .entries(extendColors(theme))
-        .forEach(([key, value]) =>
-          value &&
-          el.style.setProperty(
-            '--mu-' + kebabCase(
-              key.replace(
-                /^(gray|primary|success|warning|danger|accent)(\d*)$/,
-                (match, name, num) => (name === 'gray' ? `${name}` : `${name}-color`) + (num ? `-${num}` : '')
-              )
-            ),
-            value
-          )
+  if (theme) {
+    Object
+      .entries(extendColors(theme))
+      .forEach(([key, value]) =>
+        value &&
+        element.style.setProperty(
+          '--mu-' + kebabCase(
+            key.replace(
+              /^(gray|primary|success|warning|danger|accent)(\d*)$/,
+              (match, name, num) => (name === 'gray' ? `${name}` : `${name}-color`) + (num ? `-${num}` : '')
+            )
+          ),
+          value
         )
-    }
+      )
+  }
+}
 
-    mount.call(app, container)
+export function install (app, { root, theme, darkMode }) {
+  if (root === 'container') {
+    const mount = app.mount
+
+    app.mount = container => {
+      setRoot(
+        (isHtmlElement(container) && container) ||
+        (isString(container) && document.querySelector(container)) ||
+        document.body
+      )
+
+      mount.call(app, container)
+    }
+  } else {
+    setRoot(document.body, darkMode, theme)
   }
 }
 

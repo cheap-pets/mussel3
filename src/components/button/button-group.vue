@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-button-group mu-box">
+  <div class="mu-button-group">
     <slot />
   </div>
 </template>
@@ -7,21 +7,9 @@
 <script setup>
   import './button-group.scss'
 
-  import { provide } from 'vue'
+  import { buttonGroupProps, useButtonGroup } from './hooks/button-group'
 
-  const props = defineProps({
-    primary: Boolean,
-    danger: Boolean,
-    accent: Boolean,
-    xColor: [Boolean, String],
-    small: Boolean,
-    round: Boolean,
-    disabled: Boolean,
-    buttonStyle: {
-      type: String,
-      validator: v => ['normal', 'outline'].includes(v)
-    }
-  })
+  const props = defineProps({ ...buttonGroupProps })
 
-  provide('groupedButtonOptions', props)
+  useButtonGroup(props)
 </script>

@@ -1,28 +1,25 @@
 <template>
-  <div class="mu-box mu-grid-box" :style="style">
+  <div class="mu-grid-box mu-box" :style="style">
     <slot />
   </div>
 </template>
 
-<script>
-  import { resolveSize } from '@/utils/size'
+<script setup>
+  import { computed } from 'vue'
+  import { sizeProps, useSize } from '@/hooks/size'
+
+  defineOptions({ name: 'MusselGridBox' })
+
+  const props = defineProps({ ...sizeProps, rows: null, columns: null })
+  const sizeStyle = useSize(props).sizeStyle
 
   function getGridTemplateValues (v) {
     return isNaN(v) ? undefined : `repeat(${v}, 1fr)`
   }
 
-  export default {
-    name: 'MusselGridBox',
-    props: ['width', 'height', 'rows', 'columns'],
-    computed: {
-      style () {
-        return {
-          width: resolveSize(this.width),
-          height: resolveSize(this.height),
-          gridTemplateRows: getGridTemplateValues(this.rows),
-          gridTemplateColumns: getGridTemplateValues(this.columns)
-        }
-      }
-    }
-  }
+  const style = computed(() => ({
+    ...sizeStyle.value,
+    gridTemplateRows: getGridTemplateValues(props.rows),
+    gridTemplateColumns: getGridTemplateValues(props.columns)
+  }))
 </script>

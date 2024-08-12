@@ -4,22 +4,11 @@
   </div>
 </template>
 
-<script>
-  import { resolveSize } from '@/utils/size'
+<script setup>
+  import { sizeProps, useSize } from '@/hooks/size'
 
-  export default {
-    name: 'MusselBox',
-    props: {
-      width: null,
-      height: null
-    },
-    computed: {
-      style () {
-        return {
-          width: resolveSize(this.width),
-          height: resolveSize(this.height)
-        }
-      }
-    }
-  }
+  defineOptions({ name: 'MusselBox' })
+
+  const props = defineProps({ ...sizeProps })
+  const style = useSize(props).sizeStyle
 </script>

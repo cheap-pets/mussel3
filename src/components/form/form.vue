@@ -1,23 +1,18 @@
 <template>
-  <div class="mu-form mu-box" :style="boxStyle">
+  <div class="mu-form" :style="style">
     <slot />
   </div>
 </template>
 
-<script>
-  import Box from '../layout/box/box.vue'
+<script setup>
+  import { provide } from 'vue'
+  import { sizeProps, useSize } from '@/hooks/size'
 
-  export default {
-    name: 'MusselForm',
-    extends: Box,
-    provide () {
-      return {
-        form: this
-      }
-    },
-    props: {
-      labelWidth: String,
-      labelAlign: String
-    }
-  }
+  defineOptions({ name: 'MusselForm' })
+
+  const props = defineProps({ ...sizeProps, labelWidth: String, labelAlign: String })
+  const style = useSize(props).sizeStyle
+
+  provide('form', props)
+
 </script>

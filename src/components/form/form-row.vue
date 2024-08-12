@@ -1,14 +1,16 @@
 <template>
-  <div class="mu-form-row mu-box" :style="boxStyle">
+  <div class="mu-form-row" :style="style">
     <slot />
   </div>
 </template>
 
-<script>
-  import Box from '../layout/box/box.vue'
+<script setup>
+  import './form-row.scss'
 
-  export default {
-    name: 'MusselFormRow',
-    extends: Box
-  }
+  import { sizeProps, useSize } from '@/hooks/size'
+
+  defineOptions({ name: 'MusselFormRow' })
+
+  const props = defineProps({ ...sizeProps })
+  const style = useSize(props).sizeStyle
 </script>

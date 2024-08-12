@@ -3,6 +3,7 @@ import { resolveSize } from '@/utils/size'
 
 export const dropdownProps = {
   dropdownIcon: String,
+  dropdownItems: Array,
   dropdownPanel: Object,
   dropdownTrigger: {
     type: String,
@@ -30,9 +31,10 @@ export function useDropdown (props, emit) {
   }))
 
   const dropdownPanelBindings = computed(() => {
-    const { style, width, height, ...bindings } = props.dropdownPanel || {}
+    const { style, width, height, items, ...bindings } = props.dropdownPanel || {}
 
     bindings.style = { ...style }
+    bindings.items = props.dropdownItems || items
 
     if (width) bindings.style.width = resolveSize(width)
     if (height) bindings.style.height = resolveSize(height)
@@ -50,17 +52,19 @@ export function useDropdown (props, emit) {
   }
 
   function showDropdown () {
+    resetHideTimer()
     dropdownVisible.value = true
   }
 
   function hideDropdown () {
+    resetHideTimer()
     dropdownVisible.value = false
   }
 
   function delayHideDropdown () {
     if (isHoverTrigger.value) {
       clearTimeout(delayHideTimer)
-      delayHideTimer = setTimeout(hideDropdown, 200)
+      delayHideTimer = setTimeout(hideDropdown, 500)
     }
   }
 
@@ -108,6 +112,7 @@ export function useDropdown (props, emit) {
     dropdownVisible,
     dropdownIconBindings,
     dropdownPanelBindings,
+    isHoverTrigger,
     showDropdown,
     hideDropdown,
     onTriggerClick,

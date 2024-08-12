@@ -20,7 +20,7 @@
   <div id="app" class="mu-box" position="fixed fit">
     <div class="mu-box" padding="1x" style="padding-left: 200px;">
       <mu-dropdown
-        :dropdown-panel="{ align: right, items: artists }"
+        :dropdown-panel="{ align: 'right', items: artists }"
         @dropdown:show="onShow"
         @dropdown:itemclick="onItemClick">
         <mu-button>{{ artist }}</mu-button>
@@ -48,8 +48,8 @@
       <mu-dropdown-button
         x-color="cyan"
         split-button
-        reserve-icon-place
         caption="Split Button"
+        dropdown-trigger="click"
         :dropdown-items="artists"
         @click="onButtonClick"
         @dropdown:itemclick="onItemClick">

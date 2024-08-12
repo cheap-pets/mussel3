@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-  defineOptions({
-    name: 'MusselBar'
-  })
+  import './bar.scss'
+
+  defineOptions({ name: 'MusselBar' })
 </script>

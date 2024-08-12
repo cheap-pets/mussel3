@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+  import './list-divider.scss'
+
   defineOptions({
     name: 'MusselListDivider'
   })
