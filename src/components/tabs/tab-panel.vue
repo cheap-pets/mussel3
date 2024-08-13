@@ -1,13 +1,12 @@
 <template>
-  <div
-    v-show="visible"
-    class="mu-tab-panel mu-box"
-    flex="1">
+  <div v-show="visible" class="mu-tab-panel mu-box" flex="1">
     <slot />
   </div>
 </template>
 
 <script>
+  import './tab-panel.scss'
+
   import { ref, inject, watchEffect, onUnmounted } from 'vue'
 
   export default {
@@ -15,8 +14,8 @@
     props: {
       icon: String,
       name: String,
-      caption: String,
       title: String,
+      caption: String,
       disabled: Boolean
     },
     setup (props) {
@@ -24,7 +23,7 @@
       const visible = ref(false)
 
       watchEffect(() => {
-        visible.value = tabs.activeTabName === props.name
+        visible.value = tabs.activeTab.value === props.name
       })
 
       watchEffect(() => {
@@ -33,7 +32,7 @@
           name: props.name,
           caption: props.caption,
           title: props.title,
-          disabled: props.disabled
+          disabled: props.disabled || null
         })
       })
 

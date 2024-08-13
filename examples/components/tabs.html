@@ -10,34 +10,51 @@
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
   <link
-    rel="stylesheet" type="text/css"
+    rel="stylesheet"
+    type="text/css"
     href="../../dist/mussel.css" />
+
   <link
-    rel="stylesheet" type="text/css"
-    href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
+
+  <style>
+    .group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      padding: 8px;
+      margin: 8px;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="app" class="mu-box mu-background-normal" position="fixed fit" layout="flex" direction="column">
+  <div id="app" class="mu-box mu-bg-normal" position="fixed fit" layout="flex" direction="column">
     <div class="mu-bar mu-box mu-bg-strong">
       <label>Tap Position</label>
-      <mu-combo-box class="mu-box" :clear-button="false" width="100"
+      <mu-combo-box class="mu-box" :clear-button="false" style="width: 100px;"
         v-model="tabPosition" :options="positions">
       </mu-combo-box>
       <label>Tap Style</label>
       <mu-combo-box
-        class="mu-box" :clear-button="false" width="100"
+        class="mu-box" :clear-button="false" style="width: 100px;"
         v-model="tabStyle" :options="styles">
       </mu-combo-box>
     </div>
 
     <mu-tabs
-      :tab-position="tabPosition"
-      :active-tab="activeTab"
+      v-model:active-tab="activeTab"
+      class="mu-box"
       :tab-style="tabStyle"
-      margin-top="4x"
+      :tab-position="tabPosition"
+      :tab-bar-width="['left', 'right'].includes(tabPosition) ? '150px' : undefined"
+      tab-button-size="small"
       height="200"
-      border-y>
+      margin="2x"
+      border>
       <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
       <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
       <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
@@ -46,26 +63,22 @@
 
     <mu-tabs
       v-model:active-tab="activeTab"
-      margin-top="4x"
+      class="mu-box"
       button-size="normal"
       height="200"
-      border-y>
-      <template #tab-bar>
-        <mu-tab-bar :tab-style="tabStyle">
-          <label class="mu-bar_caption">Customized Tab Bar</label>
-          <span class="mu-bar_divider mu-box" margin-right="auto"></span>
-          <mu-tabs-buttons></mu-tabs-buttons>
-          <span class="mu-bar_divider mu-box" margin-left="auto"></span>
-          <mu-dropdown-button
-            class="mu-box"
-            caption="artist"
-            :dropdown-items="artists">
-          </mu-dropdown-button>
-          <div class="mu-editor mu-box" solid>
-            <span class="mu-icon ti ti-search"></span>
-            <input placeholder="Search Something">
-          </div>
-        </mu-tab-bar>
+      margin="2x"
+      border>
+      <template #tab-bar-prepend>
+        <label class="mu-bar_caption">Customized Tab Bar</label>
+        <span class="mu-bar_divider mu-box" margin-right="auto"></span>
+      </template>
+      <template #tab-bar-append>
+        <span class="mu-bar_divider mu-box" margin-left="auto"></span>
+        <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
+        <div class="mu-editor mu-box" solid>
+          <span class="mu-icon ti ti-search"></span>
+          <input placeholder="Search Something">
+        </div>
       </template>
       <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
       <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
@@ -96,7 +109,7 @@
           { name: 'Tab 4', disabled: true }
         ]
 
-        const activeTab = Vue.ref('Tab 4')
+        const activeTab = Vue.ref()
         const tabStyle = Vue.ref('button')
         const tabPosition = Vue.ref('top')
 
@@ -114,12 +127,7 @@
       }
     })
 
-    mussel.install(app, { darkMode: 'auto' })
-    mussel.registerIcons({
-      bug: 'ti ti-bug',
-      bolt: 'ti ti-bolt',
-      album: 'ti ti-album'
-    })
+    mussel.install(app, { darkMode: false })
 
     app.mount('#app')
   </script>

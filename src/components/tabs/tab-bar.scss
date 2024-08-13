@@ -1,0 +1,57 @@
+.mu-tab-bar {
+  flex: none;
+  height: 40px;
+  background: var(--mu-bg-strong);
+}
+
+.mu-tabs[tab-position=bottom] > .mu-tab-bar,
+.mu-tab-bar[tab-position=bottom] {
+  &[tab-style=simple] > .mu-tab-button[active] {
+    border-top: 2px solid var(--mu-primary-color);
+    border-bottom: 2px solid transparent;
+  }
+}
+
+.mu-tabs[tab-position=left] > .mu-tab-bar,
+.mu-tabs[tab-position=right] > .mu-tab-bar,
+.mu-tab-bar[tab-position=left],
+.mu-tab-bar[tab-position=right] {
+  flex-direction: column;
+  align-self: stretch;
+  height: auto;
+  padding: var(--mu-base-spacing);
+
+  & > .mu-tab-button {
+    align-self: stretch;
+  }
+
+  &[tab-style=simple] {
+    padding: var(--mu-base-spacing) 0;
+
+    & > .mu-tab-button {
+      height: 28px;
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+}
+
+.mu-tabs[tab-position=left] > .mu-tab-bar,
+.mu-tab-bar[tab-position=left] {
+  .mu-tab-button {
+    justify-content: end;
+  }
+
+  &[tab-style=simple] .mu-tab-button[active] {
+    border-right: 3px solid var(--mu-primary-color);
+    border-left: 3px solid transparent;
+  }
+}
+
+.mu-tabs[tab-position=right] > .mu-tab-bar,
+.mu-tab-bar[tab-position=right] {
+  &[tab-style=simple] .mu-tab-button[active] {
+    border-right: 3px solid transparent;
+    border-left: 3px solid var(--mu-primary-color);
+  }
+}

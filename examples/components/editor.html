@@ -59,17 +59,17 @@
     <div class="group">
       <h3>ICON & BUTTON</h3>
       <mu-editor v-model="value">
-        <template #left>
+        <template #prepend>
           <mu-icon icon="bug"></mu-icon>
         </template>
       </mu-editor>
       <mu-editor v-model="value" clear-button>
-        <template #right>
+        <template #append>
           <mu-icon icon="check"></mu-icon>
         </template>
       </mu-editor>
       <mu-editor v-model="value" clear-button>
-        <template #right>
+        <template #append>
           <mu-icon tag="a" icon="bolt" primary></mu-icon>
         </template>
       </mu-editor>
@@ -77,29 +77,29 @@
     <div class="group">
       <h3>LABEL</h3>
       <mu-editor>
-        <template #left>
+        <template #prepend>
           <span>Name</span>
         </template>
       </mu-editor>
       <mu-editor type="number">
-        <template #right>
+        <template #append>
           <span>PCS</span>
         </template>
       </mu-editor>
       <div style="width: 100%;"></div>
       <mu-editor label="Name"></mu-editor>
       <mu-editor type="number">
-        <template #right>
+        <template #append>
           <label>
             <mu-icon tag="a" icon="folderOpen" primary></mu-icon>
           </label>
         </template>
       </mu-editor>
       <mu-editor label="Addr">
-        <template #left>
+        <template #prepend>
           <span>http://</span>
         </template>
-        <template #right>
+        <template #append>
           <span>.com</span>
         </template>
       </mu-editor>
@@ -112,17 +112,17 @@
       <mu-editor v-model="value" placeholder="Round & Solid" round input-style="solid" clear-button></mu-editor>
       <div style="width: 100%;"></div>
       <mu-editor label="Name" placeholder="Underline" input-style="underline">
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>
       <mu-editor label="Name" placeholder="Round" round>
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>
       <mu-editor label="Name" placeholder="Solid" input-style="solid">
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>
@@ -132,22 +132,22 @@
       <mu-editor v-model="value" placeholder="Disabled" disabled></mu-editor>
       <div style="width: 100%;"></div>
       <mu-editor label="Name" placeholder="Underline" input-style="underline" invalid>
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>
       <mu-editor v-model="value" label="Total" placeholder="Readonly" input-style="underline" round readonly>
-        <template #right>
+        <template #append>
           <span>RPM</span>
         </template>
       </mu-editor>
       <mu-editor v-model="value" label="Name" placeholder="Disabled" input-style="underline" disabled>
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>
       <mu-editor v-model="value" label="Name" placeholder="Disabled" input-style="solid" disabled>
-        <template #right>
+        <template #append>
           <a primary>Open</a>
         </template>
       </mu-editor>

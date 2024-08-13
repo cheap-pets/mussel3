@@ -1,45 +1,35 @@
 <template>
-  <div class="mu-bar mu-tab-bar mu-box">
-    <slot>
-      <mu-tab-button
-        v-for="el in items"
-        :key="el.name"
-        v-bind="el"
-        :active="activeTabName === el.name"
-        @click="onTabClick(el)" />
-    </slot>
+  <div class="mu-bar mu-tab-bar" :tab-button-size="tabButtonSize">
+    <slot name="prepend" />
+    <mu-tab-button
+      v-for="el in tabButtons"
+      :key="el.name"
+      :style="sizeStyle"
+      :active="activeTab === el.name || null"
+      v-bind="el"
+      @click="activeTab = el.name" />
+    <slot name="append" />
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'MusselTabBar',
-    inject: {
-      tabs: {
-        default: null
-      }
-    },
-    props: {
-      tabItems: Array,
-      activeTab: null
-    },
-    emits: ['update:activeTab'],
-    computed: {
-      items () {
-        return this.tabItems || this.tabs?.tabItems
-      },
-      activeTabName () {
-        return this.tabItems
-          ? this.activeTab
-          : this.tabs?.activeTabName
-      }
-    },
-    methods: {
-      onTabClick (tabItem) {
-        this.$emit('update:activeTab', tabItem.name)
+<script setup>
+  import './tab-bar.scss'
+  import { useSize } from '@/hooks/size'
 
-        this.tabs?.onTabClick(tabItem)
-      }
+  import MuTabButton from './tab-button.vue'
+
+  defineOptions({ name: 'MusselTabBar' })
+
+  const activeTab = defineModel('activeTab', { type: String })
+
+  const props = defineProps({
+    width: String,
+    tabButtons: Array,
+    tabButtonSize: {
+      type: String,
+      validator: v => ['normal', 'small'].includes(v)
     }
-  }
+  })
+
+  const { sizeStyle } = useSize(props)
 </script>

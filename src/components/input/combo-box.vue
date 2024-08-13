@@ -1,11 +1,11 @@
 <template>
   <div class="mu-editor mu-combo-box" v-bind="controlState">
     <label v-if="label">{{ label }}</label>
-    <slot name="left" />
+    <slot name="prepend" />
     <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
     <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="onClear" />
     <mu-icon v-if="expandable" v-bind="dropdownIconBindings" @click="onTriggerClick" />
-    <slot name="right" />
+    <slot name="append" />
     <mu-dropdown-panel v-model:visible="dropdownVisible" v-bind="dropdownPanelBindings">
       <slot name="dropdown">
         <component

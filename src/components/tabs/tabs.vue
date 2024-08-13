@@ -1,73 +1,75 @@
 <template>
-  <div class="mu-tabs mu-box">
-    <slot name="tab-bar">
-      <mu-tab-bar
-        v-if="tabItems"
-        v-bind="tabBarParams"
-        :tab-style="tabStyle"
-        flex="none">
-        <mu-tab-button
-          v-for="el in tabItems"
-          :key="el.name"
-          v-bind="el"
-          :active="activeTabName === el.name"
-          @click="onTabClick(el)" />
-      </mu-tab-bar>
-    </slot>
+  <div class="mu-tabs" :style="sizeStyle">
+    <mu-tab-bar
+      v-model:active-tab="activeTab"
+      :width="tabBarWidth"
+      :tab-style="tabStyle"
+      :tab-buttons="buttons"
+      :tab-button-size="tabButtonSize">
+      <template #prepend>
+        <slot name="tab-bar-prepend" />
+      </template>
+      <template #append>
+        <slot name="tab-bar-append" />
+      </template>
+    </mu-tab-bar>
     <slot />
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'MusselTabs',
-    provide () {
-      return {
-        tabs: this
-      }
-    },
-    props: {
-      tabStyle: String,
-      activeTab: String,
-      tabBarParams: Object
-    },
-    emits: ['update:activeTab', 'tabClick'],
-    data () {
-      return {
-        tabItems: [],
-        activeTabName: null
-      }
-    },
-    watch: {
-      activeTab: {
-        handler (value) {
-          this.activeTabName = value
-        },
-        immediate: true
-      }
-    },
-    methods: {
-      mountTab (tab) {
-        if (!this.tabItems.find(el => tab.name === el.name)) {
-          this.tabItems.push(tab)
-        }
-      },
-      unmountTab (tab) {
-        const idx = this.tabItems.findIndex(el => tab.name === el.name)
+<script setup>
+  import './tabs.scss'
 
-        if (idx !== -1) this.tabItems.splice(idx, 1)
-      },
-      onTabClick (tab) {
-        this.$emit('tabClick', tab)
+  import { ref, computed, provide, onMounted, nextTick } from 'vue'
+  import { sizeProps, useSize } from '@/hooks/size'
 
-        if (
-          this.activeTabName !== tab.name &&
-          this.$attrs.onTabchange?.(tab) !== false
-        ) {
-          this.activeTabName = tab.name
-          this.$emit('update:activeTab', tab.name)
-        }
-      }
+  defineOptions({ name: 'MusselTabs' })
+
+  const activeTab = defineModel('activeTab', { type: String })
+
+  const props = defineProps({
+    tabStyle: String,
+    tabButtons: Array,
+    tabBarWidth: String,
+    tabButtonSize: String,
+    ...sizeProps
+  })
+
+  const mountedButtons = ref([])
+  const buttons = computed(() => props.tabButtons || mountedButtons.value)
+
+  const { sizeStyle } = useSize(props)
+
+  function mountTab (tab) {
+    if (props.tabButtons) return
+
+    if (!mountedButtons.value.find(el => tab.name === el.name)) {
+      mountedButtons.value.push(tab)
     }
   }
+
+  function unmountTab (tab) {
+    if (props.tabButtons) return
+
+    const idx = mountedButtons.value.findIndex(el => tab.name === el.name)
+
+    if (idx !== -1) mountedButtons.value.splice(idx, 1)
+  }
+
+  function setActiveTab (tabName) {
+    activeTab.value = tabName
+  }
+
+  onMounted(() => nextTick(() => {
+    if (!props.activeTab && buttons.value.length) {
+      setActiveTab(buttons.value[0].name)
+    }
+  }))
+
+  provide('tabs', {
+    activeTab,
+    mountTab,
+    unmountTab,
+    setActiveTab
+  })
 </script>

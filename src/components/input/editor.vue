@@ -1,10 +1,10 @@
 <template>
   <div class="mu-editor" v-bind="controlState">
     <label v-if="label">{{ label }}</label>
-    <slot name="left" />
+    <slot name="prepend" />
     <input v-model="inputValue" v-bind="inputBindings">
     <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="clear" />
-    <slot name="right" />
+    <slot name="append" />
   </div>
 </template>
 

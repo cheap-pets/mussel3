@@ -1,5 +1,5 @@
 .mu-box {
-  @for $i from 1 to 4 {
+  @for $i from 1 to 5 {
     $v: calc($i * var(--mu-base-spacing));
 
     &[margin="#{$i}x"] {
@@ -15,7 +15,7 @@
     margin: auto;
   }
 
-  @for $i from 1 to 4 {
+  @for $i from 1 to 5 {
     $v: calc($i * var(--mu-base-spacing));
 
     &[margin-x="#{$i}x"] {
@@ -49,7 +49,7 @@
     margin-bottom: auto;
   }
 
-  @for $i from 1 to 4 {
+  @for $i from 1 to 5 {
     $v: calc($i * var(--mu-base-spacing));
     
     &[margin-top="#{$i}x"] {
