@@ -86,3 +86,19 @@
   }
 }
 
+.mu-space {
+  flex: 1 1 0;
+}
+
+.mu-divider {
+  display: block;
+  flex: none;
+
+  border-color:  var(--mu-border-color-muted);
+    // var(--mu-border-color)
+    // var(--mu-border-color-muted)
+    // var(--mu-border-color-muted)
+    // var(--mu-border-color);
+  border-style: solid;
+  border-width: 1px;
+}

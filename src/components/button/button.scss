@@ -8,7 +8,7 @@
 
   display: inline-flex;
   flex: none;
-  gap: 5px;
+  gap: var(--mu-content-spacing);
   align-items: center;
   justify-content: center;
 
@@ -57,7 +57,7 @@
   --mu-button_color: var(--mu-border-color);
 
   color: var(--mu-text-color-normal);
-  background: transparent;
+  background: var(--mu-bg-normal);
   border: 1px solid var(--mu-button_color);
 
   &[active] {

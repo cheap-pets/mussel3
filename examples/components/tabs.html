@@ -50,7 +50,7 @@
       class="mu-box"
       :tab-style="tabStyle"
       :tab-position="tabPosition"
-      :tab-bar-width="['left', 'right'].includes(tabPosition) ? '150px' : undefined"
+      :tab-bar="{ width: ['left', 'right'].includes(tabPosition) ? '150px' : undefined }"
       tab-button-size="small"
       height="200"
       margin="2x"
@@ -60,31 +60,32 @@
       <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
       <mu-tab-panel name="Tab 4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
     </mu-tabs>
-
-    <mu-tabs
-      v-model:active-tab="activeTab"
-      class="mu-box"
-      button-size="normal"
-      height="200"
-      margin="2x"
-      border>
-      <template #tab-bar-prepend>
-        <label class="mu-bar_caption">Customized Tab Bar</label>
-        <span class="mu-bar_divider mu-box" margin-right="auto"></span>
-      </template>
-      <template #tab-bar-append>
-        <span class="mu-bar_divider mu-box" margin-left="auto"></span>
-        <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
-        <div class="mu-editor mu-box" solid>
-          <span class="mu-icon ti ti-search"></span>
-          <input placeholder="Search Something">
-        </div>
-      </template>
-      <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
-      <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
-      <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
-      <mu-tab-panel name="Tab 4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
-    </mu-tabs>
+    <div class="mu-divider mu-box" margin-x="2x"></div>
+    <div class="mu-box" margin="2x" padding="1x" border>
+      <mu-tabs
+        v-model:active-tab="activeTab"
+        height="200"
+        :tab-style="tabStyle">
+        <template #tab-bar-prepend>
+          <label class="mu-label">Customized Tab Bar</label>
+          <div class="mu-space"></div>
+          <div class="mu-divider"></div>
+        </template>
+        <template #tab-bar-append>
+          <div class="mu-divider"></div>
+          <div class="mu-space"></div>
+          <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
+          <div class="mu-editor mu-box" solid>
+            <span class="mu-icon ti ti-search"></span>
+            <input placeholder="Search Something">
+          </div>
+        </template>
+        <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
+        <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
+        <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
+        <mu-tab-panel name="Tab 4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
+      </mu-tabs>
+    </div>
   </div>
 
   <script type="text/javascript">

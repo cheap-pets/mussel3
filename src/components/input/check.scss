@@ -3,10 +3,11 @@
   --mu-check_size: 16px;
 
   cursor: pointer;
+  user-select: none;
 
   @at-root label#{&} {
     display: inline-flex;
-    gap: var(--mu-base-spacing);
+    gap: var(--mu-content-spacing);
     align-items: center;
 
     font-size: var(--mu-common-font-size);

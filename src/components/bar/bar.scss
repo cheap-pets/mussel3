@@ -1,6 +1,6 @@
 .mu-bar {
   display: flex;
-  gap: var(--mu-base-spacing);
+  gap: var(--mu-content-spacing);
   align-items: center;
 
   height: 40px;
@@ -8,21 +8,10 @@
 
   font-size: var(--mu-common-font-size);
 
-  & > :first-child {
-    margin-left: 0;
-  }
-
-  & > .mu-label {
-    color: var(---mu-text-color-muted);
-  }
-
   & > .mu-divider {
-    flex: none;
+    height: calc(1em + 2px);
+    margin: 0 8px;
   }
-
-  & > .mu-space {
-    flex: 1 1 0;
-  }  
 }
 
 .mu-bar[align-items="stretch"] {
@@ -31,7 +20,7 @@
   padding-bottom: 0;
 
   & > label,
-  & > .mu-bar_divider,
+  & > .mu-divider,
   & > [align-self="center"] {
     align-self: center;
   }

@@ -4,7 +4,7 @@
 
   overflow: hidden;
   display: flex;
-  gap: 5px;
+  gap: var(--mu-content-spacing);
   align-items: center;
   justify-content: center;
 
@@ -42,12 +42,12 @@
   }
 }
 
-.mu-bar[tab-button-size=small] > .mu-tab-button {
+.mu-tab-bar[tab-button-size=small] > .mu-tab-button {
   height: var(--mu-input-size-small);
   padding: 0 7px;
 }
 
-.mu-bar[tab-style=simple] > .mu-tab-button {
+.mu-tab-bar[tab-style=simple] > .mu-tab-button {
   height: 100%;
   background: transparent;
   border-radius: 0;
@@ -60,5 +60,46 @@
 
   &:hover {
     color: var(--mu-primary-color-4);
+  }
+}
+
+.mu-tab-bar[tab-position=left],
+.mu-tab-bar[tab-position=right] {
+  & > .mu-tab-button {
+    align-self: stretch;
+  }
+
+  &[tab-style=simple] {
+    & > .mu-tab-button {
+      height: 28px;
+      padding: 0 11px;
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+}
+
+.mu-tab-bar[tab-position=bottom] {
+  &[tab-style=simple] > .mu-tab-button[active] {
+    border-top: 2px solid var(--mu-primary-color);
+    border-bottom: 2px solid transparent;
+  }
+}
+
+.mu-tab-bar[tab-position=left] {
+  .mu-tab-button {
+    justify-content: end;
+  }
+
+  &[tab-style=simple] > .mu-tab-button[active] {
+    border-right: 3px solid var(--mu-primary-color);
+    border-left: 3px solid transparent;
+  }
+}
+
+.mu-tab-bar[tab-position=right] {
+  &[tab-style=simple] > .mu-tab-button[active] {
+    border-right: 3px solid transparent;
+    border-left: 3px solid var(--mu-primary-color);
   }
 }

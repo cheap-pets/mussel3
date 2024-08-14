@@ -14,7 +14,7 @@
 
   overflow: visible;
   display: flex;
-  gap: 4px;
+  gap: var(--mu-content-spacing);
   align-items: center;
 
   width: 100%;

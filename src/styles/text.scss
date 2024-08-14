@@ -39,3 +39,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.mu-label {
+  font-weight: 500;
+  color: var(--mu-text-color-muted);
+}

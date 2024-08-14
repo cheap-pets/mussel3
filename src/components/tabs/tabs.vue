@@ -1,10 +1,11 @@
 <template>
-  <div class="mu-tabs" :style="sizeStyle">
+  <div class="mu-tabs" :style="sizeStyle" :tab-position="tabPosition">
     <mu-tab-bar
       v-model:active-tab="activeTab"
-      :width="tabBarWidth"
+      v-bind="tabBar"
       :tab-style="tabStyle"
       :tab-buttons="buttons"
+      :tab-position="tabPosition"
       :tab-button-size="tabButtonSize">
       <template #prepend>
         <slot name="tab-bar-prepend" />
@@ -28,9 +29,10 @@
   const activeTab = defineModel('activeTab', { type: String })
 
   const props = defineProps({
+    tabBar: Object,
     tabStyle: String,
     tabButtons: Array,
-    tabBarWidth: String,
+    tabPosition: String,
     tabButtonSize: String,
     ...sizeProps
   })

@@ -1,10 +1,9 @@
 <template>
-  <div class="mu-bar mu-tab-bar" :tab-button-size="tabButtonSize">
+  <div class="mu-tab-bar" :style="sizeStyle">
     <slot name="prepend" />
     <mu-tab-button
       v-for="el in tabButtons"
       :key="el.name"
-      :style="sizeStyle"
       :active="activeTab === el.name || null"
       v-bind="el"
       @click="activeTab = el.name" />
@@ -24,11 +23,7 @@
 
   const props = defineProps({
     width: String,
-    tabButtons: Array,
-    tabButtonSize: {
-      type: String,
-      validator: v => ['normal', 'small'].includes(v)
-    }
+    tabButtons: Array
   })
 
   const { sizeStyle } = useSize(props)
