@@ -91,6 +91,10 @@
 
     background: transparent;
     border: 0;
+
+    &:read-only {
+      cursor: default;
+    }
   }
 
   & > span {

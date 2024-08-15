@@ -1,18 +1,21 @@
 <template>
-  <div class="mu-tab-bar" :style="sizeStyle">
+  <div class="mu-bar mu-tab-bar" :style="sizeStyle">
     <slot name="prepend" />
-    <mu-tab-button
-      v-for="el in tabButtons"
-      :key="el.name"
-      :active="activeTab === el.name || null"
-      v-bind="el"
-      @click="activeTab = el.name" />
+    <div class="mu-tab-bar_buttons">
+      <mu-tab-button
+        v-for="el in tabButtons"
+        :key="el.name"
+        :active="activeTab === el.name || null"
+        v-bind="el"
+        @click="activeTab = el.name" />
+    </div>
     <slot name="append" />
   </div>
 </template>
 
 <script setup>
-  import './tab-bar.scss'
+  import './index.scss'
+
   import { useSize } from '@/hooks/size'
 
   import MuTabButton from './tab-button.vue'

@@ -5,8 +5,7 @@
       v-bind="tabBar"
       :tab-style="tabStyle"
       :tab-buttons="buttons"
-      :tab-position="tabPosition"
-      :tab-button-size="tabButtonSize">
+      :tab-position="tabPosition">
       <template #prepend>
         <slot name="tab-bar-prepend" />
       </template>
@@ -30,10 +29,17 @@
 
   const props = defineProps({
     tabBar: Object,
-    tabStyle: String,
     tabButtons: Array,
-    tabPosition: String,
-    tabButtonSize: String,
+    tabStyle: {
+      type: String,
+      default: 'button',
+      validator: v => ['button', 'small-button', 'simple', 'card', 'border-card'].includes(v)
+    },
+    tabPosition: {
+      type: String,
+      default: 'top',
+      validator: v => ['top', 'right', 'bottom', 'left'].includes(v)
+    },
     ...sizeProps
   })
 

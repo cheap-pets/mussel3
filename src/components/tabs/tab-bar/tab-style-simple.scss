@@ -1,0 +1,92 @@
+.mu-tab-bar[tab-style=simple] {
+  box-sizing: content-box;
+
+  background: var(--mu-bg-normal);
+  border-color: var(--mu-border-color-muted);
+  border-style: solid;
+  border-width: 0;
+
+  & > .mu-tab-bar_buttons {
+    align-items: stretch;
+  }
+
+  &[tab-position=top] {
+    border-bottom-width: var(--mu-tab-bar_active-bar-width);
+  }
+
+  &[tab-position=bottom] {
+    border-top-width: var(--mu-tab-bar_active-bar-width);
+  }
+
+  &[tab-position=left] {
+    padding: var(--mu-base-spacing) 0;
+    border-right-width: var(--mu-tab-bar_active-bar-width);
+  }
+
+  &[tab-position=right] {
+    padding: var(--mu-base-spacing) 0;
+    border-left-width: var(--mu-tab-bar_active-bar-width);
+  }
+}
+
+.mu-tab-bar[tab-style=simple] {
+  & .mu-tab-button {
+    height: 40px;
+    border-radius: 0;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      color: var(--mu-primary-color-4);
+      background: unset;
+    }
+  
+    &[active] {
+      color: var(--mu-primary-color);
+      background: unset;
+
+      &::after {
+        content: '';
+        position: absolute;
+        display: block;
+        background-color: var(--mu-primary-color);
+      }
+    }
+  }
+
+  &[tab-position=top] .mu-tab-button::after {
+    top: 100%;
+    width: 100%;
+    height: var(--mu-tab-bar_active-bar-width);
+  }
+
+  &[tab-position=bottom] .mu-tab-button::after {
+    bottom: 100%;
+    width: 100%;
+    height: var(--mu-tab-bar_active-bar-width);
+  }
+
+  &[tab-position=left] .mu-tab-button {
+    height: 40px;
+    padding: 0 calc(var(--mu-base-spacing) * 2);
+
+    &::after {
+      left: 100%;
+      width: var(--mu-tab-bar_active-bar-width);
+      height: 100%;
+    }
+  }
+
+  &[tab-position=right] .mu-tab-button {
+    height: 40px;
+    padding: 0 calc(var(--mu-base-spacing) * 2);
+
+    &::after {
+      right: 100%;
+      width: var(--mu-tab-bar_active-bar-width);
+      height: 100%;
+    }
+  }
+}

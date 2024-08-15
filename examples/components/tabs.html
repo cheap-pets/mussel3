@@ -40,28 +40,30 @@
       </mu-combo-box>
       <label>Tap Style</label>
       <mu-combo-box
-        class="mu-box" :clear-button="false" style="width: 100px;"
+        class="mu-box" :clear-button="false" style="width: 125px;"
         v-model="tabStyle" :options="styles">
       </mu-combo-box>
     </div>
 
-    <mu-tabs
-      v-model:active-tab="activeTab"
-      class="mu-box"
-      :tab-style="tabStyle"
-      :tab-position="tabPosition"
-      :tab-bar="{ width: ['left', 'right'].includes(tabPosition) ? '150px' : undefined }"
-      tab-button-size="small"
-      height="200"
-      margin="2x"
-      border>
-      <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
-      <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
-      <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
-      <mu-tab-panel name="Tab 4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
-    </mu-tabs>
-    <div class="mu-divider mu-box" margin-x="2x"></div>
-    <div class="mu-box" margin="2x" padding="1x" border>
+    <div class="mu-box" margin="2x" padding="1x" border="dashed">
+      <mu-tabs
+        v-model:active-tab="activeTab"
+        class="mu-box"
+        :tab-style="tabStyle"
+        :tab-position="tabPosition"
+        :tab-bar="{ width: ['left', 'right'].includes(tabPosition) ? 'auto' : undefined }"
+        tab-button-size="small"
+        height="200">
+        <mu-tab-panel name="Tab Alpha" layout="flex" content-center>This is Tab 1</mu-tab-panel>
+        <mu-tab-panel name="Tab Bravo" layout="flex" content-center>This is Tab 2</mu-tab-panel>
+        <mu-tab-panel name="Tab Charlie" layout="flex" content-center>This is Tab 3</mu-tab-panel>
+        <mu-tab-panel name="Tab Delta" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
+      </mu-tabs>
+    </div>
+
+    <div class="mu-divider mu-box" margin-x="2x" thin></div>
+
+    <div class="mu-box" margin="2x" padding="1x" border="dashed">
       <mu-tabs
         v-model:active-tab="activeTab"
         height="200"
@@ -80,10 +82,10 @@
             <input placeholder="Search Something">
           </div>
         </template>
-        <mu-tab-panel name="Tab 1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
-        <mu-tab-panel name="Tab 2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
-        <mu-tab-panel name="Tab 3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
-        <mu-tab-panel name="Tab 4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
+        <mu-tab-panel name="Tab Alpha" icon="keyRight" layout="flex" content-center>This is Tab 1</mu-tab-panel>
+        <mu-tab-panel name="Tab Bravo" layout="flex" content-center>This is Tab 2</mu-tab-panel>
+        <mu-tab-panel name="Tab Charlie" layout="flex" content-center>This is Tab 3</mu-tab-panel>
+        <mu-tab-panel name="Tab Delta" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
       </mu-tabs>
     </div>
   </div>
@@ -100,18 +102,19 @@
 
         const styles = [
           { value: 'button' },
+          { value: 'small-button' },
           { value: 'simple' }
         ]
 
         const tabItems = [
-          { name: 'Tab 1' },
-          { name: 'Tab 2' },
-          { name: 'Tab 3' },
-          { name: 'Tab 4', disabled: true }
+          { name: 'Tab Alpha' },
+          { name: 'Tab Bravo' },
+          { name: 'Tab Charlie' },
+          { name: 'Tab Delta', disabled: true }
         ]
 
         const activeTab = Vue.ref()
-        const tabStyle = Vue.ref('button')
+        const tabStyle = Vue.ref('simple')
         const tabPosition = Vue.ref('top')
 
         const artists = Vue.reactive([

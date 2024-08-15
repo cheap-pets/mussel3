@@ -1,36 +1,19 @@
 .mu-bar {
+  position: relative;
+
   display: flex;
-  gap: var(--mu-content-spacing);
+  gap: var(--mu-base-spacing);
   align-items: center;
 
   height: 40px;
-  padding: 0 8px;
+  padding: 0 var(--mu-base-spacing);
 
   font-size: var(--mu-common-font-size);
-
-  & > .mu-divider {
-    height: calc(1em + 2px);
-    margin: 0 8px;
-  }
+  line-height: var(--mu-common-line-height);
 }
 
-.mu-bar[align-items="stretch"] {
-  align-items: stretch;
-  padding-top: 0;
-  padding-bottom: 0;
-
-  & > label,
-  & > .mu-divider,
-  & > [align-self="center"] {
-    align-self: center;
-  }
-
-  & > .mu-button,
-  & > .mu-dropdown > .mu-button,
-  & > .mu-editor {
-    height: 100%;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-  }
+.mu-bar > .mu-divider {
+  align-self: center;
+  height: calc(1em + 2px);
+  margin: 0 var(--mu-base-spacing);
 }
