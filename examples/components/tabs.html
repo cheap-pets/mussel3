@@ -28,6 +28,10 @@
       padding: 8px;
       margin: 8px;
     }
+
+    .mu-tabs {
+      height: 200px;
+    }
   </style>
 </head>
 
@@ -45,49 +49,44 @@
       </mu-combo-box>
     </div>
 
-    <div class="mu-box" margin="2x" padding="1x" border="dashed">
-      <mu-tabs
-        v-model:active-tab="activeTab"
-        class="mu-box"
-        :tab-style="tabStyle"
-        :tab-position="tabPosition"
-        :tab-bar="{ width: ['left', 'right'].includes(tabPosition) ? 'auto' : undefined }"
-        tab-button-size="small"
-        height="200">
-        <mu-tab-panel name="Tab Alpha" layout="flex" content-center>This is Tab 1</mu-tab-panel>
-        <mu-tab-panel name="Tab Bravo" layout="flex" content-center>This is Tab 2</mu-tab-panel>
-        <mu-tab-panel name="Tab Charlie" layout="flex" content-center>This is Tab 3</mu-tab-panel>
-        <mu-tab-panel name="Tab Delta" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
-      </mu-tabs>
-    </div>
+    <mu-tabs
+      v-model:active-tab="activeTab"
+      :tab-style="tabStyle"
+      :tab-position="tabPosition"
+      :tab-bar="{ width: ['left', 'right'].includes(tabPosition) ? '150px' : undefined }"
+      class="mu-box" margin="2x" padding="1x" border="dashed">
+      <mu-tab-panel name="Tab_1" caption="Tab Alpha" layout="flex" content-center>This is Tab 1</mu-tab-panel>
+      <mu-tab-panel name="Tab_2" caption="Tab Bravo" layout="flex" content-center>This is Tab 2</mu-tab-panel>
+      <mu-tab-panel name="Tab_3" caption="Tab Charlie" layout="flex" content-center>This is Tab 3</mu-tab-panel>
+      <mu-tab-panel name="Tab_4" caption="Tab Delta" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
+    </mu-tabs>
 
     <div class="mu-divider mu-box" margin-x="2x" thin></div>
 
-    <div class="mu-box" margin="2x" padding="1x" border="dashed">
-      <mu-tabs
-        v-model:active-tab="activeTab"
-        height="200"
-        :tab-style="tabStyle">
-        <template #tab-bar-prepend>
-          <label class="mu-label">Customized Tab Bar</label>
-          <div class="mu-space"></div>
-          <div class="mu-divider"></div>
-        </template>
-        <template #tab-bar-append>
-          <div class="mu-divider"></div>
-          <div class="mu-space"></div>
-          <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
-          <div class="mu-editor mu-box" solid>
-            <span class="mu-icon ti ti-search"></span>
-            <input placeholder="Search Something">
-          </div>
-        </template>
-        <mu-tab-panel name="Tab Alpha" icon="keyRight" layout="flex" content-center>This is Tab 1</mu-tab-panel>
-        <mu-tab-panel name="Tab Bravo" layout="flex" content-center>This is Tab 2</mu-tab-panel>
-        <mu-tab-panel name="Tab Charlie" layout="flex" content-center>This is Tab 3</mu-tab-panel>
-        <mu-tab-panel name="Tab Delta" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
-      </mu-tabs>
-    </div>
+    <mu-tabs
+      v-model:active-tab="activeTab"
+      :tab-style="tabStyle"
+      class="mu-box" margin="2x" padding="1x" border="muted"
+      style="--mu-tab-bar_active-bar-width: 1px;">
+      <template #tab-bar-prepend>
+        <label class="mu-label">Customized Tab Bar</label>
+        <div class="mu-space"></div>
+        <div class="mu-divider"></div>
+      </template>
+      <template #tab-bar-append>
+        <div class="mu-divider"></div>
+        <div class="mu-space"></div>
+        <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
+        <div class="mu-editor mu-box" solid>
+          <span class="mu-icon ti ti-search"></span>
+          <input placeholder="Search Something">
+        </div>
+      </template>
+      <mu-tab-panel name="Tab_1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
+      <mu-tab-panel name="Tab_2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
+      <mu-tab-panel name="Tab_3" layout="flex" content-center>This is Tab 3</mu-tab-panel>
+      <mu-tab-panel name="Tab_4" disabled layout="flex" content-center>This is Tab 4</mu-tab-panel>
+    </mu-tabs>
   </div>
 
   <script type="text/javascript">
@@ -107,10 +106,10 @@
         ]
 
         const tabItems = [
-          { name: 'Tab Alpha' },
-          { name: 'Tab Bravo' },
-          { name: 'Tab Charlie' },
-          { name: 'Tab Delta', disabled: true }
+          { name: 'Tab_1' },
+          { name: 'Tab_2' },
+          { name: 'Tab_3' },
+          { name: 'Tab_4', disabled: true }
         ]
 
         const activeTab = Vue.ref()

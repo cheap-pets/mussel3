@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-tabs" :style="sizeStyle" :tab-position="tabPosition">
+  <div ref="el" class="mu-tabs" :style="sizeStyle" :tab-position="tabPosition">
     <mu-tab-bar
       v-model:active-tab="activeTab"
       v-bind="tabBar"
@@ -20,7 +20,7 @@
 <script setup>
   import './tabs.scss'
 
-  import { ref, computed, provide, onMounted, nextTick } from 'vue'
+  import { ref, shallowRef, computed, provide, onMounted, nextTick } from 'vue'
   import { sizeProps, useSize } from '@/hooks/size'
 
   defineOptions({ name: 'MusselTabs' })
@@ -43,25 +43,30 @@
     ...sizeProps
   })
 
-  const mountedButtons = ref([])
-  const buttons = computed(() => props.tabButtons || mountedButtons.value)
+  const el = shallowRef()
+  const mountedButtons = ref(new WeakMap())
+
+  const buttons = computed(() =>
+    !el.value || props.tabButtons
+      ? props.tabButtons
+      : Array
+        .from(el.value.childNodes)
+        .filter(child => mountedButtons.value.has(child))
+        .map(child => mountedButtons.value.get(child))
+  )
 
   const { sizeStyle } = useSize(props)
 
-  function mountTab (tab) {
-    if (props.tabButtons) return
-
-    if (!mountedButtons.value.find(el => tab.name === el.name)) {
-      mountedButtons.value.push(tab)
+  function mountTab (tabProps, tabElement) {
+    if (!props.tabButtons) {
+      mountedButtons.value.set(tabElement, tabProps)
     }
   }
 
-  function unmountTab (tab) {
-    if (props.tabButtons) return
-
-    const idx = mountedButtons.value.findIndex(el => tab.name === el.name)
-
-    if (idx !== -1) mountedButtons.value.splice(idx, 1)
+  function unmountTab (tabProps, tabElement) {
+    if (!props.tabButtons) {
+      mountedButtons.value.delete(tabElement)
+    }
   }
 
   function setActiveTab (tabName) {

@@ -1,48 +1,28 @@
 <template>
-  <div v-show="visible" class="mu-tab-panel mu-box" flex="1">
+  <div v-show="activeTab === name" ref="el" class="mu-tab-panel mu-box">
     <slot />
   </div>
 </template>
 
-<script>
+<script setup>
   import './tab-panel.scss'
 
-  import { ref, inject, watchEffect, onUnmounted } from 'vue'
+  import { shallowRef, computed, inject, onMounted, onBeforeUnmount } from 'vue'
 
-  export default {
-    name: 'MusselTabPanel',
-    props: {
-      icon: String,
-      name: String,
-      title: String,
-      caption: String,
-      disabled: Boolean
-    },
-    setup (props) {
-      const tabs = inject('tabs')
-      const visible = ref(false)
+  defineOptions({ name: 'MusselTabPanel' })
 
-      watchEffect(() => {
-        visible.value = tabs.activeTab.value === props.name
-      })
+  const props = defineProps({
+    icon: String,
+    name: String,
+    title: String,
+    caption: String,
+    disabled: Boolean
+  })
 
-      watchEffect(() => {
-        tabs.mountTab({
-          icon: props.icon,
-          name: props.name,
-          caption: props.caption,
-          title: props.title,
-          disabled: props.disabled || null
-        })
-      })
+  const el = shallowRef()
+  const tabs = inject('tabs', {})
+  const activeTab = computed(() => tabs.activeTab?.value)
 
-      onUnmounted(() => {
-        tabs.unmountTab({
-          name: props.name
-        })
-      })
-
-      return { visible }
-    }
-  }
+  onMounted(() => tabs.mountTab?.(props, el.value))
+  onBeforeUnmount(() => tabs.unmountTab?.(props, el.value))
 </script>

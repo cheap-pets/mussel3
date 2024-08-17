@@ -41,6 +41,12 @@
 }
 
 .mu-label {
+  overflow: hidden;
+
+  min-width: 20px;
+
   font-weight: 500;
   color: var(--mu-text-color-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

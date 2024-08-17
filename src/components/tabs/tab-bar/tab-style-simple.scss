@@ -1,5 +1,6 @@
 .mu-tab-bar[tab-style=simple] {
   box-sizing: content-box;
+  padding: 0;
 
   background: var(--mu-bg-normal);
   border-color: var(--mu-border-color-muted);
@@ -10,28 +11,10 @@
     align-items: stretch;
   }
 
-  &[tab-position=top] {
-    border-bottom-width: var(--mu-tab-bar_active-bar-width);
-  }
-
-  &[tab-position=bottom] {
-    border-top-width: var(--mu-tab-bar_active-bar-width);
-  }
-
-  &[tab-position=left] {
-    padding: var(--mu-base-spacing) 0;
-    border-right-width: var(--mu-tab-bar_active-bar-width);
-  }
-
-  &[tab-position=right] {
-    padding: var(--mu-base-spacing) 0;
-    border-left-width: var(--mu-tab-bar_active-bar-width);
-  }
-}
-
-.mu-tab-bar[tab-style=simple] {
   & .mu-tab-button {
-    height: 40px;
+    height: auto;
+    background: unset;
+    border: 0 solid transparent;
     border-radius: 0;
 
     &::after {
@@ -45,48 +28,63 @@
   
     &[active] {
       color: var(--mu-primary-color);
-      background: unset;
-
-      &::after {
-        content: '';
-        position: absolute;
-        display: block;
-        background-color: var(--mu-primary-color);
-      }
+      border-color: var(--mu-primary-color);
     }
   }
 
-  &[tab-position=top] .mu-tab-button::after {
-    top: 100%;
-    width: 100%;
-    height: var(--mu-tab-bar_active-bar-width);
-  }
-
-  &[tab-position=bottom] .mu-tab-button::after {
-    bottom: 100%;
-    width: 100%;
-    height: var(--mu-tab-bar_active-bar-width);
-  }
-
-  &[tab-position=left] .mu-tab-button {
-    height: 40px;
-    padding: 0 calc(var(--mu-base-spacing) * 2);
-
-    &::after {
-      left: 100%;
-      width: var(--mu-tab-bar_active-bar-width);
-      height: 100%;
+  &[tab-position=left],
+  &[tab-position=right] {
+    & .mu-tab-button {
+      height: 40px;
+      padding: 0 calc(var(--mu-base-spacing) * 2);
     }
   }
 
-  &[tab-position=right] .mu-tab-button {
-    height: 40px;
-    padding: 0 calc(var(--mu-base-spacing) * 2);
+  &[tab-position=top] {
+    border-bottom-width: var(--mu-tab-bar_active-bar-width);
 
-    &::after {
-      right: 100%;
-      width: var(--mu-tab-bar_active-bar-width);
-      height: 100%;
+    & > .mu-tab-bar_buttons {
+      margin-bottom: calc(var(--mu-tab-bar_active-bar-width) * -1);
+    }
+
+    & .mu-tab-button {
+      border-bottom-width: var(--mu-tab-bar_active-bar-width);
+    }
+  }
+
+  &[tab-position=bottom] {
+    border-top-width: var(--mu-tab-bar_active-bar-width);
+
+    & > .mu-tab-bar_buttons {
+      margin-top: calc(var(--mu-tab-bar_active-bar-width) * -1);
+    }
+
+    & .mu-tab-button {
+      border-top-width: var(--mu-tab-bar_active-bar-width);
+    }
+  }
+
+  &[tab-position=left] {
+    border-right-width: var(--mu-tab-bar_active-bar-width);
+
+    & > .mu-tab-bar_buttons {
+      margin-right: calc(var(--mu-tab-bar_active-bar-width) * -1);
+    }
+
+    & .mu-tab-button {
+      border-right-width: var(--mu-tab-bar_active-bar-width);
+    }
+  }
+
+  &[tab-position=right] {
+    border-left-width: var(--mu-tab-bar_active-bar-width);
+
+    & > .mu-tab-bar_buttons {
+      margin-left: calc(var(--mu-tab-bar_active-bar-width) * -1);
+    }
+
+    & .mu-tab-button {
+      border-left-width: var(--mu-tab-bar_active-bar-width);
     }
   }
 }

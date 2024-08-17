@@ -22,6 +22,7 @@
   import { ref, computed, provide, watch } from 'vue'
   import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
   import { dropdownEvents, useDropdown } from '../dropdown/hooks/dropdown'
+  import { generateUUID } from '@/utils/id'
 
   defineOptions({ name: 'MusselComboBox' })
 
@@ -111,10 +112,6 @@
   function onOptionClick (option) {
     emit('update:modelValue', option.value)
     hideDropdown()
-  }
-
-  function generateUUID () {
-    return crypto.randomUUID()
   }
 
   provide('comboBox', {

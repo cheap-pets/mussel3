@@ -41,7 +41,7 @@
     border-color: var(--mu-danger-color);
   }
 
-  &[border~="divider"] {
+  &[border~="muted"] {
     border-color: var(--mu-border-color-muted);
   }
 
@@ -80,8 +80,8 @@
     border-left-color: var(--mu-danger-color);
   }
 
-  &[border-x~="divider"],
-  &[border-left~="divider"] {
+  &[border-x~="muted"],
+  &[border-left~="muted"] {
     border-left-color: var(--mu-border-color-muted);
   }
 
@@ -120,8 +120,8 @@
     border-right-color: var(--mu-danger-color);
   }
 
-  &[border-x~="divider"],
-  &[border-right~="divider"] {
+  &[border-x~="muted"],
+  &[border-right~="muted"] {
     border-right-color: var(--mu-border-color-muted);
   }
 
@@ -160,8 +160,8 @@
     border-top-color: var(--mu-danger-color);
   }
 
-  &[border-y~="divider"],
-  &[border-top~="divider"] {
+  &[border-y~="muted"],
+  &[border-top~="muted"] {
     border-top-color: var(--mu-border-color-muted);
   }
 
@@ -200,8 +200,8 @@
     border-bottom-color: var(--mu-danger-color);
   }
 
-  &[border-y~="divider"],
-  &[border-bottom~="divider"] {
+  &[border-y~="muted"],
+  &[border-bottom~="muted"] {
     border-bottom-color: var(--mu-border-color-muted);
   }
 

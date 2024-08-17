@@ -5,7 +5,7 @@
       <mu-tab-button
         v-for="el in tabButtons"
         :key="el.name"
-        :active="activeTab === el.name || null"
+        :active="activeTab === el.name"
         v-bind="el"
         @click="activeTab = el.name" />
     </div>
