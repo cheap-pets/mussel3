@@ -14,13 +14,15 @@
     font-size: 32px;
     color: var(--mu-primary-color-4);
   }
+}
 
-  &[type=success] > .mu-icon {
+.mu-message {
+  &[type=success] > .mu-message_title > .mu-icon {
     color: var(--mu-success-color-4);
   }
 
-  &[type=warn] > .mu-icon,
-  &[type=error] > .mu-icon {
+  &[type=warn] > .mu-message_title > .mu-icon,
+  &[type=error] > .mu-message_title > .mu-icon {
     color: var(--mu-danger-color-4);
   }
 }

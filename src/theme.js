@@ -1,5 +1,5 @@
 import { camelCase, kebabCase } from './utils/case.js'
-import { isHtmlElement, isString } from './utils/type.js'
+// import { isHtmlElement, isString } from './utils/type.js'
 
 import {
   str2rgba,
@@ -111,6 +111,7 @@ function setRoot (element, darkMode, theme) {
 }
 
 export function install (app, { root, theme, darkMode }) {
+  /*
   if (root === 'container') {
     const mount = app.mount
 
@@ -126,6 +127,8 @@ export function install (app, { root, theme, darkMode }) {
   } else {
     setRoot(document.body, darkMode, theme)
   }
+  */
+  setRoot(document.documentElement, darkMode, theme)
 }
 
 export function generatePreCssVariables (incomingColors) {

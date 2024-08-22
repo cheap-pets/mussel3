@@ -1,5 +1,5 @@
 <template>
-  <div class="mu-editor mu-combo-box" v-bind="controlState">
+  <div ref="thisEl" class="mu-editor mu-combo-box" v-bind="controlState">
     <label v-if="label">{{ label }}</label>
     <slot name="prepend" />
     <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
@@ -39,6 +39,8 @@
     ...dropdownEvents
   ])
 
+  const thisEl = ref()
+
   const {
     controlState,
     inputBindings,
@@ -54,7 +56,7 @@
     showDropdown,
     hideDropdown,
     onTriggerClick
-  } = useDropdown(props, emit)
+  } = useDropdown(thisEl, props, emit)
 
   const optionLabels = ref({})
 

@@ -1,14 +1,12 @@
 .mu-dropdown-panel {
   position: fixed;
   z-index: 110;
-  transform-origin: top;
   transform: scaleY(0);
 
   overflow: auto;
   display: block;
 
   max-height: 320px;
-  margin-top: 4px;
   padding: 4px;
 
   text-align: start;
@@ -22,9 +20,13 @@
 
   transition: transform .1s, opacity .1s;
 
+  &[position="bottom"] {
+    transform-origin: top;
+    margin-top: 4px;
+  }
+
   &[position="top"] {
     transform-origin: bottom;
-    margin-top: unset;
     margin-bottom: 4px;
   }
   

@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="el"
+    ref="thisEl"
     class="mu-flex-splitter"
     :direction="direction"
     :appearance="appearance || splitterOptions.appearance"
@@ -22,7 +22,7 @@
 
   const { splitter: splitterOptions = {} } = inject('$mussel').options
 
-  const el = ref()
+  const thisEl = ref()
   const direction = ref()
 
   const props = defineProps({
@@ -52,7 +52,7 @@
 
   function updateSiblingsFlexSize () {
     Array
-      .from(el.value.parentNode.children)
+      .from(thisEl.value.parentNode.children)
       .reduce((result, child) => {
         if (isResizableElement(child)) {
           const style = direction.value === 'row'
@@ -75,7 +75,7 @@
   }
 
   function getResizeSiblings () {
-    let prevSibling = el.value.previousElementSibling
+    let prevSibling = thisEl.value.previousElementSibling
 
     while (prevSibling) {
       if (isResizableElement(prevSibling)) break
@@ -85,7 +85,7 @@
 
     if (!prevSibling) return
 
-    let nextSibling = el.value.nextElementSibling
+    let nextSibling = thisEl.value.nextElementSibling
 
     while (nextSibling) {
       if (isResizableElement(nextSibling)) break
@@ -99,7 +99,7 @@
   function getResizeRange (prevSibling, nextSibling) {
     const isRowDirection = direction.value === 'row'
 
-    const parentNode = el.value.parentNode
+    const parentNode = thisEl.value.parentNode
     const parentSize = isRowDirection ? parentNode.clientWidth : parentNode.clientHeight
 
     function calcPixelValue (value) {
@@ -303,20 +303,20 @@
     }
 
     function onMouseUp () {
-      el.value.removeAttribute('active')
+      thisEl.value.removeAttribute('active')
 
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', onMouseUp)
     }
 
-    el.value.setAttribute('active', true)
+    thisEl.value.setAttribute('active', true)
 
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
   }
 
   onMounted(() => {
-    const parent = el.value.parentNode
+    const parent = thisEl.value.parentNode
     const value = window.getComputedStyle(parent).flexDirection
 
     direction.value = value && (value.startsWith('column') ? 'column' : 'row')

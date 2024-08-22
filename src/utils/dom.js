@@ -10,7 +10,7 @@ export function findUp (target, callback) {
 }
 
 export function within (target, element) {
-  return element === target || element.contains(target)
+  return element.contains(target)
 }
 
 export function withinClass (target, className) {

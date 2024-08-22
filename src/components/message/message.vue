@@ -20,8 +20,8 @@
   const props = defineProps({
     icon: String,
     title: String,
-    content: String
+    message: String
   })
 
-  const html = computed(() => removeEventAttr(props.content))
+  const html = computed(() => removeEventAttr(props.message))
 </script>

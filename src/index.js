@@ -10,7 +10,7 @@ import { deprecated } from './utils/function'
 const isSysDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
 function install (app, options = {}) {
-  const { root = 'body', theme, darkMode, icons, ...componentOptions } = options
+  const { /* root = 'body', */ theme, darkMode, icons, ...componentOptions } = options
 
   const context = { options: componentOptions }
 
@@ -18,7 +18,7 @@ function install (app, options = {}) {
   app.config.globalProperties.$mussel = context
 
   installTheme(app, {
-    root,
+    // root,
     theme,
     darkMode: (darkMode === true) || (darkMode === 'auto' && isSysDark)
   })

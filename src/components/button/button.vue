@@ -1,5 +1,5 @@
 <template>
-  <button ref="el" class="mu-button" v-bind="attrs">
+  <button ref="thisEl" class="mu-button" v-bind="attrs">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />
       {{ caption }}
@@ -38,7 +38,7 @@
     }
   })
 
-  const el = ref()
+  const thisEl = ref()
 
   const GROUP_FIRST_ATTRS = ['disabled']
   const LOCAL_FIRST_ATTRS = ['primary', 'danger', 'accent', 'xColor']
@@ -50,7 +50,7 @@
   const isGrouped = inheritedProps.grouped !== false
 
   const attrs = computed(() => {
-    if (!el.value) return
+    if (!thisEl.value) return
 
     const result = {}
 
@@ -79,7 +79,7 @@
 
     if (result['x-color']) {
       const xColors = generateAdjacentColors(
-        getComputedXColor(result['x-color'], el.value)
+        getComputedXColor(result['x-color'], thisEl.value)
       )
 
       if (xColors) {

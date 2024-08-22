@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="thisEl"
     class="mu-dropdown"
     @click="onTriggerClick"
     @mouseover="onTriggerMouseOver"
@@ -17,12 +18,14 @@
 <script setup>
   import './dropdown.scss'
 
+  import { ref } from 'vue'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
 
   defineOptions({ name: 'MusselDropdown' })
 
   const props = defineProps({ ...dropdownProps })
   const emit = defineEmits([...dropdownEvents])
+  const thisEl = ref()
 
   const {
     dropdownVisible,
@@ -30,5 +33,5 @@
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave
-  } = useDropdown(props, emit)
+  } = useDropdown(thisEl, props, emit)
 </script>

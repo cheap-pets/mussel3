@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-  import './style.scss'
+  import './tree.scss'
 
   import { toRef, computed, provide, inject } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'

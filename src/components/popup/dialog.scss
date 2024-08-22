@@ -12,9 +12,9 @@
   color: var(--mu-text-color-normal);
 
   opacity: 0;
-  background: var(--mu-dialog-background);
+  background: var(--mu-bg-normal);
   border-radius: var(--mu-window-border-radius);
-  box-shadow: var(--mu-shadow-window);
+  box-shadow: var(--mu-shadow-modal);
 
   transition: transform .2s, opacity .2s;
 

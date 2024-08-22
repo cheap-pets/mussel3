@@ -2,7 +2,7 @@
   <div
     class="mu-status-box mu-box"
     layout="flex" direction="column" content-center
-    :style="boxStyle">
+    :style="sizeStyle">
     <slot name="icon">
       <mu-icon v-if="icon" class="mu-status-box_icon" :icon="icon" />
     </slot>
@@ -16,14 +16,19 @@
   </div>
 </template>
 
-<script>
+<script setup>
   import './status-box.scss'
 
-  import Box from '../layout/box/box.vue'
+  import { sizeProps, useSize } from '@/hooks/size'
 
-  export default {
-    name: 'MusselStatusBox',
-    extends: Box,
-    props: ['icon', 'title', 'message']
-  }
+  defineOptions({ name: 'MusselStatusBox' })
+
+  const props = defineProps({
+    icon: String,
+    title: String,
+    message: String,
+    ...sizeProps
+  })
+
+  const { sizeStyle } = useSize(props)
 </script>

@@ -1,5 +1,4 @@
 import { ref, computed, watch, provide } from 'vue'
-import { resolveSize } from '@/utils/size'
 
 export const dropdownProps = {
   dropdownIcon: String,
@@ -18,29 +17,25 @@ export const dropdownEvents = [
   'dropdown:hide'
 ]
 
-export function useDropdown (props, emit) {
+export function useDropdown (hostElement, props, emit) {
   const dropdownVisible = ref(false)
 
-  const isHoverTrigger = computed(() => props.dropdownTrigger === 'hover')
+  const isHoverTrigger = computed(() =>
+    props.dropdownTrigger === 'hover'
+  )
 
   const dropdownIconBindings = computed(() => ({
-    class: 'mu-dropdown-icon',
     tag: 'a',
+    class: 'mu-dropdown-icon',
     icon: props.dropdownIcon || 'keyDown',
     expanded: dropdownVisible.value || null
   }))
 
-  const dropdownPanelBindings = computed(() => {
-    const { style, width, height, items, ...bindings } = props.dropdownPanel || {}
-
-    bindings.style = { ...style }
-    bindings.items = props.dropdownItems || items
-
-    if (width) bindings.style.width = resolveSize(width)
-    if (height) bindings.style.height = resolveSize(height)
-
-    return bindings
-  })
+  const dropdownPanelBindings = computed(() => ({
+    hostElement: hostElement.value,
+    dropdownItems: props.dropdownItems,
+    ...props.dropdownPanel
+  }))
 
   let delayHideTimer
 
@@ -102,6 +97,7 @@ export function useDropdown (props, emit) {
   })
 
   provide('dropdown', {
+    hostElement,
     hideDropdown,
     onDropdownPanelMouseOver,
     onDropdownPanelMouseLeave,

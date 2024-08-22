@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="thisEl"
     class="mu-dropdown mu-dropdown-button"
     :class="{ 'mu-button-group': splitButton }"
     @click="onClick"
@@ -32,6 +33,7 @@
 <script setup>
   import './dropdown-button.scss'
 
+  import { ref } from 'vue'
   import { buttonGroupProps, useButtonGroup } from '../button/hooks/button-group'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
 
@@ -48,6 +50,7 @@
   useButtonGroup(props)
 
   const emit = defineEmits([...dropdownEvents])
+  const thisEl = ref()
 
   const {
     dropdownVisible,
@@ -57,7 +60,7 @@
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave
-  } = useDropdown(props, emit)
+  } = useDropdown(thisEl, props, emit)
 
   function onClick () {
     if (!props.splitButton) onTriggerClick()

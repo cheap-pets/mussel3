@@ -49,7 +49,7 @@
 </head>
 
 <body>
-  <div id="app" class="mu-box mu-bg-strong" position="fixed fit">
+  <div id="app" class="mu-box" position="fixed fit">
     <H2>BUTTON, BUTTON GROUP & TOOL BUTTON</H2>
     <div class="group">
       <h3>BASIC</h3>
@@ -138,7 +138,7 @@
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>
         <mu-button :active="activeItem === 3" @click="select(3)">Three</mu-button>
       </mu-button-group>
-      <div class="mu-space"></div>
+      <div class="mu-space" space="100%"></div>
       <mu-button-group x-color="var(--mu-cyan)">
         <mu-button :active="activeItem === 1" @click="select(1)">One</mu-button>
         <mu-button :active="activeItem === 2" @click="select(2)">Two</mu-button>

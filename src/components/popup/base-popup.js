@@ -1,3 +1,4 @@
+import { findUp } from '@/utils/dom'
 import { delay } from '@/utils/timer'
 
 export default {
@@ -26,11 +27,22 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      const container = this.hostElement
+        ? findUp(this.hostElement, parent => {
+          if (
+            parent.classList.contains('mu-dropdown-root') ||
+            parent === document.body
+          ) return true
+        })
+        : document.body
+
+      /*
       const container =
         this.container?.$el ||
         this.container ||
         this.$.appContext.app._container ||
         document.body
+        */
 
       container.appendChild(this.$el)
     })
