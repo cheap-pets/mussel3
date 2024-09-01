@@ -13,19 +13,3 @@
     height: 1em;
   }
 }
-
-.mu-expand-icon {
-  transition: transform .1s ease-in-out;
-
-  &[expanded] {
-    transform: rotate(-90deg);
-  }
-}
-
-.mu-dropdown-icon {
-  transition: transform .1s ease-in-out;
-
-  &[expanded] {
-    transform: rotate(-180deg);
-  }
-}

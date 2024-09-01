@@ -100,7 +100,7 @@
         </template>
       </mu-dropdown-button>
     </div>
-    <div id="divX" class="mu-box mu-dropdown-root" padding="1x">
+    <div id="divX" class="mu-box" padding="1x" style="display: inline-block;">
       <mu-dropdown-button
         split-button
         caption="Request Fullscreen"
@@ -109,6 +109,17 @@
         @click="requestFullscreen"
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
+    </div>
+    <div class="mu-box" layout="flex" padding="1x">
+      <mu-dropdown-new
+        dropdown-trigger="click"
+        dropdown-style="height: 200px;"
+        :dropdown-items="artists">
+        <mu-button>New Hope 1</mu-button>
+      </mu-dropdown-new>
+      <mu-dropdown-new :dropdown-items="artists">
+        <mu-button>New Hope 2</mu-button>
+      </mu-dropdown-new>
     </div>
     <!-- <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>

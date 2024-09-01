@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ES2022",
-    "module": "CommonJS",
-    "strictFunctionTypes": true,
+    "baseUrl": "./",
+    "target": "ESNext",
+    "module": "ESNext",
     "paths": {
       "@/*": ["./src/*"] 
     }
   },
   "include": [
-    "./src/*.js",
-    "./src/*.vue",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"

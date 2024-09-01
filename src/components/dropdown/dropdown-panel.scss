@@ -1,17 +1,15 @@
 .mu-dropdown-panel {
   position: fixed;
-  z-index: 110;
+  z-index: var(--mu-z-index-popup);
   transform: scaleY(0);
 
   overflow: auto;
   display: block;
 
-  max-height: 320px;
   padding: 4px;
 
   text-align: start;
 
-  visibility: hidden;
   opacity: 0;
   background: var(--mu-bg-overlay);
   border: 1px solid var(--mu-border-color);
@@ -19,6 +17,16 @@
   box-shadow: var(--mu-shadow-popup);
 
   transition: transform .1s, opacity .1s;
+
+  &[measuring] {
+    transform: scaleY(1);
+    visibility: hidden !important;
+  }
+    
+  &[expanded] {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 
   &[position="bottom"] {
     transform-origin: top;
@@ -28,10 +36,5 @@
   &[position="top"] {
     transform-origin: bottom;
     margin-bottom: 4px;
-  }
-  
-  &[pop-up] {
-    transform: scaleY(1);
-    opacity: 1;
   }
 }

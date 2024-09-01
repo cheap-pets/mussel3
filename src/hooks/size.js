@@ -6,10 +6,10 @@ export const sizeProps = {
   height: [String, Number]
 }
 
-export function useSize (props) {
+export function useSize (proxy) {
   const sizeStyle = computed(() => ({
-    width: resolveSize(props.width),
-    height: resolveSize(props.height)
+    width: resolveSize(proxy.width),
+    height: resolveSize(proxy.height)
   }))
 
   return {

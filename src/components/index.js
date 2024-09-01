@@ -1,4 +1,5 @@
 import * as SvgComponents from './svg'
+import * as IconComponents from './icon'
 import * as LayoutComponents from './layout'
 import * as ButtonComponents from './button'
 import * as ListComponents from './list'
@@ -11,7 +12,6 @@ import * as PopupComponents from './popup'
 import * as DropdownComponents from './dropdown'
 import * as MessageComponents from './message'
 
-import MuIcon from './icon/icon.vue'
 import MuBadge from './badge/badge.vue'
 import MuScrollBox from './scrollbar/scroll-box.vue'
 
@@ -28,6 +28,7 @@ export function install (app) {
   }
 
   installComponents(SvgComponents)
+  installComponents(IconComponents)
   installComponents(LayoutComponents)
   installComponents(ButtonComponents)
   installComponents(ListComponents)
@@ -41,7 +42,6 @@ export function install (app) {
   installComponents(MessageComponents)
 
   installComponents({
-    MuIcon,
     MuBadge,
     MuScrollBox
   })

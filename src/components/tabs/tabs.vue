@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" class="mu-tabs" :style="sizeStyle" :tab-position="tabPosition">
+  <div ref="thisEl" class="mu-tabs" :style="sizeStyle" :tab-position="tabPosition">
     <mu-tab-bar
       v-model:active-tab="activeTab"
       v-bind="tabBar"
@@ -43,14 +43,14 @@
     ...sizeProps
   })
 
-  const el = shallowRef()
+  const thisEl = shallowRef()
   const mountedButtons = ref(new WeakMap())
 
   const buttons = computed(() =>
-    !el.value || props.tabButtons
+    !thisEl.value || props.tabButtons
       ? props.tabButtons
       : Array
-        .from(el.value.childNodes)
+        .from(thisEl.value.childNodes)
         .filter(child => mountedButtons.value.has(child))
         .map(child => mountedButtons.value.get(child))
   )

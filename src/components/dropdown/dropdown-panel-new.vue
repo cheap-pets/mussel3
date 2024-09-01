@@ -1,45 +1,50 @@
 <template>
-  <Teleport to="body">
-    <Transition name="mu-dropdown">
-      <div
-        v-show="expanded"
-        ref="thisEl"
-        class="mu-dropdown-panel"
-        :style="sizeStyle"
-        @click="onClick"
-        @mouseover.stop="onOver"
-        @mouseleave.stop="onLeave">
-        <slot>
-          <component :is="el.component" v-for="el in items" :key="el.key" v-bind="el.bindings" />
-        </slot>
-      </div>
-    </Transition>
-  </Teleport>
+  <div ref="placeholder" class="mu-dropdown-placeholder">
+    <Teleport :to="container">
+      <Transition name="mu-dropdown">
+        <div
+          v-show="expanded"
+          ref="panelEl"
+          class="mu-dropdown-panel"
+          :style="sizeStyle"
+          @click="onClick"
+          @mouseover.stop="onOver"
+          @mouseleave.stop="onLeave">
+          <slot>
+            <component
+              :is="el.component"
+              v-for="el in items"
+              :key="el.key"
+              v-bind="el.bindings" />
+          </slot>
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
 </template>
 
 <script setup>
   import './dropdown-panel.scss'
 
-  import { ref, computed, inject, watch } from 'vue'
+  import { ref, shallowRef, computed, inject, watch } from 'vue'
   import { generateUUID } from '@/utils/id'
   import { assignIf } from '@/utils/object'
   import { findUp } from '@/utils/dom'
   import { sizeProps, useSize } from '@/hooks/size'
-  import { useObjectVForKey } from '@/hooks/object-v-for-key'
+  import { useVForKey } from '@/hook/v-for-key'
 
   defineOptions({ name: 'MusselDropdownPanel' })
 
   const visible = defineModel('visible', { type: Boolean })
 
   const props = defineProps({
-    hostEl: null,
     dropdownItems: Array,
     dropdownItemKey: { type: String, default: 'id' },
     ...sizeProps
   })
 
   const { sizeStyle } = useSize(props)
-  const { getKey } = useObjectVForKey()
+  const { getObjectKey } = useVForKey()
 
   const items = computed(() =>
     props.dropdownItems?.map(el => {
@@ -48,7 +53,7 @@
       )
 
       return {
-        key: key || getKey(el),
+        key: key || getObjectKey(el),
         component,
         bindings
       }
@@ -56,12 +61,13 @@
   )
 
   const {
-    hostElement: pEl,
     onDropdownPanelMouseOver: onOver,
     onDropdownPanelMouseLeave: onLeave
   } = inject('dropdown', {})
 
-  const thisEl = ref()
+  const placeholder = shallowRef()
+  const container = shallowRef('body')
+  const panelEl = shallowRef()
   const expanded = ref(false)
 
   function hide () {
@@ -71,7 +77,7 @@
   function onClick (event) {
     const trigger = findUp(event.target, parent => {
       if (parent.hasAttribute('dropdown-hide-trigger')) return true
-      if (parent === thisEl.value) return false
+      if (parent === panelEl.value) return false
     })
 
     if (trigger) hide()

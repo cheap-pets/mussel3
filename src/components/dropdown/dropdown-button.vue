@@ -31,8 +31,6 @@
 </template>
 
 <script setup>
-  import './dropdown-button.scss'
-
   import { ref } from 'vue'
   import { buttonGroupProps, useButtonGroup } from '../button/hooks/button-group'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'

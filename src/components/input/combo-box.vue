@@ -9,10 +9,10 @@
     <mu-dropdown-panel v-model:visible="dropdownVisible" v-bind="dropdownPanelBindings">
       <slot name="dropdown">
         <component
-          :is="(el === '-' || el.divider) ? 'mu-list-divider' : 'mu-option'"
-          v-for="el in options"
-          :key="el[optionKey] || generateUUID()"
-          v-bind="el === '-' ? undefined : el" />
+          :is="el.component"
+          v-for="el in items"
+          :key="el.key"
+          v-bind="el.bindings" />
       </slot>
     </mu-dropdown-panel>
   </div>
@@ -22,7 +22,7 @@
   import { ref, computed, provide, watch } from 'vue'
   import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
   import { dropdownEvents, useDropdown } from '../dropdown/hooks/dropdown'
-  import { generateUUID } from '@/utils/id'
+  import { useVForComponents } from '@/hooks/v-for-components'
 
   defineOptions({ name: 'MusselComboBox' })
 
@@ -57,6 +57,15 @@
     hideDropdown,
     onTriggerClick
   } = useDropdown(thisEl, props, emit)
+
+  const { items } = useVForComponents(
+    props,
+    {
+      itemsProp: 'options',
+      itemsKeyProp: 'optionKey',
+      defaultComponent: 'mu-option'
+    }
+  )
 
   const optionLabels = ref({})
 

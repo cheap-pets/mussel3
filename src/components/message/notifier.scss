@@ -1,6 +1,6 @@
 .mu-notifier-group {
   position: fixed;
-  z-index: 99999;
+  z-index: var(--mu-z-index-ontop);
   top: 0;
   right: 0;
 }

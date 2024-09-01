@@ -134,9 +134,9 @@
 
 .mu-root {
   --mu-z-index-float: 1;
-  --mu-z-index-popup: 10;
   --mu-z-index-modal: 100;
-  --mu-z-index-ontop: 1000;
+  --mu-z-index-popup: 1000;
+  --mu-z-index-ontop: 10000;
 
   --mu-base-spacing: 8px;
   --mu-content-spacing: 5px;

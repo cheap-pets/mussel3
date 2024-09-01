@@ -1,4 +1,5 @@
 .mu-dropdown-item {
+  user-select: none;
   border-radius: var(--mu-common-border-radius);
 
   &:hover {
