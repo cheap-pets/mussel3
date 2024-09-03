@@ -1,45 +1,68 @@
 <template>
-  <div ref="thisEl" class="mu-editor mu-combo-box" v-bind="controlState">
+  <div
+    ref="thisEl"
+    class="mu-editor mu-combo-box"
+    v-bind="controlState">
     <label v-if="label">{{ label }}</label>
     <slot name="prepend" />
-    <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
-    <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="onClear" />
-    <mu-icon v-if="expandable" v-bind="dropdownIconBindings" @click="onTriggerClick" />
+    <input
+      v-model="inputValue"
+      v-bind="inputBindings"
+      @click="onTriggerClick">
+    <mu-icon
+      v-if="clearable"
+      v-bind="clearIconBindings"
+      @click="onClear" />
+    <mu-expand-icon
+      v-if="expandable"
+      :expanded="dropdownVisible"
+      @click="onTriggerClick" />
     <slot name="append" />
-    <mu-dropdown-panel v-model:visible="dropdownVisible" v-bind="dropdownPanelBindings">
-      <slot name="dropdown">
-        <component
-          :is="el.component"
-          v-for="el in items"
-          :key="el.key"
-          v-bind="el.bindings" />
-      </slot>
-    </mu-dropdown-panel>
+    <Teleport :to="dropdownContainer">
+      <div
+        ref="dropdownEl"
+        v-mu-scrollbar="dropdownScrollbar"
+        v-bind="dropdownBindings"
+        class="mu-dropdown-panel"
+        @click="onDropdownClick">
+        <slot name="dropdown">
+          <component
+            :is="el.is"
+            v-for="el in computedItems" :key="el.key"
+            v-bind="el.bindings" />
+        </slot>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
-  import { ref, computed, provide, watch } from 'vue'
-  import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
-  import { dropdownEvents, useDropdown } from '../dropdown/hooks/dropdown'
+  import { ref, shallowRef, computed, provide, watch } from 'vue'
+  import { useDropdown } from '../dropdown/hooks/dropdown'
   import { useVForComponents } from '@/hooks/v-for-components'
+  import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
 
   defineOptions({ name: 'MusselComboBox' })
 
   const props = defineProps({
     editable: Boolean,
-    dropdownPanel: Object,
+    dropdownClass: null,
+    dropdownStyle: null,
+    dropdownAttrs: Object,
+    dropdownScrollbar: [Boolean, String],
     options: Array,
     optionKey: { type: String, default: 'value' },
     ...commonInputProps
   })
 
   const emit = defineEmits([
-    ...commonInputEvents,
-    ...dropdownEvents
+    'dropdown:show',
+    'dropdown:hide',
+    ...commonInputEvents
   ])
 
-  const thisEl = ref()
+  const thisEl = shallowRef()
+  const dropdownEl = shallowRef()
 
   const {
     controlState,
@@ -51,14 +74,15 @@
 
   const {
     dropdownVisible,
-    dropdownIconBindings,
-    dropdownPanelBindings,
+    dropdownBindings,
+    dropdownContainer,
     showDropdown,
     hideDropdown,
-    onTriggerClick
-  } = useDropdown(thisEl, props, emit)
+    onTriggerClick,
+    onDropdownClick
+  } = useDropdown(thisEl, dropdownEl, props, emit)
 
-  const { items } = useVForComponents(
+  const { computedItems } = useVForComponents(
     props,
     {
       itemsProp: 'options',

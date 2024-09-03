@@ -3,13 +3,13 @@
   <a
     class="mu-icon mu-expand-icon"
     :expanded="expanded || null"
-    :expandType="expandType"
-    v-html="icons.chevronDown" />
+    :expand-type="expandType"
+    v-html="icons.chevronDown.content" />
 </template>
 
 <script setup>
   import './expand-icon.scss'
-  import { icons } from '../../icons'
+  import { icons } from '@/icons'
 
   defineOptions({
     name: 'MusselExpandIcon'

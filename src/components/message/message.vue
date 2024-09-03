@@ -13,9 +13,7 @@
   import { computed } from 'vue'
   import { removeEventAttr } from '@/utils/html'
 
-  defineOptions({
-    name: 'MusselMessage'
-  })
+  defineOptions({ name: 'MusselMessage' })
 
   const props = defineProps({
     icon: String,

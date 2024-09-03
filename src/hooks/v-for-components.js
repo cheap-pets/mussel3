@@ -3,17 +3,25 @@ import { isString } from '@/utils/type'
 import { generateUUID } from '@/utils/id'
 import { useVForKey } from './v-for-key'
 
+const SHORTCUTS = {
+  '-': { is: 'mu-list-divider' }
+}
+
 export function useVForComponents (props, options = {}) {
   const { getObjectKey } = useVForKey()
 
   const {
     itemsProp = 'items',
     itemsKeyProp = 'id',
-    defaultComponent = 'div',
-    shortcuts = { '-': { component: 'div', class: 'mu-list-divider' } }
+    defaultComponent = 'div'
   } = options
 
-  const items = computed(() => {
+  const shortcuts = {
+    ...SHORTCUTS,
+    ...options.shortcuts
+  }
+
+  const computedItems = computed(() => {
     const { [itemsProp]: arr, [itemsKeyProp]: keyProp } = props
 
     return arr?.map(el => {
@@ -22,20 +30,22 @@ export function useVForComponents (props, options = {}) {
 
         return shortcut
           ? { key: generateUUID(), ...shortcut }
-          : { component: el }
-      }
+          : { is: el }
+      } else {
+        const { is = defaultComponent, ...bindings } = el
+        const shortcut = shortcuts[is]
 
-      const { component = defaultComponent, ...bindings } = el
-
-      return {
-        key: el[keyProp] ?? getObjectKey(el),
-        component,
-        bindings
+        return {
+          key: el[keyProp] ?? getObjectKey(el),
+          is,
+          ...shortcut,
+          bindings
+        }
       }
     })
   })
 
   return {
-    items
+    computedItems
   }
 }

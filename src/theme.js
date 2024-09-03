@@ -85,50 +85,29 @@ export function getComputedXColor (xColor, el) {
     : xColor
 }
 
-function setRoot (element, darkMode, theme) {
-  element.classList.add('mu-root')
+export function install (app, options) {
+  const { root, darkMode, variables = {} } = options
+
+  root.classList.add('mu-root')
 
   if (darkMode) {
-    element.classList.add('mu-dark')
+    root.classList.add('mu-dark')
   }
 
-  if (theme) {
-    Object
-      .entries(extendColors(theme))
-      .forEach(([key, value]) =>
-        value &&
-        element.style.setProperty(
-          '--mu-' + kebabCase(
-            key.replace(
-              /^(gray|primary|success|warning|danger|accent)(\d*)$/,
-              (match, name, num) => (name === 'gray' ? `${name}` : `${name}-color`) + (num ? `-${num}` : '')
-            )
-          ),
-          value
-        )
+  Object
+    .entries(extendColors(variables))
+    .forEach(([key, value]) =>
+      value &&
+      root.style.setProperty(
+        '--mu-' + kebabCase(
+          key.replace(
+            /^(gray|primary|success|warning|danger|accent)(\d*)$/,
+            (match, name, num) => (name === 'gray' ? `${name}` : `${name}-color`) + (num ? `-${num}` : '')
+          )
+        ),
+        value
       )
-  }
-}
-
-export function install (app, { root, theme, darkMode }) {
-  /*
-  if (root === 'container') {
-    const mount = app.mount
-
-    app.mount = container => {
-      setRoot(
-        (isHtmlElement(container) && container) ||
-        (isString(container) && document.querySelector(container)) ||
-        document.body
-      )
-
-      mount.call(app, container)
-    }
-  } else {
-    setRoot(document.body, darkMode, theme)
-  }
-  */
-  setRoot(document.documentElement, darkMode, theme)
+    )
 }
 
 export function generatePreCssVariables (incomingColors) {

@@ -1,3 +1,5 @@
+import { isString } from './type'
+
 export function findUp (target, callback) {
   while (Object(target).nodeType === 1) {
     const ret = callback(target)
@@ -9,24 +11,6 @@ export function findUp (target, callback) {
   }
 }
 
-export function within (target, element) {
-  return element.contains(target)
-}
-
-export function withinClass (target, className) {
-  return !!findUp(
-    target,
-    el => (el.classList?.contains(className) || null)
-  )
-}
-
-export function withinAttr (target, attrName, attrValue) {
-  return !!findUp(
-    target,
-    el => {
-      const v = el.getAttribute?.(attrName)
-
-      return (v != null && (!attrValue || v === attrValue)) || null
-    }
-  )
+export function resolveElement (el) {
+  return isString(el) ? document.querySelector(el) : el
 }

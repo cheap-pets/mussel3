@@ -1,6 +1,6 @@
 .mu-message-box {
-  & .mu-message-box_icon {
-    font-size: 60px;
+  & .mu-message {
+    padding: 0 calc(var(--mu-base-spacing) * 4);
   }
 
   & .mu-message_title {

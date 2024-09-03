@@ -24,14 +24,8 @@
   margin: 16px;
   padding: 8px;
 
-  font-size: var(--mu-common-font-size);
-
   background: var(--mu-bg-normal);
   border: 1px solid var(--mu-border-color-muted);
   border-radius: var(--mu-window-border-radius);
   box-shadow: var(--mu-shadow-popup);
-
-  & .mu-icon {
-    color: var(--mu-gray-0);
-  }
 }

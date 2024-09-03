@@ -11,7 +11,7 @@
         <mu-icon v-if="icon" :icon="icon" />
         <span v-if="caption">{{ caption }}</span>
       </slot>
-      <mu-icon v-if="!splitButton" v-bind="dropdownIconBindings" />
+      <mu-expand-icon v-if="!splitButton" :expanded="dropdownVisible" />
     </mu-button>
     <mu-button
       v-if="splitButton"
@@ -19,46 +19,73 @@
       @click.stop="onTriggerClick"
       @mouseover.stop="onTriggerMouseOver"
       @mouseleave.stop="onTriggerMouseLeave">
-      <mu-icon v-bind="dropdownIconBindings" />
+      <mu-expand-icon :expanded="dropdownVisible" />
     </mu-button>
-    <mu-dropdown-panel
-      v-model:visible="dropdownVisible"
-      v-bind="dropdownPanelBindings"
-      width="auto">
-      <slot name="dropdown" />
-    </mu-dropdown-panel>
+    <Teleport :to="dropdownContainer">
+      <div
+        ref="dropdownEl"
+        v-mu-scrollbar="dropdownScrollbar"
+        v-bind="dropdownBindings"
+        class="mu-dropdown-panel"
+        @click="onDropdownClick"
+        @mouseover.stop="onDropdownMouseOver"
+        @mouseleave.stop="onDropdownMouseLeave">
+        <slot name="dropdown">
+          <component
+            :is="el.is"
+            v-for="el in computedItems" :key="el.key"
+            v-bind="el.bindings" />
+        </slot>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { shallowRef } from 'vue'
   import { buttonGroupProps, useButtonGroup } from '../button/hooks/button-group'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
+  import { useVForComponents } from '@/hooks/v-for-components'
 
   defineOptions({ name: 'MusselDropdownButton' })
 
   const props = defineProps({
-    ...dropdownProps,
-    ...buttonGroupProps,
     icon: String,
     caption: String,
-    splitButton: Boolean
+    splitButton: Boolean,
+    dropdownItems: Array,
+    ...dropdownProps,
+    ...buttonGroupProps
   })
+
+  const emit = defineEmits([...dropdownEvents])
+
+  const thisEl = shallowRef()
+  const dropdownEl = shallowRef()
 
   useButtonGroup(props)
 
-  const emit = defineEmits([...dropdownEvents])
-  const thisEl = ref()
-
   const {
     dropdownVisible,
-    dropdownIconBindings,
-    dropdownPanelBindings,
+    dropdownBindings,
+    dropdownContainer,
     hideDropdown,
     onTriggerClick,
     onTriggerMouseOver,
-    onTriggerMouseLeave
-  } = useDropdown(thisEl, props, emit)
+    onTriggerMouseLeave,
+    onDropdownClick,
+    onDropdownMouseOver,
+    onDropdownMouseLeave
+  } = useDropdown(thisEl, dropdownEl, props, emit)
+
+  const { computedItems } = useVForComponents(
+    props,
+    {
+      itemsProp: 'dropdownItems',
+      itemsKeyProp: 'id',
+      defaultComponent: 'mu-dropdown-item'
+    }
+  )
 
   function onClick () {
     if (!props.splitButton) onTriggerClick()

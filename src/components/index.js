@@ -17,14 +17,14 @@ import MuScrollBox from './scrollbar/scroll-box.vue'
 
 import { kebabCase } from '@/utils/case'
 
-export function install (app) {
+export function install (app, options) {
   function installComponents (components) {
     Object.keys(components).forEach(key =>
       key.startsWith('Mu') &&
       app.component(kebabCase(key), components[key])
     )
 
-    components.install?.(app)
+    components.install?.(app, options)
   }
 
   installComponents(SvgComponents)

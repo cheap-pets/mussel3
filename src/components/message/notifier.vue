@@ -1,7 +1,7 @@
 <template>
   <transition-group name="mu-notifier-group" tag="div" class="mu-notifier-group">
     <mu-message
-      v-for="el in messages"
+      v-for="el in notifications"
       :key="el.id"
       class="mu-notifier"
       v-bind="el" />
@@ -14,5 +14,5 @@
   import MuMessage from './message.vue'
 
   defineOptions({ name: 'MuNotifier' })
-  defineProps({ messages: Array })
+  defineProps({ notifications: Array })
 </script>

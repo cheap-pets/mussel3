@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" class="mu-root">
+<html lang="zh">
 
 <head>
   <meta charset="utf-8">
@@ -9,59 +9,75 @@
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
-  <link rel="stylesheet" type="text/css" href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css">
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
 
   <style>
-    .mu-button + .mu-button {
-      margin-left: 8px;
+    .group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      padding: 8px;
+      margin: 8px;
     }
   </style>
 </head>
 
 <body>
   <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
-    <div class="mu-box" layout="flex" padding="1x">
+    <div class="group">
       <mu-button @click="alert">Alert</mu-button>
       <mu-button @click="confirm">Confirm</mu-button>
       <mu-button @click="error">Error</mu-button>
       <mu-button @click="warn">Warn</mu-button>
       <mu-button @click="showMessage">Show Message</mu-button>
     </div>
-    <div class="mu-box" layout="flex" padding="1x">
+    <div class="group">
       <mu-button @click="notifyInfo">Notify Info</mu-button>
       <mu-button @click="notifySuccess">Notify Success</mu-button>
       <mu-button @click="notifyWarning">Notify Warning</mu-button>
       <mu-button @click="notifyError">Notify Error</mu-button>
     </div>
-    <mu-status-box
-      class="mu-bg-strong" width="500" height="300"
-      margin="1x" border="divider" border-radius="2x"
-      icon="bolt"
-      title="CAUTION !"
-      message="Something Wrong Here !">
-      <mu-button primary round>
-        Do Something ...
-      </mu-button>
-    </mu-status-box>
-    <mu-status-box
-      class="mu-bg-strong" width="500" height="400"
-      margin="1x" margin-top="2x" border="divider" border-radius="2x"
-      title="NOT FOUND !"
-      message="Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here !">
-      <template #icon>
-        <img style="margin-top: auto;" src="../images/a.jpg">
-      </template>
-      <div class="mu-box" layout="flex" margin-top="auto" align-self="stretch">
+    <div class="group">
+      <mu-status-box
+        class="mu-bg-strong" width="500" height="300"
+        border="divider" border-radius="2x"
+        icon="bolt"
+        title="CAUTION !"
+        message="Something Wrong Here !">
         <mu-button primary round>
-          Create New ...
+          Do Something ...
         </mu-button>
-        <span flex="1"></span>
-        <mu-button round>
-          Dismiss
-        </mu-button>
-      </div>
-    </mu-status-box>
+      </mu-status-box>
+    </div>
+    <div class="group">
+      <mu-status-box
+        class="mu-bg-strong" width="500" height="400"
+        border="divider" border-radius="2x"
+        title="NOT FOUND !"
+        message="Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here ! Something Wrong Here !">
+        <template #icon>
+          <img style="margin-top: auto;" src="../images/a.jpg">
+        </template>
+        <div class="mu-box" layout="flex" margin-top="auto" align-self="stretch">
+          <mu-button primary round>
+            Create New ...
+          </mu-button>
+          <span flex="1"></span>
+          <mu-button round>
+            Dismiss
+          </mu-button>
+        </div>
+      </mu-status-box>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -149,13 +165,11 @@
       }
     })
 
-    mussel.registerIcons({
-      bolt: 'ti ti-bolt'
-    })
-
     mussel.install(app, {
+      // root: '#app',
       darkMode: false,
-      theme: { commonFontSize: '12px' }
+      theme: { commonFontSize: '12px' },
+      icons: { bolt: 'ti ti-bolt' }
     })
 
     app.mount('#app')

@@ -1,8 +1,8 @@
 <template>
   <mu-dialog
     v-model:visible="visible"
-    class="mu-message-box"
     :buttons="buttons"
+    class="mu-message-box"
     close-button
     @button-click="onButtonClick"
     @close-button-click="onButtonClick">
