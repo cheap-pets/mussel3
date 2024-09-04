@@ -1,0 +1,8 @@
+.mu-modal-mask {
+  position: fixed;
+  z-index: var(--mu-z-index-modal);
+  inset: 0;
+
+  background: var(--mu-bg-mask);
+  backdrop-filter: blur(4px);
+}

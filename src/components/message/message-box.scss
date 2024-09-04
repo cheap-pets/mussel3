@@ -1,9 +1,8 @@
-.mu-message-box {
-  & .mu-message {
-    padding: 0 calc(var(--mu-base-spacing) * 4);
-  }
+.mu-message-box .mu-message {
+  flex: 1 1 0;
+  padding: 0 calc(var(--mu-base-spacing) * 4);
 
-  & .mu-message_title {
+  & > .mu-message_title {
     font-size: calc(1em + 2px);
   }
 }

@@ -18,7 +18,7 @@
       :expanded="dropdownVisible"
       @click="onTriggerClick" />
     <slot name="append" />
-    <Teleport :to="dropdownContainer">
+    <Teleport v-if="expandable && dropdownReady" :to="dropdownContainer">
       <div
         ref="dropdownEl"
         v-mu-scrollbar="dropdownScrollbar"
@@ -73,6 +73,7 @@
   } = useCommonInput(props, emit)
 
   const {
+    dropdownReady,
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,

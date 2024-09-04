@@ -21,7 +21,7 @@
       @mouseleave.stop="onTriggerMouseLeave">
       <mu-expand-icon :expanded="dropdownVisible" />
     </mu-button>
-    <Teleport :to="dropdownContainer">
+    <Teleport v-if="dropdownReady" :to="dropdownContainer">
       <div
         ref="dropdownEl"
         v-mu-scrollbar="dropdownScrollbar"
@@ -66,6 +66,7 @@
   useButtonGroup(props)
 
   const {
+    dropdownReady,
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,

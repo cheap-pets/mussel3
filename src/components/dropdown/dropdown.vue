@@ -6,7 +6,7 @@
     @mouseover="onTriggerMouseOver"
     @mouseleave="onTriggerMouseLeave">
     <slot />
-    <Teleport :to="dropdownContainer">
+    <Teleport v-if="dropdownReady" :to="dropdownContainer">
       <div
         ref="dropdownEl"
         v-mu-scrollbar="dropdownScrollbar"
@@ -42,6 +42,7 @@
   const dropdownEl = shallowRef()
 
   const {
+    dropdownReady,
     dropdownBindings,
     dropdownContainer,
     onTriggerClick,

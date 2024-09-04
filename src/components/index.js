@@ -8,7 +8,7 @@ import * as TabsComponents from './tabs'
 import * as BarComponents from './bar'
 import * as FormComponents from './form'
 import * as InputComponents from './input'
-import * as PopupComponents from './popup'
+import * as ModalComponents from './modal'
 import * as DropdownComponents from './dropdown'
 import * as MessageComponents from './message'
 
@@ -37,7 +37,7 @@ export function install (app, options) {
   installComponents(BarComponents)
   installComponents(FormComponents)
   installComponents(InputComponents)
-  installComponents(PopupComponents)
+  installComponents(ModalComponents)
   installComponents(DropdownComponents)
   installComponents(MessageComponents)
 

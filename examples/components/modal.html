@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Modal Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css">
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
+
+  <style>
+    .group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      padding: 8px;
+      margin: 8px;
+    }
+
+    h2 {
+      margin: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid currentColor;
+    }
+
+    h3 {
+      width: 100%;
+      margin: 0;
+      color: var(--mu-text-color-normal);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="mu-box" position="fixed fit">
+    <h2>Modal Dialog</h2>
+    <div id="divX" class="group">
+      <mu-button caption="Open Dialog 1" @click="openDialog1"></mu-button>
+      <mu-button caption="Request Fullscreen" @click="requestFullscreen"></mu-button>
+    </div>
+    <mu-modal-dialog
+      v-model:visible="dialog1Visible"
+      easy-hide
+      style="width: 500px;">
+    </mu-modal-dialog>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const dialog1Visible = Vue.ref()
+
+        function openDialog1 () {
+          dialog1Visible.value = true
+        }
+        
+        function requestFullscreen () {
+          document.querySelector('#divX').requestFullscreen()
+        }
+
+        return { dialog1Visible, openDialog1, requestFullscreen }
+      }
+    })
+
+    mussel.install(app, {
+      darkMode: false
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

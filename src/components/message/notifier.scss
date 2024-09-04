@@ -11,12 +11,6 @@
   opacity: 0;
 }
 
-.mu-notifier-group-move,
-.mu-notifier-group-enter-active,
-.mu-notifier-group-leave-active {
-  transition: all .5s;
-}
-
 .mu-notifier {
   cursor: pointer;
 
@@ -28,4 +22,6 @@
   border: 1px solid var(--mu-border-color-muted);
   border-radius: var(--mu-window-border-radius);
   box-shadow: var(--mu-shadow-popup);
+
+  transition: transform .5s, opacity .5s;
 }

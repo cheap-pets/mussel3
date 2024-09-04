@@ -6,9 +6,7 @@
     close-button
     @button-click="onButtonClick"
     @close-button-click="onButtonClick">
-    <mu-message
-      class="mu-box" flex="1" padding-x="4x" padding-y="0"
-      v-bind="{ icon, title, message, type }" />
+    <mu-message v-bind="{ icon, title, message, type }" />
   </mu-dialog>
 </template>
 
