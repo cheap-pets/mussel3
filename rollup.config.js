@@ -41,7 +41,7 @@ export default {
       entries: [
         {
           find: '~icons',
-          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons/outline')
+          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons')
         },
         {
           find: '@',

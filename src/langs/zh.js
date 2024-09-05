@@ -5,6 +5,7 @@ export default {
   },
 
   Button: {
+    ACCEPT: '接受',
     CANCEL: '取消',
     CLOSE: '关闭',
     Delete: '删除',

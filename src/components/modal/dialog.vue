@@ -1,228 +1,134 @@
 <template>
-  <div
-    v-if="ready"
-    v-show="visible || !hidden"
-    class="mu-box mu-modal-mask"
-    layout="flex"
-    content-center
-    :position="positionStyle"
-    @click="onMaskClick">
-    <div
-      v-show="!hidden"
-      ref="popupElement"
-      class="mu-box mu-dialog"
-      layout="flex"
-      :style="popupStyle">
-      <slot name="side-panel" />
+  <Teleport v-if="visible || ready" :to="container">
+    <Transition name="mu-dialog">
       <div
-        flex="1"
-        class="mu-box mu-dialog_center"
-        layout="flex"
-        direction="column">
+        v-show="modalVisible" ref="maskEl" v-bind="maskAttrs"
+        class="mu-modal-mask mu-dialog-mask" :style="{ zIndex }"
+        @click="onMaskClick">
         <div
-          v-if="title ?? (closeButton || $slots.header)"
-          class="mu-box mu-dialog_header"
-          layout="flex"
+          class="mu-dialog" :style="[{ transform }, sizeStyle]"
+          v-bind="$attrs" :dragging="dragging"
           @mousedown="onDragStart">
-          <slot name="header">
-            <label
-              v-if="title"
-              class="mu-dialog_title mu-text-ellipsis"
-              flex="1">
-              {{ title }}
-            </label>
-            <mu-icon
-              v-if="closeButton"
-              class="mu-dialog_ctrl-btn mu-dialog_ctrl-btn-close"
-              icon="x"
-              @mousedown.stop
-              @click="onCloseButtonClick" />
-          </slot>
-        </div>
-        <slot />
-        <div
-          v-if="buttons || $slots.footer"
-          class="mu-box mu-dialog_footer"
-          layout="flex">
-          <slot name="footer">
-            <div class="mu-space" />
-            <mu-button
-              v-for="el in buttons"
-              :key="el"
-              v-bind="el"
-              @click="onButtonClick(el)" />
+          <slot name="dialog">
+            <div v-if="headerVisible" class="mu-dialog_header">
+              <slot name="header">
+                <mu-icon v-if="icon" class="mu-dialog_icon" v-bind="iconBindings" />
+                <label class="mu-dialog_title">
+                  {{ title }}
+                </label>
+                <slot name="header-append" />
+                <mu-tool-button
+                  v-if="closeButton"
+                  class="mu-dialog_close-button" icon="x"
+                  @click="onCloseButtonClick" />
+              </slot>
+            </div>
+            <slot />
+            <div v-if="footerVisible" class="mu-dialog_footer">
+              <slot name="footer">
+                <slot name="footer-prepend" />
+                <component
+                  :is="el.is"
+                  v-for="el in footerButtons" :key="el.key" v-bind="el.bindings"
+                  @click="el.is === 'mu-button' && onButtonClick(el)" />
+              </slot>
+            </div>
           </slot>
         </div>
       </div>
-    </div>
-  </div>
+    </Transition>
+  </Teleport>
 </template>
 
-<script>
-  // import './dialog.scss'
+<script setup>
+  import './dialog.scss'
 
-  import { delay } from '@/utils/timer'
-  import { assignIf } from '@/utils/object'
-  import { getClientRect } from '@/utils/client-rect'
+  import { ref, shallowReactive, computed } from 'vue'
+  import { modalProps, modalEvents, useModal } from './modal-hook'
+  import { ButtonShortcuts } from './button-shortcuts'
+  import { sizeProps, useSize } from '@/hooks/size'
+  import { useKeyGen } from '@/hooks/key-gen'
+  import { isString } from '@/utils/type'
 
-  import BasePopup from './base-popup'
+  const { genKey, getObjectKey } = useKeyGen()
 
-  export default {
-    name: 'MusselDialog',
-    extends: BasePopup,
-    props: {
-      width: null,
-      height: null,
-      title: String,
-      buttons: Array,
-      dialogStyle: Object,
-      maskAction: {
-        type: String,
-        default: 'none',
-        validator (v) {
-          return ['none', 'hide'].includes(v)
-        }
-      },
-      closeButton: {
-        type: Boolean,
-        default: true
-      },
-      moveable: {
-        type: Boolean,
-        default: true
-      }
-    },
-    emits: ['maskClick', 'buttonClick', 'closeButtonClick', 'show', 'hide'],
-    data () {
-      return {
-        popup: false,
-        popupOffsetX: 0,
-        popupOffsetY: 0,
-        popupStyle: {
-          width: null,
-          height: null,
-          transform: 'translate3d(0, 200px, 0)',
-          ...this.dialogStyle
-        }
-      }
-    },
-    computed: {
-      positionStyle () {
-        return this.container
-          ? 'absolute fit'
-          : 'fixed fit'
-      }
-    },
-    watch: {
-      popup: 'updateTranslate'
-    },
-    methods: {
-      onShow () {
-        document.activeElement?.blur?.()
-      },
-      onHide () {
-        this.$emit('hide')
-      },
-      updatePosition () {
-        const { width, height } = this.dialogStyle || {}
+  defineOptions({ name: 'MusselDialog', inheritAttrs: false })
 
-        assignIf(this.popupStyle, {
-          width: width ? null : this.width,
-          height: height ? null : this.height
-        })
+  const slots = defineSlots()
+  const emit = defineEmits([...modalEvents, 'buttonClick'])
 
-        this.$emit('show')
-      },
-      updateTranslate () {
-        const tx = this.popupOffsetX
-        const ty = this.popupOffsetY + (this.popup ? 0 : 200)
+  const props = defineProps({
+    icon: [String, Object],
+    title: [String, Object],
+    buttons: Array,
+    zIndex: String,
+    maskAttrs: Object,
+    closeButton: { type: Boolean, default: true },
+    ...sizeProps,
+    ...modalProps
+  })
 
-        this.popupStyle.transform = `translate3d(${tx}px, ${ty}px, 0)`
-      },
-      onMaskClick (event) {
-        if (this.popupDragState || event.target !== this.$el) return
+  const headerVisible = computed(() => props.title ?? (props.closeButton || slots.header))
+  const footerVisible = computed(() => props.buttons?.length || slots.footer)
 
-        if (this.maskAction === 'hide') this.updateVisible(false)
-        else this.$emit('maskClick', event)
-      },
-      onCloseButtonClick () {
-        this.$emit('closeButtonClick')
-        this.updateVisible(false)
-      },
-      onButtonClick (btn) {
-        if (btn.action === 'hide') this.updateVisible(false, btn)
-        else this.$emit('buttonClick', btn)
-      },
-      onDragStart (event) {
-        const el = this.$popupElement
-        const tagName = event.target.tagName.toLowerCase()
-        const isInput = tagName === 'input'
+  const iconBindings = computed(() => isString(props.icon) ? { icon: props.icon } : props.icon)
 
-        if (!el || this.moveable === false || isInput) return
+  const footerButtons = computed(() =>
+    props.buttons?.map(el =>
+      isString(el)
+        ? { key: genKey(), is: 'mu-button', bindings: { caption: el }, ...ButtonShortcuts[el] }
+        : { key: getObjectKey(el), is: 'mu-button', bindings: el }
+    )
+  )
 
-        el.style.transition = 'none'
+  const sizeStyle = useSize(props).sizeStyle
 
-        this.popupDragState = {
-          offsetX: this.popupOffsetX ?? 0,
-          offsetY: this.popupOffsetY ?? 0,
-          startX: event.pageX,
-          startY: event.pageY
-        }
+  const {
+    ready,
+    container,
+    modalVisible,
+    hide,
+    onMaskClick,
+    onCloseButtonClick
+  } = useModal(props, emit)
 
-        el.setAttribute('dragging', '')
+  const dragging = ref()
+  const translate = shallowReactive({ x: 0, y: 0 })
+  const transform = computed(() => `translate3d(${translate.x}px, ${translate.y}px, 0)`)
 
-        window.addEventListener('mousemove', this.onDragMove)
-        window.addEventListener('mouseup', this.onDragEnd)
-        window.addEventListener('blur', this.onDragEnd)
-      },
-      onDragMove (event) {
-        window.requestAnimationFrame(() => {
-          const el = this.$popupElement
+  function onDragStart (event) {
+    const { classList } = event.target
 
-          if (!el && !this.popupDragState) return
+    if (
+      !['mu-dialog_header', 'mu-dialog_title'].find(cls => classList.contains(cls))
+    ) return
 
-          const { pageX: x, pageY: y } = event
-          const { offsetX, offsetY, startX, startY } = this.popupDragState
-          const { top, left } = getClientRect(el)
+    const { pageX, pageY } = event
+    const { x: startX, y: startY } = translate
 
-          const newX = offsetX + x - startX
-          const newY = offsetY + y - startY
+    dragging.value = true
 
-          if (
-            (left > 0 || newX > this.popupOffsetX) &&
-            (x < window.innerWidth)
-          ) {
-            this.popupOffsetX = newX
-          }
+    function onMouseMove (e) {
+      translate.x = startX + e.pageX - pageX
+      translate.y = startY + e.pageY - pageY
+    }
 
-          if (
-            (top > 0 || offsetY + y - startY > this.popupOffsetY) &&
-            (y < window.innerHeight)
-          ) {
-            this.popupOffsetY = newY
-          }
+    function onMouseUp () {
+      dragging.value = null
 
-          this.updateTranslate()
-        })
-      },
-      onDragEnd (event) {
-        window.removeEventListener('mousemove', this.onDragMove)
-        window.removeEventListener('mouseup', this.onDragEnd)
-        window.removeEventListener('blur', this.onDragEnd)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
 
-        const el = this.$popupElement
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+  }
 
-        if (el) {
-          el.style.transition = null
-          el.removeAttribute('dragging')
-        }
+  function onButtonClick (btn) {
+    emit('buttonClick', btn.name || btn.bindings)
 
-        if (this.popupDragState) {
-          delay().then(() => {
-            delete this.popupDragState
-          })
-        }
-      }
+    if (btn.action === 'close') {
+      hide('button-click', btn.name)
     }
   }
 </script>

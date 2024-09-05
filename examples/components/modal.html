@@ -50,11 +50,30 @@
       <mu-button caption="Open Dialog 1" @click="openDialog1"></mu-button>
       <mu-button caption="Request Fullscreen" @click="requestFullscreen"></mu-button>
     </div>
-    <mu-modal-dialog
+    <mu-dialog
       v-model:visible="dialog1Visible"
+      title="Modal Dialog 1"
+      width="600"
+      height="400"
       easy-hide
-      style="width: 500px;">
-    </mu-modal-dialog>
+      :icon="{ icon: 'box', style: 'color: var(--mu-accent-color)' }"
+      :buttons="['Find', ' ', '-', 'CANCEL', 'OK']"
+      @update:visible="(...args) => onDialogVisibleChange('dialog1', ...args)"
+      @button-click="onButtonClick">
+      <template #header-append>
+        <mu-editor placeholder="find your money" icon="search" input-style="solid" round>
+          <template #prepend><mu-icon icon="search"></mu-icon></template>
+        </mu-editor>
+      </template>
+      <div class="mu-dialog_body mu-bg-strong" v-mu-scrollbar>
+        <div style="height: 1000px;">
+        It's a long story...
+        </div>
+      </div>
+      <template #footer-prepend>
+        <mu-editor placeholder="where's your money?"></mu-editor>
+      </template>
+    </mu-dialog>
   </div>
 
   <script type="text/javascript">
@@ -70,12 +89,30 @@
           document.querySelector('#divX').requestFullscreen()
         }
 
-        return { dialog1Visible, openDialog1, requestFullscreen }
+        function onDialogVisibleChange (dialogName, value, action, btn) {
+          console.log(dialogName, value, action, btn)
+        }
+
+        function onButtonClick(button) {
+          console.log(button)
+        }
+
+        return {
+          dialog1Visible,
+          openDialog1,
+          onDialogVisibleChange,
+          onButtonClick,
+          requestFullscreen
+        }
       }
     })
 
     mussel.install(app, {
-      darkMode: false
+      darkMode: false,
+      icons: {
+        box: 'ti ti-box',
+        search: 'ti ti-search'
+      }
     })
 
     app.mount('#app')

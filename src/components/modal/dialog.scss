@@ -1,7 +1,16 @@
+.mu-dialog-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: .3s;
+}
+
 .mu-dialog {
   position: relative;
 
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   min-width: 360px;
   max-width: 90%;
@@ -11,66 +20,88 @@
   font-size: var(--mu-common-font-size);
   color: var(--mu-text-color-normal);
 
-  opacity: 0;
   background: var(--mu-bg-normal);
   border-radius: var(--mu-window-border-radius);
   box-shadow: var(--mu-shadow-modal);
 
-  transition: transform .2s, opacity .2s;
+  transition: margin-top .3s, opacity .1s;
 
-  &[pop-up] {
-    opacity: 1;
-  }
-
-  &:not([pop-up]),
   &[dragging] {
-    user-select: none;
+    opacity: .8;
+
+    & * {
+      cursor: grab !important;
+    }
   }
 }
 
-.mu-dialog_side-panel {
-  padding: 16px 12px;
-  background: var(--mu-bg-strong);
-}
-
-.mu-dialog_center > * {
-  padding: 16px 24px;
-}
-
-.mu-dialog_header {
-  align-items: center;
-  line-height: 24px;
-}
-
-.mu-dialog_footer {
-  align-items: center;
-  line-height: 24px;
-
-  & > .mu-button {
-    margin-left: var(--mu-base-spacing);
+.mu-dialog-enter-from,
+.mu-dialog-leave-to {
+  & > .mu-dialog {
+    margin-top: 300px;
+    opacity: 0;
   }
 }
 
-.mu-dialog_header + .mu-dialog_footer {
-  margin-top: auto;
-}
-
-.mu-dialog_body {
-  flex: 1 1 0;
+.mu-dialog_icon {
+  pointer-events: none;
+  font-size: 24px;
 }
 
 .mu-dialog_title {
+  pointer-events: none;
+  flex: 1 1 0;
   font-size: calc(var(--mu-common-font-size) + 2px);
   font-weight: 600;
 }
 
-.mu-dialog_ctrl-btn-close {
-  cursor: pointer;
-  margin-left: auto;
-  font-size: 20px;
-  color: var(--mu-text-color-muted);
-
+.mu-tool-button.mu-dialog_close-button {
   &:hover {
-    color: var(--mu-danger-color-4);
+    color: #fff;
+    background-color: var(--mu-danger-color);
   }
+}
+
+.mu-dialog_header,
+.mu-dialog_footer {
+  cursor: default;
+
+  display: flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+
+  line-height: 20px;
+  color: var(--mu-text-color-normal);
+
+  & > .mu-divider {
+    align-self: center;
+    height: calc(1em + 2px);
+    margin: 0 var(--mu-base-spacing);
+  }
+}
+
+.mu-dialog_header {
+  padding: calc(var(--mu-base-spacing) * 2);
+
+  & + .mu-dialog_footer {
+    margin-top: auto;
+  }
+
+  /*
+  & > .mu-tool-button:last-child {
+    margin-right: -8px;
+  }
+  */
+}
+
+.mu-dialog_footer {
+  justify-content: flex-end;
+  padding: calc(var(--mu-base-spacing) * 2);
+}
+
+.mu-dialog_body {
+  flex: 1 1 auto;
+  padding: calc(var(--mu-base-spacing) * 2);
+  // background-color: var(--mu-bg-strong);
 }

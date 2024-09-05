@@ -1,16 +1,23 @@
 import { isString } from './type'
 
-export function findUp (target, callback) {
-  while (Object(target).nodeType === 1) {
-    const ret = callback(target)
+export function findUp (node, callback) {
+  while (Object(node).nodeType === 1) {
+    const ret = callback(node)
 
-    if (ret) return target
+    if (ret) return node
     else if (ret === false) break
 
-    target = target.parentNode
+    node = node.parentNode
   }
 }
 
 export function resolveElement (el) {
   return isString(el) ? document.querySelector(el) : el
+}
+
+export function isInputElement (node) {
+  return (
+    ['INPUT', 'TEXTAREA', 'SELECT'].includes(node.tagName.toUpperCase()) ||
+    node.hasAttribute('contenteditable')
+  )
 }

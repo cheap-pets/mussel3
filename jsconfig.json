@@ -4,7 +4,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "paths": {
-      "@/*": ["./src/*"] 
+      "@/*": ["./src/*"],
+      "~icons/*": ["./node_modules/@tabler/icons/icons/*"] 
     }
   },
   "include": [

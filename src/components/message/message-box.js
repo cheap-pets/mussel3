@@ -1,6 +1,6 @@
 import { delay } from '@/utils/timer'
 import { isString } from '@/utils/type'
-import { Buttons, MessageTypes } from './constant'
+import { MessageTypes } from './constant'
 import { createDynamicComponent } from '@/utils/vue'
 
 import MessageBox from './message-box.vue'
@@ -17,23 +17,6 @@ export function pluginMessageBox (app) {
     return new Promise(resolve => {
       let dispose
 
-      const buttons = (options.buttons || ['OK']).map(el => {
-        const isPrimary = ['OK', 'YES'].includes(el)
-
-        return isString(el)
-          ? Object.assign(
-            {
-              primary: !options.danger && isPrimary ? '' : null,
-              danger: options.danger && isPrimary ? '' : null
-            },
-            Buttons[el] || { caption: el },
-            {
-              raw: el
-            }
-          )
-          : el
-      })
-
       const callback = btn => {
         options.callback?.(btn)
         resolve(btn)
@@ -44,7 +27,7 @@ export function pluginMessageBox (app) {
         })
       }
 
-      const { icon, title, message } = options
+      const { icon, title, message, buttons } = options
 
       dispose = createDynamicComponent({
         appContext: app._context,

@@ -1,7 +1,17 @@
 import { generateUUID } from '@/utils/id'
 
-export function useVForKey () {
+export function useKeyGen () {
   const keys = new WeakMap()
+
+  function genKey (obj) {
+    const key = generateUUID()
+
+    if (obj) {
+      keys.set(obj, key)
+    }
+
+    return key
+  }
 
   function getObjectKey (obj) {
     let key = keys.get(obj)
@@ -15,6 +25,7 @@ export function useVForKey () {
   }
 
   return {
+    genKey,
     getObjectKey
   }
 }

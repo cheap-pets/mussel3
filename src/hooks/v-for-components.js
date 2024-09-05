@@ -1,14 +1,13 @@
 import { computed } from 'vue'
+import { useKeyGen } from './key-gen'
 import { isString } from '@/utils/type'
-import { generateUUID } from '@/utils/id'
-import { useVForKey } from './v-for-key'
 
 const SHORTCUTS = {
   '-': { is: 'mu-list-divider' }
 }
 
 export function useVForComponents (props, options = {}) {
-  const { getObjectKey } = useVForKey()
+  const { genKey, getObjectKey } = useKeyGen()
 
   const {
     itemsProp = 'items',
@@ -29,7 +28,7 @@ export function useVForComponents (props, options = {}) {
         const shortcut = shortcuts[el]
 
         return shortcut
-          ? { key: generateUUID(), ...shortcut }
+          ? { key: genKey(), ...shortcut }
           : { is: el }
       } else {
         const { is = defaultComponent, ...bindings } = el
@@ -42,7 +41,7 @@ export function useVForComponents (props, options = {}) {
           bindings
         }
       }
-    })
+    }).filter(Boolean)
   })
 
   return {

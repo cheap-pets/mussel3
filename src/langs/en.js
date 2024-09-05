@@ -5,6 +5,7 @@ export default {
   },
 
   Button: {
+    ACCEPT: 'Accept',
     CANCEL: 'Cancel',
     CLOSE: 'Close',
     Delete: 'Delete',
