@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition-duration: .3s;
+  transition-duration: .2s;
 }
 
 .mu-dialog {
@@ -13,9 +13,9 @@
   flex-direction: column;
 
   min-width: 360px;
-  max-width: 90%;
-  min-height: 210px;
-  max-height: 90%;
+  max-width: 100%;
+  min-height: 240px;
+  max-height: 100%;
 
   font-size: var(--mu-common-font-size);
   color: var(--mu-text-color-normal);
@@ -24,14 +24,10 @@
   border-radius: var(--mu-window-border-radius);
   box-shadow: var(--mu-shadow-modal);
 
-  transition: margin-top .3s, opacity .1s;
+  transition: margin-top .2s, opacity .2s;
 
   &[dragging] {
     opacity: .8;
-
-    & * {
-      cursor: grab !important;
-    }
   }
 }
 
@@ -56,7 +52,10 @@
 }
 
 .mu-tool-button.mu-dialog_close-button {
+  transition: all .1s ease-in-out;
+
   &:hover {
+    transform: rotate(-180deg);
     color: #fff;
     background-color: var(--mu-danger-color);
   }
@@ -64,7 +63,7 @@
 
 .mu-dialog_header,
 .mu-dialog_footer {
-  cursor: default;
+  user-select: none;
 
   display: flex;
   flex: none;

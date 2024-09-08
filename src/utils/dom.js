@@ -1,13 +1,13 @@
 import { isString } from './type'
 
-export function findUp (node, callback) {
-  while (Object(node).nodeType === 1) {
-    const ret = callback(node)
+export function findUp (el, callback) {
+  while (Object(el).nodeType === 1) {
+    const ret = callback(el)
 
-    if (ret) return node
+    if (ret) return el
     else if (ret === false) break
 
-    node = node.parentNode
+    el = el.parentNode
   }
 }
 
@@ -15,9 +15,25 @@ export function resolveElement (el) {
   return isString(el) ? document.querySelector(el) : el
 }
 
-export function isInputElement (node) {
+export function isInputElement (el) {
   return (
-    ['INPUT', 'TEXTAREA', 'SELECT'].includes(node.tagName.toUpperCase()) ||
-    node.hasAttribute('contenteditable')
+    ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName.toUpperCase()) ||
+    el.hasAttribute('contenteditable')
   )
+}
+
+export function resolveSafeHTML (html = '') {
+  return html
+    .replace(/\s+on\w+="[^"]*"/gi, '') // event bindings
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '') // <script> node
+}
+
+export function isElementInViewport (el) {
+  const { innerHeight, innerWidth } = window
+  const { top, left, height, width } = el.getBoundingClientRect()
+
+  const xInView = (left <= innerWidth) && ((left + width) >= 0)
+  const yInView = (top <= innerHeight) && ((top + height) >= 0)
+
+  return xInView && yInView
 }

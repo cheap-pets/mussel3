@@ -1,6 +1,7 @@
 import { ref, shallowRef, computed, provide, inject } from 'vue'
+import { usePopupManager } from '@/hooks/popup'
+import { findUp, isElementInViewport } from '@/utils/dom'
 import { getTransitionDuration } from '@/utils/style'
-import { findUp } from '@/utils/dom'
 import { delay } from '@/utils/timer'
 
 export const dropdownProps = {
@@ -21,10 +22,7 @@ export const dropdownEvents = [
   'dropdown:itemclick'
 ]
 
-let lastExpanded
-
-export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
-  const context = { hideDropdown }
+export function useDropdown (hostRef, dropdownRef, props, emit) {
   const rootEl = inject('$mussel').rootElement
 
   const expanded = ref()
@@ -41,9 +39,22 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
     ...props.dropdownAttrs
   }))
 
+  const hostEl = computed(() => hostRef.value?.$el || hostRef.value)
+  const ddEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
   const dropdownVisible = computed(() => expanded.value)
 
+  usePopupManager(expanded, {
+    hide,
+    onCaptureEscKeyDown,
+    onCaptureMouseDown,
+    onCaptureScroll
+  })
+
   let delayHideTimer
+
+  function isHoverTrigger () {
+    return props.dropdownTrigger === 'hover'
+  }
 
   function resetHideTimer () {
     if (delayHideTimer) {
@@ -55,11 +66,8 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
   function updatePosition () {
     if (!activityStyle.value) return
 
-    const hEl = hostElementRef.value
-    const dEl = dropdownElementRef.value
-
-    const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hEl.getBoundingClientRect()
-    const { width: dw, height: dh } = dEl.getBoundingClientRect()
+    const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
+    const { width: dw, height: dh } = ddEl.value.getBoundingClientRect()
     const { innerWidth: tw, innerHeight: th } = window
 
     const style = {}
@@ -75,24 +83,19 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
     }
 
     if (th - hb > dh || ht < dh) {
-      dEl.setAttribute('position', 'bottom')
+      ddEl.value.setAttribute('position', 'bottom')
       style.top = `${hb}px`
     } else {
-      dEl.setAttribute('position', 'top')
+      ddEl.value.setAttribute('position', 'top')
       style.bottom = `${th - ht}px`
     }
 
     activityStyle.value = style
-    dEl.removeAttribute('measuring')
+    ddEl.value.removeAttribute('measuring')
   }
 
-  function showDropdown () {
+  function show () {
     resetHideTimer()
-
-    if (lastExpanded !== context) {
-      lastExpanded?.hideDropdown()
-      lastExpanded = context
-    }
 
     if (!expanded.value) {
       dropdownContainer.value = document.fullscreenElement || rootEl
@@ -108,7 +111,7 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
           delay()
         )
         .then(() => {
-          const el = dropdownElementRef.value
+          const el = ddEl.value
 
           el.style.transition = 'none'
           el.setAttribute('measuring', '')
@@ -123,19 +126,15 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
     }
   }
 
-  function hideDropdown () {
+  function hide () {
     resetHideTimer()
 
     if (expanded.value) {
       expanded.value = false
 
-      if (lastExpanded === context) {
-        lastExpanded = null
-      }
-
       emit('dropdown:hide')
 
-      const el = dropdownElementRef.value
+      const el = ddEl.value
 
       el.removeAttribute('measuring')
       el.removeAttribute('expanded')
@@ -146,35 +145,35 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
     }
   }
 
-  function delayHideDropdown () {
-    if (props.dropdownTrigger === 'hover') {
+  function delayHide () {
+    if (isHoverTrigger()) {
       clearTimeout(delayHideTimer)
-      delayHideTimer = setTimeout(hideDropdown, 300)
+      delayHideTimer = setTimeout(hide, 300)
     }
   }
 
   function onTriggerClick () {
-    if (props.dropdownTrigger === 'hover') return
+    if (isHoverTrigger()) return
 
-    if (expanded.value) hideDropdown()
-    else showDropdown()
+    if (expanded.value) hide()
+    else show()
   }
 
   function onTriggerMouseOver () {
-    if (props.dropdownTrigger === 'hover') showDropdown()
+    if (isHoverTrigger()) show()
   }
 
   function onTriggerMouseLeave () {
-    if (props.dropdownTrigger === 'hover') delayHideDropdown()
+    if (isHoverTrigger()) delayHide()
   }
 
   function onDropdownClick (event) {
     const trigger = findUp(event.target, parent => {
       if (parent.hasAttribute('dropdown-hide-trigger')) return true
-      if (parent === dropdownElementRef.value) return false
+      if (parent === ddEl.value) return false
     })
 
-    if (trigger) hideDropdown()
+    if (trigger) hide()
   }
 
   function onDropdownMouseOver () {
@@ -187,37 +186,35 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
 
   function onDropdownItemClick (item) {
     emit('dropdown:itemclick', item)
-    hideDropdown()
+    hide()
   }
 
-  window.addEventListener('scroll', event => {
-    if (
-      expanded.value &&
-      event.target.contains(hostElementRef.value) &&
-      !dropdownElementRef.value.contains(event.target)
-    ) updatePosition()
-  }, true)
-
-  window.addEventListener('mousedown', event => {
-    if (
-      expanded.value &&
-      !hostElementRef.value?.contains(event.target) &&
-      !dropdownElementRef.value?.contains(event.target)
-    ) hideDropdown()
-  }, true)
-
-  window.addEventListener('blur', event => {
-    if (expanded.value) {
-      hideDropdown()
+  function onCaptureEscKeyDown (event) {
+    if (expanded.value && !isHoverTrigger()) {
+      hide('esc-key')
     }
-  })
+  }
 
-  window.addEventListener('fullscreenchange', event => {
-    if (expanded.value) hideDropdown()
-  }, true)
+  function onCaptureMouseDown (event) {
+    if (
+      expanded.value &&
+      !hostEl.value?.contains(event.target) &&
+      !ddEl.value?.contains(event.target)
+    ) hide()
+  }
+
+  function onCaptureScroll (event) {
+    if (!isElementInViewport(hostEl.value)) {
+      hide()
+    } else if (
+      expanded.value &&
+      event.target.contains(hostEl.value)
+      // && !ddEl.value.contains(event.target)
+    ) updatePosition()
+  }
 
   provide('dropdown', {
-    hideDropdown,
+    hide,
     dropdownVisible,
     onDropdownItemClick
   })
@@ -227,8 +224,8 @@ export function useDropdown (hostElementRef, dropdownElementRef, props, emit) {
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,
-    showDropdown,
-    hideDropdown,
+    show,
+    hide,
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave,

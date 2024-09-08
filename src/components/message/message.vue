@@ -11,7 +11,7 @@
   import './message.scss'
 
   import { computed } from 'vue'
-  import { removeEventAttr } from '@/utils/html'
+  import { resolveSafeHTML } from '@/utils/dom'
 
   defineOptions({ name: 'MusselMessage' })
 
@@ -21,5 +21,5 @@
     message: String
   })
 
-  const html = computed(() => removeEventAttr(props.message))
+  const html = computed(() => resolveSafeHTML(props.message))
 </script>

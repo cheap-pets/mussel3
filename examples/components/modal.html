@@ -53,17 +53,26 @@
     <mu-dialog
       v-model:visible="dialog1Visible"
       title="Modal Dialog 1"
-      width="600"
-      height="400"
+      width="800"
+      height="600"
       easy-hide
+      keep-position
+      :lazy="false"
       :icon="{ icon: 'box', style: 'color: var(--mu-accent-color)' }"
-      :buttons="['Find', ' ', '-', 'CANCEL', 'OK']"
+      :buttons="['-', 'Find', ' ', 'CANCEL', 'OK']"
       @update:visible="(...args) => onDialogVisibleChange('dialog1', ...args)"
       @button-click="onButtonClick">
       <template #header-append>
         <mu-editor placeholder="find your money" icon="search" input-style="solid" round>
           <template #prepend><mu-icon icon="search"></mu-icon></template>
         </mu-editor>
+        <mu-dropdown-button
+          class="mu-icon-button"
+          tool-button
+          icon="dotsVert"
+          dropdown-trigger="click"
+          :dropdown-items="menus">
+        </mu-dropdown>
       </template>
       <div class="mu-dialog_body mu-bg-strong" v-mu-scrollbar>
         <div style="height: 1000px;">
@@ -80,6 +89,14 @@
     const app = Vue.createApp({
       setup () {
         const dialog1Visible = Vue.ref()
+        const $mussel = Vue.inject('$mussel')
+
+        const menus = [
+          { label: 'Open Recent Files' },
+          { label: 'New File' },
+          '-',
+          { label: 'Exit' }
+        ]
 
         function openDialog1 () {
           dialog1Visible.value = true
@@ -94,11 +111,16 @@
         }
 
         function onButtonClick(button) {
-          console.log(button)
+          if (button?.caption === 'Find') {
+            $mussel.messageBox.alert('Cannot find any !')
+          } else {
+            console.log(button?.caption)
+          }
         }
 
         return {
           dialog1Visible,
+          menus,
           openDialog1,
           onDialogVisibleChange,
           onButtonClick,

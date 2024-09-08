@@ -1,61 +1,65 @@
 <template>
-  <div
-    ref="thisEl"
-    class="mu-dropdown mu-dropdown-button"
-    :class="{ 'mu-button-group': splitButton }"
-    @click="onClick"
-    @mouseover="onMouseOver"
-    @mouseleave="onMouseLeave">
-    <mu-button>
-      <slot>
-        <mu-icon v-if="icon" :icon="icon" />
-        <span v-if="caption">{{ caption }}</span>
-      </slot>
-      <mu-expand-icon v-if="!splitButton" :expanded="dropdownVisible" />
+  <mu-tool-button
+    v-if="toolButton"
+    ref="thisEl" class="mu-dropdown mu-expand-icon" v-bind="$attrs"
+    expand-type="dropdown" :expanded="dropdownVisible || null" :icon="icon || 'chevronDown'"
+    @click="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave" />
+  <mu-button-group
+    v-else-if="splitButton"
+    ref="thisEl" class="mu-dropdown" v-bind="$attrs">
+    <mu-button :icon="icon" :caption="caption" @click="hideDropdown">
+      <slot />
     </mu-button>
     <mu-button
-      v-if="splitButton"
       class="mu-button mu-icon-button"
-      @click.stop="onTriggerClick"
-      @mouseover.stop="onTriggerMouseOver"
-      @mouseleave.stop="onTriggerMouseLeave">
+      @click.stop="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
       <mu-expand-icon :expanded="dropdownVisible" />
     </mu-button>
-    <Teleport v-if="dropdownReady" :to="dropdownContainer">
-      <div
-        ref="dropdownEl"
-        v-mu-scrollbar="dropdownScrollbar"
-        v-bind="dropdownBindings"
-        class="mu-dropdown-panel"
-        @click="onDropdownClick"
-        @mouseover.stop="onDropdownMouseOver"
-        @mouseleave.stop="onDropdownMouseLeave">
-        <slot name="dropdown">
-          <component
-            :is="el.is"
-            v-for="el in computedItems" :key="el.key"
-            v-bind="el.bindings" />
-        </slot>
-      </div>
-    </Teleport>
-  </div>
+  </mu-button-group>
+  <mu-button
+    v-else
+    ref="thisEl" class="mu-dropdown" v-bind="$attrs"
+    @click="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
+    <slot>
+      <mu-icon v-if="icon" :icon="icon" />
+      {{ caption }}
+    </slot>
+    <mu-expand-icon v-if="arrow" :expanded="dropdownVisible" />
+  </mu-button>
+  <Teleport v-if="dropdownReady" :to="dropdownContainer">
+    <div
+      ref="dropdownEl"
+      v-mu-scrollbar="dropdownScrollbar"
+      v-bind="dropdownBindings"
+      class="mu-dropdown-panel"
+      @click="onDropdownClick"
+      @mouseover.stop="onDropdownMouseOver"
+      @mouseleave.stop="onDropdownMouseLeave">
+      <slot name="dropdown">
+        <component
+          :is="el.is"
+          v-for="el in computedItems" :key="el.key"
+          v-bind="el.bindings" />
+      </slot>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
   import { shallowRef } from 'vue'
-  import { buttonGroupProps, useButtonGroup } from '../button/hooks/button-group'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
   import { useVForComponents } from '@/hooks/v-for-components'
 
-  defineOptions({ name: 'MusselDropdownButton' })
+  defineOptions({ name: 'MusselDropdownButton', inheritAttrs: false })
 
   const props = defineProps({
     icon: String,
     caption: String,
+    toolButton: Boolean,
     splitButton: Boolean,
     dropdownItems: Array,
-    ...dropdownProps,
-    ...buttonGroupProps
+    arrow: { type: Boolean, default: true },
+    ...dropdownProps
   })
 
   const emit = defineEmits([...dropdownEvents])
@@ -63,14 +67,12 @@
   const thisEl = shallowRef()
   const dropdownEl = shallowRef()
 
-  useButtonGroup(props)
-
   const {
     dropdownReady,
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,
-    hideDropdown,
+    hide: hideDropdown,
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave,
@@ -87,17 +89,4 @@
       defaultComponent: 'mu-dropdown-item'
     }
   )
-
-  function onClick () {
-    if (!props.splitButton) onTriggerClick()
-    else hideDropdown()
-  }
-
-  function onMouseOver () {
-    if (!props.splitButton) onTriggerMouseOver()
-  }
-
-  function onMouseLeave () {
-    if (!props.splitButton) onTriggerMouseLeave()
-  }
 </script>

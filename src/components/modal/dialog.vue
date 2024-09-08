@@ -2,20 +2,21 @@
   <Teleport v-if="visible || ready" :to="container">
     <Transition name="mu-dialog">
       <div
-        v-show="modalVisible" ref="maskEl" v-bind="maskAttrs"
+        v-show="modalVisible" v-bind="maskAttrs"
         class="mu-modal-mask mu-dialog-mask" :style="{ zIndex }"
+        @sizechange="onMaskResize"
         @click="onMaskClick">
         <div
+          ref="dialogEl"
           class="mu-dialog" :style="[{ transform }, sizeStyle]"
           v-bind="$attrs" :dragging="dragging"
           @mousedown="onDragStart">
           <slot name="dialog">
             <div v-if="headerVisible" class="mu-dialog_header">
               <slot name="header">
+                <slot name="header-prepend" />
                 <mu-icon v-if="icon" class="mu-dialog_icon" v-bind="iconBindings" />
-                <label class="mu-dialog_title">
-                  {{ title }}
-                </label>
+                <label class="mu-dialog_title" draggable="false">{{ title }}</label>
                 <slot name="header-append" />
                 <mu-tool-button
                   v-if="closeButton"
@@ -31,6 +32,7 @@
                   :is="el.is"
                   v-for="el in footerButtons" :key="el.key" v-bind="el.bindings"
                   @click="el.is === 'mu-button' && onButtonClick(el)" />
+                <slot name="footer-append" />
               </slot>
             </div>
           </slot>
@@ -43,12 +45,13 @@
 <script setup>
   import './dialog.scss'
 
-  import { ref, shallowReactive, computed } from 'vue'
-  import { modalProps, modalEvents, useModal } from './modal-hook'
+  import { ref, shallowRef, shallowReactive, computed, watchEffect } from 'vue'
+  import { modalProps, modalEvents, useModal } from './modal'
   import { ButtonShortcuts } from './button-shortcuts'
   import { sizeProps, useSize } from '@/hooks/size'
   import { useKeyGen } from '@/hooks/key-gen'
   import { isString } from '@/utils/type'
+  import { debounce } from 'throttle-debounce'
 
   const { genKey, getObjectKey } = useKeyGen()
 
@@ -63,6 +66,7 @@
     buttons: Array,
     zIndex: String,
     maskAttrs: Object,
+    keepPosition: Boolean,
     closeButton: { type: Boolean, default: true },
     ...sizeProps,
     ...modalProps
@@ -92,9 +96,36 @@
     onCloseButtonClick
   } = useModal(props, emit)
 
+  const dialogEl = shallowRef()
   const dragging = ref()
   const translate = shallowReactive({ x: 0, y: 0 })
   const transform = computed(() => `translate3d(${translate.x}px, ${translate.y}px, 0)`)
+
+  function correctPosition () {
+    if (!modalVisible.value) {
+      return
+    }
+
+    const { top, left, height, width } = dialogEl.value.getBoundingClientRect()
+    const { innerHeight, innerWidth } = window
+
+    const minH = height <= innerHeight ? height : innerHeight
+    const minW = height <= innerWidth ? width : innerWidth
+
+    if (top < 0) {
+      translate.y -= top
+    } else if (top > innerHeight - minH) {
+      translate.y -= top - innerHeight + minH
+    }
+
+    if (left < 0) {
+      translate.x -= left
+    } else if (left > innerWidth - minW) {
+      translate.x -= left - innerWidth + minW
+    }
+  }
+
+  const onMaskResize = debounce(500, correctPosition)
 
   function onDragStart (event) {
     const { classList } = event.target
@@ -118,6 +149,8 @@
 
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', onMouseUp)
+
+      correctPosition()
     }
 
     window.addEventListener('mousemove', onMouseMove)
@@ -131,4 +164,10 @@
       hide('button-click', btn.name)
     }
   }
+
+  watchEffect(() => {
+    if (props.visible && !props.keepPosition) {
+      Object.assign(translate, { x: 0, y: 0 })
+    }
+  })
 </script>

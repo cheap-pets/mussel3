@@ -1,8 +1,7 @@
 <template>
   <button ref="thisEl" class="mu-button" v-bind="attrs">
     <slot>
-      <mu-icon v-if="icon" :icon="icon" />
-      {{ caption }}
+      <mu-icon v-if="icon" :icon="icon" />{{ caption }}
     </slot>
   </button>
 </template>

@@ -5,7 +5,7 @@
 <script setup>
   import './tool-button.scss'
 
-  import { useIcon } from '../icon/icon-hook'
+  import { useIcon } from '../icon/icon'
 
   defineOptions({ name: 'MusselToolButton' })
 

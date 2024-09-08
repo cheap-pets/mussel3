@@ -1,8 +1,7 @@
-import interceptor from '../interceptor'
-
 import * as Recognizers from './recognizers'
 
 import { bind, unbind } from './touch'
+import { EventInterceptor } from '../interceptor'
 import { GESTURE_CONTEXT_PROP, EventTypes } from './constant'
 
 function interceptorAdd (type, listener, options) {
@@ -37,7 +36,7 @@ function interceptorRemove (type, listener, options) {
 
 if ('ontouchstart' in window) {
   Object.keys(EventTypes).forEach(type => {
-    interceptor.register(type, {
+    EventInterceptor.register(type, {
       add: interceptorAdd,
       remove: interceptorRemove
     })

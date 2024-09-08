@@ -16,7 +16,7 @@
 
   import { toRef, computed, provide, inject } from 'vue'
   import { DEFAULT_DATA_PROPS, DEFAULT_EXPAND_ICONS, DEFAULT_NODE_ICONS } from './default-options'
-  import { useExpand } from './tree-hooks'
+  import { useExpand } from './tree'
 
   defineOptions({ name: 'MusselTree' })
 

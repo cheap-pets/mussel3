@@ -16,7 +16,7 @@ function hack (prototype) {
 }
 
 hack(Element.prototype)
-hack(Document.prototype)
+// hack(Document.prototype)
 
 export const EventInterceptor = {
   register (type, interceptor) {

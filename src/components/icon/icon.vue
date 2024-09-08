@@ -12,7 +12,7 @@
   import './icon.scss'
 
   import { computed } from 'vue'
-  import { useIcon } from './icon-hook'
+  import { useIcon } from './icon'
 
   defineOptions({ name: 'MusselIcon' })
 

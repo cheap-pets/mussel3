@@ -36,5 +36,6 @@ const registerIcons = deprecated(
 )
 
 export * as scrollbar from 'mussel-scrollbar'
-export { EventInterceptor } from './events/interceptor'
+
+export { EventInterceptor } from './events'
 export { install, installIcons, registerIcons }

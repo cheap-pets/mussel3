@@ -77,8 +77,8 @@
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,
-    showDropdown,
-    hideDropdown,
+    show: showDropdown,
+    hide: hideDropdown,
     onTriggerClick,
     onDropdownClick
   } = useDropdown(thisEl, dropdownEl, props, emit)

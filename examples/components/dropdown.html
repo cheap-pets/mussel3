@@ -9,7 +9,18 @@
 
   <title>Dropdown Component Example</title>
 
-  <link rel="stylesheet" type="text/css" href="../../dist/mussel.css" />
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css">
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
 
   <style>
     .group {
@@ -22,13 +33,10 @@
       margin: 8px;
     }
   </style>
-
-  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
-  <script type="text/javascript" src="../../dist/mussel.js"></script>
 </head>
 
 <body>
-  <div id="app" class="mu-box" position="fixed fit">
+  <div id="app" class="mu-box" position="fixed fit" style="overflow: auto;">
     <div class="group">
       <mu-dropdown
         style="display: inline-block;"
@@ -49,9 +57,9 @@
     <div class="group">
       <mu-dropdown-button
         danger
-        caption="Dropdown Button"
         :dropdown-items="artists"
         @dropdown:itemclick="onItemClick">
+        Dropdown Button A
       </mu-dropdown-button>
       <mu-dropdown-button
         x-color="cyan"
@@ -60,6 +68,27 @@
         dropdown-trigger="click"
         :dropdown-items="artists"
         @click="onButtonClick"
+        @dropdown:itemclick="onItemClick">
+      </mu-dropdown-button>
+    </div>
+    <div class="group">
+      <mu-dropdown-button
+        class="mu-icon-button"
+        icon="dotsVert"
+        button-style="text"
+        :arrow="false"
+        :dropdown-items="artists"
+        @dropdown:itemclick="onItemClick">
+      </mu-dropdown-button>
+      <mu-dropdown-button
+        tool-button
+        icon="dotsVert"
+        :dropdown-items="artists"
+        @dropdown:itemclick="onItemClick">
+      </mu-dropdown-button>
+      <mu-dropdown-button
+        tool-button
+        :dropdown-items="artists"
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
@@ -96,7 +125,7 @@
         dropdown-style="max-height: 200px;"
         dropdown-scrollbar
         :dropdown-items="artists">
-        <mu-button>Scrollbar</mu-button>
+        <mu-button>Mussel Scrollbar</mu-button>
       </mu-dropdown>
     </div>
     <div id="divX" class="group">
