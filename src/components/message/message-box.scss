@@ -1,8 +1,20 @@
-.mu-message-box .mu-message {
-  flex: 1 1 0;
-  padding: 0 calc(var(--mu-base-spacing) * 4);
+.mu-modal-mask.mu-message-mask {
+  z-index: calc(var(--mu-z-index-ontop) - 1);
+}
 
-  & > .mu-message_title {
-    font-size: calc(1em + 2px);
+.mu-message-box {
+  &.mu-dialog {
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  & > .mu-message {
+    overflow: hidden auto;
+    flex: 1 1 auto;
+    padding: 0 calc(var(--mu-base-spacing) * 4);
+  
+    & > .mu-message_title {
+      font-size: calc(1em + 2px);
+    }
   }
 }

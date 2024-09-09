@@ -2,16 +2,16 @@
   <Teleport v-if="visible || ready" :to="container">
     <Transition name="mu-dialog">
       <div
-        v-show="modalVisible" v-bind="maskAttrs"
-        class="mu-modal-mask mu-dialog-mask" :style="{ zIndex }"
-        @sizechange="onMaskResize"
-        @click="onMaskClick">
+        v-show="modalVisible"
+        class="mu-modal-mask mu-dialog-mask"
+        :class="maskClass" :style="{ zIndex }" v-bind="maskAttrs"
+        @sizechange="onMaskResize" @click="onMaskClick">
         <div
           ref="dialogEl"
           class="mu-dialog" :style="[{ transform }, sizeStyle]"
           v-bind="$attrs" :dragging="dragging"
           @mousedown="onDragStart">
-          <slot name="dialog">
+          <slot name="client">
             <div v-if="headerVisible" class="mu-dialog_header">
               <slot name="header">
                 <slot name="header-prepend" />
@@ -20,8 +20,8 @@
                 <slot name="header-append" />
                 <mu-tool-button
                   v-if="closeButton"
-                  class="mu-dialog_close-button" icon="x"
-                  @click="onCloseButtonClick" />
+                  class="mu-close-button" icon="x"
+                  @click="hide('close-button-click', '$CLOSE')" />
               </slot>
             </div>
             <slot />
@@ -53,29 +53,32 @@
   import { isString } from '@/utils/type'
   import { debounce } from 'throttle-debounce'
 
-  const { genKey, getObjectKey } = useKeyGen()
-
   defineOptions({ name: 'MusselDialog', inheritAttrs: false })
 
   const slots = defineSlots()
   const emit = defineEmits([...modalEvents, 'buttonClick'])
 
   const props = defineProps({
+    ...sizeProps,
+    ...modalProps,
+    zIndex: String,
+    buttons: Array,
+    keepPosition: Boolean,
     icon: [String, Object],
     title: [String, Object],
-    buttons: Array,
-    zIndex: String,
-    maskAttrs: Object,
-    keepPosition: Boolean,
-    closeButton: { type: Boolean, default: true },
-    ...sizeProps,
-    ...modalProps
+    closeButton: { type: Boolean, default: true }
   })
+
+  const { ready, container, modalVisible, hide, onMaskClick } = useModal(props, emit)
+  const { genKey, getObjectKey } = useKeyGen()
+  const { sizeStyle } = useSize(props)
 
   const headerVisible = computed(() => props.title ?? (props.closeButton || slots.header))
   const footerVisible = computed(() => props.buttons?.length || slots.footer)
 
-  const iconBindings = computed(() => isString(props.icon) ? { icon: props.icon } : props.icon)
+  const iconBindings = computed(() =>
+    isString(props.icon) ? { icon: props.icon } : props.icon
+  )
 
   const footerButtons = computed(() =>
     props.buttons?.map(el =>
@@ -85,19 +88,8 @@
     )
   )
 
-  const sizeStyle = useSize(props).sizeStyle
-
-  const {
-    ready,
-    container,
-    modalVisible,
-    hide,
-    onMaskClick,
-    onCloseButtonClick
-  } = useModal(props, emit)
-
-  const dialogEl = shallowRef()
   const dragging = ref()
+  const dialogEl = shallowRef()
   const translate = shallowReactive({ x: 0, y: 0 })
   const transform = computed(() => `translate3d(${translate.x}px, ${translate.y}px, 0)`)
 
@@ -125,7 +117,7 @@
     }
   }
 
-  const onMaskResize = debounce(500, correctPosition)
+  const onMaskResize = debounce(300, correctPosition)
 
   function onDragStart (event) {
     const { classList } = event.target
@@ -158,10 +150,13 @@
   }
 
   function onButtonClick (btn) {
-    emit('buttonClick', btn.name || btn.bindings)
+    const { action, bindings = {} } = btn
+    const { name = bindings.name || bindings.id || bindings.caption } = btn
 
-    if (btn.action === 'close') {
-      hide('button-click', btn.name)
+    if (action === 'close') {
+      hide('button-click', name)
+    } else {
+      emit('buttonClick', name)
     }
   }
 
@@ -169,5 +164,9 @@
     if (props.visible && !props.keepPosition) {
       Object.assign(translate, { x: 0, y: 0 })
     }
+  })
+
+  defineExpose({
+    hide
   })
 </script>

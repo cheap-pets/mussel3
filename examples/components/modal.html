@@ -22,8 +22,7 @@
   <style>
     .group {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 16px;
 
       padding: 8px;
       margin: 8px;
@@ -46,9 +45,16 @@
 <body>
   <div id="app" class="mu-box" position="fixed fit">
     <h2>Modal Dialog</h2>
-    <div id="divX" class="group">
+    <div id="div1" class="group">
       <mu-button caption="Open Dialog 1" @click="openDialog1"></mu-button>
-      <mu-button caption="Request Fullscreen" @click="requestFullscreen"></mu-button>
+      <mu-button caption="Request Fullscreen" accent button-style="outline" @click="requestFullscreen('#div1')"></mu-button>
+    </div>
+    <div id="div2" class="group">
+      <mu-button caption="Open Drawer: Top" @click="openDrawer1('top')"></mu-button>
+      <mu-button caption="Open Drawer: Bottom" @click="openDrawer1('bottom')"></mu-button>
+      <mu-button caption="Open Drawer: Left" @click="openDrawer1('left')"></mu-button>
+      <mu-button caption="Open Drawer: Right" @click="openDrawer1('right')"></mu-button>
+      <mu-button caption="Request Fullscreen" accent button-style="outline" @click="requestFullscreen('#div2')"></mu-button>
     </div>
     <mu-dialog
       v-model:visible="dialog1Visible"
@@ -83,13 +89,23 @@
         <mu-editor placeholder="where's your money?"></mu-editor>
       </template>
     </mu-dialog>
+    <mu-drawer
+      v-model:visible="drawer1Visible"
+      :position="drawerPosition"
+      width="500"
+      easy-hide>
+    </mu-drawer>
+
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
-        const dialog1Visible = Vue.ref()
         const $mussel = Vue.inject('$mussel')
+        const dialog1Visible = Vue.ref()
+        const drawer1Visible = Vue.ref()
+        const drawerPosition = Vue.ref()
+
 
         const menus = [
           { label: 'Open Recent Files' },
@@ -101,9 +117,14 @@
         function openDialog1 () {
           dialog1Visible.value = true
         }
+
+        function openDrawer1 (position) {
+          drawerPosition.value = position
+          drawer1Visible.value = true
+        }
         
-        function requestFullscreen () {
-          document.querySelector('#divX').requestFullscreen()
+        function requestFullscreen (divId) {
+          document.querySelector(divId).requestFullscreen()
         }
 
         function onDialogVisibleChange (dialogName, value, action, btn) {
@@ -120,8 +141,11 @@
 
         return {
           dialog1Visible,
+          drawer1Visible,
+          drawerPosition,
           menus,
           openDialog1,
+          openDrawer1,
           onDialogVisibleChange,
           onButtonClick,
           requestFullscreen

@@ -36,15 +36,10 @@ window.addEventListener('scroll', event => {
   activePopup?.onCaptureScroll?.(event)
 }, true)
 
-window.addEventListener('blur', event => {
-  activePopup?.hide?.(event)
-})
+window.addEventListener('blur', () => activePopup?.hide?.())
+window.addEventListener('fullscreenchange', () => activePopup?.hide?.())
 
-window.addEventListener('fullscreenchange', event => {
-  activePopup?.hide?.(event)
-})
-
-export function usePopupManager (visibleRef, options = {}) {
+export function usePopupManager (watchableVisible, options = {}) {
   const instance = { ...options }
 
   function setActivePopup () {
@@ -60,7 +55,7 @@ export function usePopupManager (visibleRef, options = {}) {
     }
   }
 
-  watch(visibleRef, v => {
+  watch(watchableVisible, v => {
     if (v) {
       setActivePopup()
     } else {
@@ -71,7 +66,7 @@ export function usePopupManager (visibleRef, options = {}) {
   onUnmounted(unsetActivePopup)
 }
 
-export function useModalManager (visibleRef, options = {}) {
+export function useModalManager (watchableVisible, options = {}) {
   const instance = { ...options }
 
   function pushModal () {
@@ -91,13 +86,13 @@ export function useModalManager (visibleRef, options = {}) {
     }
   }
 
-  watch(visibleRef, v => {
+  watch(watchableVisible, v => {
     if (v) {
       pushModal()
     } else {
       popModal()
     }
-  })
+  }, { immediate: true })
 
   onUnmounted(popModal)
 }

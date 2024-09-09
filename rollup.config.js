@@ -15,8 +15,6 @@ import { fileURLToPath } from 'url'
 import { generatePreCssVariables } from './src/theme.js'
 
 const isDevEnv = process.env.dev
-const currentDir = path.dirname(fileURLToPath(import.meta.url))
-
 const scssVariables = generatePreCssVariables()
 
 function warn (...args) {
@@ -41,11 +39,11 @@ export default {
       entries: [
         {
           find: '~icons',
-          replacement: path.resolve(currentDir, 'node_modules/@tabler/icons/icons')
+          replacement: path.resolve('node_modules/@tabler/icons/icons')
         },
         {
           find: '@',
-          replacement: path.resolve(currentDir, 'src')
+          replacement: path.resolve('src')
         }
       ]
     }),
@@ -70,7 +68,7 @@ export default {
         }
       },
       env: {
-        targets: browserslist.findConfig(currentDir).defaults,
+        targets: browserslist.findConfig('.').defaults,
         coreJs: 3
       },
       minify: !isDevEnv

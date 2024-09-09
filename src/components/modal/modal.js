@@ -1,12 +1,14 @@
-import { ref, shallowRef, toRef, inject, watch, onBeforeMount } from 'vue'
+import { ref, shallowRef, inject, watch, onMounted } from 'vue'
 import { useModalManager } from '@/hooks/popup'
 import { delay } from '@/utils/timer'
 
 export const modalProps = {
-  lazy: { type: Boolean, default: true },
+  maskClass: null,
+  maskAttrs: Object,
   visible: Boolean,
   easyHide: Boolean,
-  disposeOnHide: Boolean
+  disposeOnHide: Boolean,
+  lazy: { type: Boolean, default: true }
 }
 
 export const modalEvents = [
@@ -23,9 +25,8 @@ export function useModal (props, emit) {
 
   const ready = ref()
   const modalVisible = ref()
-  const visibleRef = toRef(() => props.visible)
 
-  useModalManager(visibleRef, {
+  useModalManager(modalVisible, {
     hide,
     onCaptureEscKeyDown,
     onCaptureMouseDown,
@@ -35,23 +36,19 @@ export function useModal (props, emit) {
   let isMouseDownInMask
   let isMouseUpInMask
 
-  function hide (...args) {
-    emit('update:visible', false, ...args)
+  function hide (action, trigger) {
+    emit('update:visible', false, action, trigger)
   }
 
   function onMaskClick (event) {
     if (props.easyHide && isMouseDownInMask && isMouseUpInMask) {
       isMouseDownInMask = undefined
-      hide('mask-click')
+      hide('mask-click', '$MASK')
     }
   }
 
-  function onCloseButtonClick () {
-    hide('close-button-click')
-  }
-
   function onCaptureEscKeyDown (event) {
-    if (props.visible && props.easyHide) hide('esc-key')
+    if (props.visible && props.easyHide) hide('esc-key', '$ESC')
   }
 
   function onCaptureMouseDown (event) {
@@ -63,8 +60,8 @@ export function useModal (props, emit) {
     isMouseUpInMask = targetIsMask(event)
   }
 
-  watch(visibleRef, async v => {
-    if (v) {
+  async function setModalVisible (value) {
+    if (value) {
       container.value = document.fullscreenElement || rootEl
 
       if (!ready.value) {
@@ -73,17 +70,24 @@ export function useModal (props, emit) {
       }
     }
 
-    modalVisible.value = visibleRef.value
-  })
+    modalVisible.value = props.visible
+  }
 
-  onBeforeMount(() => { ready.value = !props.lazy })
+  watch(() => props.visible, setModalVisible)
+
+  onMounted(() => {
+    ready.value = !props.lazy
+
+    if (props.visible) {
+      setModalVisible(props.visible)
+    }
+  })
 
   return {
     ready,
     container,
     modalVisible,
     hide,
-    onMaskClick,
-    onCloseButtonClick
+    onMaskClick
   }
 }

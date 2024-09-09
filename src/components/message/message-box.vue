@@ -1,12 +1,10 @@
 <template>
   <mu-dialog
+    ref="dialog"
     v-model:visible="visible"
-    class="mu-message-box"
-    close-button
-    :buttons="buttons"
-    :easy-hide="easyHide"
-    @button-click="onButtonClick"
-    @close-button-click="onButtonClick">
+    :buttons="buttons" :easy-hide="easyHide"
+    class="mu-message-box" mask-class="mu-message-mask"
+    @button-click="onButtonClick" @update:visible="onVisibleChange">
     <mu-message v-bind="{ icon, title, message, type }" />
   </mu-dialog>
 </template>
@@ -16,7 +14,7 @@
 
   import MuMessage from './message.vue'
 
-  import { ref, inject, onMounted } from 'vue'
+  import { ref, inject } from 'vue'
 
   const props = defineProps({
     icon: null,
@@ -30,14 +28,14 @@
   const { messageBox: options = {} } = inject('$mussel').options
   const { easyHide = true } = options
 
-  const visible = ref()
+  const dialog = ref()
+  const visible = ref(true)
 
   function onButtonClick (btn) {
-    visible.value = false
-    props.callback?.(btn?.raw || btn)
+    dialog.value.hide('button-click', btn)
   }
 
-  onMounted(() => {
-    visible.value = true
-  })
+  function onVisibleChange (v, action, trigger) {
+    if (!v) props.callback?.(trigger)
+  }
 </script>

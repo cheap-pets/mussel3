@@ -1,7 +1,7 @@
 import { ref, shallowRef, computed, provide, inject } from 'vue'
-import { usePopupManager } from '@/hooks/popup'
 import { findUp, isElementInViewport } from '@/utils/dom'
 import { getTransitionDuration } from '@/utils/style'
+import { usePopupManager } from '@/hooks/popup'
 import { delay } from '@/utils/timer'
 
 export const dropdownProps = {
@@ -13,6 +13,10 @@ export const dropdownProps = {
     type: String,
     default: 'hover',
     validator: v => ['hover', 'click'].includes(v)
+  },
+  positioned: {
+    type: String,
+    validator: v => ['top', 'bottom'].includes(v)
   }
 }
 
@@ -43,7 +47,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
   const ddEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
   const dropdownVisible = computed(() => expanded.value)
 
-  usePopupManager(expanded, {
+  usePopupManager(dropdownVisible, {
     hide,
     onCaptureEscKeyDown,
     onCaptureMouseDown,
@@ -66,31 +70,36 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
   function updatePosition () {
     if (!activityStyle.value) return
 
-    const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
-    const { width: dw, height: dh } = ddEl.value.getBoundingClientRect()
-    const { innerWidth: tw, innerHeight: th } = window
-
-    const style = {}
-
-    if (dw < hw) {
-      style.width = `${hw}px`
-    }
-
-    if ((dw > hw) && ((tw - hl >= dw) || (hr < dw))) {
-      style.left = `${hl}px`
+    if (props.positioned) {
+      ddEl.value.setAttribute('position', props.positioned)
     } else {
-      style.right = `${tw - hr}px`
+      const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
+      const { width: dw, height: dh } = ddEl.value.getBoundingClientRect()
+      const { innerWidth: tw, innerHeight: th } = window
+
+      const style = {}
+
+      if (dw < hw) {
+        style.width = `${hw}px`
+      }
+
+      if ((dw > hw) && ((tw - hl >= dw) || (hr < dw))) {
+        style.left = `${hl}px`
+      } else {
+        style.right = `${tw - hr}px`
+      }
+
+      if (th - hb > dh || ht < dh) {
+        ddEl.value.setAttribute('position', 'bottom')
+        style.top = `${hb}px`
+      } else {
+        ddEl.value.setAttribute('position', 'top')
+        style.bottom = `${th - ht}px`
+      }
+
+      activityStyle.value = style
     }
 
-    if (th - hb > dh || ht < dh) {
-      ddEl.value.setAttribute('position', 'bottom')
-      style.top = `${hb}px`
-    } else {
-      ddEl.value.setAttribute('position', 'top')
-      style.bottom = `${th - ht}px`
-    }
-
-    activityStyle.value = style
     ddEl.value.removeAttribute('measuring')
   }
 
@@ -191,7 +200,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
 
   function onCaptureEscKeyDown (event) {
     if (expanded.value && !isHoverTrigger()) {
-      hide('esc-key')
+      hide()
     }
   }
 

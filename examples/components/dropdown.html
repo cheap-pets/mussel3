@@ -140,6 +140,15 @@
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
+    <mu-dropdown-button
+      accent large
+      class="mu-icon-button"
+      icon="dotsVert"
+      positioned="bottom"
+      :arrow="false"
+      style="position: fixed; top: 0; right: 0;"
+      dropdown-style="top: 40px; right: 0; bottom: 0; width: 500px; margin-top: 2px; background-color: var(--mu-accent-color-0);">
+    </mu-dropdown>
     <!-- <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>
       <mu-dropdown-panel
