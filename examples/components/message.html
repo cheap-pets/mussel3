@@ -20,6 +20,12 @@
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
 
   <style>
+    h2 {
+      margin: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid currentColor;
+    }
+
     .group {
       display: flex;
       gap: 8px;
@@ -33,6 +39,7 @@
 
 <body>
   <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
+    <h2>Message Components & API</h2>
     <div class="group">
       <mu-button @click="alert">Alert</mu-button>
       <mu-button @click="confirm">Confirm</mu-button>

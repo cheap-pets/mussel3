@@ -39,7 +39,7 @@
 .mu-h-box,
 .mu-v-box,
 .mu-box[layout=flex] {
-  align-items: stretch;
+  // align-items: stretch;
   
   &[content-center] {
     align-items: center;

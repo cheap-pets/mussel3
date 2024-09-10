@@ -12,9 +12,5 @@
     overflow: hidden auto;
     flex: 1 1 auto;
     padding: 0 calc(var(--mu-base-spacing) * 4);
-  
-    & > .mu-message_title {
-      font-size: calc(1em + 2px);
-    }
   }
 }

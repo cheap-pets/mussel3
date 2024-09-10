@@ -6,6 +6,7 @@
 
   &.mu-drawer-mask {
     z-index: var(--mu-z-index-layer);
+    backdrop-filter: none;
   }
 }
 
@@ -22,10 +23,13 @@
   color: var(--mu-text-color-normal);
 
   background: var(--mu-bg-normal);
-  // border-radius: var(--mu-window-border-radius);
-  box-shadow: var(--mu-shadow-modal);
+  box-shadow: var(--mu-shadow-layer);
 
   transition: transform .2s, opacity .2s;
+
+  &[border-radius] {
+    border-radius: var(--mu-window-border-radius);
+  }
 
   &[position=top] {
     top: 0;

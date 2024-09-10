@@ -73,7 +73,7 @@
   const { genKey, getObjectKey } = useKeyGen()
   const { sizeStyle } = useSize(props)
 
-  const headerVisible = computed(() => props.title ?? (props.closeButton || slots.header))
+  const headerVisible = computed(() => props.title || props.closeButton || slots.header)
   const footerVisible = computed(() => props.buttons?.length || slots.footer)
 
   const iconBindings = computed(() =>

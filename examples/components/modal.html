@@ -23,6 +23,7 @@
     .group {
       display: flex;
       gap: 16px;
+      flex-wrap: wrap;
 
       padding: 8px;
       margin: 8px;
@@ -55,6 +56,8 @@
       <mu-button caption="Open Drawer: Left" @click="openDrawer1('left')"></mu-button>
       <mu-button caption="Open Drawer: Right" @click="openDrawer1('right')"></mu-button>
       <mu-button caption="Request Fullscreen" accent button-style="outline" @click="requestFullscreen('#div2')"></mu-button>
+      <mu-switch v-model="maskVisible" label="Mask Visible"></mu-switch>
+      <mu-switch v-model="borderRadius" label="Border Radius"></mu-switch>
     </div>
     <mu-dialog
       v-model:visible="dialog1Visible"
@@ -92,8 +95,12 @@
     <mu-drawer
       v-model:visible="drawer1Visible"
       :position="drawerPosition"
-      width="500"
+      :mask="maskVisible"
+      :border-radius="borderRadius"
+      style="padding: 16px;"
+      width="50%"
       easy-hide>
+      <label>I am a drawer.</label>
     </mu-drawer>
 
   </div>
@@ -105,7 +112,8 @@
         const dialog1Visible = Vue.ref()
         const drawer1Visible = Vue.ref()
         const drawerPosition = Vue.ref()
-
+        const maskVisible = Vue.ref(true)
+        const borderRadius = Vue.ref(true)
 
         const menus = [
           { label: 'Open Recent Files' },
@@ -143,6 +151,8 @@
           dialog1Visible,
           drawer1Visible,
           drawerPosition,
+          maskVisible,
+          borderRadius,
           menus,
           openDialog1,
           openDrawer1,

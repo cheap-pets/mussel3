@@ -1,8 +1,8 @@
 <template>
   <div class="mu-message">
     <div class="mu-message_title">
-      <mu-icon :icon="icon" />
-      <span>{{ title }}</span>
+      <mu-icon class="mu-message_icon" :icon="icon" />
+      <label>{{ title }}</label>
     </div>
     <div class="mu-message_content" v-html="html" />
   </div>

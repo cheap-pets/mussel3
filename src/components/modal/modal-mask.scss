@@ -5,4 +5,14 @@
 
   background: var(--mu-bg-mask);
   backdrop-filter: blur(4px);
+
+  &[invisible] {
+    pointer-events: none;
+    background: none;
+    backdrop-filter: none;
+  }
+
+  & > * {
+    pointer-events: auto;
+  }
 }
