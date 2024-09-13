@@ -65,6 +65,7 @@
 
     z-index: 1;
     color: var(--mu-button_color);
+    background-color: rgb(from var(--mu-button_color) r g b / 0.1);
   }
 
   &:hover {
@@ -125,11 +126,17 @@
 }
 
 .mu-button {
+  &:disabled,
   &[disabled] {
     pointer-events: none;
     color: var(--mu-text-color-subtle) !important;
     background: var(--mu-bg-disabled);
     border-color: var(--mu-border-color-muted);
+  }
+
+  &[button-style="link"] {
+    height: unset;
+    padding: 0;
   }
 
   &[button-style="text"],
@@ -141,14 +148,17 @@
   &[button-style="text"],
   &[button-style="link"] {
     border-color: transparent;
+    box-shadow: none;
   }
 
   &[button-style="text"]:hover {
-    border-color: var(--mu-button_color);
+    background: var(--mu-bg-translucent-gray);
   }
 
-  &[button-style="link"] {
-    padding: 0;
-    box-shadow: none;
+  &[button-style="text"],
+  &[button-style="outline"] {
+    &[active] {
+      background-color: rgb(from var(--mu-button_color) r g b / 0.1);
+    }
   }
 }

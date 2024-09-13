@@ -22,12 +22,12 @@
 }
 
 .mu-message {
-  &[type=success] > .mu-message_icon {
+  &[type=success] .mu-message_icon {
     color: var(--mu-success-color-4);
   }
 
-  &[type=warn] > .mu-message_icon,
-  &[type=error] > .mu-message_icon {
+  &[type=warn] .mu-message_icon,
+  &[type=error] .mu-message_icon {
     color: var(--mu-danger-color-4);
   }
 }

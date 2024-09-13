@@ -29,7 +29,8 @@
       </div>
     </div>
     <p>
-      <mu-button @click="onClick">Reset Height</mu-button>
+    <mu-button @click="resetHeight">Reset Height</mu-button>&nbsp;
+    <mu-button @click="setScrollTop">Set ScrollTop</mu-button>
     </p>
     <mu-scroll-box class="scroll-container">
       <div class="scroll-element">
@@ -49,15 +50,22 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup (props, context) {
-        function onClick () {
+        function resetHeight () {
           const el = document.querySelector('.scroll-element')
 
           el.style.height = '1000px'
           el.style.width = '100px'
         }
 
+        function setScrollTop () {
+          const el = document.querySelector('.scroll-container')
+          el.scrollTop = el.scrollTop + 500
+
+        }
+
         return {
-          onClick
+          resetHeight,
+          setScrollTop
         }
       }
     })

@@ -12,7 +12,9 @@ export const modalProps = {
 }
 
 export const modalEvents = [
-  'update:visible'
+  'update:visible',
+  'show',
+  'hide'
 ]
 
 function targetIsMask (event) {
@@ -71,6 +73,11 @@ export function useModal (props, emit) {
     }
 
     modalVisible.value = props.visible
+
+    delay().then(() =>
+      (value === modalVisible.value) &&
+      emit(modalVisible.value ? 'show' : 'hide')
+    )
   }
 
   watch(() => props.visible, setModalVisible)

@@ -1,5 +1,10 @@
 <template>
-  <button ref="thisEl" class="mu-button" v-bind="attrs">
+  <button
+    ref="thisEl"
+    class="mu-button"
+    :type="type"
+    :active="active || null"
+    v-bind="bindings">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />{{ caption }}
     </slot>
@@ -43,19 +48,26 @@
   const LOCAL_FIRST_ATTRS = ['primary', 'danger', 'accent', 'xColor']
 
   const GROUP_ONLY_ATTRS = ['small', 'round', 'buttonStyle']
-  const LOCAL_ONLY_ATTRS = ['type', 'active']
 
   const inheritedProps = inject('groupedButtonOptions', { grouped: false })
   const isGrouped = inheritedProps.grouped !== false
 
-  const attrs = computed(() => {
+  function getInheritedProp (key) {
+    const value = inheritedProps[key]
+
+    return key === 'buttonStyle' && value && value !== 'outline'
+      ? 'normal'
+      : value
+  }
+
+  const bindings = computed(() => {
     if (!thisEl.value) return
 
-    const result = {}
+    const values = {}
 
     function assignValue (key, value) {
       if (value) {
-        result[kebabCase(key)] = (value === true ? '' : value)
+        values[kebabCase(key)] = (value === true ? '' : value)
         return true
       }
     }
@@ -66,7 +78,7 @@
     )
 
     GROUP_ONLY_ATTRS.forEach(key => isGrouped
-      ? assignValue(key, inheritedProps[key])
+      ? assignValue(key, getInheritedProp(key))
       : assignValue(key, props[key])
     )
 
@@ -74,28 +86,22 @@
       LOCAL_FIRST_ATTRS.find(key => assignValue(key, inheritedProps[key]))
     }
 
-    LOCAL_ONLY_ATTRS.forEach(key => assignValue(key, props[key]))
-
-    if (result['x-color']) {
+    if (values['x-color']) {
       const xColors = generateAdjacentColors(
-        getComputedXColor(result['x-color'], thisEl.value)
+        getComputedXColor(values['x-color'], thisEl.value)
       )
 
       if (xColors) {
-        result.style = {
+        values.style = {
           '--mu-x-color': xColors.color,
           '--mu-x-color-dark': xColors.dark,
           '--mu-x-color-light': xColors.light
         }
 
-        result['x-color'] = ''
+        values['x-color'] = ''
       }
     }
 
-    if (isGrouped && result.active === '' && result['button-style']) {
-      delete result['button-style']
-    }
-
-    return result
+    return values
   })
 </script>

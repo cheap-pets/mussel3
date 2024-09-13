@@ -16,7 +16,7 @@
   padding: 0;
 
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: var(--mu-common-line-height);
   text-decoration: none;
 
@@ -62,7 +62,7 @@
   }
 
   &[active] {
-    background-color: rgb(from var(--mu-button_color) r g b / 0.15);
+    background-color: rgb(from var(--mu-button_color) r g b / 0.1);
     border:  1px solid var(--mu-button_color);
   }
 

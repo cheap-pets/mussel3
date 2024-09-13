@@ -3,12 +3,13 @@
     <Transition name="mu-dialog">
       <div
         v-show="modalVisible"
+        ref="maskEl"
         class="mu-modal-mask mu-dialog-mask"
         :class="maskClass" :style="{ zIndex }" v-bind="maskAttrs"
         @sizechange="onMaskResize" @click="onMaskClick">
         <div
           ref="dialogEl"
-          class="mu-dialog" :style="[{ transform }, sizeStyle]"
+          class="mu-dialog" :style="[sizeStyle, position]"
           v-bind="$attrs" :dragging="dragging"
           @mousedown="onDragStart">
           <slot name="client">
@@ -45,7 +46,7 @@
 <script setup>
   import './dialog.scss'
 
-  import { ref, shallowRef, shallowReactive, computed, watchEffect } from 'vue'
+  import { ref, shallowRef, reactive, computed, watchEffect } from 'vue'
   import { modalProps, modalEvents, useModal } from './modal'
   import { ButtonShortcuts } from './button-shortcuts'
   import { sizeProps, useSize } from '@/hooks/size'
@@ -88,32 +89,37 @@
     )
   )
 
-  const dragging = ref()
+  const maskEl = shallowRef()
   const dialogEl = shallowRef()
-  const translate = shallowReactive({ x: 0, y: 0 })
-  const transform = computed(() => `translate3d(${translate.x}px, ${translate.y}px, 0)`)
+
+  const dragging = ref()
+  const position = reactive({})
 
   function correctPosition () {
-    if (!modalVisible.value) {
-      return
-    }
+    if (!modalVisible.value) return
 
-    const { top, left, height, width } = dialogEl.value.getBoundingClientRect()
-    const { innerHeight, innerWidth } = window
+    const {
+      offsetTop: top,
+      offsetLeft: left,
+      offsetHeight: height,
+      offsetWidth: width
+    } = dialogEl.value
 
-    const minH = height <= innerHeight ? height : innerHeight
-    const minW = height <= innerWidth ? width : innerWidth
+    const { clientHeight, clientWidth } = maskEl.value
+
+    const maxTop = clientHeight - (height <= clientHeight ? height : clientHeight)
+    const maxLeft = clientWidth - (width <= clientWidth ? width : clientWidth)
 
     if (top < 0) {
-      translate.y -= top
-    } else if (top > innerHeight - minH) {
-      translate.y -= top - innerHeight + minH
+      position.top = 0
+    } else if (top > maxTop) {
+      position.top = `${maxTop}px`
     }
 
     if (left < 0) {
-      translate.x -= left
-    } else if (left > innerWidth - minW) {
-      translate.x -= left - innerWidth + minW
+      position.left = 0
+    } else if (left > maxLeft) {
+      position.left = `${maxLeft}px`
     }
   }
 
@@ -126,14 +132,14 @@
       !['mu-dialog_header', 'mu-dialog_title'].find(cls => classList.contains(cls))
     ) return
 
-    const { pageX, pageY } = event
-    const { x: startX, y: startY } = translate
+    const { pageY, pageX } = event
+    const { offsetTop: startY, offsetLeft: startX } = dialogEl.value
 
     dragging.value = true
 
     function onMouseMove (e) {
-      translate.x = startX + e.pageX - pageX
-      translate.y = startY + e.pageY - pageY
+      position.top = `${parseInt(startY + e.pageY - pageY)}px`
+      position.left = `${parseInt(startX + e.pageX - pageX)}px`
     }
 
     function onMouseUp () {
@@ -162,7 +168,7 @@
 
   watchEffect(() => {
     if (props.visible && !props.keepPosition) {
-      Object.assign(translate, { x: 0, y: 0 })
+      Object.assign(position, { top: undefined, left: undefined })
     }
   })
 

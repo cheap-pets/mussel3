@@ -38,6 +38,36 @@
       padding: 8px;
       margin: 8px;
     }
+
+    .mu-dropdown-panel.sys-menu_mask {
+      pointer-events: none;
+      top: 52px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: var(--mu-bg-mask);
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .sys-menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 360px;
+      background-color: #f0f0f0;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: transform .2s, opacity .2s;
+      box-shadow: var(--mu-shadow-layer);
+    }
+
+    .sys-menu_mask[expanded] > .sys-menu {
+      transform: translateY(0);
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -148,23 +178,17 @@
       </mu-dropdown-button>
     </div>
     <mu-dropdown-button
-      accent large
       class="mu-icon-button"
-      icon="dotsVert"
-      positioned="bottom"
+      accent large icon="dotsVert"
+      dropdown-trigger="click"
+      positioned
       :arrow="false"
-      style="position: fixed; top: 0; right: 0;"
-      dropdown-style="top: 40px; right: 0; bottom: 0; width: 500px; margin-top: 2px; background-color: var(--mu-accent-color-0);">
-    </mu-dropdown>
-    <!-- <div class="mu-box" layout="flex" padding="1x">
-      <mu-button @click="stickyPanelVisible = true">Where's the Dropdown ?</mu-button>
-      <mu-dropdown-panel
-        :items="artists"
-        :sticky-target="btnGrape"
-        width="auto"
-        v-model:visible="stickyPanelVisible">
-      </mu-dropdown-panel>
-    </div> -->
+      style="position: fixed; top: 6px; right: 16px;"
+      dropdown-class="sys-menu_mask">
+      <template #dropdown>
+        <div class="sys-menu"></div>
+      </template>
+    </mu-dropdown-button>
   </div>
 
   <script type="text/javascript">

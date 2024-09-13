@@ -8,6 +8,7 @@ export { default as circleX } from '~icons/filled/circle-x.svg'
 export { default as circleCheck } from '~icons/filled/circle-check.svg'
 export { default as circleAlert } from '~icons/filled/alert-circle.svg'
 export { default as triangleAlert } from '~icons/filled/alert-triangle.svg'
+export { default as circleQuestion } from '~icons/filled/help-circle.svg'
 
 export { default as file } from '~icons/outline/file.svg'
 export { default as folder } from '~icons/outline/folder.svg'

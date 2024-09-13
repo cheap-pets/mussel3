@@ -18,7 +18,7 @@ export default {
   Message: {
     ALERT: '提示',
     SUCCESS: '成功',
-    CONFIRM: '提示',
+    CONFIRM: '确认',
     ERROR: '出错',
     WARN: '警告'
   },

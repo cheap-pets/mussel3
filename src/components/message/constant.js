@@ -12,7 +12,7 @@ export const MessageTypes = {
     buttons: ['OK']
   },
   CONFIRM: {
-    icon: 'circleAlert',
+    icon: 'circleQuestion',
     title: lang.Message.CONFIRM,
     buttons: ['CANCEL', 'OK']
   },

@@ -83,9 +83,9 @@
           :dropdown-items="menus">
         </mu-dropdown>
       </template>
-      <div class="mu-dialog_body mu-bg-strong" v-mu-scrollbar>
-        <div style="height: 1000px;">
-        It's a long story...
+      <div v-mu-scrollbar class="mu-dialog_body mu-bg-strong" style="padding: 24px;">
+        <div style="height: 1000px; font-style: italic; font-size: 16px;">
+          A long time ago in a galaxy far, far away…
         </div>
       </div>
       <template #footer-prepend>
@@ -164,7 +164,7 @@
     })
 
     mussel.install(app, {
-      darkMode: false,
+      darkMode: true,
       icons: {
         box: 'ti ti-box',
         search: 'ti ti-search'

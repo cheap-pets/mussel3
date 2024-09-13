@@ -7,9 +7,21 @@
 <script setup>
   import './button-group.scss'
 
-  import { buttonGroupProps, useButtonGroup } from './hooks/button-group'
+  import { provide } from 'vue'
 
-  const props = defineProps({ ...buttonGroupProps })
+  const props = defineProps({
+    primary: Boolean,
+    danger: Boolean,
+    accent: Boolean,
+    xColor: [Boolean, String],
+    small: Boolean,
+    round: Boolean,
+    disabled: Boolean,
+    buttonStyle: {
+      type: String,
+      validator: v => ['normal', 'outline'].includes(v)
+    }
+  })
 
-  useButtonGroup(props)
+  provide('groupedButtonOptions', props)
 </script>

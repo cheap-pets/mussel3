@@ -2,6 +2,7 @@ import { ref, shallowRef, computed, provide, inject } from 'vue'
 import { findUp, isElementInViewport } from '@/utils/dom'
 import { getTransitionDuration } from '@/utils/style'
 import { usePopupManager } from '@/hooks/popup'
+import { isString } from '@/utils/type'
 import { delay } from '@/utils/timer'
 
 export const dropdownProps = {
@@ -15,8 +16,8 @@ export const dropdownProps = {
     validator: v => ['hover', 'click'].includes(v)
   },
   positioned: {
-    type: String,
-    validator: v => ['top', 'bottom'].includes(v)
+    type: [Boolean, String],
+    validator: v => [true, false, 'top', 'bottom'].includes(v)
   }
 }
 
@@ -44,7 +45,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
   }))
 
   const hostEl = computed(() => hostRef.value?.$el || hostRef.value)
-  const ddEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
+  const dropdownEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
   const dropdownVisible = computed(() => expanded.value)
 
   usePopupManager(dropdownVisible, {
@@ -70,14 +71,15 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
   function updatePosition () {
     if (!activityStyle.value) return
 
-    if (props.positioned) {
-      ddEl.value.setAttribute('position', props.positioned)
-    } else {
-      const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
-      const { width: dw, height: dh } = ddEl.value.getBoundingClientRect()
-      const { innerWidth: tw, innerHeight: th } = window
+    const ddEl = dropdownEl.value
+    const style = {}
 
-      const style = {}
+    if (isString(props.positioned)) {
+      ddEl.setAttribute('position', props.positioned)
+    } else if (!props.positioned) {
+      const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
+      const { width: dw, height: dh } = ddEl.getBoundingClientRect()
+      const { innerWidth: tw, innerHeight: th } = window
 
       if (dw < hw) {
         style.width = `${hw}px`
@@ -90,17 +92,15 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
       }
 
       if (th - hb > dh || ht < dh) {
-        ddEl.value.setAttribute('position', 'bottom')
+        ddEl.setAttribute('position', 'bottom')
         style.top = `${hb}px`
       } else {
-        ddEl.value.setAttribute('position', 'top')
+        ddEl.setAttribute('position', 'top')
         style.bottom = `${th - ht}px`
       }
-
-      activityStyle.value = style
     }
 
-    ddEl.value.removeAttribute('measuring')
+    activityStyle.value = style
   }
 
   function show () {
@@ -108,7 +108,6 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
 
     if (!expanded.value) {
       dropdownContainer.value = document.fullscreenElement || rootEl
-      activityStyle.value = {}
       expanded.value = true
 
       emit('dropdown:show')
@@ -120,17 +119,21 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
           delay()
         )
         .then(() => {
-          const el = ddEl.value
+          const ddEl = dropdownEl.value
 
-          el.style.transition = 'none'
-          el.setAttribute('measuring', '')
-          el.removeAttribute('expanded')
+          ddEl.removeAttribute('expanded')
+          ddEl.style.transition = 'none'
+
+          activityStyle.value = {
+            transform: 'none',
+            visibility: 'hidden'
+          }
 
           delay()
             .then(updatePosition)
             .then(delay)
-            .then(() => { el.style.transition = null })
-            .then(() => expanded.value && el.setAttribute('expanded', ''))
+            .then(() => { ddEl.style.transition = null })
+            .then(() => expanded.value && ddEl.setAttribute('expanded', ''))
         })
     }
   }
@@ -143,12 +146,12 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
 
       emit('dropdown:hide')
 
-      const el = ddEl.value
+      const ddEl = dropdownEl.value
+      const duration = getTransitionDuration(ddEl)
 
-      el.removeAttribute('measuring')
-      el.removeAttribute('expanded')
+      ddEl.removeAttribute('expanded')
 
-      delay(getTransitionDuration(el)).then(() => {
+      delay(duration).then(() => {
         if (!expanded.value) activityStyle.value = null
       })
     }
@@ -179,7 +182,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
   function onDropdownClick (event) {
     const trigger = findUp(event.target, parent => {
       if (parent.hasAttribute('dropdown-hide-trigger')) return true
-      if (parent === ddEl.value) return false
+      if (parent === dropdownEl.value) return false
     })
 
     if (trigger) hide()
@@ -208,7 +211,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
     if (
       expanded.value &&
       !hostEl.value?.contains(event.target) &&
-      !ddEl.value?.contains(event.target)
+      !dropdownEl.value?.contains(event.target)
     ) hide()
   }
 
@@ -218,7 +221,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
     } else if (
       expanded.value &&
       event.target.contains(hostEl.value)
-      // && !ddEl.value.contains(event.target)
+      // && !dropdownEl.value.contains(event.target)
     ) updatePosition()
   }
 
