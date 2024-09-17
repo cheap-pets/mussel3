@@ -44,6 +44,12 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
     ...props.dropdownAttrs
   }))
 
+  const dropdownArrowBindings = computed(() => ({
+    icon: 'chevronDown',
+    class: 'mu-dropdown-arrow',
+    expanded: expanded.value || null
+  }))
+
   const hostEl = computed(() => hostRef.value?.$el || hostRef.value)
   const dropdownEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
   const dropdownVisible = computed(() => expanded.value)
@@ -236,6 +242,7 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
     dropdownVisible,
     dropdownBindings,
     dropdownContainer,
+    dropdownArrowBindings,
     show,
     hide,
     onTriggerClick,

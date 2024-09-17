@@ -21,7 +21,7 @@
                 <slot name="header-append" />
                 <mu-tool-button
                   v-if="closeButton"
-                  class="mu-close-button" icon="x"
+                  class="mu-close-button" icon="X"
                   @click="hide('close-button-click', '$CLOSE')" />
               </slot>
             </div>

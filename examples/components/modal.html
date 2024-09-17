@@ -77,9 +77,10 @@
         </mu-editor>
         <mu-dropdown-button
           class="mu-icon-button"
-          tool-button
-          icon="dotsVert"
+          button-style="text"
           dropdown-trigger="click"
+          icon="dots"
+          :arrow="false"
           :dropdown-items="menus">
         </mu-dropdown>
       </template>
@@ -167,6 +168,7 @@
       darkMode: true,
       icons: {
         box: 'ti ti-box',
+        dots: 'ti ti-dots',
         search: 'ti ti-search'
       }
     })

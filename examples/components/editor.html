@@ -52,7 +52,7 @@
     <h2>EDITOR</h2>
     <div class="group">
       <h3>BASIC</h3>
-      <mu-editor v-model="value" placeholder="Input Text"></mu-editor>
+      <mu-editor v-model.trim="value" placeholder="Input Text" @update:model-value="onChange"></mu-editor>
       <mu-editor v-model="value" placeholder="Input Text" clear-button></mu-editor>
       <mu-editor v-model="value" placeholder="Input Text" clear-button></mu-editor>
     </div>
@@ -65,7 +65,7 @@
       </mu-editor>
       <mu-editor v-model="value" clear-button>
         <template #append>
-          <mu-icon icon="check"></mu-icon>
+          <mu-icon icon="ok"></mu-icon>
         </template>
       </mu-editor>
       <mu-editor v-model="value" clear-button>
@@ -164,12 +164,14 @@
         }
       },
       methods: {
-
+        onChange (v) {
+          console.log(v)
+        }
       }
     })
 
     mussel.install(app, {
-      darkMode: false,
+      darkMode: true,
       icons: {
         bug: 'ti ti-bug',
         bolt: 'ti ti-bolt',

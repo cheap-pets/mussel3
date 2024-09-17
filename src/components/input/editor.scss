@@ -105,11 +105,11 @@
   & a {
     cursor: pointer;
     font-weight: 500;
-    color: var(--mu-text-color-muted);
+    color: var(--mu-text-color-subtle);
     text-decoration: none;
 
     &:hover {
-      color: var(--mu-text-color-normal);
+      color: var(--mu-text-color-soft);
     }
 
     &[primary]:hover {

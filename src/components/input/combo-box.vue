@@ -1,22 +1,10 @@
 <template>
-  <div
-    ref="thisEl"
-    class="mu-editor mu-combo-box"
-    v-bind="controlState">
+  <div ref="thisEl" class="mu-editor mu-combo-box" v-bind="controlState">
     <label v-if="label">{{ label }}</label>
     <slot name="prepend" />
-    <input
-      v-model="inputValue"
-      v-bind="inputBindings"
-      @click="onTriggerClick">
-    <mu-icon
-      v-if="clearable"
-      v-bind="clearIconBindings"
-      @click="onClear" />
-    <mu-expand-icon
-      v-if="expandable"
-      :expanded="dropdownVisible"
-      @click="onTriggerClick" />
+    <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
+    <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="onClear" />
+    <mu-icon v-if="expandable" v-bind="dropdownArrowBindings" @click="onTriggerClick" />
     <slot name="append" />
     <Teleport v-if="expandable && dropdownReady" :to="dropdownContainer">
       <div
@@ -74,9 +62,9 @@
 
   const {
     dropdownReady,
-    dropdownVisible,
     dropdownBindings,
     dropdownContainer,
+    dropdownArrowBindings,
     show: showDropdown,
     hide: hideDropdown,
     onTriggerClick,

@@ -105,8 +105,9 @@
 }
 
 .mu-root {
-  --mu-text-color-normal: var(--mu-gray-7);
   --mu-text-color-body: var(--mu-gray-8);
+  --mu-text-color-normal: var(--mu-gray-7);
+  --mu-text-color-soft: var(--mu-gray-5);
   --mu-text-color-muted: var(--mu-gray-4);
   --mu-text-color-subtle: var(--mu-gray-3);
   --mu-text-color-placeholder: var(--mu-gray-2);

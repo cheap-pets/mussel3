@@ -1,11 +1,6 @@
 <template>
-  <mu-tool-button
-    v-if="toolButton"
-    ref="thisEl" class="mu-dropdown mu-expand-icon" v-bind="$attrs"
-    expand-type="dropdown" :expanded="dropdownVisible || null" :icon="icon || 'chevronDown'"
-    @click="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave" />
   <mu-button-group
-    v-else-if="splitButton"
+    v-if="splitButton"
     ref="thisEl" class="mu-dropdown" v-bind="$attrs">
     <mu-button :icon="icon" :caption="caption" @click="hideDropdown">
       <slot />
@@ -13,7 +8,7 @@
     <mu-button
       class="mu-button mu-icon-button"
       @click.stop="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
-      <mu-expand-icon :expanded="dropdownVisible" />
+      <mu-icon v-bind="dropdownArrowBindings" />
     </mu-button>
   </mu-button-group>
   <mu-button
@@ -24,7 +19,7 @@
       <mu-icon v-if="icon" :icon="icon" />
       {{ caption }}
     </slot>
-    <mu-expand-icon v-if="arrow" :expanded="dropdownVisible" />
+    <mu-icon v-if="arrow" v-bind="dropdownArrowBindings" />
   </mu-button>
   <Teleport v-if="dropdownReady" :to="dropdownContainer">
     <div
@@ -55,7 +50,6 @@
   const props = defineProps({
     icon: String,
     caption: String,
-    toolButton: Boolean,
     splitButton: Boolean,
     dropdownItems: Array,
     arrow: { type: Boolean, default: true },
@@ -69,9 +63,9 @@
 
   const {
     dropdownReady,
-    dropdownVisible,
     dropdownBindings,
     dropdownContainer,
+    dropdownArrowBindings,
     hide: hideDropdown,
     onTriggerClick,
     onTriggerMouseOver,
