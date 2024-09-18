@@ -13,6 +13,11 @@
   <link
     rel="stylesheet"
     type="text/css"
+    href="./style.css" />
+
+  <link
+    rel="stylesheet"
+    type="text/css"
     href="../../dist/mussel.css" />
 
   <link
@@ -21,25 +26,6 @@
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
 
   <style>
-    body {
-      margin: 0;
-    }
-
-    .group {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-
-      margin: 8px;
-      padding: 8px;
-    }
-
-    .group-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
     .link-group {
       gap: 16px;
       padding: 8px;
@@ -51,18 +37,6 @@
       width: 80px;
     }
 
-    h2 {
-      margin: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid currentColor;
-    }
-
-    h3 {
-      width: 100%;
-      margin: 0;
-      color: var(--mu-text-color-normal);
-    }
-
     .button-w-90 .mu-button {
       width: 90px;
     }
@@ -71,7 +45,15 @@
 
 <body>
   <div id="app">
-    <H2>BUTTON, BUTTON GROUP & TOOL BUTTON</H2>
+    <H2>
+      BUTTON, BUTTON GROUP & TOOL BUTTON
+      <mu-switch
+        v-model="darkMode"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
+    </H2>
     <div class="group button-w-90">
       <h3>NORMAL STYLE</h3>
       <div class="group-row">
@@ -277,6 +259,7 @@
     const app = Vue.createApp({
       data () {
         return {
+          darkMode: false,
           activeItem: null
         }
       },
@@ -286,12 +269,14 @@
         },
         select (v) {
           this.activeItem = v
+        },
+        onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
         }
       }
     })
 
     mussel.install(app, {
-      darkMode: false,
       icons: {
         bolt: 'ti ti-bolt',
         album: 'ti ti-album',

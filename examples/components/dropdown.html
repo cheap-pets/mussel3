@@ -11,6 +11,11 @@
 
   <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
   <script type="text/javascript" src="../../dist/mussel.js"></script>
+  
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="./style.css" />
 
   <link
     rel="stylesheet"
@@ -23,25 +28,9 @@
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
 
   <style>
-    h2 {
-      margin: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid currentColor;
-    }
-
-    .group {
-      align-items: start;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-
-      padding: 8px;
-      margin: 8px;
-    }
-
     .mu-dropdown-panel.sys-menu_mask {
       pointer-events: none;
-      top: 52px;
+      top: 56px;
       right: 0;
       bottom: 0;
       left: 0;
@@ -57,7 +46,7 @@
       right: 0;
       bottom: 0;
       width: 360px;
-      background-color: #f0f0f0;
+      background-color: var(--mu-bg-strong);
       opacity: 0;
       transform: translateY(-100%);
       transition: transform .2s, opacity .2s;
@@ -73,7 +62,26 @@
 
 <body>
   <div id="app" class="mu-box" position="fixed fit" style="overflow: auto;">
-    <h2>Dropdown Components</h2>
+    <h2>
+      Dropdown Components
+      <mu-switch
+        v-model="darkMode"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
+      <mu-dropdown-button
+        class="mu-icon-button"
+        accent icon="dotsVert"
+        dropdown-trigger="click"
+        positioned
+        :arrow="false"
+        dropdown-class="sys-menu_mask">
+        <template #dropdown>
+          <div class="sys-menu"></div>
+        </template>
+      </mu-dropdown-button>
+    </h2>
     <div class="group">
       <mu-dropdown
         style="display: inline-block;"
@@ -164,23 +172,12 @@
         @dropdown:itemclick="onItemClick">
       </mu-dropdown-button>
     </div>
-    <mu-dropdown-button
-      class="mu-icon-button"
-      accent large icon="dotsVert"
-      dropdown-trigger="click"
-      positioned
-      :arrow="false"
-      style="position: fixed; top: 6px; right: 16px;"
-      dropdown-class="sys-menu_mask">
-      <template #dropdown>
-        <div class="sys-menu"></div>
-      </template>
-    </mu-dropdown-button>
   </div>
 
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
+        const darkMode = Vue.ref(false)
         const artist = Vue.ref()
         const artists = Vue.ref([
           { is: '-', label: 'GROUP 1' },
@@ -216,7 +213,12 @@
 
         const stickyPanelVisible = Vue.ref(false)
 
+        function onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
+        }
+
         return {
+          darkMode,
           artist,
           artists,
           checkedArtist,
@@ -226,13 +228,13 @@
           onShow,
           onItemClick,
           onButtonClick,
-          requestFullscreen
+          requestFullscreen,
+          onUIModeChange
         }
       }
     })
 
     mussel.install(app, {
-      darkMode: false,
       icons: {
         bug: 'ti ti-bug',
         bolt: 'ti ti-bolt',

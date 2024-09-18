@@ -45,7 +45,7 @@
 .mu-tool-button {
   --mu-button_color: var(--mu-primary-color);
 
-  color: var(--mu-text-color-normal);
+  color: var(--mu-text-color-soft);
 
   &[danger] {
     --mu-button_color: var(--mu-danger-color);

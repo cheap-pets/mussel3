@@ -12,6 +12,11 @@
   <link
     rel="stylesheet"
     type="text/css"
+    href="./style.css" />
+
+  <link
+    rel="stylesheet"
+    type="text/css"
     href="../../dist/mussel.css" />
 
   <link
@@ -20,15 +25,6 @@
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
 
   <style>
-    .group {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-
-      padding: 8px;
-      margin: 8px;
-    }
-
     .mu-tabs {
       height: 200px;
     }
@@ -47,6 +43,13 @@
         class="mu-box" :clear-button="false" style="width: 125px;"
         v-model="tabStyle" :options="styles">
       </mu-combo-box>
+        <mu-switch
+          v-model="darkMode"
+          style="margin-left: auto;"
+          active-label="Dark"
+          inactive-label="Light"
+          @update:model-value="onUIModeChange">
+        </mu-switch>
     </div>
 
     <mu-tabs
@@ -92,6 +95,7 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
+        const darkMode = Vue.ref(false)
         const positions = [
           { value: 'top' },
           { value: 'bottom' },
@@ -126,11 +130,25 @@
           { label: 'Johann Baptist Strauss', disabled: true  }
         ])
 
-        return { positions, styles, tabItems, activeTab, tabStyle, tabPosition, artists }
+        function onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
+        }
+
+        return { 
+          darkMode,
+          positions,
+          styles,
+          tabItems,
+          activeTab,
+          tabStyle,
+          tabPosition,
+          artists,
+          onUIModeChange
+        }
       }
     })
 
-    mussel.install(app, { darkMode: false })
+    mussel.install(app)
 
     app.mount('#app')
   </script>

@@ -16,6 +16,7 @@
     <mu-check
       v-if="checkbox"
       v-model="checked"
+      class="mu-tree-node_check"
       @dblclick.stop />
     <slot :node="node">
       <mu-icon
@@ -31,8 +32,9 @@
         v-for="btn in buttons"
         :key="btn"
         v-bind="btn"
-        class="mu-icon-button mu-tree-node_button"
-        @click="tree.emit('nodeButtonClick', node, button)" />
+        tag="a"
+        class="mu-tool-button mu-tree-node_button"
+        @click="tree.emit('nodeButtonClick', node, btn)" />
     </slot>
   </a>
   <template v-if="expanded">
@@ -129,7 +131,7 @@
   )
 
   const paddingLeft = computed(() =>
-    `calc(var(--mu-tree_node-indent) * ${props.level} + var(--mu-tree_node-padding-x))`
+    `calc(var(--mu-tree_node-indent) * ${props.level})`
   )
 
   const active = computed(() =>

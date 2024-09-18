@@ -11,8 +11,8 @@ export const DEFAULT_DATA_PROPS = {
 
 export const DEFAULT_EXPAND_ICONS = {
   leaf: undefined,
-  expanded: 'dropdown',
-  collapsed: 'dropdown'
+  expanded: 'chevronRight',
+  collapsed: 'chevronRight'
 }
 
 export const DEFAULT_NODE_ICONS = {

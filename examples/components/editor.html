@@ -12,6 +12,11 @@
   <link
     rel="stylesheet"
     type="text/css"
+    href="./style.css" />
+
+  <link
+    rel="stylesheet"
+    type="text/css"
     href="../../dist/mussel.css" />
 
   <link
@@ -20,36 +25,23 @@
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
 
     <style>
-      .group {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-  
-        padding: 8px;
-        margin: 8px;
-      }
-
       .mu-editor {
         width: 250px;
-      }
-
-      h2 {
-        margin: 16px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid currentColor;
-      }
-
-      h3 {
-        width: 100%;
-        margin: 0;
-        color: var(--mu-text-color-normal);
       }
     </style>
 </head>
 
 <body>
   <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
-    <h2>EDITOR</h2>
+    <h2>
+      EDITOR
+      <mu-switch
+        v-model="darkMode"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
+    </h2>
     <div class="group">
       <h3>BASIC</h3>
       <mu-editor v-model.trim="value" placeholder="Input Text" @update:model-value="onChange"></mu-editor>
@@ -157,10 +149,17 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
+        const darkMode = Vue.ref(false)
         const value = Vue.ref('')
 
+        function onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
+        }
+
         return {
-          value
+          darkMode,
+          value,
+          onUIModeChange
         }
       },
       methods: {
@@ -171,7 +170,6 @@
     })
 
     mussel.install(app, {
-      darkMode: true,
       icons: {
         bug: 'ti ti-bug',
         bolt: 'ti ti-bolt',
