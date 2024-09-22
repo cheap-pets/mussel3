@@ -6,6 +6,7 @@ import { isString } from '@/utils/type'
 import { delay } from '@/utils/timer'
 
 export const dropdownProps = {
+  dropdownHost: null,
   dropdownClass: null,
   dropdownStyle: null,
   dropdownAttrs: Object,
@@ -27,7 +28,7 @@ export const dropdownEvents = [
   'dropdown:itemclick'
 ]
 
-export function useDropdown (hostRef, dropdownRef, props, emit) {
+export function useDropdown (componentRef, dropdownRef, props, emit) {
   const rootEl = inject('$mussel').rootElement
 
   const expanded = ref()
@@ -50,7 +51,17 @@ export function useDropdown (hostRef, dropdownRef, props, emit) {
     expanded: expanded.value || null
   }))
 
-  const hostEl = computed(() => hostRef.value?.$el || hostRef.value)
+  const hostEl = computed(() => {
+    const componentEl = componentRef.value?.$el || componentRef.value
+    const host = props.dropdownHost
+
+    console.log(host)
+
+    return host
+      ? host === '$parent' ? componentEl?.parentNode : host.$el || host
+      : componentEl
+  })
+
   const dropdownEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
   const dropdownVisible = computed(() => expanded.value)
 

@@ -1,8 +1,7 @@
-import { camelCase, kebabCase } from './utils/case.js'
+import { kebabCase } from './utils/case.js'
 // import { isHtmlElement, isString } from './utils/type.js'
 
 import {
-  str2rgba,
   generatePalette,
   generateAccentPalette,
   generateNeutralPalette
@@ -33,24 +32,14 @@ const SPECIAL_COLORS = {
 }
 
 function extendColors (colors) {
-  const {
-    primary,
-    accent,
-    gray,
-    ...result
-  } = colors
+  const { primary, accent, neutral, ...result } = colors
 
   function appendColors (name, palette) {
-    const { r, g, b } = str2rgba(palette[5])
-
     result[name] ||= palette[5]
-    // result[`${name}Rgb`] ||= `${r},${g},${b}`
 
-    if (name !== 'gray') {
-      result[camelCase(`shadow-${name}`)] ||= `rgba(${r}, ${g}, ${b}, .15)`
-    }
-
-    palette.forEach((color, i) => (result[`${name}${i}`] ||= color))
+    palette.forEach((color, i) => {
+      result[`${name}${i}`] ||= color
+    })
   }
 
   ;['primary', 'success', 'warning', 'danger'].forEach(key =>
@@ -58,12 +47,12 @@ function extendColors (colors) {
     appendColors(key, generatePalette(colors[key]))
   )
 
-  if (gray || primary) {
-    appendColors('gray', gray ? generatePalette(gray) : generateNeutralPalette(primary))
-  }
-
   if (accent || primary) {
     appendColors('accent', accent ? generatePalette(accent) : generateAccentPalette(primary))
+  }
+
+  if (neutral || primary) {
+    appendColors('neutral', neutral ? generatePalette(neutral) : generateNeutralPalette(primary))
   }
 
   return result

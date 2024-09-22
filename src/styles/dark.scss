@@ -1,14 +1,14 @@
 .mu-dark {
-  --mu-gray-l0: var(--mu-gray-9);
-  --mu-gray-l1: var(--mu-gray-8);
-  --mu-gray-l2: var(--mu-gray-7);
-  --mu-gray-l3: var(--mu-gray-6);
-  --mu-gray-l4: var(--mu-gray-5);
-  --mu-gray-l5: var(--mu-gray-4);
-  --mu-gray-l6: var(--mu-gray-3);
-  --mu-gray-l7: var(--mu-gray-2);
-  --mu-gray-l8: var(--mu-gray-1);
-  --mu-gray-l9: var(--mu-gray-0);
+  // --mu-gray-0: var(--mu-neutral-9);
+  // --mu-gray-1: var(--mu-neutral-8);
+  // --mu-gray-2: var(--mu-neutral-7);
+  // --mu-gray-3: var(--mu-neutral-6);
+  // --mu-gray-4: var(--mu-neutral-5);
+  // --mu-gray-5: var(--mu-neutral-4);
+  // --mu-gray-6: var(--mu-neutral-3);
+  // --mu-gray-7: var(--mu-neutral-2);
+  // --mu-gray-8: var(--mu-neutral-1);
+  // --mu-gray-9: var(--mu-neutral-0);
 
   --mu-text-color-body: var(--mu-gray-1);
   --mu-text-color-normal: var(--mu-gray-2);
@@ -19,9 +19,10 @@
 
   --mu-bg-normal: var(--mu-gray-9);
   --mu-bg-strong: var(--mu-gray-8);
-  --mu-bg-overlay: var(--mu-gray-8);
-  --mu-bg-readonly: #21231c;
+  --mu-bg-overlay: var(--mu-gray-9);
+
   --mu-bg-disabled: var(--mu-gray-8);
+  
   --mu-bg-mask: rgba(255, 255, 255, .15);
   --mu-bg-translucent-gray: rgba(255, 255, 255, .08);
 

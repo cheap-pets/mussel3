@@ -13,3 +13,20 @@
     height: 1em;
   }
 }
+
+a.mu-icon {
+  cursor: pointer;
+  color: var(--mu-text-color-soft);
+
+  &:hover {
+    color: var(--mu-primary-color);
+  }
+
+  &[danger] {
+    color: var(--mu-danger-color);
+
+    &:hover {
+      color: var(--mu-danger-color-4);
+    }
+  }
+}

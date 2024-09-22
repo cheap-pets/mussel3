@@ -7,8 +7,6 @@
 </template>
 
 <script setup>
-  import './check.scss'
-
   import { radioProps, radioEvents, useRadio } from './hooks/radio'
 
   defineOptions({ name: 'MusselRadio' })

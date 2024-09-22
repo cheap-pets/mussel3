@@ -2,6 +2,7 @@
   overflow: hidden;
   padding: calc(var(--mu-base-spacing) * 2);
   font-size: var(--mu-common-font-size);
+  color: var(--mu-text-color-normal);
 
   & > * {
     overflow: hidden;

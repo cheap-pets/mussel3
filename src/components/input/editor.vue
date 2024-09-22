@@ -1,9 +1,9 @@
 <template>
-  <div class="mu-editor" v-bind="controlState">
+  <div class="mu-edit" v-bind="editAttrs">
     <label v-if="label">{{ label }}</label>
     <slot name="prepend" />
-    <input v-model="inputValue" v-bind="inputBindings">
-    <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="clear" />
+    <input v-model="inputValue" v-bind="inputAttrs">
+    <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="clear" />
     <slot name="append" />
   </div>
 </template>
@@ -12,22 +12,22 @@
   import './editor.scss'
 
   import {
-    commonInputProps,
-    commonInputEvents,
-    useCommonInput
-  } from './hooks/common-input'
+    inputProps,
+    inputEvents,
+    useInput
+  } from './hooks/input'
 
   defineOptions({ name: 'MusselEditor' })
 
-  const props = defineProps({ ...commonInputProps })
-  const emit = defineEmits([...commonInputEvents])
+  const props = defineProps({ ...inputProps })
+  const emit = defineEmits([...inputEvents])
 
   const {
-    controlState,
+    editAttrs,
     inputValue,
-    inputBindings,
-    clearIconBindings,
-    clearable,
+    inputAttrs,
+    clearButtonVisible,
+    clearButtonAttrs,
     clear
-  } = useCommonInput(props, emit)
+  } = useInput(props, emit)
 </script>

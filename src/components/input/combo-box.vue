@@ -1,9 +1,9 @@
 <template>
-  <div ref="thisEl" class="mu-editor mu-combo-box" v-bind="controlState">
+  <div ref="thisEl" class="mu-edit mu-combo-box" v-bind="editAttrs">
     <label v-if="label">{{ label }}</label>
     <slot name="prepend" />
-    <input v-model="inputValue" v-bind="inputBindings" @click="onTriggerClick">
-    <mu-icon v-if="clearable" v-bind="clearIconBindings" @click="onClear" />
+    <input v-model="inputValue" v-bind="inputAttrs" @click="onTriggerClick">
+    <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="onClear" />
     <mu-icon v-if="expandable" v-bind="dropdownArrowBindings" @click="onTriggerClick" />
     <slot name="append" />
     <Teleport v-if="expandable && dropdownReady" :to="dropdownContainer">
@@ -28,7 +28,7 @@
   import { ref, shallowRef, computed, provide, watch } from 'vue'
   import { useDropdown } from '../dropdown/hooks/dropdown'
   import { useVForComponents } from '@/hooks/v-for-components'
-  import { commonInputProps, commonInputEvents, useCommonInput } from './hooks/common-input'
+  import { inputProps, inputEvents, useInput } from './hooks/input'
 
   defineOptions({ name: 'MusselComboBox' })
 
@@ -40,25 +40,25 @@
     dropdownScrollbar: [Boolean, String],
     options: Array,
     optionKey: { type: String, default: 'value' },
-    ...commonInputProps
+    ...inputProps
   })
 
   const emit = defineEmits([
     'dropdown:show',
     'dropdown:hide',
-    ...commonInputEvents
+    ...inputEvents
   ])
 
   const thisEl = shallowRef()
   const dropdownEl = shallowRef()
 
   const {
-    controlState,
-    inputBindings,
-    clearIconBindings,
-    clearable,
+    editAttrs,
+    inputAttrs,
+    clearButtonVisible,
+    clearButtonAttrs,
     clear
-  } = useCommonInput(props, emit)
+  } = useInput(props, emit)
 
   const {
     dropdownReady,

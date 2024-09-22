@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Editor Component Example</title>
+
+  <script type="text/javascript" src="../../node_modules/vue/dist/vue.global.js"></script>
+  <script type="text/javascript" src="../../dist/mussel.js"></script>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="./style.css" />
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../dist/mussel.css" />
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css" />
+
+    <style>
+      .mu-edit {
+        width: 250px;
+      }
+    </style>
+</head>
+
+<body>
+  <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
+    <h2>
+      EDITOR
+      <mu-switch
+        v-model="darkMode"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
+    </h2>
+    <div class="group">
+      <h3>BASIC</h3>
+      <mu-edit v-model.trim="value" placeholder="Input Text" @update:model-value="onChange"></mu-edit>
+      <mu-edit v-model="value" placeholder="Input Text" clear-button></mu-edit>
+      <mu-edit v-model="value" placeholder="Input Text" clear-button></mu-edit>
+    </div>
+    <div class="group">
+      <h3>AFFIX：Icon, Text, Tool & Link</h3>
+      <mu-edit v-model="value" prefix=":icon=bug"></mu-edit>
+      <mu-edit v-model="value" clear-button prefix=":tool=bug"></mu-edit>
+      <mu-edit v-model="value" clear-button suffix="Unit"></mu-edit>
+      <mu-edit v-model="value" prefix=":tool=bug" suffix=":link=Click Here !"></mu-edit>
+    </div>
+    <div class="group">
+      <h3>ADDON</h3>
+      <mu-edit>
+        <template #prepend>
+          <span>Name</span>
+        </template>
+      </mu-edit>
+      <mu-edit type="number">
+        <template #append>
+          <span>PCS</span>
+        </template>
+      </mu-edit>
+      <mu-edit label="Addr">
+        <template #prepend>
+          http://
+        </template>
+        <template #append>
+          .com
+        </template>
+      </mu-edit>
+      <div style="width: 100%;"></div>
+      <mu-edit>
+        <template #prepend>
+          <a>Click !</a>
+        </template>
+      </mu-edit>
+      <mu-edit type="number">
+        <template #append>
+          <mu-icon tag="a" icon="chevronRight" primary></mu-icon>
+        </template>
+      </mu-edit>
+      <mu-edit ref="editWithDropdown">
+        <template #prepend>
+          <mu-dropdown-button dropdown-host="$parent" :dropdown-items="[{ label: 'C' }, { label: 'B' }, { label: 'C' }]">
+            Select
+          </mu-dropdown-button>
+        </template>
+        <template #append>
+          .com
+        </template>
+      </mu-edit>
+    </div>
+    <div class="group">
+      <h3>Style & State</h3>
+      <mu-edit v-model="value" placeholder="Underline" input-style="underline" clear-button></mu-edit>
+      <mu-edit v-model="value" placeholder="Round" round clear-button></mu-edit>
+      <mu-edit v-model="value" placeholder="Solid" input-style="solid" clear-button></mu-edit>
+      <mu-edit v-model="value" placeholder="Round & Solid" round input-style="solid" clear-button></mu-edit>
+      <div style="width: 100%;"></div>
+      <mu-edit label="Name" placeholder="Underline" input-style="underline">
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+      <mu-edit label="Name" placeholder="Round" round>
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+      <mu-edit label="Name" placeholder="Solid" input-style="solid">
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+      <div style="width: 100%;"></div>
+      <mu-edit v-model="value" placeholder="Invalid Input" invalid></mu-edit>
+      <mu-edit v-model="value" placeholder="Readonly" readonly></mu-edit>
+      <mu-edit v-model="value" placeholder="Disabled" disabled></mu-edit>
+      <div style="width: 100%;"></div>
+      <mu-edit label="Name" placeholder="Underline" input-style="underline" invalid>
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+      <mu-edit v-model="value" label="Total" placeholder="Readonly" input-style="underline" round readonly>
+        <template #append>
+          <label>RPM</label>
+        </template>
+      </mu-edit>
+      <mu-edit v-model="value" label="Name" placeholder="Disabled" input-style="underline" disabled>
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+      <mu-edit v-model="value" label="Name" placeholder="Disabled" input-style="solid" disabled>
+        <template #append>
+          <a primary>Open</a>
+        </template>
+      </mu-edit>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    const app = Vue.createApp({
+      setup () {
+        const darkMode = Vue.ref(false)
+        const value = Vue.ref('')
+        const editWithDropdown = Vue.ref()
+
+        function onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
+        }
+
+        return {
+          darkMode,
+          value,
+          editWithDropdown,
+          onUIModeChange
+        }
+      },
+      methods: {
+        onChange (v) {
+          console.log(v)
+        }
+      }
+    })
+
+    mussel.install(app, {
+      icons: {
+        bug: 'ti ti-bug',
+        bolt: 'ti ti-bolt',
+        album: 'ti ti-album'
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

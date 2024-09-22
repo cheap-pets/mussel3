@@ -12,19 +12,6 @@
   --mu-yellow: $yellow;
   --mu-orange: $orange;
 
-  --mu-gray: $gray;
-  --mu-gray-0: $gray0;
-  --mu-gray-1: $gray1;
-  --mu-gray-2: $gray2;
-  --mu-gray-3: $gray3;
-  --mu-gray-4: $gray4;
-  --mu-gray-5: $gray5;
-  --mu-gray-6: $gray6;
-  --mu-gray-7: $gray7;
-  --mu-gray-8: $gray8;
-  --mu-gray-9: $gray9;
-  // --mu-gray-rgb: $grayRgb;
-
   --mu-primary-color: $primary;
   --mu-primary-color-0: $primary0;
   --mu-primary-color-1: $primary1;
@@ -36,7 +23,18 @@
   --mu-primary-color-7: $primary7;
   --mu-primary-color-8: $primary8;
   --mu-primary-color-9: $primary9;
-  // --mu-primary-rgb: $primaryRgb;
+  
+  --mu-neutral-color: $neutral;
+  --mu-neutral-color-0: $neutral0;
+  --mu-neutral-color-1: $neutral1;
+  --mu-neutral-color-2: $neutral2;
+  --mu-neutral-color-3: $neutral3;
+  --mu-neutral-color-4: $neutral4;
+  --mu-neutral-color-5: $neutral5;
+  --mu-neutral-color-6: $neutral6;
+  --mu-neutral-color-7: $neutral7;
+  --mu-neutral-color-8: $neutral8;
+  --mu-neutral-color-9: $neutral9;
 
   --mu-success-color: $success;
   --mu-success-color-0: $success0;
@@ -49,7 +47,6 @@
   --mu-success-color-7: $success7;
   --mu-success-color-8: $success8;
   --mu-success-color-9: $success9;
-  // --mu-success-rgb: $successRgb;
 
   --mu-warning-color: $warning;
   --mu-warning-color-0: $warning0;
@@ -62,7 +59,6 @@
   --mu-warning-color-7: $warning7;
   --mu-warning-color-8: $warning8;
   --mu-warning-color-9: $warning9;
-  // --mu-warning-rgb: $warningRgb;
 
   --mu-danger-color: $danger;
   --mu-danger-color-0: $danger0;
@@ -75,7 +71,6 @@
   --mu-danger-color-7: $danger7;
   --mu-danger-color-8: $danger8;
   --mu-danger-color-9: $danger9;
-  // --mu-danger-rgb: $dangerRgb;
 
   --mu-accent-color: $accent;
   --mu-accent-color-0: $accent0;
@@ -88,20 +83,20 @@
   --mu-accent-color-7: $accent7;
   --mu-accent-color-8: $accent8;
   --mu-accent-color-9: $accent9;
-  // --mu-accent-rgb: $accentRgb;
 }
 
 .mu-root {
-  --mu-gray-l0: var(--mu-gray-0);
-  --mu-gray-l1: var(--mu-gray-1);
-  --mu-gray-l2: var(--mu-gray-2);
-  --mu-gray-l3: var(--mu-gray-3);
-  --mu-gray-l4: var(--mu-gray-4);
-  --mu-gray-l5: var(--mu-gray-5);
-  --mu-gray-l6: var(--mu-gray-6);
-  --mu-gray-l7: var(--mu-gray-7);
-  --mu-gray-l8: var(--mu-gray-8);
-  --mu-gray-l9: var(--mu-gray-9);
+  --mu-gray: var(--mu-neutral-color-5);
+  --mu-gray-0: var(--mu-neutral-color-0);
+  --mu-gray-1: var(--mu-neutral-color-1);
+  --mu-gray-2: var(--mu-neutral-color-2);
+  --mu-gray-3: var(--mu-neutral-color-3);
+  --mu-gray-4: var(--mu-neutral-color-4);
+  --mu-gray-5: var(--mu-neutral-color-5);
+  --mu-gray-6: var(--mu-neutral-color-6);
+  --mu-gray-7: var(--mu-neutral-color-7);
+  --mu-gray-8: var(--mu-neutral-color-8);
+  --mu-gray-9: var(--mu-neutral-color-9);
 }
 
 .mu-root {
@@ -115,8 +110,11 @@
   --mu-bg-normal: #fff;
   --mu-bg-strong: var(--mu-gray-0);
   --mu-bg-overlay: #fff;
-  --mu-bg-readonly: #ffd;
+  
+  --mu-bg-danger: rgb(from var(--mu-danger-color) r g b / 0.08);
+  --mu-bg-readonly: rgb(from var(--mu-primary-color) r g b / 0.08);
   --mu-bg-disabled: var(--mu-gray-0);
+
   --mu-bg-mask: rgba(0, 0, 0, .5);
   --mu-bg-translucent-gray: rgba(0, 0, 0, .08);
 
@@ -124,13 +122,6 @@
   --mu-border-color-soft: var(--mu-gray-2);
   --mu-border-color-muted: var(--mu-gray-1);
   --mu-border-color-strong: var(--mu-gray-4);
-  
-  --mu-shadow-color: rgba(0, 0, 0, .1);
-  --mu-shadow-primary: $shadowPrimary;
-  --mu-shadow-success: $shadowSuccess;
-  --mu-shadow-warning: $shadowWarning;
-  --mu-shadow-danger: $shadowDanger;
-  --mu-shadow-accent: $shadowAccent;
 }
 
 .mu-root {

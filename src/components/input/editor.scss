@@ -1,29 +1,29 @@
-.mu-editor {
-  --mu-editor_height: var(--mu-input-size);
-  --mu-editor_border-color: var(--mu-border-color);
-  --mu-editor_border-radius: var(--mu-common-border-radius);
+.mu-edit {
+  --mu-edit_height: var(--mu-input-size);
+  --mu-edit_border-color: var(--mu-border-color);
+  --mu-edit_border-radius: var(--mu-common-border-radius);
 
   position: relative;
 
   width: 200px;
-  height: var(--mu-editor_height);
+  height: var(--mu-edit_height);
 
   font-size: var(--mu-common-font-size);
   line-height: var(--mu-common-line-height);
 
-  border-radius: var(--mu-editor_border-radius);
+  border-radius: var(--mu-edit_border-radius);
 
   &[small] {
-    --mu-editor_height: var(--mu-input-size-small);
+    --mu-edit_height: var(--mu-input-size-small);
   }
 
   &[round] {
-    --mu-editor_border-radius: calc(var(--mu-editor_height) / 2);
+    --mu-edit_border-radius: calc(var(--mu-edit_height) / 2);
   }
 }
 
 // Input Element
-.mu-editor {
+.mu-edit {
   @at-root {
     input#{&} {
       padding: 0 11px;
@@ -53,7 +53,7 @@
 }
 
 // Child Elements
-.mu-editor {
+.mu-edit {
   @at-root {
     div#{&} {
       display: inline-flex;
@@ -70,14 +70,14 @@
 
   & > :first-child {
     margin-left: 11px;
-    border-top-left-radius: var(--mu-editor_border-radius);
-    border-bottom-left-radius: var(--mu-editor_border-radius);
+    border-top-left-radius: var(--mu-edit_border-radius);
+    border-bottom-left-radius: var(--mu-edit_border-radius);
   }
 
   & > :last-child {
     margin-right: 11px;
-    border-top-right-radius: var(--mu-editor_border-radius);
-    border-bottom-right-radius: var(--mu-editor_border-radius);
+    border-top-right-radius: var(--mu-edit_border-radius);
+    border-bottom-right-radius: var(--mu-edit_border-radius);
   }
 
   & > input {
@@ -135,7 +135,7 @@
   }
 }
 
-.mu-editor {
+.mu-edit {
   & > label {
     display: flex;
     align-items: center;
@@ -189,20 +189,20 @@
 }
 
 // Style & State
-.mu-editor {
+.mu-edit {
   color: var(--mu-text-color-normal);
   background-color: var(--mu-bg-normal);
-  border: 1px solid var(--mu-editor_border-color);
+  border: 1px solid var(--mu-edit_border-color);
 
   &[input-style="solid"] {
-    --mu-editor_border-color: transparent;
+    --mu-edit_border-color: transparent;
 
     background-color: var(--mu-bg-strong);
   }
 
   &[input-style="underline"] {
     border-color: transparent;
-    border-bottom-color: var(--mu-editor_border-color);
+    border-bottom-color: var(--mu-edit_border-color);
     border-radius: 0;
     box-shadow: none !important;
 
@@ -216,7 +216,7 @@
   }
 
   &[disabled] {
-    --mu-editor_border-color: var(--mu-border-color-muted);
+    --mu-edit_border-color: var(--mu-border-color-muted);
 
     pointer-events: none;
     background-color: var(--mu-bg-disabled);
@@ -235,22 +235,22 @@
   }
 
   &:focus-within {
-    --mu-editor_border-color: var(--mu-primary-color);
+    --mu-edit_border-color: var(--mu-primary-color);
 
-    box-shadow: var(--mu-shadow-focus) rgb(from var(--mu-editor_border-color) r g b / 0.15);
+    box-shadow: var(--mu-shadow-focus) rgb(from var(--mu-edit_border-color) r g b / 0.15);
   }
 
   &:hover {
-    --mu-editor_border-color: var(--mu-primary-color-4);
+    --mu-edit_border-color: var(--mu-primary-color-4);
   }
 
   @at-root {
     #{&}[invalid],
     [invalid] > #{&} {
-      --mu-editor_border-color: var(--mu-danger-color);
+      --mu-edit_border-color: var(--mu-danger-color);
 
       &:hover {
-        --mu-editor_border-color: var(--mu-danger-color-4);
+        --mu-edit_border-color: var(--mu-danger-color-4);
       }
     }
   }

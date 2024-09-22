@@ -76,9 +76,7 @@
   }
 
   &:focus {
-    --mu-shadow-color: rgb(from var(--mu-button_color) r g b / 0.15);
-
-    box-shadow: var(--mu-shadow-focus) var(--mu-shadow-color);
+    box-shadow: var(--mu-shadow-focus) rgb(from var(--mu-button_color) r g b / 0.15);
   }
 }
 
