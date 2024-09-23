@@ -30,12 +30,18 @@
       }
 
       .mu-edit-group {
-        width: 400px;
+        width: 350px;
       }
     </style>
 </head>
 
 <body>
+  <defs>
+    <mask id="xMask">
+      <rect width="24" height="24" fill="white"/>
+      <path d="M9 9 L15 15 M15 9 L9 15" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    </mask>
+  </defs>
   <div id="app" class="mu-box mu-bg-normal" position="fixed fit">
     <h2>
       EDIT & EDIT-GROUP
@@ -53,10 +59,10 @@
     </div>
     <div class="group">
       <h3>AFFIX：Icon, Text, Tool & Link</h3>
-      <mu-edit v-model="value" prefix=":icon=bug"></mu-edit>
-      <mu-edit v-model="value" clear-button prefix=":tool=bug"></mu-edit>
+      <mu-edit v-model="value" prefix=":icon=search"></mu-edit>
       <mu-edit v-model="value" clear-button suffix="Suffix"></mu-edit>
-      <mu-edit v-model="value" prefix=":tool=bug" suffix=":link=Click Here !"></mu-edit>
+      <mu-edit v-model="value" clear-button prefix=":tool=folderOpen"></mu-edit>
+      <mu-edit v-model="value" prefix=":tool=bug" suffix=":link=Link"></mu-edit>
     </div>
     <div class="group">
       <h3>Style & State</h3>
@@ -93,17 +99,23 @@
         <span>.com</span>
       </div>
       <div class="mu-edit-group">
-        <mu-icon icon="search" tag="a"></mu-icon>
         <a class="mu-link">Link</a>
-        <mu-edit v-model="value" clear-button invalid></mu-edit>
-        <mu-button>Button</mu-button>
+        <mu-edit v-model="value" clear-button></mu-edit>
+        <mu-tool-button icon="search"></mu-tool-button>
+        <mu-button class="mu-edit-addon">Button</mu-button>
       </div>
       <div class="mu-edit-group">
-        <mu-dropdown-button :dropdown-items="[{ label: 'C' }, { label: 'B' }, { label: 'C' }]">
+        <mu-dropdown-button class="mu-edit-addon" :dropdown-items="[{ label: 'Option A' }, { label: 'Option B' }, { label: 'Option C' }]">
           Select
         </mu-dropdown-button>
-        <mu-edit v-model="value" clear-button input-style="underline"></mu-edit>
+        <mu-edit v-model="value" clear-button input-style="solid"></mu-edit>
         <span><mu-check label="Check"></mu-check></span>
+      </div>
+      <div style="width: 100%;"></div>
+      <div class="mu-edit-group">
+        <span>http://</span>
+        <mu-edit v-model="value" invalid placeholder="Invalid" input-style="underline"></mu-edit>
+        <span>.com</span>
       </div>
       <div class="mu-edit-group">
         <span>http://</span>

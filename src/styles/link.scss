@@ -1,3 +1,4 @@
+a.mu-icon,
 .mu-link {
   --mu-link_color: var(--mu-text-color-normal);
   --mu-link_hover-color: var(--mu-primary-color-4);
@@ -17,18 +18,27 @@
   }
 }
 
-.mu-link {
+.mu-link, a.mu-icon {
   cursor: pointer;
   color: var(--mu-link_color);
   text-decoration: none;
 
   &:hover {
     color: var(--mu-link_hover-color);
-    text-decoration: underline;
   }
 
   &[disabled] {
     pointer-events: none;
     color: var(--mu-text-color-subtle);
+  }
+}
+
+.mu-link {
+  &[decoration="underline"], &:hover {
+    text-decoration: underline;
+  }
+
+  &[decoration="none"] {
+    text-decoration: none;
   }
 }

@@ -1,11 +1,14 @@
 <template>
-  <div ref="thisEl" class="mu-edit mu-combo-box" v-bind="editAttrs">
-    <label v-if="label">{{ label }}</label>
-    <slot name="prepend" />
-    <input v-model="inputValue" v-bind="inputAttrs" @click="onTriggerClick">
+  <div ref="thisEl" class="mu-edit mu-combo-box" v-bind="editAttrs" :tabindex="tabindex">
+    <component :is="pre.is" v-if="pre" v-bind="pre.attrs" class="mu-edit_prefix" @click="onPrefixClick">
+      {{ pre.content }}
+    </component>
+    <input ref="inputEl" v-model="inputValue" v-bind="inputAttrs" @click="onTriggerClick">
     <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="onClear" />
-    <mu-icon v-if="expandable" v-bind="dropdownArrowBindings" @click="onTriggerClick" />
-    <slot name="append" />
+    <mu-icon v-if="expandable" tag="a" v-bind="dropdownArrowBindings" @click="onTriggerClick" />
+    <component :is="suf.is" v-if="suf" v-bind="suf.attrs" class="mu-edit_suffix" @click="onSuffixClick">
+      {{ suf.content }}
+    </component>
     <Teleport v-if="expandable && dropdownReady" :to="dropdownContainer">
       <div
         ref="dropdownEl"
@@ -34,6 +37,7 @@
 
   const props = defineProps({
     editable: Boolean,
+    dropdownHost: null,
     dropdownClass: null,
     dropdownStyle: null,
     dropdownAttrs: Object,
@@ -54,7 +58,12 @@
 
   const {
     editAttrs,
+    inputEl,
     inputAttrs,
+    prefix: pre,
+    suffix: suf,
+    onPrefixClick,
+    onSuffixClick,
     clearButtonVisible,
     clearButtonAttrs,
     clear

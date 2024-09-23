@@ -7,7 +7,7 @@ export const MessageTypes = {
     buttons: ['OK']
   },
   SUCCESS: {
-    icon: 'ok',
+    icon: 'check',
     title: lang.Message.SUCCESS,
     buttons: ['OK']
   },
@@ -23,7 +23,7 @@ export const MessageTypes = {
     danger: true
   },
   WARN: {
-    icon: 'info',
+    icon: 'alert',
     title: lang.Message.WARN,
     buttons: ['CANCEL', 'OK!'],
     danger: true

@@ -43,13 +43,17 @@
       </mu-switch>
     </h2>
     <div class="group">
-      <mu-combo-box
-        v-model="artist"
-        clear-button
-        :options="artists"
-        @dropdown:show="onDropdownShow">
-      </mu-combo-box>
-      <mu-button caption="Add Option" @click="addOption"></mu-button>
+      <div class="mu-edit-group">
+        <mu-combo-box
+          v-model="artist"
+          clear-button
+          prefix="Artist: "
+          dropdown-host="$parent"
+          :options="artists"
+          @dropdown:show="onDropdownShow">
+        </mu-combo-box>
+        <mu-button caption="Add Option" class="mu-edit-addon" @click="addOption"></mu-button>
+      </div>
     </div>
     <div class="group mu-box" position="fixed bottom left">
       <mu-combo-box

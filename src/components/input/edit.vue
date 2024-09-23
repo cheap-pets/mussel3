@@ -4,7 +4,7 @@
       {{ pre.content }}
     </component>
     <input ref="inputEl" v-model="inputValue" v-bind="inputAttrs">
-    <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="onClearButtonClick" />
+    <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="clear" />
     <component :is="suf.is" v-if="suf" v-bind="suf.attrs" class="mu-edit_suffix" @click="onSuffixClick">
       {{ suf.content }}
     </component>
@@ -32,6 +32,6 @@
     onSuffixClick,
     clearButtonVisible,
     clearButtonAttrs,
-    onClearButtonClick
+    clear
   } = useInput(props, emit)
 </script>

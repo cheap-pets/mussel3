@@ -1,3 +1,4 @@
+import * as svgIcons from './svg'
 import * as tablerIcons from './tabler-icons'
 
 import { isString, isSvgString } from '@/utils/type'
@@ -18,6 +19,7 @@ function install (data = {}, options) {
   })
 }
 
+install(svgIcons, 'svg')
 install(tablerIcons, 'svg')
 
 export { icons, install }

@@ -20,11 +20,13 @@
   --mu-bg-normal: var(--mu-gray-9);
   --mu-bg-strong: var(--mu-gray-8);
   --mu-bg-overlay: var(--mu-gray-9);
-
+  
+  --mu-bg-danger: rgb(from var(--mu-danger-color) r g b / 0.15);
+  --mu-bg-readonly: rgb(from var(--mu-primary-color) r g b / 0.15);
   --mu-bg-disabled: var(--mu-gray-8);
   
   --mu-bg-mask: rgba(255, 255, 255, .15);
-  --mu-bg-translucent-gray: rgba(255, 255, 255, .08);
+  --mu-bg-translucent-gray: rgba(255, 255, 255, .1);
 
   --mu-border-color: var(--mu-gray-5);
   --mu-border-color-soft: var(--mu-gray-6);

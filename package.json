@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "@cheap-pets/rollup-plugin-postcss-scss": "^1.0.2",
-    "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-node-resolve": "^15.2.4",
     "@swc/core": "^1.7.26",
     "@tabler/icons": "^3.17.0",
     "@tabler/icons-webfont": "^3.17.0",
@@ -23,13 +23,13 @@
     "core-js": "^3.38.1",
     "mussel-scrollbar": "^1.0.5",
     "postcss-simple-vars": "^7.0.1",
-    "rollup": "^4.21.3",
+    "rollup": "^4.22.4",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-swc": "^0.2.1",
     "throttle-debounce": "^5.0.2",
     "unplugin-vue": "^5.1.5",
-    "vite": "^5.4.6",
-    "vue": "^3.5.6"
+    "vite": "^5.4.7",
+    "vue": "^3.5.8"
   },
   "config": {
     "cz-customizable": {

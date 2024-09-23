@@ -36,7 +36,10 @@ input {
       margin: 0;
     
       appearance: none;
-      background: no-repeat center contain var(--mu-bg-normal);
+      background-color: var(--mu-bg-normal);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
       border: 1px solid var(--mu-border-color);
 
       transition: background-color .1s;

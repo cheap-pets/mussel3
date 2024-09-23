@@ -83,7 +83,7 @@ export function useInput (props, emit) {
     !props.disabled && !props.readonly && props.clearButton && props.modelValue
   )
 
-  function onClearButtonClick () {
+  function clear () {
     emit('update:modelValue', null)
     emit('clear')
   }
@@ -99,6 +99,6 @@ export function useInput (props, emit) {
     onSuffixClick,
     clearButtonVisible,
     clearButtonAttrs,
-    onClearButtonClick
+    clear
   }
 }
