@@ -1,9 +1,14 @@
 <template>
-  <div ref="wrapperRef" class="mu-input mu-combo-box" v-bind="wrapperAttrs" :tabindex="tabindex">
+  <div ref="wrapperRef" class="mu-input mu-select" v-bind="wrapperAttrs" :tabindex="tabindex">
     <component :is="pre.is" v-if="pre" v-bind="pre.attrs" class="mu-input_prefix" @click="onPrefixClick">
       {{ pre.content }}
     </component>
-    <input v-model="value" v-bind="inputAttrs" @click="onTriggerClick">
+    <div
+      class="mu-select_value mu-text-ellipsis"
+      :placeholder="inputAttrs.placeholder"
+      @click="onTriggerClick">
+      {{ value }}
+    </div>
     <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="onClear" />
     <mu-icon v-if="expandable" tag="a" v-bind="dropdownArrowBindings" @click="onTriggerClick" />
     <component :is="suf.is" v-if="suf" v-bind="suf.attrs" class="mu-input_suffix" @click="onSuffixClick">
@@ -28,10 +33,12 @@
 </template>
 
 <script setup>
+  import './select.scss'
+
   import { inputProps, inputEvents, useInput } from './hooks/input'
   import { selectProps, selectEvents, useSelect } from './hooks/select'
 
-  defineOptions({ name: 'MusselComboBox' })
+  defineOptions({ name: 'MusselSelect' })
 
   const model = defineModel()
 

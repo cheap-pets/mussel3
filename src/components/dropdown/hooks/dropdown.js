@@ -10,13 +10,16 @@ export const dropdownProps = {
   dropdownClass: null,
   dropdownStyle: null,
   dropdownAttrs: Object,
-  dropdownScrollbar: [Boolean, String],
   dropdownTrigger: {
     type: String,
     default: 'hover',
     validator: v => ['hover', 'click'].includes(v)
   },
-  positioned: {
+  dropdownScrollbar: [
+    Boolean,
+    String
+  ],
+  dropdownPositioned: {
     type: [Boolean, String],
     validator: v => [true, false, 'top', 'bottom'].includes(v)
   }
@@ -28,7 +31,12 @@ export const dropdownEvents = [
   'dropdown:itemclick'
 ]
 
-export function useDropdown (componentRef, dropdownRef, props, emit) {
+export function useDropdown (props, emit, options = {}) {
+  const {
+    wrapperRef = shallowRef(),
+    dropdownRef = shallowRef()
+  } = options
+
   const rootEl = inject('$mussel').rootElement
 
   const expanded = ref()
@@ -52,10 +60,8 @@ export function useDropdown (componentRef, dropdownRef, props, emit) {
   }))
 
   const hostEl = computed(() => {
-    const componentEl = componentRef.value?.$el || componentRef.value
+    const componentEl = wrapperRef.value?.$el || wrapperRef.value
     const host = props.dropdownHost
-
-    console.log(host)
 
     return host
       ? host === '$parent' ? componentEl?.parentNode : host.$el || host
@@ -88,12 +94,13 @@ export function useDropdown (componentRef, dropdownRef, props, emit) {
   function updatePosition () {
     if (!activityStyle.value) return
 
+    const positioned = props.dropdownPositioned
     const ddEl = dropdownEl.value
     const style = {}
 
-    if (isString(props.positioned)) {
-      ddEl.setAttribute('position', props.positioned)
-    } else if (!props.positioned) {
+    if (isString(positioned)) {
+      ddEl.setAttribute('position', positioned)
+    } else if (!positioned) {
       const { width: hw, top: ht, right: hr, bottom: hb, left: hl } = hostEl.value.getBoundingClientRect()
       const { width: dw, height: dh } = ddEl.getBoundingClientRect()
       const { innerWidth: tw, innerHeight: th } = window
@@ -249,6 +256,8 @@ export function useDropdown (componentRef, dropdownRef, props, emit) {
   })
 
   return {
+    wrapperRef,
+    dropdownRef,
     dropdownReady,
     dropdownVisible,
     dropdownBindings,

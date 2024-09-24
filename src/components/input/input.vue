@@ -1,30 +1,29 @@
 <template>
-  <div class="mu-edit" v-bind="editAttrs" :tabindex="tabindex">
-    <component :is="pre.is" v-if="pre" v-bind="pre.attrs" class="mu-edit_prefix" @click="onPrefixClick">
+  <div class="mu-input" v-bind="wrapperAttrs" :tabindex="tabindex">
+    <component :is="pre.is" v-if="pre" v-bind="pre.attrs" class="mu-input_prefix" @click="onPrefixClick">
       {{ pre.content }}
     </component>
-    <input ref="inputEl" v-model="inputValue" v-bind="inputAttrs">
+    <input v-model="model" v-bind="inputAttrs">
     <mu-icon v-if="clearButtonVisible" v-bind="clearButtonAttrs" @click="clear" />
-    <component :is="suf.is" v-if="suf" v-bind="suf.attrs" class="mu-edit_suffix" @click="onSuffixClick">
+    <component :is="suf.is" v-if="suf" v-bind="suf.attrs" class="mu-input_suffix" @click="onSuffixClick">
       {{ suf.content }}
     </component>
   </div>
 </template>
 
 <script setup>
-  import './edit.scss'
+  import './input.scss'
 
   import { inputProps, inputEvents, useInput } from './hooks/input'
 
-  defineOptions({ name: 'MusselEdit' })
+  defineOptions({ name: 'MusselInput' })
 
+  const model = defineModel()
   const props = defineProps({ ...inputProps })
   const emit = defineEmits([...inputEvents])
 
   const {
-    editAttrs,
-    inputEl,
-    inputValue,
+    wrapperAttrs,
     inputAttrs,
     prefix: pre,
     suffix: suf,
@@ -33,5 +32,5 @@
     clearButtonVisible,
     clearButtonAttrs,
     clear
-  } = useInput(props, emit)
+  } = useInput(model, props, emit)
 </script>

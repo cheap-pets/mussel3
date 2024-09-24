@@ -16,19 +16,19 @@
   const props = defineProps({ ...dropdownItemProps, value: { required: true } })
   const emit = defineEmits([...dropdownItemEvents])
 
-  const comboBox = inject('comboBox', {})
+  const select = inject('select', {})
   const optionLabel = computed(() => props.label ?? props.value)
 
   function onClick (event) {
     emit('click', event)
-    comboBox.onOptionClick?.(props)
+    select.onOptionClick?.(props)
   }
 
   onMounted(() => {
-    comboBox.mountOption?.(props)
+    select.mountOption?.(props)
   })
 
   onUnmounted(() => {
-    comboBox.unmountOption?.(props)
+    select.unmountOption?.(props)
   })
 </script>

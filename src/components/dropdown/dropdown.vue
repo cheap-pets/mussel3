@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="thisEl"
+    ref="wrapperRef"
     class="mu-dropdown"
     @click="onTriggerClick"
     @mouseover="onTriggerMouseOver"
@@ -8,7 +8,7 @@
     <slot />
     <Teleport v-if="dropdownReady" :to="dropdownContainer">
       <div
-        ref="dropdownEl"
+        ref="dropdownRef"
         v-mu-scrollbar="dropdownScrollbar"
         v-bind="dropdownBindings"
         class="mu-dropdown-panel"
@@ -29,7 +29,6 @@
 <script setup>
   import './dropdown.scss'
 
-  import { shallowRef } from 'vue'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
   import { useVForComponents } from '@/hooks/v-for-components'
 
@@ -38,10 +37,9 @@
   const props = defineProps({ dropdownItems: Array, ...dropdownProps })
   const emit = defineEmits([...dropdownEvents])
 
-  const thisEl = shallowRef()
-  const dropdownEl = shallowRef()
-
   const {
+    wrapperRef,
+    dropdownRef,
     dropdownReady,
     dropdownBindings,
     dropdownContainer,
@@ -51,7 +49,7 @@
     onDropdownClick,
     onDropdownMouseOver,
     onDropdownMouseLeave
-  } = useDropdown(thisEl, dropdownEl, props, emit)
+  } = useDropdown(props, emit)
 
   const { computedItems } = useVForComponents(
     props,

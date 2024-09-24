@@ -1,10 +1,5 @@
 <template>
-  <button
-    ref="thisEl"
-    class="mu-button"
-    :type="type"
-    :active="active || null"
-    v-bind="bindings">
+  <button ref="thisEl" class="mu-button" :type="type" v-bind="attrs">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />{{ caption }}
     </slot>
@@ -30,6 +25,7 @@
     accent: Boolean,
     xColor: [Boolean, String],
     small: Boolean,
+    large: Boolean,
     round: Boolean,
     disabled: Boolean,
     type: {
@@ -43,52 +39,22 @@
   })
 
   const thisEl = ref()
+  const inheritedProps = inject('buttonGroup', {})
 
-  const GROUP_FIRST_ATTRS = ['disabled']
-  const LOCAL_FIRST_ATTRS = ['primary', 'danger', 'accent', 'xColor']
-
-  const GROUP_ONLY_ATTRS = ['small', 'round', 'buttonStyle']
-
-  const inheritedProps = inject('groupedButtonOptions', { grouped: false })
-  const isGrouped = inheritedProps.grouped !== false
-
-  function getInheritedProp (key) {
-    const value = inheritedProps[key]
-
-    return key === 'buttonStyle' && value && value !== 'outline'
-      ? 'normal'
-      : value
-  }
-
-  const bindings = computed(() => {
+  const attrs = computed(() => {
     if (!thisEl.value) return
 
-    const values = {}
+    const { type, icon, caption, disabled, ...values } = props
 
-    function assignValue (key, value) {
-      if (value) {
-        values[kebabCase(key)] = (value === true ? '' : value)
-        return true
-      }
-    }
-
-    GROUP_FIRST_ATTRS.forEach(key =>
-      assignValue(key, inheritedProps[key]) ||
-      assignValue(key, props[key])
+    Object.assign(
+      values,
+      inheritedProps,
+      { disabled: disabled || inheritedProps.disabled }
     )
 
-    GROUP_ONLY_ATTRS.forEach(key => isGrouped
-      ? assignValue(key, getInheritedProp(key))
-      : assignValue(key, props[key])
-    )
-
-    if (!LOCAL_FIRST_ATTRS.find(key => assignValue(key, props[key]))) {
-      LOCAL_FIRST_ATTRS.find(key => assignValue(key, inheritedProps[key]))
-    }
-
-    if (values['x-color']) {
+    if (values.xColor) {
       const xColors = generateAdjacentColors(
-        getComputedXColor(values['x-color'], thisEl.value)
+        getComputedXColor(values.xColor, thisEl.value)
       )
 
       if (xColors) {
@@ -97,10 +63,23 @@
           '--mu-x-color-dark': xColors.dark,
           '--mu-x-color-light': xColors.light
         }
-
-        values['x-color'] = ''
       }
+
+      values.xColor = true
     }
+
+    Object
+      .keys(values)
+      .forEach(key => {
+        const kebabKey = kebabCase(key)
+        const value = values[key]
+
+        delete values[key]
+
+        if (value) {
+          values[kebabKey] = value === true ? '' : value
+        }
+      })
 
     return values
   })

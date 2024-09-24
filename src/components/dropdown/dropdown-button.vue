@@ -1,7 +1,7 @@
 <template>
   <mu-button-group
     v-if="splitButton"
-    ref="thisEl" class="mu-dropdown" v-bind="$attrs">
+    ref="wrapperRef" class="mu-dropdown" v-bind="$attrs">
     <mu-button :icon="icon" :caption="caption" @click="hideDropdown">
       <slot />
     </mu-button>
@@ -13,7 +13,7 @@
   </mu-button-group>
   <mu-button
     v-else
-    ref="thisEl" class="mu-dropdown" v-bind="$attrs"
+    ref="wrapperRef" class="mu-dropdown" v-bind="$attrs"
     @click="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />
@@ -23,7 +23,7 @@
   </mu-button>
   <Teleport v-if="dropdownReady" :to="dropdownContainer">
     <div
-      ref="dropdownEl"
+      ref="dropdownRef"
       v-mu-scrollbar="dropdownScrollbar"
       v-bind="dropdownBindings"
       class="mu-dropdown-panel"
@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-  import { shallowRef } from 'vue'
   import { dropdownProps, dropdownEvents, useDropdown } from './hooks/dropdown'
   import { useVForComponents } from '@/hooks/v-for-components'
 
@@ -58,10 +57,9 @@
 
   const emit = defineEmits([...dropdownEvents])
 
-  const thisEl = shallowRef()
-  const dropdownEl = shallowRef()
-
   const {
+    wrapperRef,
+    dropdownRef,
     dropdownReady,
     dropdownBindings,
     dropdownContainer,
@@ -73,7 +71,7 @@
     onDropdownClick,
     onDropdownMouseOver,
     onDropdownMouseLeave
-  } = useDropdown(thisEl, dropdownEl, props, emit)
+  } = useDropdown(props, emit)
 
   const { computedItems } = useVForComponents(
     props,

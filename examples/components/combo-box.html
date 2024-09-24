@@ -26,7 +26,7 @@
 
   <style>
     .mu-combo-box {
-      width: 350px;
+      width: 300px;
     }
   </style>
 </head>
@@ -34,7 +34,7 @@
 <body>
   <div id="app" class="mu-box" position="fixed fit">
     <h2>
-      COMBOBOX
+      COMBOBOX & SELECT
       <mu-switch
         v-model="darkMode"
         active-label="Dark"
@@ -43,7 +43,7 @@
       </mu-switch>
     </h2>
     <div class="group">
-      <div class="mu-edit-group">
+      <div class="mu-input-group">
         <mu-combo-box
           v-model="artist"
           clear-button
@@ -52,8 +52,16 @@
           :options="artists"
           @dropdown:show="onDropdownShow">
         </mu-combo-box>
-        <mu-button caption="Add Option" class="mu-edit-addon" @click="addOption"></mu-button>
+        <mu-button caption="Add Option" class="mu-input_addon" @click="addOption"></mu-button>
       </div>
+    </div>
+    <div class="group">
+      <mu-select
+        v-model="artist"
+        placeholder="choose an artist"
+        :options="artists"
+        @dropdown:show="onDropdownShow">
+      </mu-select>
     </div>
     <div class="group mu-box" position="fixed bottom left">
       <mu-combo-box

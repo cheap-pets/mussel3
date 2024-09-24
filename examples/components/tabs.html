@@ -43,13 +43,13 @@
         class="mu-box" :clear-button="false" style="width: 125px;"
         v-model="tabStyle" :options="styles">
       </mu-combo-box>
-        <mu-switch
-          v-model="darkMode"
-          style="margin-left: auto;"
-          active-label="Dark"
-          inactive-label="Light"
-          @update:model-value="onUIModeChange">
-        </mu-switch>
+      <mu-switch
+        v-model="darkMode"
+        style="margin-left: auto;"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
     </div>
 
     <mu-tabs
@@ -80,10 +80,8 @@
         <div class="mu-divider"></div>
         <div class="mu-space"></div>
         <mu-dropdown-button class="mu-box" caption="artist" :dropdown-items="artists"></mu-dropdown-button>
-        <div class="mu-editor mu-box" solid>
-          <span class="mu-icon ti ti-search"></span>
-          <input placeholder="Search Something">
-        </div>
+        <mu-input input-style="solid" prefix=":icon=search" placeholder="Search Something">
+        </mu-input>
       </template>
       <mu-tab-panel name="Tab_1" layout="flex" content-center>This is Tab 1</mu-tab-panel>
       <mu-tab-panel name="Tab_2" layout="flex" content-center>This is Tab 2</mu-tab-panel>
@@ -148,7 +146,11 @@
       }
     })
 
-    mussel.install(app)
+    mussel.install(app, {
+      icons: {
+        search: 'ti ti-search'
+      }
+    })
 
     app.mount('#app')
   </script>

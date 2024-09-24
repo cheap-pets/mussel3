@@ -19,33 +19,27 @@
     type="text/css"
     href="../../node_modules/@tabler/icons-webfont/dist/tabler-icons-outline.css">
 
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="./style.css" />
+
   <style>
-    .group {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-
-      padding: 8px;
-      margin: 8px;
-    }
-
-    h2 {
-      margin: 16px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid currentColor;
-    }
-
-    h3 {
-      width: 100%;
-      margin: 0;
-      color: var(--mu-text-color-normal);
-    }
   </style>
 </head>
 
 <body>
   <div id="app" class="mu-box" position="fixed fit">
-    <h2>Modal Dialog</h2>
+    <h2>
+      Modal Dialog
+      <mu-switch
+        v-model="darkMode"
+        style="margin-left: auto;"
+        active-label="Dark"
+        inactive-label="Light"
+        @update:model-value="onUIModeChange">
+      </mu-switch>
+    </h2>
     <div id="div1" class="group">
       <mu-button caption="Open Dialog 1" @click="openDialog1"></mu-button>
       <mu-button caption="Request Fullscreen" accent button-style="outline" @click="requestFullscreen('#div1')"></mu-button>
@@ -72,9 +66,7 @@
       @update:visible="(...args) => onDialogVisibleChange('dialog1', ...args)"
       @button-click="onButtonClick">
       <template #header-append>
-        <mu-editor placeholder="find your money" icon="search" input-style="solid" round>
-          <template #prepend><mu-icon icon="search"></mu-icon></template>
-        </mu-editor>
+        <mu-input placeholder="find your money" prefix=":icon=search" input-style="solid" round></mu-input>
         <mu-dropdown-button
           class="mu-icon-button"
           button-style="text"
@@ -90,7 +82,7 @@
         </div>
       </div>
       <template #footer-prepend>
-        <mu-editor placeholder="where's your money?"></mu-editor>
+        <mu-input placeholder="where's your money?"></mu-input>
       </template>
     </mu-dialog>
     <mu-drawer
@@ -148,6 +140,10 @@
           }
         }
 
+        function onUIModeChange (v) {
+          document.querySelector('.mu-root').classList.toggle('mu-dark')
+        }
+
         return {
           dialog1Visible,
           drawer1Visible,
@@ -159,13 +155,13 @@
           openDrawer1,
           onDialogVisibleChange,
           onButtonClick,
-          requestFullscreen
+          requestFullscreen,
+          onUIModeChange
         }
       }
     })
 
     mussel.install(app, {
-      darkMode: true,
       icons: {
         box: 'ti ti-box',
         dots: 'ti ti-dots',

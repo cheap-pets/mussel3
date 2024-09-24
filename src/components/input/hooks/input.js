@@ -1,12 +1,10 @@
-import { computed, shallowRef } from 'vue'
+import { computed } from 'vue'
 import { isString } from '@/utils/type'
 
 export const inputProps = {
-  modelValue: null,
   type: String,
   label: String,
   placeholder: String,
-  displayValue: String,
   readonly: Boolean,
   disabled: Boolean,
   clearButton: Boolean,
@@ -16,24 +14,16 @@ export const inputProps = {
 }
 
 export const inputEvents = [
-  'update:modelValue',
   'prefixClick',
   'suffixClick',
   'clear'
 ]
 
-export function useInput (props, emit) {
-  const editAttrs = computed(() => ({
+export function useInput (model, props, emit) {
+  const wrapperAttrs = computed(() => ({
     disabled: props.disabled || null,
     readonly: props.readonly || null
   }))
-
-  const inputEl = shallowRef()
-
-  const inputValue = computed({
-    get: () => props.displayValue ?? props.modelValue,
-    set: v => emit('update:modelValue', v)
-  })
 
   const inputAttrs = computed(() => ({
     type: props.type || 'text',
@@ -73,25 +63,27 @@ export function useInput (props, emit) {
   }
 
   const clearButtonAttrs = {
-    class: 'mu-edit_clear-button',
+    class: 'mu-input_clear-button',
     tag: 'a',
     icon: 'x',
     concealed: ''
   }
 
   const clearButtonVisible = computed(() =>
-    !props.disabled && !props.readonly && props.clearButton && props.modelValue
+    !props.disabled &&
+    !props.readonly &&
+    props.clearButton &&
+    model.value != null &&
+    model.value !== ''
   )
 
   function clear () {
-    emit('update:modelValue', null)
+    model.value = null
     emit('clear')
   }
 
   return {
-    editAttrs,
-    inputEl,
-    inputValue,
+    wrapperAttrs,
     inputAttrs,
     prefix,
     suffix,

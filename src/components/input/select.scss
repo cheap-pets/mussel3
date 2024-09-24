@@ -1,0 +1,14 @@
+.mu-select {
+  width: auto;
+}
+
+.mu-select_value {
+  flex: 1 1 auto;
+  width: auto;
+  min-height: var(--mu-common-line-height);
+
+  &:empty::before {
+    content: attr(placeholder);
+    color: var(--mu-text-color-placeholder);
+  }
+}

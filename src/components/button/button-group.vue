@@ -15,6 +15,7 @@
     accent: Boolean,
     xColor: [Boolean, String],
     small: Boolean,
+    large: Boolean,
     round: Boolean,
     disabled: Boolean,
     buttonStyle: {
@@ -23,5 +24,5 @@
     }
   })
 
-  provide('groupedButtonOptions', props)
+  provide('buttonGroup', props)
 </script>

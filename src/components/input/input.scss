@@ -1,38 +1,42 @@
-.mu-edit {
-  --mu-edit_height: var(--mu-input-size);
-  --mu-edit_bg: var(--mu-bg-normal);
-  --mu-edit_border-color: var(--mu-border-color);
-  --mu-edit_border-radius: var(--mu-common-border-radius);
-  --mu-edit_focus-shadow: var(--mu-shadow-focus) rgb(from var(--mu-edit_border-color) r g b / 0.15);
+.mu-input {
+  --mu-input_height: var(--mu-input-size);
+  --mu-input_bg: var(--mu-bg-normal);
+  --mu-input_border-color: var(--mu-border-color);
+  --mu-input_border-radius: var(--mu-common-border-radius);
+  --mu-input_focus-shadow: var(--mu-shadow-focus) rgb(from var(--mu-input_border-color) r g b / 0.15);
 }
 
-.mu-edit {
-  width: 100%;
-  height: var(--mu-edit_height);
+.mu-input {
+  display: flex;
+
+  width: 200px;
+  height: var(--mu-input_height);
 
   font-size: var(--mu-common-font-size);
   line-height: var(--mu-common-line-height);
 
-  border-radius: var(--mu-edit_border-radius);
+  border-radius: var(--mu-input_border-radius);
 
   &[small] {
-    --mu-edit_height: var(--mu-input-size-small);
+    --mu-input_height: var(--mu-input-size-small);
   }
 
   &[round] {
-    --mu-edit_border-radius: calc(var(--mu-edit_height) / 2);
+    --mu-input_border-radius: calc(var(--mu-input_height) / 2);
   }
 }
 
 // Input & Textarea
-.mu-edit {
+.mu-input {
   @at-root {
     input#{&} {
+      display: unset;
       padding: 0 11px;
     }
 
     textarea#{&} {
       resize: none;
+      display: unset;
       padding: 5px 11px;
     }
 
@@ -54,13 +58,12 @@
   }
 }
 
-div.mu-edit {
+div.mu-input {
   user-select: none;
 
   position: relative;
 
   overflow: hidden;
-  display: flex;
   gap: var(--mu-base-spacing);
   align-items: center;
 
@@ -102,7 +105,7 @@ div.mu-edit {
   }
 }
 
-.mu-edit-group {
+.mu-input-group {
   user-select: none;
 
   position: relative;
@@ -125,7 +128,7 @@ div.mu-edit {
     border-radius: 0 !important;
   }
 
-  & > a, & > span, & > label, & > .mu-edit-addon {
+  & > a, & > span, & > label, & > .mu-input_addon {
     background: var(--mu-bg-translucent-gray);
   }
 
@@ -137,8 +140,8 @@ div.mu-edit {
     font-size: calc(1em + 2px);
   }
   
-  & > .mu-edit {
-    --mu-edit_height: var(--mu-input-size);
+  & > .mu-input {
+    --mu-input_height: var(--mu-input-size);
 
     z-index: 1;
     flex: 1 1 auto;
@@ -160,23 +163,25 @@ div.mu-edit {
   }
 }
 
-.mu-edit {
+.mu-input {
   color: var(--mu-text-color-normal);
-  background-color: var(--mu-edit_bg);
-  border: 1px solid var(--mu-edit_border-color);
+  background-color: var(--mu-input_bg);
+  border: 1px solid var(--mu-input_border-color);
 
   &[readonly] {
+    --mu-input_border-color: var(--mu-border-color-muted);
+
     background-color: var(--mu-bg-readonly) !important;
   }
 
   &[invalid] {
-    --mu-edit_border-color: var(--mu-danger-color);
+    --mu-input_border-color: var(--mu-danger-color);
 
     background-color: var(--mu-bg-danger) !important;
   }
 
   &[disabled] {
-    --mu-edit_border-color: var(--mu-border-color-muted);
+    --mu-input_border-color: var(--mu-border-color-muted);
 
     pointer-events: none;
     background-color: var(--mu-bg-disabled) !important;
@@ -193,51 +198,51 @@ div.mu-edit {
   }
 
   &[input-style="solid"] {
-    --mu-edit_bg: var(--mu-bg-translucent-gray);
+    --mu-input_bg: var(--mu-bg-translucent-gray);
 
     border-color: transparent;
   }
 
   &[input-style="underline"] {
-    border-color: transparent transparent var(--mu-edit_border-color);
+    border-color: transparent transparent var(--mu-input_border-color);
     border-radius: 0;
   }
 }
 
-.mu-edit-group > .mu-edit {
-  --mu-edit_bg: var(--mu-bg-normal);
-  --mu-edit_border-color: var(--mu-border-color);
+.mu-input-group > .mu-input {
+  --mu-input_bg: var(--mu-bg-normal);
+  --mu-input_border-color: var(--mu-border-color);
 
-  border-color: var(--mu-edit_border-color);
+  border-color: var(--mu-input_border-color);
 
   &[invalid] {
-    --mu-edit_border-color: var(--mu-danger-color);
+    --mu-input_border-color: var(--mu-danger-color);
   }
 }
 
-.mu-edit {
+.mu-input {
   &:hover, &:focus-within {
-    border-color: var(--mu-edit_border-color);
-    border-radius: var(--mu-edit_border-radius);
+    border-color: var(--mu-input_border-color);
+    border-radius: var(--mu-input_border-radius);
   }
 
   &:focus-within {
-    --mu-edit_border-color: var(--mu-primary-color);
+    --mu-input_border-color: var(--mu-primary-color);
 
-    box-shadow: var(--mu-edit_focus-shadow);
+    box-shadow: var(--mu-input_focus-shadow);
   }
 
   &:hover {
-    --mu-edit_border-color: var(--mu-primary-color-4);
+    --mu-input_border-color: var(--mu-primary-color-4);
   }
 
   &[invalid] {
     &:focus-within {
-      --mu-edit_border-color: var(--mu-danger-color);
+      --mu-input_border-color: var(--mu-danger-color);
     }
 
     &:hover {
-      --mu-edit_border-color: var(--mu-danger-color-4);
+      --mu-input_border-color: var(--mu-danger-color-4);
     }
   }
 }

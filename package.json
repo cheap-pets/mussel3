@@ -15,7 +15,7 @@
   "devDependencies": {
     "@cheap-pets/rollup-plugin-postcss-scss": "^1.0.2",
     "@rollup/plugin-alias": "^5.1.1",
-    "@rollup/plugin-node-resolve": "^15.2.4",
+    "@rollup/plugin-node-resolve": "^15.3.0",
     "@swc/core": "^1.7.26",
     "@tabler/icons": "^3.17.0",
     "@tabler/icons-webfont": "^3.17.0",

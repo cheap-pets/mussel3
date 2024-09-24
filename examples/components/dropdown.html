@@ -72,11 +72,10 @@
       </mu-switch>
       <mu-dropdown-button
         class="mu-icon-button"
-        accent icon="dotsVert"
+        accent icon="dotsVert" :arrow="false"
+        dropdown-class="sys-menu_mask"
         dropdown-trigger="click"
-        positioned
-        :arrow="false"
-        dropdown-class="sys-menu_mask">
+        dropdown-positioned>
         <template #dropdown>
           <div class="sys-menu"></div>
         </template>
