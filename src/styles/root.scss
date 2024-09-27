@@ -1,100 +1,24 @@
 .mu-root {
-  --mu-red: $red;
-  --mu-pink: $pink;
-  --mu-grape: $grape;
-  --mu-violet: $violet;
-  --mu-indigo: $indigo;
-  --mu-blue: $blue;
-  --mu-cyan: $cyan;
-  --mu-teal: $teal;
-  --mu-green: $green;
-  --mu-lime: $lime;
-  --mu-yellow: $yellow;
-  --mu-orange: $orange;
+  @each $v in (
+    "red", "pink", "grape", "violet", "indigo", "blue",
+    "cyan", "teal", "green", "lime", "yellow", "orange"
+  ) {
+    --mu-#{$v}: $#{$v};
+  }
 
-  --mu-primary-color: $primary;
-  --mu-primary-color-0: $primary0;
-  --mu-primary-color-1: $primary1;
-  --mu-primary-color-2: $primary2;
-  --mu-primary-color-3: $primary3;
-  --mu-primary-color-4: $primary4;
-  --mu-primary-color-5: $primary5;
-  --mu-primary-color-6: $primary6;
-  --mu-primary-color-7: $primary7;
-  --mu-primary-color-8: $primary8;
-  --mu-primary-color-9: $primary9;
-  
-  --mu-neutral-color: $neutral;
-  --mu-neutral-color-0: $neutral0;
-  --mu-neutral-color-1: $neutral1;
-  --mu-neutral-color-2: $neutral2;
-  --mu-neutral-color-3: $neutral3;
-  --mu-neutral-color-4: $neutral4;
-  --mu-neutral-color-5: $neutral5;
-  --mu-neutral-color-6: $neutral6;
-  --mu-neutral-color-7: $neutral7;
-  --mu-neutral-color-8: $neutral8;
-  --mu-neutral-color-9: $neutral9;
+  @each $v in (primary, neutral, success, warning, danger, accent) {
+    --mu-#{$v}-color: $#{$v};
 
-  --mu-success-color: $success;
-  --mu-success-color-0: $success0;
-  --mu-success-color-1: $success1;
-  --mu-success-color-2: $success2;
-  --mu-success-color-3: $success3;
-  --mu-success-color-4: $success4;
-  --mu-success-color-5: $success5;
-  --mu-success-color-6: $success6;
-  --mu-success-color-7: $success7;
-  --mu-success-color-8: $success8;
-  --mu-success-color-9: $success9;
-
-  --mu-warning-color: $warning;
-  --mu-warning-color-0: $warning0;
-  --mu-warning-color-1: $warning1;
-  --mu-warning-color-2: $warning2;
-  --mu-warning-color-3: $warning3;
-  --mu-warning-color-4: $warning4;
-  --mu-warning-color-5: $warning5;
-  --mu-warning-color-6: $warning6;
-  --mu-warning-color-7: $warning7;
-  --mu-warning-color-8: $warning8;
-  --mu-warning-color-9: $warning9;
-
-  --mu-danger-color: $danger;
-  --mu-danger-color-0: $danger0;
-  --mu-danger-color-1: $danger1;
-  --mu-danger-color-2: $danger2;
-  --mu-danger-color-3: $danger3;
-  --mu-danger-color-4: $danger4;
-  --mu-danger-color-5: $danger5;
-  --mu-danger-color-6: $danger6;
-  --mu-danger-color-7: $danger7;
-  --mu-danger-color-8: $danger8;
-  --mu-danger-color-9: $danger9;
-
-  --mu-accent-color: $accent;
-  --mu-accent-color-0: $accent0;
-  --mu-accent-color-1: $accent1;
-  --mu-accent-color-2: $accent2;
-  --mu-accent-color-3: $accent3;
-  --mu-accent-color-4: $accent4;
-  --mu-accent-color-5: $accent5;
-  --mu-accent-color-6: $accent6;
-  --mu-accent-color-7: $accent7;
-  --mu-accent-color-8: $accent8;
-  --mu-accent-color-9: $accent9;
+    @for $i from 0 through 9 {
+      --mu-#{$v}-color-#{$i}: $#{$v}#{$i};
+    }
+  }
 
   --mu-gray: var(--mu-neutral-color-5);
-  --mu-gray-0: var(--mu-neutral-color-0);
-  --mu-gray-1: var(--mu-neutral-color-1);
-  --mu-gray-2: var(--mu-neutral-color-2);
-  --mu-gray-3: var(--mu-neutral-color-3);
-  --mu-gray-4: var(--mu-neutral-color-4);
-  --mu-gray-5: var(--mu-neutral-color-5);
-  --mu-gray-6: var(--mu-neutral-color-6);
-  --mu-gray-7: var(--mu-neutral-color-7);
-  --mu-gray-8: var(--mu-neutral-color-8);
-  --mu-gray-9: var(--mu-neutral-color-9);
+
+  @for $i from 0 through 9 {
+    --mu-gray-#{$i}: var(--mu-neutral-color-#{$i});
+  }
 }
 
 .mu-root {
@@ -104,23 +28,23 @@
   --mu-text-color-muted: var(--mu-gray-4);
   --mu-text-color-subtle: var(--mu-gray-3);
   --mu-text-color-placeholder: var(--mu-gray-2);
+  
+  --mu-translucent-alpha: 0.08;
+  --mu-bg-translucent-gray: rgba(0, 0, 0, .07);
+
+  @each $v in (primary, success, warning, danger, accent) {
+    --mu-bg-translucent-#{$v}: rgb(from var(--mu-#{$v}-color) r g b / var(--mu-translucent-alpha));
+  }
 
   --mu-bg-normal: #fff;
   --mu-bg-strong: var(--mu-gray-0);
-  --mu-bg-overlay: #fff;
-  
-  --mu-bg-danger: rgb(from var(--mu-danger-color) r g b / 0.08);
-  --mu-bg-readonly: rgb(from var(--mu-primary-color) r g b / 0.08);
   --mu-bg-disabled: var(--mu-gray-0);
 
+  --mu-bg-overlay: var(--mu-bg-normal);
   --mu-bg-mask: rgba(0, 0, 0, .5);
 
-  --mu-bg-translucent-gray: rgba(0, 0, 0, .07);
-
   --mu-border-color: var(--mu-gray-3);
-  --mu-border-color-soft: var(--mu-gray-2);
   --mu-border-color-muted: var(--mu-gray-1);
-  --mu-border-color-strong: var(--mu-gray-4);
 }
 
 .mu-root {

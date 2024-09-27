@@ -1,9 +1,4 @@
 export default {
-  Page: {
-    CURRENT_PAGE: 'Page %s',
-    TOTAL_PAGES: 'of %s'
-  },
-
   Button: {
     ACCEPT: 'Accept',
     CANCEL: 'Cancel',
@@ -24,29 +19,61 @@ export default {
 
   Calendar: {
     TODAY: 'Today',
+    YEAR_AND_MONTH: '{0} {1}',
 
-    JANUARY: 'Jan',
-    FEBRUARY: 'Feb',
-    MARCH: 'Mar',
-    APRIL: 'Apr',
-    MAY: 'May',
-    JUNE: 'Jun',
-    JULY: 'Jul',
-    AUGUST: 'Aug',
-    SEPTEMBER: 'Sep',
-    OCTOBER: 'Oct',
-    NOVEMBER: 'Nov',
-    DECEMBER: 'Dec',
+    DAYS_OF_WEEK: [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ],
 
-    SUNDAY: 'Su',
-    MONDAY: 'Mo',
-    TUESDAY: 'Tu',
-    WEDNESDAY: 'We',
-    THURSDAY: 'Th',
-    FRIDAY: 'Fr',
-    SATURDAY: 'Sa',
+    DAYS_OF_WEEK_SHORT: [
+      'Sun',
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat'
+    ],
 
-    YEAR: '',
-    MONTH: ''
+    MONTHS: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
+
+    MONTHS_SHORT: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ]
+  },
+
+  Pagination: {
+    CURRENT: 'Page {0}',
+    CURRENT_AND_TOTAL: 'Page {0} of {1}'
   }
 }

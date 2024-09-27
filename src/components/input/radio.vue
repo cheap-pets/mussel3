@@ -1,18 +1,17 @@
 <template>
-  <label v-if="label" class="mu-radio" :disabled="disabled || null">
-    <input v-model="radioValue" type="radio" :value="value" :disabled="disabled">
-    <span>{{ label }}</span>
+  <label class="mu-radio">
+    <input v-model="model" type="radio" :value="value">
+    <span v-if="label">{{ label }}</span>
   </label>
-  <input v-else v-model="radioValue" class="mu-radio" type="radio" :value="value">
 </template>
 
 <script setup>
-  import { radioProps, radioEvents, useRadio } from './hooks/radio'
-
   defineOptions({ name: 'MusselRadio' })
 
-  const props = defineProps({ ...radioProps })
-  const emit = defineEmits([...radioEvents])
+  const model = defineModel()
 
-  const { radioValue } = useRadio(props, emit)
+  defineProps({
+    value: { required: true },
+    label: String
+  })
 </script>

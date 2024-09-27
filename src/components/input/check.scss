@@ -5,74 +5,62 @@
   cursor: pointer;
   user-select: none;
 
-  @at-root label#{&} {
-    display: inline-flex;
-    gap: var(--mu-content-spacing);
-    align-items: center;
+  display: inline-flex;
+  gap: var(--mu-content-spacing);
+  align-items: center;
 
-    font-size: var(--mu-common-font-size);
-    line-height: var(--mu-common-line-height);
+  font-size: var(--mu-common-font-size);
+  line-height: var(--mu-common-line-height);
 
-    & > span {
-      display: block;
+  & > span {
+    display: block;
+  }
+
+  & > input {
+    flex: none;
+
+    width: var(--mu-check_size);
+    height: var(--mu-check_size);
+    margin: 0;
+  
+    appearance: none;
+    background-color: var(--mu-bg-normal);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid var(--mu-border-color);
+
+    transition: background-color .1s;
+  
+    &:checked {
+      background-color: var(--mu-primary-color);
+      border-color: var(--mu-primary-color);
     }
   }
 
   &[disabled] {
     pointer-events: none;
+    color: var(--mu-text-color-muted);
+
+    & > input {
+      background-color: var(--mu-text-color-placeholder);
+      border-color: transparent;
+    }
   }
 }
 
-input {
-  @at-root {
-    #{&}.mu-check,
-    #{&}.mu-radio,
-    .mu-check > #{&},
-    .mu-radio > #{&} {
-      flex: none;
+.mu-check > input {
+  border-radius: var(--mu-common-border-radius);
+  
+  &:checked {
+    background-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+  }
+}
 
-      width: var(--mu-check_size);
-      height: var(--mu-check_size);
-      margin: 0;
-    
-      appearance: none;
-      background-color: var(--mu-bg-normal);
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      border: 1px solid var(--mu-border-color);
+.mu-radio > input {
+  border-radius: calc(var(--mu-check_size) / 2);
 
-      transition: background-color .1s;
-    
-      &:checked {
-        background-color: var(--mu-primary-color);
-        border-color: var(--mu-primary-color);
-      }
-    }
-
-    #{&}.mu-check[disabled],
-    #{&}.mu-radio[disabled],
-    .mu-check[disabled] > #{&},
-    .mu-radio[disabled] > #{&} {
-      opacity: .5;
-    }
-
-    #{&}.mu-check,
-    .mu-check > #{&} {
-      border-radius: var(--mu-common-border-radius);
-      
-      &:checked {
-        background-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
-      }
-    }
-
-    #{&}.mu-radio,
-    .mu-radio > #{&} {
-      border-radius: calc(var(--mu-check_size) / 2);
-
-      &:checked {
-        background-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3ccircle fill='%23fff' cx='10' cy='10' r='4' /%3e%3c/svg%3e");
-      }
-    }
+  &:checked {
+    background-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3ccircle fill='%23fff' cx='10' cy='10' r='4' /%3e%3c/svg%3e");
   }
 }

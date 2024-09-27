@@ -93,14 +93,6 @@
   align-self: stretch;
   background-color: var(--mu-border-color-muted);
 
-  // border-color:
-  //   var(--mu-border-color)
-  //   var(--mu-border-color-muted)
-  //   var(--mu-border-color-muted)
-  //   var(--mu-border-color);
-  // border-style: solid;
-  // border-width: 1px;
-
   &[thin] {
     flex-basis: 1px;
   }

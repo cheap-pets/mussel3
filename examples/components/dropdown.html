@@ -65,7 +65,6 @@
     <h2>
       Dropdown Components
       <mu-switch
-        v-model="darkMode"
         active-label="Dark"
         inactive-label="Light"
         @update:model-value="onUIModeChange">
@@ -176,7 +175,6 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
-        const darkMode = Vue.ref(false)
         const artist = Vue.ref()
         const artists = Vue.ref([
           { is: '-', label: 'GROUP 1' },
@@ -217,7 +215,6 @@
         }
 
         return {
-          darkMode,
           artist,
           artists,
           checkedArtist,

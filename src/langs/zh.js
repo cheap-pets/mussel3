@@ -1,9 +1,4 @@
 export default {
-  Page: {
-    CURRENT_PAGE: '第 %s 页',
-    TOTAL_PAGES: '共 %s 页'
-  },
-
   Button: {
     ACCEPT: '接受',
     CANCEL: '取消',
@@ -25,29 +20,61 @@ export default {
 
   Calendar: {
     TODAY: '今日',
+    YEAR_AND_MONTH: '{0} 年 {1}',
 
-    JANUARY: '1 月',
-    FEBRUARY: '2 月',
-    MARCH: '3 月',
-    APRIL: '4 月',
-    MAY: '5 月',
-    JUNE: '6 月',
-    JULY: '7 月',
-    AUGUST: '8 月',
-    SEPTEMBER: '9 月',
-    OCTOBER: '10 月',
-    NOVEMBER: '11 月',
-    DECEMBER: '12 月',
+    DAYS_OF_WEEK: [
+      '星期日',
+      '星期一',
+      '星期二',
+      '星期三',
+      '星期四',
+      '星期五',
+      '星期六'
+    ],
 
-    SUNDAY: '日',
-    MONDAY: '一',
-    TUESDAY: '二',
-    WEDNESDAY: '三',
-    THURSDAY: '四',
-    FRIDAY: '五',
-    SATURDAY: '六',
+    DAYS_OF_WEEK_SHORT: [
+      '日',
+      '一',
+      '二',
+      '三',
+      '四',
+      '五',
+      '六'
+    ],
 
-    YEAR: '年',
-    MONTH: '月'
+    MONTHS: [
+      '1 月',
+      '2 月',
+      '3 月',
+      '4 月',
+      '5 月',
+      '6 月',
+      '7 月',
+      '8 月',
+      '9 月',
+      '10 月',
+      '11 月',
+      '12 月'
+    ],
+
+    MONTHS_SHORT: [
+      '一月',
+      '二月',
+      '三月',
+      '四月',
+      '五月',
+      '六月',
+      '七月',
+      '八月',
+      '九月',
+      '十月',
+      '十一月',
+      '十二月'
+    ]
+  },
+
+  Pagination: {
+    CURRENT: '第 {0} 页',
+    CURRENT_AND_TOTAL: '第 {0} 页，共 {1} 页'
   }
 }

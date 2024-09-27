@@ -1,5 +1,9 @@
 <template>
-  <div class="mu-switch" :active="isActive" :label="innerLabel" @click="toggle" />
+  <div
+    class="mu-switch"
+    :active="isActive"
+    :label="innerLabel"
+    @click="toggle" />
 </template>
 
 <script setup>
@@ -9,8 +13,9 @@
 
   defineOptions({ name: 'MusselSwitch' })
 
+  const model = defineModel()
+
   const props = defineProps({
-    modelValue: null,
     label: String,
     activeLabel: String,
     inactiveLabel: String,
@@ -18,10 +23,8 @@
     inactiveValue: { default: false }
   })
 
-  const emit = defineEmits(['update:modelValue'])
-
   const isActive = computed(() =>
-    props.activeValue === props.modelValue || null
+    props.activeValue === model.value || null
   )
 
   const innerLabel = computed(() =>
@@ -29,9 +32,6 @@
   )
 
   function toggle () {
-    emit(
-      'update:modelValue',
-      isActive.value ? props.inactiveValue : props.activeValue
-    )
+    model.value = isActive.value ? props.inactiveValue : props.activeValue
   }
 </script>

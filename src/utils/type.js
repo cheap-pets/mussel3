@@ -27,7 +27,7 @@ export function isClass (value) {
 }
 
 export function isDate (value) {
-  return typeOf(value) === 'date'
+  return typeOf(value) === 'date' && !isNaN(value.getTime())
 }
 
 export function isFunction (value) {

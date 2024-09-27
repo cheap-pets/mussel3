@@ -1,20 +1,19 @@
 <template>
-  <label v-if="label" class="mu-check" :disabled="disabled || null">
-    <input v-model="checkValue" type="checkbox" :value="value" :disabled="disabled">
-    <span>{{ label }}</span>
+  <label class="mu-check">
+    <input v-model="model" type="checkbox" :value="value">
+    <span v-if="label">{{ label }}</span>
   </label>
-  <input v-else v-model="checkValue" class="mu-check" type="checkbox" :value="value">
 </template>
 
 <script setup>
   import './check.scss'
 
-  import { checkProps, checkEvents, useCheck } from './hooks/check'
-
   defineOptions({ name: 'MusselCheck' })
 
-  const props = defineProps({ ...checkProps })
-  const emit = defineEmits([...checkEvents])
+  const model = defineModel({ type: [Boolean, Array] })
 
-  const { checkValue } = useCheck(props, emit)
+  defineProps({
+    value: null,
+    label: String
+  })
 </script>

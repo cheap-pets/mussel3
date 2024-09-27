@@ -36,7 +36,6 @@
     <h2>
       COMBOBOX & SELECT
       <mu-switch
-        v-model="darkMode"
         active-label="Dark"
         inactive-label="Light"
         @update:model-value="onUIModeChange">
@@ -52,7 +51,7 @@
           :options="artists"
           @dropdown:show="onDropdownShow">
         </mu-combo-box>
-        <mu-button caption="Add Option" class="mu-input_addon" @click="addOption"></mu-button>
+        <mu-button caption="Add Option" class="mu-input-addon" @click="addOption"></mu-button>
       </div>
     </div>
     <div class="group">
@@ -78,16 +77,16 @@
   <script type="text/javascript">
     const app = Vue.createApp({
       setup () {
-        const darkMode = Vue.ref(false)
         const artist = Vue.ref('Johann Baptist Strauss')
-        const artists = Vue.ref([
+
+        const artists = [
           { is: '-', label: 'GROUP 1' },
           { value: 'Ludwig van Beethoven' },
           { value: 'Wolfgang Amadeus Mozart' },
           { value: 'Frédéric François Chopin' },
           { is: '-', label: 'GROUP 2' },
           { value: 'Johann Baptist Strauss', disabled: true  }
-        ])
+        ]
 
         const artistsCn = [
           { value: 'Ludwig van Beethoven', label: '贝多芬' },
@@ -105,7 +104,7 @@
           })
         }
 
-        return { darkMode, artist, artists, artistsCn, addOption }
+        return { artist, artists, artistsCn, addOption }
       },
       methods: {
         onDropdownShow () {

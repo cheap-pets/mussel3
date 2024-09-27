@@ -3,9 +3,12 @@
 }
 
 .mu-select_value {
+  display: flex;
   flex: 1 1 auto;
+  align-items: center;
+  align-self: stretch;
+
   width: auto;
-  min-height: var(--mu-common-line-height);
 
   &:empty::before {
     content: attr(placeholder);

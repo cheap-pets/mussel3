@@ -19,7 +19,7 @@
   defineOptions({ name: 'MusselInput' })
 
   const model = defineModel()
-  const props = defineProps({ ...inputProps })
+  const props = defineProps({ ...inputProps, type: String })
   const emit = defineEmits([...inputEvents])
 
   const {

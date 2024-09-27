@@ -2,7 +2,6 @@ import { computed } from 'vue'
 import { isString } from '@/utils/type'
 
 export const inputProps = {
-  type: String,
   label: String,
   placeholder: String,
   readonly: Boolean,

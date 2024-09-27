@@ -13,6 +13,7 @@ import * as DropdownComponents from './dropdown'
 import * as MessageComponents from './message'
 
 import MuBadge from './badge/badge.vue'
+import MuCalendar from './calendar/calendar.vue'
 import MuScrollBox from './scrollbar/scroll-box.vue'
 
 import { kebabCase } from '@/utils/case'
@@ -43,6 +44,7 @@ export function install (app, options) {
 
   installComponents({
     MuBadge,
+    MuCalendar,
     MuScrollBox
   })
 }

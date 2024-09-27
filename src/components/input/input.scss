@@ -128,10 +128,6 @@ div.mu-input {
     border-radius: 0 !important;
   }
 
-  & > a, & > span, & > label, & > .mu-input_addon {
-    background: var(--mu-bg-translucent-gray);
-  }
-
   & > .mu-icon,
   & > .mu-tool-button {
     justify-content: center;
@@ -145,6 +141,11 @@ div.mu-input {
 
     z-index: 1;
     flex: 1 1 auto;
+  }
+
+  & > a, & > span, & > label, & > .mu-input-addon {
+    flex: none;
+    background: var(--mu-bg-translucent-gray);
   }
 
   & > :focus-within {
@@ -171,13 +172,13 @@ div.mu-input {
   &[readonly] {
     --mu-input_border-color: var(--mu-border-color-muted);
 
-    background-color: var(--mu-bg-readonly) !important;
+    background-color: var(--mu-bg-translucent-primary) !important;
   }
 
   &[invalid] {
     --mu-input_border-color: var(--mu-danger-color);
 
-    background-color: var(--mu-bg-danger) !important;
+    background-color: var(--mu-bg-translucent-danger) !important;
   }
 
   &[disabled] {

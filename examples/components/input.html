@@ -29,6 +29,10 @@
         width: 250px;
       }
 
+      .mu-select {
+        max-width: 105px;
+      }
+
       .mu-input-group {
         width: 350px;
       }
@@ -102,12 +106,13 @@
         <a class="mu-link">Link</a>
         <mu-input v-model="value" clear-button></mu-input>
         <mu-tool-button icon="search"></mu-tool-button>
-        <mu-button class="mu-input_addon">Button</mu-button>
+        <mu-button class="mu-input-addon">Button</mu-button>
       </div>
       <div class="mu-input-group">
-        <mu-dropdown-button class="mu-input_addon" :dropdown-items="[{ label: 'Option A' }, { label: 'Option B' }, { label: 'Option C' }]">
-          Select
-        </mu-dropdown-button>
+        <mu-select
+          v-model="selectValue" :options="options"
+          class="mu-input-addon" placeholder="empty">
+        </mu-select>
         <mu-input v-model="value" clear-button input-style="solid"></mu-input>
         <span><mu-check label="Check"></mu-check></span>
       </div>
@@ -136,6 +141,14 @@
         const darkMode = Vue.ref(false)
         const value = Vue.ref('')
 
+        const selectValue = Vue.ref()
+        const options = Vue.ref([
+          { value: 'Option A' },
+          { value: 'Option B' },
+          { value: 'Option C' },
+          { value: 'Option D', disabled: true  }
+        ])
+
         function onUIModeChange (v) {
           document.querySelector('.mu-root').classList.toggle('mu-dark')
         }
@@ -143,6 +156,8 @@
         return {
           darkMode,
           value,
+          selectValue,
+          options,
           onUIModeChange
         }
       },
