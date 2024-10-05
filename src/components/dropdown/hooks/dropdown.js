@@ -69,7 +69,7 @@ export function useDropdown (props, emit, options = {}) {
   })
 
   const dropdownEl = computed(() => dropdownRef.value?.$el || dropdownRef.value)
-  const dropdownVisible = computed(() => expanded.value)
+  const dropdownVisible = computed(() => expanded.value || null)
 
   usePopupManager(dropdownVisible, {
     hide,

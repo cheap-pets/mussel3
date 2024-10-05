@@ -1,18 +1,49 @@
 <template>
   <div class="mu-calendar">
     <div class="mu-calendar_header">
-      {{ monthTitle }}
+      <mu-dropdown-button
+        dropdown-trigger="click"
+        class="mu-calendar_caption" button-style="text"
+        icon="calendar" :caption="caption">
+        <template #dropdown>
+          <table class="mu-calendar_years mu-calendar_table" cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td><mu-icon icon="chevronLeft" /></td>
+                <td v-for="i in 5" :key="i">
+                  {{ i + startYear - 1 }}
+                </td>
+              </tr>
+              <tr>
+                <td v-for="i in 5" :key="i">
+                  {{ i + startYear + 4 }}
+                </td>
+                <td><mu-icon icon="chevronRight" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
+      </mu-dropdown-button>
+      <mu-tool-button icon="chevronUp" @click="goSiblingMonth(-1)" />
+      <mu-tool-button icon="chevronDown" @click="goSiblingMonth(1)" />
     </div>
-    <table class="mu-calendar_table">
+    <div class="mu-divider" thin />
+    <table class="mu-calendar_body mu-calendar_table" cellpadding="0" cellspacing="0">
       <thead>
         <th v-for="v in daysOfWeek" :key="v">
           {{ v }}
         </th>
       </thead>
       <tbody>
-        <tr v-for="(n, i) in rowCount" :key="n">
-          <td v-for="(m, j) in 7" :key="m" v-bind="cells[i * 7 + j].attrs">
-            {{ cells[i * 7 + j].date }}
+        <tr v-for="(row, i) in data" :key="i">
+          <td
+            v-for="(cell, j) in row" :key="j"
+            :prev="cell.prev"
+            :next="cell.next"
+            :today="isSameDate(cell, today) || null"
+            :active="isSameDate(cell, selected) || null"
+            @click="setDate(cell)">
+            {{ cell.date }}
           </td>
         </tr>
       </tbody>
@@ -23,7 +54,7 @@
 <script setup>
   import './calendar.scss'
 
-  import { ref, computed, watchEffect } from 'vue'
+  import { reactive, computed, watchEffect } from 'vue'
   import { formatString } from '@/utils/string'
 
   import {
@@ -31,7 +62,7 @@
     getMonthFirstDay,
     getMonthDaysCount,
     calculateMonth,
-    isSameDay
+    isSameDate
   } from './calendar'
 
   import lang from '@/langs'
@@ -45,24 +76,22 @@
     range: Boolean,
     min: [Date, String],
     max: [Date, String],
-    daysOfWeek: { type: Array, default: () => [...lang.Calendar.DAYS_OF_WEEK_SHORT] }
+    daysOfWeek: { type: Array, default: () => [...lang.Calendar.DAYS_OF_WEEK] }
   })
 
-  const current = ref()
+  const current = reactive({})
+
+  const today = computed(() => parseDateObject(new Date()))
   const selected = computed(() => parseDateObject(date.value))
 
-  const monthTitle = computed(() =>
-    current.value &&
-    formatString(YEAR_AND_MONTH, current.value.year, MONTHS[current.value.month]
-    )
+  const caption = computed(() =>
+    formatString(YEAR_AND_MONTH, current.year, MONTHS[current.month])
   )
 
-  const cells = computed(() => {
-    if (!current.value) return []
+  const startYear = computed(() => current.year)
 
-    const ret = []
-
-    const { year: y, month: m } = current.value
+  const data = computed(() => {
+    const { year: y, month: m } = current
 
     const count = getMonthDaysCount(y, m)
     const first = getMonthFirstDay(y, m)
@@ -71,29 +100,52 @@
     const next = calculateMonth(y, m, +1)
     const prevCount = getMonthDaysCount(prev.year, prev.month)
 
-    for (let i = 1; i < 43; i++) {
-      const v = i - first
+    const rows = []
 
+    let i = 1
+    let row = []
+
+    while (true) {
+      const v = i - first
       const isPrev = v < 1
       const isNext = v > count
-      const date = isPrev ? (prevCount + v) : (isNext ? v - count : v)
 
-      ret.push({
-        date,
-        attr: {
-          // today:
-        }
-      })
+      row.push(
+        isPrev
+          ? { ...prev, date: prevCount + v, prev: true }
+          : isNext
+            ? { ...next, date: v - count, next: true }
+            : { year: y, month: m, date: v }
+      )
 
-      if (v >= count && i % 7 === 0) break
+      if (i % 7 === 0) {
+        rows.push(row)
+
+        if (v < count) row = []
+        else break
+      }
+
+      i++
     }
 
-    return ret
+    return rows
   })
 
-  const rowCount = computed(() => parseInt(cells.value.length / 7))
+  function goSiblingMonth (offset) {
+    Object.assign(
+      current,
+      calculateMonth(current.year, current.month, offset)
+    )
+  }
+
+  function setDate (cell) {
+    date.value = new Date(cell.year, cell.month, cell.date)
+  }
 
   watchEffect(() => {
-    current.value = selected.value || parseDateObject(new Date())
+    const { year, month } = selected.value || today.value
+
+    current.year = year
+    current.month = month
   })
 </script>

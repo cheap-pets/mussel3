@@ -41,13 +41,11 @@ export function formatDate (date, format = 'yyyy-MM-dd') {
 }
 
 export function resolveDate (value) {
-  value = isString(value)
-    ? new Date(value)
-    : value
+  if (isString(value)) {
+    value = new Date(value)
+  }
 
-  return isDate(value)
-    ? value
-    : null
+  return isDate(value) ? value : null
 }
 
 export function parseDateObject (value) {
@@ -100,7 +98,7 @@ export function filterDatesByMonth (dates, year, month) {
   }, [])
 }
 
-export function isSameDay (a, b) {
+export function isSameDate (a, b) {
   a = isDate(a) ? parseDateObject(a) : Object(a)
   b = isDate(b) ? parseDateObject(b) : Object(b)
 

@@ -6,14 +6,14 @@
       <slot />
     </mu-button>
     <mu-button
-      class="mu-button mu-icon-button"
+      class="mu-button mu-icon-button" :active="dropdownVisible"
       @click.stop="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
       <mu-icon v-bind="dropdownArrowBindings" />
     </mu-button>
   </mu-button-group>
   <mu-button
     v-else
-    ref="wrapperRef" class="mu-dropdown" v-bind="$attrs"
+    ref="wrapperRef" class="mu-dropdown" v-bind="$attrs" :active="dropdownVisible"
     @click="onTriggerClick" @mouseover="onTriggerMouseOver" @mouseleave="onTriggerMouseLeave">
     <slot>
       <mu-icon v-if="icon" :icon="icon" />
@@ -61,6 +61,7 @@
     wrapperRef,
     dropdownRef,
     dropdownReady,
+    dropdownVisible,
     dropdownBindings,
     dropdownContainer,
     dropdownArrowBindings,
