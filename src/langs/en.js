@@ -19,6 +19,7 @@ export default {
 
   Calendar: {
     TODAY: 'Today',
+    THIS_MONTH: 'This Month',
     YEAR_AND_MONTH: '{0} {1}',
 
     DAYS_OF_WEEK: [

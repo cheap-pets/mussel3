@@ -2,7 +2,7 @@
   <mu-button-group
     v-if="splitButton"
     ref="wrapperRef" class="mu-dropdown" v-bind="$attrs">
-    <mu-button :icon="icon" :caption="caption" @click="hideDropdown">
+    <mu-button :icon="icon" :caption="caption" @click="collapse">
       <slot />
     </mu-button>
     <mu-button
@@ -65,7 +65,7 @@
     dropdownBindings,
     dropdownContainer,
     dropdownArrowBindings,
-    hide: hideDropdown,
+    hide: collapse,
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave,
@@ -82,4 +82,9 @@
       defaultComponent: 'mu-dropdown-item'
     }
   )
+
+  defineExpose({
+    dropdownVisible,
+    collapse
+  })
 </script>

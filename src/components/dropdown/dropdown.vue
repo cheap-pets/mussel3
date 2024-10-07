@@ -41,8 +41,10 @@
     wrapperRef,
     dropdownRef,
     dropdownReady,
+    dropdownVisible,
     dropdownBindings,
     dropdownContainer,
+    hide: collapse,
     onTriggerClick,
     onTriggerMouseOver,
     onTriggerMouseLeave,
@@ -58,4 +60,9 @@
       defaultComponent: 'mu-dropdown-item'
     }
   )
+
+  defineExpose({
+    dropdownVisible,
+    collapse
+  })
 </script>

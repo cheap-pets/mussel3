@@ -48,7 +48,7 @@
 
   import { ref, shallowRef, reactive, computed, watchEffect } from 'vue'
   import { modalProps, modalEvents, useModal } from './modal'
-  import { ButtonShortcuts } from './button-shortcuts'
+  import { DialogToolPresets } from './dialog-tool-presets'
   import { sizeProps, useSize } from '@/hooks/size'
   import { useKeyGen } from '@/hooks/key-gen'
   import { isString } from '@/utils/type'
@@ -84,7 +84,7 @@
   const footerButtons = computed(() =>
     props.buttons?.map(el =>
       isString(el)
-        ? { key: genKey(), is: 'mu-button', bindings: { caption: el }, ...ButtonShortcuts[el] }
+        ? { key: genKey(), is: 'mu-button', bindings: { caption: el }, ...DialogToolPresets[el] }
         : { key: getObjectKey(el), is: 'mu-button', bindings: el }
     )
   )

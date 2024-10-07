@@ -1,106 +1,120 @@
-import { isString, isDate } from '@/utils/type'
+import { ref, computed, watchEffect } from 'vue'
+import { formatString } from '@/utils/string'
 
-export function formatDate (date, format = 'yyyy-MM-dd') {
-  let result = /(y+)/i.test(format)
-    ? format.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
-    : format
+import lang from '@/langs'
 
-  const patterns = {
-    '(M+)': date.getMonth() + 1,
-    '(d+)': date.getDate(),
-    '(h+)': date.getHours(),
-    '(m+)': date.getMinutes(),
-    '(s+)': date.getSeconds(),
-    '(S+)': date.getMilliseconds()
-  }
+import {
+  getMonthFirstDay,
+  getMonthDaysCount,
+  getPrevMonth,
+  getNextMonth,
+  toObject,
+  toString,
+  equals
+} from './utils'
 
-  Object
-    .keys(patterns)
-    .forEach(p => {
-      const re = new RegExp(p, ['(d+)', '(h+)'].includes(p) ? 'i' : undefined)
+export const calendarProps = {
+  range: Boolean,
+  format: String,
+  min: [Date, String],
+  max: [Date, String],
+  daysOfWeek: { type: Array, default: () => [...lang.Calendar.DAYS_OF_WEEK] }
+}
 
-      if (re.test(result)) {
-        const len = RegExp.$1.length
-        const value = '' + patterns[p]
-        const start = value.length
+export function useCalendar (model, props) {
+  const { YEAR_AND_MONTH, MONTHS } = lang.Calendar
 
-        result = result.replace(
-          RegExp.$1,
-          len === 3
-            ? ('000' + value).substr(start)
-            : (
-                len === 2
-                  ? ('00' + value).substr(start)
-                  : value
-              )
-        )
+  const current = ref()
+
+  const today = computed(() => toObject(new Date()))
+  const selected = computed(() => toObject(model.value))
+
+  const year = computed(() => current.value.year)
+  const month = computed(() => current.value.month)
+
+  const caption = computed(() =>
+    formatString(YEAR_AND_MONTH, year.value, MONTHS[month.value])
+  )
+
+  const data = computed(() => {
+    const y = year.value
+    const m = month.value
+
+    const first = getMonthFirstDay(y, m)
+    const count = getMonthDaysCount(y, m)
+
+    const prev = getPrevMonth(y, m)
+    const next = getNextMonth(y, m)
+    const prevCount = getMonthDaysCount(prev.year, prev.month)
+
+    const rows = []
+
+    let i = 1
+    let row = []
+
+    while (true) {
+      const v = i - first
+      const isPrev = v < 1
+      const isNext = v > count
+
+      row.push(
+        isPrev
+          ? { ...prev, date: prevCount + v, prev: true }
+          : isNext
+            ? { ...next, date: v - count, next: true }
+            : { year: y, month: m, date: v }
+      )
+
+      if (i % 7 === 0) {
+        rows.push(row)
+
+        if (v < count) row = []
+        else break
       }
-    })
 
-  return result
-}
-
-export function resolveDate (value) {
-  if (isString(value)) {
-    value = new Date(value)
-  }
-
-  return isDate(value) ? value : null
-}
-
-export function parseDateObject (value) {
-  const date = resolveDate(value)
-
-  return date && {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    date: date.getDate()
-  }
-}
-
-function isLeapYear (year) {
-  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
-}
-
-export function getMonthDaysCount (year, month) {
-  return isLeapYear(year) && month === 1
-    ? 29
-    : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
-}
-
-export function getMonthFirstDay (year, month) {
-  return (new Date(year, month, 1)).getDay()
-}
-
-export function calculateMonth (year, month, offset) {
-  month += offset
-
-  if (month < 0) {
-    month = 11
-    year--
-  } else if (month > 11) {
-    month = 0
-    year++
-  }
-
-  return { year, month }
-}
-
-export function filterDatesByMonth (dates, year, month) {
-  return dates.reduce((t, el) => {
-    el = parseDateObject(el)
-
-    if (el && el.year === year && el.month === month) {
-      t.push(el)
+      i++
     }
 
-    return t
-  }, [])
-}
+    return rows
+  })
 
-export function isSameDate (a, b) {
-  a = isDate(a) ? parseDateObject(a) : Object(a)
-  b = isDate(b) ? parseDateObject(b) : Object(b)
+  function updateCurrent (value) {
+    Object.assign(current.value, { year: value.year, month: value.month })
+  }
 
-  return a.year === b.year && a.month === b.month && a.date === b.date
+  function prevMonth () {
+    updateCurrent(getPrevMonth(year.value, month.value))
+  }
+
+  function nextMonth () {
+    updateCurrent(getNextMonth(year.value, month.value))
+  }
+
+  function updateDate (cell) {
+    if (model.value && equals(cell, model.value)) return
+
+    const v = new Date(cell.year, cell.month, cell.date)
+
+    model.value = props.format
+      ? toString(v, props.format)
+      : v
+  }
+
+  watchEffect(() => {
+    const { year: y, month: m } = selected.value || today.value
+
+    current.value = { year: y, month: m }
+  })
+
+  return {
+    data,
+    today,
+    caption,
+    current,
+    selected,
+    prevMonth,
+    nextMonth,
+    updateDate,
+    updateCurrent
+  }
 }

@@ -1,4 +1,5 @@
 export { default as X } from '~icons/outline/x.svg'
+export { default as ok } from '~icons/outline/check.svg'
 
 // export { default as x } from '~icons/filled/circle-x.svg'
 export { default as info } from '~icons/filled/info-circle.svg'

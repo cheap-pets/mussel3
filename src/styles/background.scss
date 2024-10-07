@@ -9,3 +9,8 @@
 .mu-bg-disabled {
   background-color: var(--mu-bg-disabled);
 }
+
+.mu-masked {
+  pointer-events: none;
+  filter: blur(4px);
+}
