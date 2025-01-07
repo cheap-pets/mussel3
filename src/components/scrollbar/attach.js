@@ -1,13 +1,13 @@
-import './styles.scss'
-
 import { throttle } from 'throttle-debounce'
 
-import { h } from '../../utils/h'
+import { h } from '@/utils/h'
 import { SYMBOL } from './constants'
 import { onTrackXMouseDown, onTrackYMouseDown } from './track-mouse-events'
 import { updateTracks, updateThumbX, updateThumbY } from './update-positions'
 
 export function attach (el) {
+  if (el[SYMBOL]) return
+
   const ctx = el[SYMBOL] = {}
 
   function isScrollSizeChanged () {
@@ -112,6 +112,11 @@ export function attach (el) {
 
     const { tracks, trackX, trackY } = ctx.elements
 
+    if (ctx.hideTracksTimer) {
+      clearTimeout(ctx.hideTracksTimer)
+      ctx.hideTracksTimer = null
+    }
+
     if (ctx.existedTracks) {
       trackX.remove()
       trackY.remove()
@@ -128,7 +133,7 @@ export function attach (el) {
   createMutationObserver()
 
   window.requestAnimationFrame(() => {
-    ctx.ready = true
+    ctx.ready ??= true
     updatePosition(true)
   })
 }

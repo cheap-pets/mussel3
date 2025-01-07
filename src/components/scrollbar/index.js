@@ -1,3 +1,5 @@
+import './styles.scss'
+
 import { SYMBOL } from './constants'
 
 export { attach } from './attach'

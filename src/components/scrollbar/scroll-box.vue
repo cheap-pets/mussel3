@@ -6,9 +6,13 @@
 </template>
 
 <script>
+  import './scroll-box.scss'
+
   import { attach, detach } from './index'
 
   export default {
+    name: 'MusselScrollBox',
+
     mounted () {
       attach(this.$el)
     },

@@ -23,7 +23,7 @@
       tabItems: Array,
       activeTab: null
     },
-    emits: ['update:activeTab'],
+    emits: ['update:activeTab', 'buttonClick'],
     computed: {
       items () {
         return this.tabItems || this.tabs?.tabItems
@@ -37,6 +37,7 @@
     methods: {
       onTabClick (tabItem) {
         this.$emit('update:activeTab', tabItem.name)
+        this.$emit('buttonClick', tabItem.name)
 
         this.tabs?.onTabClick(tabItem)
       }

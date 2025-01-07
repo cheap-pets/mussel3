@@ -28,6 +28,9 @@ export function onTrackXMouseDown (event, el, ctx) {
 
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mouseup', onMouseUp)
+
+  event.stopPropagation()
+  event.preventDefault()
 }
 
 export function onTrackYMouseDown (event, el, ctx) {
@@ -60,4 +63,7 @@ export function onTrackYMouseDown (event, el, ctx) {
 
   window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mouseup', onMouseUp)
+
+  event.stopPropagation()
+  event.preventDefault()
 }

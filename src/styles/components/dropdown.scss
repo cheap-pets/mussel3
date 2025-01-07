@@ -1,5 +1,8 @@
-.mu-dropdown-panel {
+div.mu-dropdown-panel {
   position: fixed;
+}
+
+.mu-dropdown-panel {
   z-index: 110;
   transform: scaleY(0);
 

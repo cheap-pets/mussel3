@@ -31,7 +31,7 @@
       activeTab: String,
       tabBarParams: Object
     },
-    emits: ['update:activeTab', 'tabClick'],
+    emits: ['update:activeTab', 'tabClick', 'buttonClick'],
     data () {
       return {
         tabItems: [],
@@ -59,6 +59,7 @@
       },
       onTabClick (tab) {
         this.$emit('tabClick', tab)
+        this.$emit('buttonClick', tab.name)
 
         if (
           this.activeTabName !== tab.name &&
