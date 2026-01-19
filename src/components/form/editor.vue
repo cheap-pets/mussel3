@@ -10,7 +10,12 @@
       v-model="inputValue"
       :readonly="readonly"
       :disabled="disabled"
-      :placeholder="placeholder">
+      :placeholder="placeholder"
+      @input="onInput"
+      @blur="onBlur"
+      @focus="onFocus"
+      @click="onClick"
+      @keydown="onKeyDown">
     <mu-icon
       v-if="clearButtonVisible"
       visibility="hover"
@@ -33,7 +38,7 @@
       placeholder: String,
       clearButton: Boolean
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'input', 'click', 'focus', 'blur', 'enterkey', 'esckey'],
     computed: {
       inputValue: {
         get () {
@@ -57,8 +62,21 @@
         if (this.$attrs.onClear) this.$attrs.onClear()
         else this.$emit('update:modelValue', '')
       },
-      toggleDropdown () {
-        this.expanded = !this.expanded || null
+      onInput (event) {
+        this.$emit('input', event.target.value)
+      },
+      onKeyDown () {
+        if (event.keyCode === 13) this.$emit('enterkey', this)
+        else if (event.keyCode === 27) this.$emit('esckey', this)
+      },
+      onClick (event) {
+        if (!this.disabled) this.$emit('click', event)
+      },
+      onFocus () {
+        this.$emit('focus', this)
+      },
+      onBlur () {
+        this.$emit('blur', this)
       }
     }
   }

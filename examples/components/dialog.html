@@ -21,11 +21,12 @@
 </head>
 
 <body>
-  <div id="app" class="mu-box" position="fixed fit" dark-mode>
+  <div id="app" class="mu-box" position="fixed fit">
     <div class="mu-box" layout="flex" padding="1x">
       <mu-button @click="dialogVisible1 = true">Show Dialog 1</mu-button>
       <mu-dialog
         v-model:visible="dialogVisible1"
+        id="dialog1"
         title="My Dialog 1"
         mask-action="hide"
         width="640px"
@@ -34,7 +35,20 @@
         @show="onShow"
         @hide="onHide">
         <div flex="1">
-          <span>{{ new Date() }}</span>
+          <div>{{ new Date() }}</div>
+          <mu-button
+            style="margin-top: 16px;"
+            caption="Request Fullscreen"
+            @click="requestFullscreen('#dialog1 > div')">
+          </mu-button>
+          <mu-dropdown-button
+            caption="..."
+            style="margin-top: 16px;"
+            :dropdown-items="[
+              { label: 'Menu 1' },
+              { label: 'Menu 2' }
+            ]">
+          </mu-dropdown-button>
         </div>
       </mu-dialog>
     </div>
@@ -120,6 +134,9 @@
           },
           onHide () {
             console.log('hide')
+          },
+          requestFullscreen (selector) {
+            document.querySelector(selector).requestFullscreen()
           }
         }
       }
@@ -129,7 +146,9 @@
       bolt: 'ti ti-bolt'
     })
 
-    mussel.install(app)
+    mussel.install(app, {
+      darkMode: 'auto'
+    })
 
     app.mount('#app')
   </script>

@@ -15,6 +15,11 @@
   <link
     rel="stylesheet" type="text/css"
     href="../../node_modules/@tabler/icons/iconfont/tabler-icons.css" />
+  <style>
+    .my-combo-box > input {
+      color: green;
+    }
+  </style>
 </head>
 
 <body>
@@ -39,7 +44,7 @@
     <div class="mu-box" padding="1x">
       <mu-combo-box
         v-model="artist"
-        class="mu-box"
+        class="mu-box my-combo-box"
         width="500"
         label="Artist"
         placeholder="Artist Name"

@@ -123,6 +123,7 @@
 
   <script type="text/javascript">
     const app = Vue.createApp({
+      inject: ['$mussel'],
       data () {
         return {
           activeItem: null
@@ -135,8 +136,16 @@
         select (v) {
           this.activeItem = v
         }
+      },
+      mounted () {
+        this.$mussel.setupTheme({
+          theme: {
+            primaryColor: '#005BAC'
+          }
+        })
       }
     })
+
     mussel.registerIcons({
       bolt: 'ti ti-bolt',
       album: 'ti ti-album',

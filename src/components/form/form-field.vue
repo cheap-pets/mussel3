@@ -1,9 +1,11 @@
 <template>
-  <div class="mu-form-field mu-box" :style="boxStyle">
+  <div
+    class="mu-form-field mu-box"
+    :label-align="labelAlign || form.labelAlign || 'right'"
+    :style="boxStyle">
     <label
       v-if="label"
       class="mu-text-ellipsis"
-      :text-align="labelAlign || form.labelAlign || null"
       :style="{ width: labelElementWidth }">
       {{ label }}
     </label>

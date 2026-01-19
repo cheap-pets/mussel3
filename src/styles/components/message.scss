@@ -44,7 +44,7 @@
   border-radius: $notifierBorderRadius;
   box-shadow: $boxShadowPopup;
   
-  &:hover > .mu-notifier_content {
+  &[link]:hover > .mu-message_content {
     cursor: pointer;
     text-decoration: underline;
   }

@@ -6,7 +6,7 @@
       :link="!!el.callback || ''"
       class="mu-notifier"
       @click="onClick(el)">
-      <div class="mu-message_title" :type="el.type">
+      <div v-if="el.title" class="mu-message_title" :type="el.type">
         <mu-icon reverse :icon="el.icon" />
         <span>{{ el.title }}</span>
       </div>
@@ -22,6 +22,18 @@
     name: 'MusselNotifier',
     props: {
       messages: Array
+    },
+    watch: {
+      messages: {
+        handler () {
+          const container = document.fullscreenElement || document.body
+
+          if (this.$el.parentNode !== container) {
+            container.appendChild(this.$el)
+          }
+        },
+        deep: true
+      }
     },
     methods: {
       onClick (message) {

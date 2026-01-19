@@ -26,13 +26,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      const container =
-        this.container?.$el ||
-        this.container ||
-        this.$.appContext.app._container ||
-        document.body
-
-      container.appendChild(this.$el)
+      this.getContainer().appendChild(this.$el)
     })
   },
   beforeUnmount () {
@@ -40,6 +34,13 @@ export default {
     this.$el.parentNode?.removeChild(this.$el)
   },
   methods: {
+    getContainer () {
+      return document.fullscreenElement ||
+        this.container?.$el ||
+        this.container ||
+        this.$.appContext.app._container ||
+        document.body
+    },
     show () {
       if (!this.visible) {
         this.updateVisible(true)
@@ -63,6 +64,12 @@ export default {
           )
 
           if (el) {
+            const container = this.getContainer()
+
+            if (this.$el.parentNode !== container) {
+              container.appendChild(this.$el)
+            }
+
             el.style.visibility = null
             el.removeAttribute('pop-up')
 

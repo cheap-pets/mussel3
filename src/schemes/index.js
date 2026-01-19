@@ -1,5 +1,5 @@
 import { paramCase } from '../utils/case'
-import { isHtmlElement, isString } from '../utils/type'
+// import { isHtmlElement, isString } from '../utils/type'
 import { GENERABLE_COLORS, complementColors } from './colors'
 
 import updateVariableValues from './update-variable-values'
@@ -11,7 +11,7 @@ import darkTheme from './theme-dark'
 */
 
 function setTheme (options = {}) {
-  const el = options.el || document.documentElement
+  const root = options.root || document.documentElement
   const values = { ...options.theme }
 
   updateVariableValues(values)
@@ -25,47 +25,26 @@ function setTheme (options = {}) {
   }
 
   Object.keys(values).forEach(key => {
-    el.style.setProperty('--mu-' + paramCase(key), values[key])
+    root.style.setProperty('--mu-' + paramCase(key), values[key])
   })
 }
 
-function installTheme (app, options) {
-  const mount = app.mount
+function installTheme (options) {
+  const { darkMode, autoComplementColors, theme, root = document.documentElement } = options
 
-  app.mount = rootContainer => {
-    const el = isHtmlElement(rootContainer)
-      ? rootContainer
-      : (
-          isString(rootContainer)
-            ? document.querySelector(rootContainer)
-            : null
-        )
+  root.classList.add('mu-root')
 
-    const { darkMode, autoComplementColors, theme } = options
+  if (
+    (darkMode === true) ||
+    (darkMode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) root.setAttribute('dark-mode', '')
 
-    if (el) {
-      if (el.classList && !el.classList.contains('mu-root')) {
-        const isSysDarkMode =
-          window.matchMedia('(prefers-color-scheme: dark)').matches
-
-        const useDarkTheme =
-          (darkMode === true) ||
-          (darkMode === 'auto' && isSysDarkMode)
-
-        el.classList.add('mu-root')
-
-        if (useDarkTheme) el.setAttribute('dark-mode', '')
-      }
-
-      if (theme) {
-        setTheme({ el, autoComplementColors, theme })
-      }
-    }
-
-    mount.call(app, rootContainer)
+  if (theme) {
+    setTheme({ root, autoComplementColors, theme })
   }
 }
 
 export {
-  installTheme
+  installTheme,
+  setTheme
 }

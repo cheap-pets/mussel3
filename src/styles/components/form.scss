@@ -33,12 +33,6 @@
 
     font-size: calc(1em - 1px);
     color: var(--mu-text-color-weak);
-
-    @each $v in (left, right, center) {
-      &[text-align="#{$v}"] {
-        text-align: $v;
-      }
-    }
   }
 
   & > .mu-form-field_content {
@@ -48,6 +42,35 @@
 
   & > .mu-editor {
     flex: 1 1 0;
+  }
+
+  &[label-align="top"] {
+    flex-direction: column;
+    align-items: flex-start;
+
+    & > label {
+      line-height: $editorHeight;
+    }
+
+    & > input,
+    & > textarea,
+    & > .mu-input,
+    & > .mu-editor {
+      flex: none;
+      width: 100%;
+    }
+  }
+
+  &[label-align="left"] > label {
+    text-align: left;
+  }
+
+  &[label-align="right"] > label {
+    text-align: right;
+  }
+
+  &[label-align="center"] > label {
+    text-align: center;
   }
 
   &[required] > label:before {
